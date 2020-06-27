@@ -33,6 +33,20 @@ public class UIControl : MonoBehaviour
                     {
                         Text = "next",
                         OnButtonClick = DFunctions.GoToNextPage
+                    },
+                    new DButton()
+                    {
+                        Text = "this is also a next page button",
+                        OnButtonClick = DFunctions.GoToNextPage
+                    },
+                    new DButton()
+                    {
+                        Text = "but this one is a trap",
+                        OnButtonClick = () =>
+                        {
+                            Debug.Log("The trap got you. Goodbye");
+                            DFunctions.CloseDialogue();
+                        }
                     }
                 }
             },
