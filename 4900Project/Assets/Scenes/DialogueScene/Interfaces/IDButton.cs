@@ -10,6 +10,11 @@ namespace Dialogue {
     /// </summary>
     interface IDButton {
         /// <summary>
+        /// The button's ID. This is an internal mechanism that gets updated.
+        /// </summary>
+        int Id { get; }
+
+        /// <summary>
         /// The button's text. This is displayed with the button.
         /// </summary>
         string Text { get; set; }

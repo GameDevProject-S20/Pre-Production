@@ -16,11 +16,14 @@ namespace Dialogue {
         /// </summary>
         /// <param name="dialoguePages"></param>
         public static int CreateDialog(IEnumerable<IDPage> dialoguePages) {
+            // The new dialog will have the ID for the next index of our dialogs list
             var index = dialogs.Count;
 
+            // Create the dialog for that ID, and add it to the list
             IDialogue dialog = new Dialogue(index, dialoguePages);
             dialogs.Add(dialog);
 
+            // Return the new id
             return index;
         }
 
