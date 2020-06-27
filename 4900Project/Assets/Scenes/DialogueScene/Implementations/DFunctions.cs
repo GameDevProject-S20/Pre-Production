@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Scenes.DialogueScene {
+namespace Dialogue {
     /// <summary>
     /// The DFunctions class provides some utility functions that can be used as button handlers.
     /// This includes things like controlling the dialog & triggering the quest system.
