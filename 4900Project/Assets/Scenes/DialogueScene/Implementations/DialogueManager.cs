@@ -37,9 +37,13 @@ namespace Dialogue
             // Create the dialog for that ID, and add it to the list
             IDialogue dialog = new Dialogue(dialogs.Count, dialoguePages);
             dialogs.Add(dialog);
+            activeDialogs.Add(dialog);
 
             // hook the dialog into our event listeners
             AddEvents(dialog);
+
+            // Update the active dialog
+            UpdateActiveDialog();
 
             // Return the new dialog
             return dialog;
