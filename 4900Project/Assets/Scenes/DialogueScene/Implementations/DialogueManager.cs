@@ -114,6 +114,12 @@ namespace Dialogue
                 activeDialogs.Remove(dialog);
                 UpdateActiveDialog();
             });
+
+            // When the dialog changes, redirect it to our ActiveDialogChanged event
+            dialog.PageUpdated.AddListener(() =>
+            {
+                UpdateActiveDialog();
+            });
         }
 
         /// <summary>
@@ -121,16 +127,6 @@ namespace Dialogue
         /// </summary>
         private static void UpdateActiveDialog()
         {
-            // The active dialog is whichever one was last opened
-            var currentDialog = activeDialogs.LastOrDefault();
-
-            // If we don't have one, then exit out
-            if (currentDialog == null)
-            {
-                return;
-            }
-
-            // Otherwise, set that one as active
             ActiveDialogChanged.Invoke();
         }
     }
