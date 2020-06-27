@@ -9,7 +9,7 @@ namespace Dialogue
     /// <summary>
     /// The DialogueManager class controls the creation of new dialogue systems.
     /// </summary>
-    static class DialogueManager
+    public static class DialogueManager
     {
         private static List<IDialogue> dialogs = new List<IDialogue>();
 
@@ -17,17 +17,15 @@ namespace Dialogue
         /// Creates a new dialog box with the given pages. 
         /// </summary>
         /// <param name="dialoguePages"></param>
-        public static int CreateDialog(IEnumerable<IDPage> dialoguePages)
+        public static IDialogue CreateDialog(IEnumerable<IDPage> dialoguePages)
         {
-            // The new dialog will have the ID for the next index of our dialogs list
-            var index = dialogs.Count;
-
+            // The ID of the dialog will be the next index into our dialogs list.
             // Create the dialog for that ID, and add it to the list
-            IDialogue dialog = new Dialogue(index, dialoguePages);
+            IDialogue dialog = new Dialogue(dialogs.Count, dialoguePages);
             dialogs.Add(dialog);
 
-            // Return the new id
-            return index;
+            // Return the new dialog
+            return dialog;
         }
 
         /// <summary>
@@ -45,6 +43,11 @@ namespace Dialogue
 
             // Otherwise, return the dialog
             return dialogs[dialogId];
+        }
+
+        public static bool DialogExists(int dialogId)
+        {
+            return dialogs.ElementAtOrDefault(dialogId) != null;
         }
     }
 }

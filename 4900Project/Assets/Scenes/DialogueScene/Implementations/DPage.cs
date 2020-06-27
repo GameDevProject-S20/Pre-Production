@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dialogue
 {
-    class DPage : IDPage
+    public class DPage : IDPage
     {
         // Properties
         public string Text { get; set; }

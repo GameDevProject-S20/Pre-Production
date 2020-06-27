@@ -11,7 +11,7 @@ namespace Dialogue
     /// A DEvent is a Dialogue Event that gets activated.
     /// The event will pass through the ID of the Dialogue.
     /// </summary>
-    class DEvent : UnityEvent<int>
+    public class DEvent : UnityEvent<int>
     {
     }
 }

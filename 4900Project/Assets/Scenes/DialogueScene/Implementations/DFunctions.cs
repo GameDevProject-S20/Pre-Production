@@ -10,7 +10,7 @@ namespace Dialogue
     /// The DFunctions class provides some utility functions that can be used as button handlers.
     /// This includes things like controlling the dialog & triggering the quest system.
     /// </summary>
-    static class DFunctions
+    public static class DFunctions
     {
         /// <summary>
         /// Advances the Dialogue system to the next page.

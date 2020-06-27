@@ -14,6 +14,7 @@ namespace Dialogue
     {
         // Properties
         public int Id { get; protected set; }
+        public bool IsVisible { get; protected set; }
         protected IEnumerable<IDPage> Pages { get; set; }
         protected IEnumerator<IDPage> PageEnumerator;
 
@@ -38,6 +39,7 @@ namespace Dialogue
         public Dialogue(int id, IEnumerable<IDPage> pages)
         {
             this.Id = id;
+            this.IsVisible = true;
             this.Pages = pages;
             this.PageEnumerator = pages.GetEnumerator();
 
@@ -45,6 +47,9 @@ namespace Dialogue
             PageUpdated = new DEvent();
             DialogueClosed = new DEvent();
             DialogueOpened = new DEvent();
+
+            // Start off on the first page
+            PageEnumerator.MoveNext();
         }
 
         // Public Getters
@@ -64,7 +69,7 @@ namespace Dialogue
         public bool HasMorePages()
         {
             // We're on the last page if our enumerator's current page is the last in the list
-            return PageEnumerator.Current == Pages.LastOrDefault();
+            return PageEnumerator.Current != Pages.LastOrDefault();
         }
 
 
@@ -91,6 +96,7 @@ namespace Dialogue
         /// </summary>
         public void Hide()
         {
+            IsVisible = false;
             DialogueClosed.Invoke(Id);
         }
 
@@ -111,6 +117,7 @@ namespace Dialogue
         /// </summary>
         public void Show()
         {
+            IsVisible = true;
             DialogueOpened.Invoke(Id);
         }
 

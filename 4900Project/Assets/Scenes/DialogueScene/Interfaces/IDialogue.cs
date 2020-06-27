@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEditor.XR;
 using UnityEngine.Events;
 
 namespace Dialogue
@@ -10,10 +11,11 @@ namespace Dialogue
     /// <summary>
     /// This represents a single Dialogue class.
     /// </summary>
-    interface IDialogue
+    public interface IDialogue
     {
         // Properties
         int Id { get; }
+        bool IsVisible { get; }
 
         // Events
         DEvent PageUpdated { get; }
