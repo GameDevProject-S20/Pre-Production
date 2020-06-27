@@ -41,11 +41,10 @@ public class UIControl : MonoBehaviour
                     },
                     new DButton()
                     {
-                        Text = "but this one is a trap",
+                        Text = "this one makes a new dialog pop up",
                         OnButtonClick = () =>
                         {
-                            Debug.Log("The trap got you. Goodbye");
-                            DFunctions.CloseDialogue();
+                            MakeDialogTwo();
                         }
                     }
                 }
@@ -58,6 +57,38 @@ public class UIControl : MonoBehaviour
                     new DButton()
                     {
                         Text = "goodbye",
+                        OnButtonClick = DFunctions.CloseDialogue
+                    }
+                }
+            }
+        });
+    }
+
+    // TODO: Remove
+    protected void MakeDialogTwo()
+    {
+        DialogueManager.CreateDialog(new List<IDPage>()
+        {
+            new DPage()
+            {
+                Text = "This is the second quest",
+                Buttons = new List<IDButton>()
+                {
+                    new DButton()
+                    {
+                        Text = "ok",
+                        OnButtonClick = DFunctions.GoToNextPage
+                    }
+                }
+            },
+            new DPage()
+            {
+                Text = "You will be going back to the first quest",
+                Buttons = new List<IDButton>()
+                {
+                    new DButton()
+                    {
+                        Text = "ok",
                         OnButtonClick = DFunctions.CloseDialogue
                     }
                 }
