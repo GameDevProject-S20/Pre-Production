@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dialogue {
+namespace Dialogue
+{
     /// <summary>
     /// The Dialogue Page interface. Every Dialogue page has text and an array of buttons to be shown.
     /// </summary>
-    interface IDPage {
+    interface IDPage
+    {
         /// <summary>
         /// The text that the page should display.
         /// </summary>

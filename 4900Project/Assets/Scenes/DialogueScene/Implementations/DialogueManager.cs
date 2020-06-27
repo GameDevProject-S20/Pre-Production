@@ -4,18 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dialogue {
+namespace Dialogue
+{
     /// <summary>
     /// The DialogueManager class controls the creation of new dialogue systems.
     /// </summary>
-    static class DialogueManager {
+    static class DialogueManager
+    {
         private static List<IDialogue> dialogs = new List<IDialogue>();
 
         /// <summary>
         /// Creates a new dialog box with the given pages. 
         /// </summary>
         /// <param name="dialoguePages"></param>
-        public static int CreateDialog(IEnumerable<IDPage> dialoguePages) {
+        public static int CreateDialog(IEnumerable<IDPage> dialoguePages)
+        {
             // The new dialog will have the ID for the next index of our dialogs list
             var index = dialogs.Count;
 
@@ -32,9 +35,11 @@ namespace Dialogue {
         /// </summary>
         /// <param name="dialogId"></param>
         /// <returns></returns>
-        public static IDialogue GetDialog(int dialogId) {
+        public static IDialogue GetDialog(int dialogId)
+        {
             // If the dialog doesn't exist, return null
-            if (dialogId >= dialogs.Count) {
+            if (dialogId >= dialogs.Count)
+            {
                 return null;
             }
 

@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine.Events;
 
-namespace Dialogue {
+namespace Dialogue
+{
     /// <summary>
     /// This represents a single Dialogue class.
     /// </summary>
-    interface IDialogue {
+    interface IDialogue
+    {
         // Properties
         int Id { get; }
 

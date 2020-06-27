@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dialogue {
+namespace Dialogue
+{
     /// <summary>
     /// The interface for a single dialog button. Every button has text & a click handler.
     /// </summary>
-    interface IDButton {
+    interface IDButton
+    {
         /// <summary>
         /// The button's text. This is displayed with the button.
         /// </summary>

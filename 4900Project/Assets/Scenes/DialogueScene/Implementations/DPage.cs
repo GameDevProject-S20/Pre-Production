@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dialogue {
-    class DPage : IDPage {
+namespace Dialogue
+{
+    class DPage : IDPage
+    {
         // Properties
         public string Text { get; set; }
         public IEnumerable<IDButton> Buttons { get; set; }
@@ -16,7 +18,8 @@ namespace Dialogue {
         /// </summary>
         /// <param name="buttonId"></param>
         /// <returns></returns>
-        public IDButton GetButton(int buttonIndex) {
+        public IDButton GetButton(int buttonIndex)
+        {
             return Buttons.ElementAtOrDefault(buttonIndex);
         }
     }
