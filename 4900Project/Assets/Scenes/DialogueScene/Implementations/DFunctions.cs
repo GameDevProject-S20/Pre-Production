@@ -15,23 +15,23 @@ namespace Dialogue
         /// <summary>
         /// Advances the Dialogue system to the next page.
         /// </summary>
-        public static readonly Action<int> GoToNextPage = (int id) =>
+        public static readonly Action GoToNextPage = () =>
         {
-            DialogueManager.GetDialog(id).GoToNextPage();
+            DialogueManager.GetActiveDialog().GoToNextPage();
         };
 
         /// <summary>
         /// Closes the Dialogue.
         /// </summary>
-        public static readonly Action<int> CloseDialogue = (int id) =>
+        public static readonly Action CloseDialogue = () =>
         {
-            DialogueManager.GetDialog(id).Hide();
+            DialogueManager.GetActiveDialog().Hide();
         };
 
         /// <summary>
         /// Notifies the quest system that a button was pressed.
         /// </summary>
-        public static readonly Action<int> NotifyQuestSystem = (int id) =>
+        public static readonly Action NotifyQuestSystem = () =>
         {
             // TODO
         };

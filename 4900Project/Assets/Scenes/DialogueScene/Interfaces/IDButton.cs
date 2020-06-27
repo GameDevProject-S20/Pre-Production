@@ -19,6 +19,6 @@ namespace Dialogue
         /// <summary>
         /// Handler function to be called when the button is clicked. Passes in the ID for the dialogue.
         /// </summary>
-        Action<int> OnButtonClick { get; set; }
+        Action OnButtonClick { get; set; }
     }
 }

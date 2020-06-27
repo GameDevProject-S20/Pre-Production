@@ -93,7 +93,7 @@ namespace Dialogue
         private static void AddEvents(IDialogue dialog)
         {
             // When a dialog is opened, set it as the active dialog
-            dialog.DialogueOpened.AddListener((int _) =>
+            dialog.DialogueOpened.AddListener(() =>
             {
                 // If it's already been added, remove the instance already in the system
                 // So that we avoid duplicates
@@ -108,7 +108,7 @@ namespace Dialogue
             });
 
             // When a dialog is closed, go back to the previous dialog as the active
-            dialog.DialogueClosed.AddListener((int _) =>
+            dialog.DialogueClosed.AddListener(() =>
             {
                 // First, we need to remove it from our active list
                 activeDialogs.Remove(dialog);
@@ -131,7 +131,7 @@ namespace Dialogue
             }
 
             // Otherwise, set that one as active
-            ActiveDialogChanged.Invoke(currentDialog.Id);
+            ActiveDialogChanged.Invoke();
         }
     }
 }

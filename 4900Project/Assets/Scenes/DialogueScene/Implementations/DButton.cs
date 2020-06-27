@@ -12,6 +12,6 @@ namespace Dialogue
     public class DButton : IDButton
     {
         public string Text { get; set; }
-        public Action<int> OnButtonClick { get; set; }
+        public Action OnButtonClick { get; set; }
     }
 }

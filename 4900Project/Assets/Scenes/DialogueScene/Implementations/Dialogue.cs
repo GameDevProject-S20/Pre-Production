@@ -97,7 +97,7 @@ namespace Dialogue
         public void Hide()
         {
             IsVisible = false;
-            DialogueClosed.Invoke(Id);
+            DialogueClosed.Invoke();
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Dialogue
             var page = GetPage();
             var button = page.GetButton(buttonIndex);
 
-            button.OnButtonClick(Id);
+            button.OnButtonClick();
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace Dialogue
         public void Show()
         {
             IsVisible = true;
-            DialogueOpened.Invoke(Id);
+            DialogueOpened.Invoke();
         }
 
         // Protected Methods
@@ -127,7 +127,7 @@ namespace Dialogue
         /// </summary>
         protected void Update()
         {
-            PageUpdated.Invoke(Id);
+            PageUpdated.Invoke();
         }
     }
 }
