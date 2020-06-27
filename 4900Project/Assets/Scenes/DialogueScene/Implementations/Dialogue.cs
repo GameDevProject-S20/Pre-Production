@@ -82,9 +82,9 @@ namespace Dialogue {
         /// Activates a button, given its index.
         /// </summary>
         /// <param name="buttonIndex">The index of the button to activate</param>
-        public void PressButton(int buttonId) {
+        public void PressButton(int buttonIndex) {
             var page = GetPage();
-            var button = page.GetButton(buttonId);
+            var button = page.GetButton(buttonIndex);
 
             button.OnButtonClick(Id);
         }
