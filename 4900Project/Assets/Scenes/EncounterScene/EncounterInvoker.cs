@@ -9,5 +9,6 @@ public class EncounterInvoker : MonoBehaviour
     {
         Debug.Log("foobar");
         var mgr = RandomEncounterManager.Instance;
+        mgr.NextEncounter();
     }
 }

@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Random = System.Random;
+
 
 namespace Encounters
 {
@@ -18,21 +20,34 @@ namespace Encounters
 
         private static RandomEncounterManager instance;
 
+        private Random random;
+
+        private Dictionary<int, Encounter> encounters;
+
         private RandomEncounterManager()
         {
-            Debug.Log("RandomEncounterManager ctor");
+            random = new Random();
+            encounters = new Dictionary<int, Encounter>();
+            loadEncounters();
+        }
 
-            Encounter enc = new Encounter("Name", "Tag", "BodyText", "ResultText",
-                    new string[] {"foo", "bar", "baz"});
+        public void NextEncounter()
+        {
+            Encounter next = randomEncounter();
+            Debug.Log(next);
+        }
 
-            Debug.Log(enc.Name);
-            Debug.Log(enc.Tag);
-            Debug.Log(enc.BodyText);
-            Debug.Log(enc.ResultText);
-            foreach (string s in enc.ButtonText)
-            {
-                Debug.Log(s);
-            }
+        // Load from csv or wherever in the future...
+        private void loadEncounters()
+        {
+            Encounter enc = new Encounter("Name", "Tag", "BodyText", new string[] {"foo", "bar", "baz"}, new string[] {"fooRes", "barRes", "bazRes"});
+            encounters.Add(enc.Id, enc);
+        }
+
+        private Encounter randomEncounter()
+        {
+            int i = random.Next(encounters.Count);
+            return encounters[i];
         }
     }
 }
