@@ -29,9 +29,9 @@ namespace Dialogue
         };
 
         /// <summary>
-        /// Notifies the quest system that a button was pressed.
+        /// Fires off a notification to our EventManager indicating that the button was pressed.
         /// </summary>
-        public static readonly Action NotifyQuestSystem = () =>
+        public static readonly Action NotifyEventManager = () =>
         {
             // TODO
         };

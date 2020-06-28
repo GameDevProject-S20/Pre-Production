@@ -12,7 +12,7 @@ namespace Dialogue
     public static class DialogueManager
     {
         // Public Properties
-        public static DEvent ActiveDialogChanged = new DEvent();
+        public static DialogueUpdatedEvent ActiveDialogChanged = new DialogueUpdatedEvent();
 
         // Private Member Variables
         /// <summary>
@@ -39,10 +39,37 @@ namespace Dialogue
             dialogs.Add(dialog);
             activeDialogs.Add(dialog);
 
-            // hook the dialog into our event listeners
-            AddEvents(dialog);
+            // Hook into the events for updating the active dialog / firing dialog changes
+            // When a dialog is opened, set it as the active dialog
+            dialog.DialogueOpened.AddListener(() =>
+            {
+                // If it's already been added, remove the instance already in the system
+                // So that we avoid duplicates
+                if (activeDialogs.Contains(dialog))
+                {
+                    activeDialogs.Remove(dialog);
+                }
 
-            // Update the active dialog
+                // Add it in at the end of the list, and set it as active
+                activeDialogs.Add(dialog);
+                UpdateActiveDialog();
+            });
+
+            // When a dialog is closed, go back to the previous dialog as the active
+            dialog.DialogueClosed.AddListener(() =>
+            {
+                // First, we need to remove it from our active list
+                activeDialogs.Remove(dialog);
+                UpdateActiveDialog();
+            });
+
+            // When the dialog changes, redirect it to our ActiveDialogChanged event
+            dialog.PageUpdated.AddListener(() =>
+            {
+                UpdateActiveDialog();
+            });
+
+            // Update with the new active dialog
             UpdateActiveDialog();
 
             // Return the new dialog
@@ -92,34 +119,6 @@ namespace Dialogue
         /// <param name="dialog"></param>
         private static void AddEvents(IDialogue dialog)
         {
-            // When a dialog is opened, set it as the active dialog
-            dialog.DialogueOpened.AddListener(() =>
-            {
-                // If it's already been added, remove the instance already in the system
-                // So that we avoid duplicates
-                if (activeDialogs.Contains(dialog))
-                {
-                    activeDialogs.Remove(dialog);
-                }
-
-                // Add it in at the end of the list, and set it as active
-                activeDialogs.Add(dialog);
-                UpdateActiveDialog();
-            });
-
-            // When a dialog is closed, go back to the previous dialog as the active
-            dialog.DialogueClosed.AddListener(() =>
-            {
-                // First, we need to remove it from our active list
-                activeDialogs.Remove(dialog);
-                UpdateActiveDialog();
-            });
-
-            // When the dialog changes, redirect it to our ActiveDialogChanged event
-            dialog.PageUpdated.AddListener(() =>
-            {
-                UpdateActiveDialog();
-            });
         }
 
         /// <summary>

@@ -18,9 +18,9 @@ namespace Dialogue
         bool IsVisible { get; }
 
         // Events
-        DEvent PageUpdated { get; }
-        DEvent DialogueClosed { get; }
-        DEvent DialogueOpened { get; }
+        DialogueUpdatedEvent PageUpdated { get; }
+        DialogueUpdatedEvent DialogueClosed { get; }
+        DialogueUpdatedEvent DialogueOpened { get; }
 
         // Public Getters
         IDPage GetPage();

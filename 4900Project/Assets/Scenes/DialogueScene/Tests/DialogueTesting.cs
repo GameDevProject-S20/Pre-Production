@@ -7,7 +7,7 @@ using Dialogue;
 
 namespace Tests
 {
-    public class NewTestScript
+    public class DialogueTesting
     {
         /// <summary>
         /// Tests that new Dialog objects can be created.

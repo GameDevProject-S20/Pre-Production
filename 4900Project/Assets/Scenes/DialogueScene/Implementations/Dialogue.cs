@@ -20,19 +20,19 @@ namespace Dialogue
 
         // Events
         /// <summary>
-        /// Called when the page is updated, passes in the ID of the dialog. Should be used for updating UI.
+        /// Called when the page is updated.
         /// </summary>
-        public DEvent PageUpdated { get; private set; }
+        public DialogueUpdatedEvent PageUpdated { get; private set; }
 
         /// <summary>
         /// Fires when the dialog should be closed.
         /// </summary>
-        public DEvent DialogueClosed { get; private set; }
+        public DialogueUpdatedEvent DialogueClosed { get; private set; }
 
         /// <summary>
         /// Fired when the dialogue should be opened.
         /// </summary>
-        public DEvent DialogueOpened { get; private set; }
+        public DialogueUpdatedEvent DialogueOpened { get; private set; }
 
 
         // Constructor
@@ -44,9 +44,9 @@ namespace Dialogue
             this.PageEnumerator = pages.GetEnumerator();
 
             // initialize the events
-            PageUpdated = new DEvent();
-            DialogueClosed = new DEvent();
-            DialogueOpened = new DEvent();
+            PageUpdated = new DialogueUpdatedEvent();
+            DialogueClosed = new DialogueUpdatedEvent();
+            DialogueOpened = new DialogueUpdatedEvent();
 
             // Start off on the first page
             PageEnumerator.MoveNext();
