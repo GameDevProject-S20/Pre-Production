@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using UnityEngine;
+using Dialogue;
 
 
 namespace Encounters
@@ -49,6 +50,9 @@ namespace Encounters
         public ReadOnlyCollection<string> ResultText
         { get; }
 
+        private List<IDPage> dialoguePages;
+        private List<IDButton> dialogueButtons;
+
 
         public Encounter(string name, string tag, string bodyText,
                          IEnumerable<string> buttonText, IEnumerable<string> resultText)
@@ -59,6 +63,28 @@ namespace Encounters
             BodyText = bodyText;
             ButtonText = new ReadOnlyCollection<string>(new List<string>(buttonText));
             ResultText = new ReadOnlyCollection<string>(new List<string>(resultText));
+            dialoguePages = new List<IDPage>();
+            dialogueButtons = new List<IDButton>();
+            initDialogue();
+        }
+
+        public void StartDialogue()
+        {
+            IDialogue dialogue = DialogueManager.CreateDialogue(new List<IDPage>()
+            {
+                new DPage()
+                {
+                    Text = "My First Test",
+                    Buttons = new List<IDButton>()
+                    {
+                        new DButton()
+                        {
+                            Text = "First button",
+                            OnButtonClick = DFunctions.CloseDialogue
+                        }
+                    }
+                }
+            });
         }
 
         public override string ToString()
@@ -78,6 +104,11 @@ namespace Encounters
             sb.AppendLine("}");
 
             return sb.ToString();
+        }
+
+        private void initDialogue()
+        {
+
         }
     }
 }

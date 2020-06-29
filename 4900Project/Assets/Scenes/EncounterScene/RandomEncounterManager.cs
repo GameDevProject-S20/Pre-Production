@@ -35,6 +35,7 @@ namespace Encounters
         {
             Encounter next = randomEncounter();
             Debug.Log(next);
+            next.StartDialogue();
         }
 
         // Load from csv or wherever in the future...
