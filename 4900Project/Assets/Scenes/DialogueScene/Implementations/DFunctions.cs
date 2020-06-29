@@ -17,7 +17,7 @@ namespace Dialogue
         /// </summary>
         public static readonly Action GoToNextPage = () =>
         {
-            DialogueManager.GetActiveDialog().GoToNextPage();
+            DialogueManager.GetActiveDialogue().GoToNextPage();
         };
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace Dialogue
         /// </summary>
         public static readonly Action CloseDialogue = () =>
         {
-            DialogueManager.GetActiveDialog().Hide();
+            DialogueManager.GetActiveDialogue().Hide();
         };
 
         /// <summary>

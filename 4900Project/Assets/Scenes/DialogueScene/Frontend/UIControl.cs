@@ -11,94 +11,95 @@ public class UIControl : MonoBehaviour
     public GameObject textDisplay;
     public GameObject buttonsPanel;
     public GameObject buttonTemplate;
+    public bool makeTestDialogue;
     
     void Start()
     {
-        DialogueManager.ActiveDialogChanged.AddListener(() =>
+        DialogueManager.ActiveDialogueChanged.AddListener(() =>
         {
             UpdateDialogDisplay();
         });
 
         UpdateDialogDisplay();
 
-        // TODO: Remove when actual Dialogs are in the game
-        DialogueManager.CreateDialog(new List<IDPage>()
-        {
-            new DPage()
-            {
-                Text = "Hello World",
-                Buttons = new List<IDButton>()
-                {
-                    new DButton()
-                    {
-                        Text = "next",
-                        OnButtonClick = DFunctions.GoToNextPage
-                    },
-                    new DButton()
-                    {
-                        Text = "this is also a next page button",
-                        OnButtonClick = DFunctions.GoToNextPage
-                    },
-                    new DButton()
-                    {
-                        Text = "this one makes a new dialog pop up",
-                        OnButtonClick = () =>
-                        {
-                            MakeDialogTwo();
-                        }
-                    }
-                }
-            },
-            new DPage()
-            {
-                Text = "Goobye World",
-                Buttons = new List<IDButton>()
-                {
-                    new DButton()
-                    {
-                        Text = "goodbye",
-                        OnButtonClick = DFunctions.CloseDialogue
-                    }
-                }
-            }
-        });
+        //// TODO: Remove when actual Dialogs are in the game
+        //DialogueManager.CreateDialogue(new List<IDPage>()
+        //{
+        //    new DPage()
+        //    {
+        //        Text = "Hello World",
+        //        Buttons = new List<IDButton>()
+        //        {
+        //            new DButton()
+        //            {
+        //                Text = "next",
+        //                OnButtonClick = DFunctions.GoToNextPage
+        //            },
+        //            new DButton()
+        //            {
+        //                Text = "this is also a next page button",
+        //                OnButtonClick = DFunctions.GoToNextPage
+        //            },
+        //            new DButton()
+        //            {
+        //                Text = "this one makes a new dialog pop up",
+        //                OnButtonClick = () =>
+        //                {
+        //                    MakeDialogTwo();
+        //                }
+        //            }
+        //        }
+        //    },
+        //    new DPage()
+        //    {
+        //        Text = "Goobye World",
+        //        Buttons = new List<IDButton>()
+        //        {
+        //            new DButton()
+        //            {
+        //                Text = "goodbye",
+        //                OnButtonClick = DFunctions.CloseDialogue
+        //            }
+        //        }
+        //    }
+        //});
     }
 
     // TODO: Remove
-    protected void MakeDialogTwo()
-    {
-        DialogueManager.CreateDialog(new List<IDPage>()
-        {
-            new DPage()
-            {
-                Text = "This is the second quest",
-                Buttons = new List<IDButton>()
-                {
-                    new DButton()
-                    {
-                        Text = "ok",
-                        OnButtonClick = DFunctions.GoToNextPage
-                    }
-                }
-            },
-            new DPage()
-            {
-                Text = "You will be going back to the first quest",
-                Buttons = new List<IDButton>()
-                {
-                    new DButton()
-                    {
-                        Text = "ok",
-                        OnButtonClick = DFunctions.CloseDialogue
-                    }
-                }
-            }
-        });
-    }
+    //protected void MakeDialogTwo()
+    //{
+    //    DialogueManager.CreateDialogue(new List<IDPage>()
+    //    {
+    //        new DPage()
+    //        {
+    //            Text = "This is the second quest",
+    //            Buttons = new List<IDButton>()
+    //            {
+    //                new DButton()
+    //                {
+    //                    Text = "ok",
+    //                    OnButtonClick = DFunctions.GoToNextPage
+    //                }
+    //            }
+    //        },
+    //        new DPage()
+    //        {
+    //            Text = "You will be going back to the first quest",
+    //            Buttons = new List<IDButton>()
+    //            {
+    //                new DButton()
+    //                {
+    //                    Text = "ok",
+    //                    OnButtonClick = DFunctions.CloseDialogue
+    //                }
+    //            }
+    //        }
+    //    });
+    //}
      
     protected void UpdateDialogDisplay()
     {
-        var dialog = DialogueManager.GetActiveDialog();
+        var dialog = DialogueManager.GetActiveDialogue();
 
         // If we don't have an active dialog, hide the UI
         if (dialog == null)

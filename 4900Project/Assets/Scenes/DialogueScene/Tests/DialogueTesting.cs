@@ -25,11 +25,11 @@ namespace Tests
             };
 
             // Create the dialog & verify that it exists
-            var dialog = DialogueManager.CreateDialog(pages);
+            var dialog = DialogueManager.CreateDialogue(pages);
             Assert.IsNotNull(dialog, "The dialog creation failed: Received a null result");
 
             // Verify that the dialog can be found by ID
-            Assert.IsTrue(DialogueManager.DialogExists(dialog.Id), "The dialog was not correctly created.");
+            Assert.IsTrue(DialogueManager.DialogueExists(dialog.Id), "The dialog was not correctly created.");
 
             // Cleanup - hide the dialog
             dialog.Hide();
@@ -71,7 +71,7 @@ namespace Tests
             };
 
             // Create the dialog
-            var dialog = DialogueManager.CreateDialog(pages);
+            var dialog = DialogueManager.CreateDialogue(pages);
 
             // Verify that it starts on the first page
             Assert.AreEqual("Page 1", dialog.GetPage().Text, $"The actual page text did not match what was expected. Received {dialog.GetPage().Text}");
@@ -110,36 +110,36 @@ namespace Tests
             };
 
             // Create two dialogs
-            var dialogOne = DialogueManager.CreateDialog(pageObject);
-            var dialogTwo = DialogueManager.CreateDialog(pageObject);
+            var dialogOne = DialogueManager.CreateDialogue(pageObject);
+            var dialogTwo = DialogueManager.CreateDialogue(pageObject);
 
             // Verify that the second dialog is active
-            var activeDialog = DialogueManager.GetActiveDialog();
+            var activeDialog = DialogueManager.GetActiveDialogue();
             Assert.AreEqual(dialogTwo, activeDialog, $"Active dialog check failed: Expected Dialog {dialogTwo.Id}, but received Dialog {activeDialog.Id}");
 
             // Close the dialog
             dialogTwo.PressButton(0);
 
             // The active dialog should now be dialog one
-            activeDialog = DialogueManager.GetActiveDialog();
+            activeDialog = DialogueManager.GetActiveDialogue();
             Assert.AreEqual(dialogOne, activeDialog, $"Active dialog check failed: Expected Dialog {dialogOne.Id}, but received Dialog {activeDialog.Id}");
 
             // Now close the first dialog and verify that there is no active dialog
             dialogOne.PressButton(0);
 
-            activeDialog = DialogueManager.GetActiveDialog();
+            activeDialog = DialogueManager.GetActiveDialogue();
             Assert.IsNull(activeDialog, $"Active dialog check failed: Expected null, but received Dialog {(activeDialog != null ? activeDialog.Id : -1)}");
 
             // Re-open the second dialog and verify that it is again the active dialog
             dialogTwo.Show();
 
-            activeDialog = DialogueManager.GetActiveDialog();
+            activeDialog = DialogueManager.GetActiveDialogue();
             Assert.AreEqual(dialogTwo, activeDialog, $"Active dialog check failed: Expected Dialog {dialogTwo.Id}, but received Dialog {activeDialog.Id}");
 
             // Hide the second dialog and verify that we again have no active dialog
             dialogTwo.Hide();
 
-            activeDialog = DialogueManager.GetActiveDialog();
+            activeDialog = DialogueManager.GetActiveDialogue();
             Assert.IsNull(activeDialog, $"Active dialog check failed: Expected null, but received Dialog {(activeDialog != null ? activeDialog.Id : -1)}");
 
         }
