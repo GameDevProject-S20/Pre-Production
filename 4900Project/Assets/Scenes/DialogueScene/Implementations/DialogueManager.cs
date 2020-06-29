@@ -114,14 +114,6 @@ namespace Dialogue
 
         // Private Methods
         /// <summary>
-        /// Hooks into events on the dialog systems, specifically for maintaining the active dialog
-        /// </summary>
-        /// <param name="dialog"></param>
-        private static void AddEvents(IDialogue dialog)
-        {
-        }
-
-        /// <summary>
         /// Updates which Dialog is currently active
         /// </summary>
         private static void UpdateActiveDialog()
