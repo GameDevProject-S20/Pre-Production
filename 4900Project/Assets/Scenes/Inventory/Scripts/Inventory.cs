@@ -4,10 +4,35 @@ using UnityEngine;
 
 public class Inventory
 {
-    static Dictionary<string, Item> itemsMaster = new Dictionary<string, Item>();
+    public static Dictionary<string, Item> itemsMaster = new Dictionary<string, Item>();
     Dictionary<string, int> contents = new Dictionary<string, int>();
     public float weightLimit {get; set;}
     float weightOverflowModifier = 1.0f; // for now this does nothing. might be used later if we allow the player to overfill their inventory at a cost
+
+
+    // ! Test
+    public Inventory(){
+        if (itemsMaster.Count == 0){
+            Item item1 = new Item("item1", "Item 1", "", "", 1, 1);
+            Item item2 = new Item("item2", "Item 2", "", "", 2, 2);
+            Item item3 = new Item("item3", "Item 3", "", "", 3, 3);
+            Item item4 = new Item("item4", "Item 4", "", "", 5, 5);
+            Item item5 = new Item("item5", "Item 5", "", "", 8, 8);
+            Item item6 = new Item("item6", "Item 6", "", "", 13, 13);
+            Item item7 = new Item("item7", "Item 7", "", "", 21, 21);
+            Item item8 = new Item("item8", "Item 8", "", "", 34, 34);
+
+            itemsMaster.Add(item1.name, item1);
+            itemsMaster.Add(item2.name, item2);
+            itemsMaster.Add(item3.name, item3);
+            itemsMaster.Add(item4.name, item4);
+            itemsMaster.Add(item5.name, item5);
+            itemsMaster.Add(item6.name, item6);
+            itemsMaster.Add(item7.name, item7);
+            itemsMaster.Add(item8.name, item8);
+        }
+    }
+
 
     public Inventory(Inventory sourceInventory){
         contents = sourceInventory.contents;
@@ -27,14 +52,15 @@ public class Inventory
         if (capacity > 0) {
             int currentCount = 0;
             if (contents.TryGetValue(name, out currentCount)){
-                contents[name] = currentCount + capacity;
+                contents[name] = currentCount + Mathf.Min(capacity, amount);
             }
             else {
-                contents.Add(name, capacity);
+                contents.Add(name, Mathf.Min(capacity, amount));
             } 
         }
-        return capacity;
+        return Mathf.Min(capacity, amount);
     }
+    
 
     /// <summary>
     /// Removes an item from the inventory
@@ -109,6 +135,14 @@ public class Inventory
     public bool canFitItems(float weight){
         return weight + totalWeight() <= weightLimit * weightOverflowModifier;
     }
+
+    public override string ToString(){
+        string output = "";
+        foreach (var item in contents){
+            output += itemsMaster[item.Key].displayName + " (" + item.Value +")\n";
+        }
+        return output;
+    }
 }
 
 public struct Item{
@@ -118,4 +152,13 @@ public struct Item{
     public string description;
     public float value;
     public float weight;
+
+    public Item(string name_, string displayName_, string tooltip_, string description_, float value_, float weight_){
+        name = name_;
+        displayName = displayName_;
+        tooltip = tooltip_;
+        description = description_;
+        value = value_;
+        weight = weight_;
+    }
 }
