@@ -12,7 +12,7 @@ namespace Dialogue
     public static class DialogueManager
     {
         // Public Properties
-        public static DialogueUpdatedEvent ActiveDialogChanged = new DialogueUpdatedEvent();
+        public static DialogueUpdatedEvent ActiveDialogueChanged = new DialogueUpdatedEvent();
 
         // Private Member Variables
         /// <summary>
@@ -31,7 +31,7 @@ namespace Dialogue
         /// Creates a new dialog box with the given pages. 
         /// </summary>
         /// <param name="dialoguePages"></param>
-        public static IDialogue CreateDialog(IEnumerable<IDPage> dialoguePages)
+        public static IDialogue CreateDialogue(IEnumerable<IDPage> dialoguePages)
         {
             // The ID of the dialog will be the next index into our dialogs list.
             // Create the dialog for that ID, and add it to the list
@@ -52,7 +52,7 @@ namespace Dialogue
 
                 // Add it in at the end of the list, and set it as active
                 activeDialogs.Add(dialog);
-                UpdateActiveDialog();
+                UpdateActiveDialogue();
             });
 
             // When a dialog is closed, go back to the previous dialog as the active
@@ -60,17 +60,17 @@ namespace Dialogue
             {
                 // First, we need to remove it from our active list
                 activeDialogs.Remove(dialog);
-                UpdateActiveDialog();
+                UpdateActiveDialogue();
             });
 
             // When the dialog changes, redirect it to our ActiveDialogChanged event
             dialog.PageUpdated.AddListener(() =>
             {
-                UpdateActiveDialog();
+                UpdateActiveDialogue();
             });
 
             // Update with the new active dialog
-            UpdateActiveDialog();
+            UpdateActiveDialogue();
 
             // Return the new dialog
             return dialog;
@@ -80,7 +80,7 @@ namespace Dialogue
         /// Retrieves the active dialog. This is the last one to be opened, or null if no dialogs are currently active.
         /// </summary>
         /// <returns></returns>
-        public static IDialogue GetActiveDialog()
+        public static IDialogue GetActiveDialogue()
         {
             return activeDialogs.LastOrDefault();
         }
@@ -90,7 +90,7 @@ namespace Dialogue
         /// </summary>
         /// <param name="dialogId"></param>
         /// <returns></returns>
-        public static IDialogue GetDialog(int dialogId)
+        public static IDialogue GetDialogue(int dialogId)
         {
             // If the dialog doesn't exist, return null
             if (dialogId >= dialogs.Count)
@@ -107,7 +107,7 @@ namespace Dialogue
         /// </summary>
         /// <param name="dialogId"></param>
         /// <returns></returns>
-        public static bool DialogExists(int dialogId)
+        public static bool DialogueExists(int dialogId)
         {
             return dialogs.ElementAtOrDefault(dialogId) != null;
         }
@@ -116,9 +116,9 @@ namespace Dialogue
         /// <summary>
         /// Updates which Dialog is currently active
         /// </summary>
-        private static void UpdateActiveDialog()
+        private static void UpdateActiveDialogue()
         {
-            ActiveDialogChanged.Invoke();
+            ActiveDialogueChanged.Invoke();
         }
     }
 }
