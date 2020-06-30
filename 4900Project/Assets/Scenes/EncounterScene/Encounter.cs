@@ -52,6 +52,7 @@ namespace Encounters
 
         private List<IDPage> dialoguePages;
         private List<IDButton> dialogueButtons;
+        private int dialogueStage;
 
 
         public Encounter(string name, string tag, string bodyText,
@@ -65,26 +66,13 @@ namespace Encounters
             ResultText = new ReadOnlyCollection<string>(new List<string>(resultText));
             dialoguePages = new List<IDPage>();
             dialogueButtons = new List<IDButton>();
+            dialogueStage = 0;
             initDialogue();
         }
 
         public void StartDialogue()
         {
-            IDialogue dialogue = DialogueManager.CreateDialogue(new List<IDPage>()
-            {
-                new DPage()
-                {
-                    Text = "My First Test",
-                    Buttons = new List<IDButton>()
-                    {
-                        new DButton()
-                        {
-                            Text = "First button",
-                            OnButtonClick = DFunctions.CloseDialogue
-                        }
-                    }
-                }
-            });
+            IDialogue dialogue = DialogueManager.CreateDialogue(dialoguePages);
         }
 
         public override string ToString()
@@ -109,6 +97,43 @@ namespace Encounters
         private void initDialogue()
         {
 
+            IDButton endBtn = new DButton() { Text = "Done.", OnButtonClick = DFunctions.CloseDialogue };
+
+            // can there be multiple pages???
+            // would that require a second encounter??
+            // Maybe a "subencounter" class?
+            for (int i = 0; i < ButtonText.Count; i++)
+            {
+                // Need to copy local variable for the closure to work
+                // Otherwise throws index out of bounds
+                int idx = i;
+                dialogueButtons.Add(new DButton()
+                {
+                    Text = ButtonText[i],
+                    OnButtonClick = () =>
+                    {
+                        dialoguePages[++dialogueStage].Text = ResultText[idx];
+                        DFunctions.GoToNextPage();
+                    }
+                });
+            }
+
+            dialoguePages.Add(new DPage()
+            {
+                //Text = $"{Name}\n\n{BodyText}",
+                //Text = "Hello! this is a long multi line string!\nHi there!!",
+                Text = "hello this is a long string of text ha ha ha ha ha ha",
+                Buttons = dialogueButtons
+            });
+
+            dialoguePages.Add(new DPage()
+            {
+                Text = "",
+                Buttons = new List<IDButton>()
+                {
+                    endBtn
+                }
+            });
         }
     }
 }
