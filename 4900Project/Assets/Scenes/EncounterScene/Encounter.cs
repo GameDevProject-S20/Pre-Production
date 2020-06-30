@@ -29,6 +29,9 @@ namespace Encounters
         public string Name
         { get; }
 
+        /// <summary>
+        /// String tag for categorizing encounters
+        /// </summary>
         public string Tag
         { get; }
 
