@@ -73,7 +73,6 @@ public class Trading : MonoBehaviour
         foreach(Transform child in offerListObject.transform){
             Destroy(child.gameObject);
         }
-
         foreach(var item in offer.getContents()){
             var listItem = GameObject.Instantiate(inventoryListItem, Vector3.zero, Quaternion.identity);
             listItem.GetComponentInChildren<TextMeshProUGUI>().text = Inventory.itemsMaster[item.Key].displayName + " (" + item.Value + ") " + getValueString(Inventory.itemsMaster[item.Key].value);
@@ -85,7 +84,6 @@ public class Trading : MonoBehaviour
     }
 
     void buildCartList(){
-
         foreach(Transform child in cartListObject.transform){
             Destroy(child.gameObject);
         }
