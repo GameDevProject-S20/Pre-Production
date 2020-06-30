@@ -3,11 +3,11 @@ using UnityEngine;
 using Encounters;
 
 
+// Just a class for demo purposes.
 public class EncounterInvoker : MonoBehaviour
 {
     void Start()
     {
-        Debug.Log("foobar");
         var mgr = RandomEncounterManager.Instance;
         mgr.NextEncounter();
     }
