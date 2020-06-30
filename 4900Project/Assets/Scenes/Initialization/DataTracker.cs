@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 //cribbed over from inventory as holdover until can link them properly
 //public class ItemTester : IInventoryItem
@@ -46,8 +47,8 @@ public class Trader
 
 public class DataTracker : MonoBehaviour
 {
-
     public static DataTracker instance = null;
+
 
     private int startingCapacity = 10;
     private int startingHp = 100;
@@ -84,7 +85,16 @@ public class DataTracker : MonoBehaviour
 
     private void Start()
     {
-        
+        Awake();
+
+
+        /* Lets load in the town scene then the dialog for the first quest */
+        SceneManager.LoadScene("InventoryTestScene", LoadSceneMode.Additive);
+
+        SceneManager.LoadScene("EncounterTestScene", LoadSceneMode.Additive);
+
+
+
     }
 
     public void printAll()
