@@ -23,21 +23,21 @@ public class TownSceneSetup : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        townData = TownManager.current.getTownById(currentTown);
-        setup();
+        townData = TownManager.current.GetTownById(currentTown);
+        Setup();
         
     }
 
-    void setup()
+    void Setup()
     {
-        textBox.text = "Town: " + townData.name + "(" + townData.id + ")\n" + "Leader: " + townData.leader + "\nCurrent Reputation Value: " + townData.reputation + "\nShop IDs: \n";
+        textBox.text = "Town: " + townData.Name + "(" + townData.Id + ")\n" + "Leader: " + townData.Leader + "\nCurrent Reputation Value: " + townData.Reputation + "\nShop IDs: \n";
         for(int i = 0; i < townData.shops.Count; i++)
         {
             textBox.text = textBox.text + townData.shops[i] + "\n";
         }
     }
 
-    public void shift(int i)
+    public void Shift(int i)
     {
         currentTown += i;
         if (currentTown < 0)
@@ -48,7 +48,7 @@ public class TownSceneSetup : MonoBehaviour
         {
             currentTown = 2;
         }
-        townData = TownManager.current.getTownById(currentTown);
-        setup();
+        townData = TownManager.current.GetTownById(currentTown);
+        Setup();
     }
 }

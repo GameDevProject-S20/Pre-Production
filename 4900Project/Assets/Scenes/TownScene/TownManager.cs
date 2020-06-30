@@ -26,28 +26,28 @@ public class TownManager : MonoBehaviour
 
         // Loading in town data from CSV will replace this
         Town dummy = new Town(0, "Smithsville", "Sarif");
-        dummy.alterRep(-10);
-        dummy.addShop(0);
-        dummy.addShop(1);
-        towns.Add(dummy.id, dummy);
+        dummy.AlterRep(-10);
+        dummy.AddShop(0);
+        dummy.AddShop(1);
+        towns.Add(dummy.Id, dummy);
         dummy = new Town(1, "Real Town", "Real Leader");
-        dummy.alterRep(10);
-        dummy.addShop(2);
-        towns.Add(dummy.id, dummy);
+        dummy.AlterRep(10);
+        dummy.AddShop(2);
+        towns.Add(dummy.Id, dummy);
         dummy = new Town(2, "Test", "Tester");
-        dummy.addShop(3);
-        towns.Add(dummy.id, dummy);
+        dummy.AddShop(3);
+        towns.Add(dummy.Id, dummy);
     }
 
 
     // Get the town at the current node using the Data Tracker
-   /* public Town getCurrentTownData()
+   /* public Town GetCurrentTownData()
     {
-        return getTownById(DataTracker.instance.GetCurrentNode().IdOfLandmarkAtNode);
+        return GetTownById(DataTracker.instance.GetCurrentNode().IdOfLandmarkAtNode);
     }*/
 
     //town retrieval
-    public Town getTownById(int id)
+    public Town GetTownById(int id)
     {
         Town town;
         if (towns.TryGetValue(id, out town))

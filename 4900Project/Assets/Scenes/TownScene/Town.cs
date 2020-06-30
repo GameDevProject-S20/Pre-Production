@@ -6,26 +6,27 @@ using UnityEngine;
 //Town class 
 public class Town
 {
-    public int id { get; }
-    public string name { get; set; }
-    public string leader { get; set; }
+    public int Id { get; }
+    public string Name { get; set; }
+    public string Leader { get; set; }
     public List<int> shops;
-    public int reputation { get; set; }
+    public int Reputation { get; set; }
 
     public Town(int a, string b, string c)
     {
-        id = a;
-        name = b;
-        leader = c;
+        Id = a;
+        Name = b;
+        Leader = c;
         shops = new List<int>();
-        reputation = 50;
+        Reputation = 50;
     }
 
-    public void addShop(int i)
+    public void AddShop(int i)
     {
         shops.Add(i);
     }
-    public void removeShop(int i)
+
+    public void RemoveShopById(int i)
     {
         for(int j = 0; j < shops.Count; j++)
         {
@@ -37,10 +38,15 @@ public class Town
         }
     }
 
-    public void alterRep(int i)
+    public void RemoveShop(int i)
     {
-        reputation += i;
-        reputation = Mathf.Clamp(reputation, 0, 100);
+        shops.Remove(i);
+    }
+
+    public void AlterRep(int i)
+    {
+        Reputation += i;
+        Reputation = Mathf.Clamp(Reputation, 0, 100);
     }
 
 }
