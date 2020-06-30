@@ -11,7 +11,6 @@ public class TradingTest : MonoBehaviour
 
     private void Start() {
         player = new Player();
-        player.inventory.weightLimit = 10000;
         Shop aShop = new Shop(1, "Test Store", "", "");
 
         player.inventory.addItem("item1", 4);

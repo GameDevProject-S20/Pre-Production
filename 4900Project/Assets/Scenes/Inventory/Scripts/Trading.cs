@@ -23,17 +23,18 @@ public class Trading : MonoBehaviour
     Transform offerListObject;
     [SerializeField]
     Transform cartListObject;
+
     public void init(Shop shop_) {
         shop = shop_;
         copyOfPlayerInventory = new Inventory(TradingTest.player.inventory);
         copyOfShopInventory = new Inventory(shop.inventory);
-        offer.weightLimit = 10000;
-        cart.weightLimit = 10000;
         buildShopList();
         buildPlayerList();
-
     }
 
+    //======================================================================//
+    //                           UI Functions                               //
+    //======================================================================//
 
     void buildShopList(){
 
@@ -43,7 +44,7 @@ public class Trading : MonoBehaviour
 
         foreach(var item in copyOfShopInventory.getContents()){
             var listItem = GameObject.Instantiate(inventoryListItem, Vector3.zero, Quaternion.identity);
-            listItem.GetComponentInChildren<TextMeshProUGUI>().text = Inventory.itemsMaster[item.Key].displayName + " (" + item.Value + ")";
+            listItem.GetComponentInChildren<TextMeshProUGUI>().text = Inventory.itemsMaster[item.Key].displayName + " (" + item.Value + ") " + getValueString(Inventory.itemsMaster[item.Key].value);
             listItem.transform.SetParent(shopInventoryObject, false);
             listItem.GetComponent<Button>().onClick.AddListener(() => {addToCart(item.Key);});
             listItem.name = Inventory.itemsMaster[item.Key].displayName + "_button";
@@ -59,12 +60,13 @@ public class Trading : MonoBehaviour
 
         foreach(var item in copyOfPlayerInventory.getContents()){
             var listItem = GameObject.Instantiate(inventoryListItem, Vector3.zero, Quaternion.identity);
-            listItem.GetComponentInChildren<TextMeshProUGUI>().text = Inventory.itemsMaster[item.Key].displayName + " (" + item.Value + ")";
+            listItem.GetComponentInChildren<TextMeshProUGUI>().text = Inventory.itemsMaster[item.Key].displayName + " (" + item.Value + ") " + getValueString(Inventory.itemsMaster[item.Key].value);
             listItem.transform.SetParent(playerInventoryObject, false);
             listItem.GetComponent<Button>().onClick.AddListener(() => {addToOffer(item.Key);});
             listItem.name = Inventory.itemsMaster[item.Key].displayName + "_button";
         }
     }
+
 
     void buildOfferList(){
 
@@ -74,7 +76,7 @@ public class Trading : MonoBehaviour
 
         foreach(var item in offer.getContents()){
             var listItem = GameObject.Instantiate(inventoryListItem, Vector3.zero, Quaternion.identity);
-            listItem.GetComponentInChildren<TextMeshProUGUI>().text = Inventory.itemsMaster[item.Key].displayName + " (" + item.Value + ")";
+            listItem.GetComponentInChildren<TextMeshProUGUI>().text = Inventory.itemsMaster[item.Key].displayName + " (" + item.Value + ") " + getValueString(Inventory.itemsMaster[item.Key].value);
             listItem.transform.SetParent(offerListObject, false);
             listItem.GetComponent<Button>().onClick.AddListener(() => {removeFromOffer(item.Key);});
             listItem.name = Inventory.itemsMaster[item.Key].displayName + "_button";
@@ -89,12 +91,30 @@ public class Trading : MonoBehaviour
         }
         foreach(var item in cart.getContents()){
             var listItem = GameObject.Instantiate(inventoryListItem, Vector3.zero, Quaternion.identity);
-            listItem.GetComponentInChildren<TextMeshProUGUI>().text = Inventory.itemsMaster[item.Key].displayName + " (" + item.Value + ")";
+            listItem.GetComponentInChildren<TextMeshProUGUI>().text = Inventory.itemsMaster[item.Key].displayName + " (" + item.Value + ") " + getValueString(Inventory.itemsMaster[item.Key].value);
             listItem.transform.SetParent(cartListObject, false);
             listItem.GetComponent<Button>().onClick.AddListener(() => {removeFromCart(item.Key);});
             listItem.name = Inventory.itemsMaster[item.Key].displayName + "_button";
 
         }
+    }
+
+    string getValueString(float value){
+        if (value < 5){
+                return "*";
+            }
+            else if (value < 15){
+                return "* *";
+            }
+            else if (value < 30){
+                return "* * *";
+            }
+            else if (value < 50){
+                return "* * * *";
+            }
+            else{
+                return "* * * * *";
+            }
     }
 
     void addToCart(string item){
@@ -131,18 +151,22 @@ public class Trading : MonoBehaviour
         {
             case 0:
             break;
-            case 1: makeTrade(); Debug.Log("1");
+            case 1: makeTrade();
             break;
-            case 2: makeTrade(); Debug.Log("2");
+            case 2: makeTrade();
             break;
             case 3: Debug.Log("Too Low!");
             break;
         }
     }
 
+    //======================================================================//
+    //                         Trading Functions                            //
+    //======================================================================// 
 
     /// <summary>
-    /// 
+    /// A trade is valid if the player has enough inventory space to fit all the items they are purchasing
+    /// AND the player's offer matches or surpasses the value of their cart.
     /// </summary>
     /// <returns>
     /// 0: Not enough room in inventory (not accepted)
