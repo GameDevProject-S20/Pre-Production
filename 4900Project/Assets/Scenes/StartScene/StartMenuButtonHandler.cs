@@ -15,7 +15,7 @@ public class StartMenuButtonHandler : MonoBehaviour
 
     public void OnNewGamePress(){
 
-        SceneManager.LoadScene("DefaultScene", LoadSceneMode.Single);
+        SceneManager.LoadScene("EncounterTestScene", LoadSceneMode.Single);
     }
 
     public void Init(){
