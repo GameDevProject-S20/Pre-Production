@@ -6,48 +6,22 @@ using UnityEngine.Events;
 
 public class StartMenuButtonHandler : MonoBehaviour
 {
-    public static UnityEvent OnFinishLoading = new UnityEvent();
-
-    private void Start() {
-        OnFinishLoading.AddListener(Init);
-    }
-
+    [SerializeField]
+    public string StartGameScene = "GameInitialization";
+    //public string LoadGameScene = "Not Used";
 
     public void OnNewGamePress(){
 
-        SceneManager.LoadScene("EncounterTestScene", LoadSceneMode.Single);
+        SceneManager.LoadScene(StartGameScene, LoadSceneMode.Single);
     }
 
-    public void Init(){
-
-        /*Quest medicineQuest = Quest.MakeMedicineQuest();
-        QuestManager.current.addQuest(medicineQuest);
-
-        // Wants to load the Town Menu as the background scene
-        SceneManager.LoadScene("TownMenu", LoadSceneMode.Single);
-
-        // Add in the tutorial text on top
-        SceneManager.LoadScene("TutorialScene", LoadSceneMode.Additive);
-
-        Tutorial.TutorialCompleted.AddListener(() =>
-        {
-            QuestManager.current.startQuest(medicineQuest.name);
-
-            // Load the quest dialog
-            SceneManager.LoadScene("MedicineQuestScene", LoadSceneMode.Additive);
-            MedicineQuestDialog.DialogCompleted.AddListener(() =>
-            {
-                // give money for medicine
-                DataTracker.instance.player.Items.Cash += 50;
-            });
-        });*/
-    }
-
-    public void OnLoadGamePress(){
+    /*public void OnLoadGamePress(){
         // TODO - What do we do here? There's no loading yet
         Debug.Log("Loading Game");
-    }
 
+        SceneManager.LoadScene(LoadGameScene, LoadSceneMode.Single);
+    }
+    */ 
     public void OnQuitPress(){
         // Application.Quit() will close the application
         Application.Quit();
