@@ -109,7 +109,7 @@ namespace Encounters
                 int idx = i;
                 dialogueButtons.Add(new DButton()
                 {
-                    Text = ButtonText[i],
+                    Text = ButtonText[idx],
                     OnButtonClick = () =>
                     {
                         dialoguePages[++dialogueStage].Text = ResultText[idx];
@@ -120,9 +120,7 @@ namespace Encounters
 
             dialoguePages.Add(new DPage()
             {
-                //Text = $"{Name}\n\n{BodyText}",
-                //Text = "Hello! this is a long multi line string!\nHi there!!",
-                Text = "hello this is a long string of text ha ha ha ha ha ha",
+                Text = $"{Name}\n\n{BodyText}",
                 Buttons = dialogueButtons
             });
 
