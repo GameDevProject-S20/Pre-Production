@@ -38,10 +38,6 @@ public class Town
         }
     }
 
-    public void RemoveShop(int i)
-    {
-        shops.Remove(i);
-    }
 
     public void AlterRep(int i)
     {
