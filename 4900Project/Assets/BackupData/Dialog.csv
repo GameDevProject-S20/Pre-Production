@@ -1,0 +1,10 @@
+Interaction,Step,Speaker,Dialog Text,Other Actions
+TEST,1,Test All Chars,"1234567890 -=_+[]\{}|;':"",./<>?`~ abcdefghijklmnopqrstuvwxyz 
+ABCDEFGHIJKLMNOPQRSTUVWXYZ !@#$%^&*()",
+TEST,2,Test new name,Test change in length to small from large ,
+Tutorial ,1,Sheriff,"Welcome to {townname}, I'm the Sheriff of these here parts! You'll be able to find the things you can do in my town on the Town Menu screen.
+Now, don't be going messing around in my town or you'll be hearing from me and  your reputation will suffer. 
+These are hard times and we can't be just letting anyone into our community, if your reputation drops low enough you'd best keep away. 
+I see you're a traveling merchant, I hear the general store is looking for some medicine .
+You can get that from the Pharmacy and sell it to the general store. Good luck!",
+Tutorial ,2,Sheriff,You'll be able to find the things you can do in my town on the Town Menu screen ,
