@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class EventManager : MonoBehaviour
 {
     private static EventManager _current;
-    public static EventManager current {get {return _current;}}
+    public static EventManager Current {get {return _current;}}
 
     private void Awake() {
         if (_current != null && _current != this)
