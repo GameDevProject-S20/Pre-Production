@@ -60,6 +60,7 @@ public class DataTracker : MonoBehaviour
     public Sprite journal_open;
     public Sprite inventory_closed;
     public Sprite inventory_open;
+    public GameObject HUDCanvasGameObject; 
 
 
 
@@ -173,7 +174,7 @@ public class DataTracker : MonoBehaviour
 
     /**********************************
      * HUD Button Clicks *
-     **********************************/ 
+     **********************************/
 
 
     public void OnMapClick()
