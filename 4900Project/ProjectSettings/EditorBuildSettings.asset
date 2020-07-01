@@ -9,12 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/StartScene/StartMenu.unity
     guid: a28a435c96070e642afda2a8020c080c
   - enabled: 1
-    path: Assets/Scenes/Initialization/GameInitialization.unity
-    guid: 23ff13064941d46bb93d23a5dccfe892
-  - enabled: 1
     path: Assets/Scenes/EncounterScene/EncounterTestScene.unity
     guid: b28899e20532af473844b2f0967d82fb
   - enabled: 1
     path: Assets/Scenes/Inventory/InventoryTestScene.unity
     guid: 8d6699ad28dbcaf46ace09cbb1631420
+  - enabled: 1
+    path: Assets/Scenes/Initialization/GameInitialization.unity
+    guid: 23ff13064941d46bb93d23a5dccfe892
   m_configObjects: {}

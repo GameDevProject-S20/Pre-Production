@@ -1,7 +1,5 @@
 ﻿using Dialogue;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,8 +9,8 @@ public class UIControl : MonoBehaviour
     public GameObject textDisplay;
     public GameObject buttonsPanel;
     public GameObject buttonTemplate;
-    public bool makeTestDialogue;
-    
+    //public bool makeTestDialogue; //not used 
+
     void Start()
     {
         DialogueManager.ActiveDialogueChanged.AddListener(() =>
@@ -96,7 +94,7 @@ public class UIControl : MonoBehaviour
     //        }
     //    });
     //}
-     
+
     protected void UpdateDialogDisplay()
     {
         var dialog = DialogueManager.GetActiveDialogue();
@@ -129,7 +127,7 @@ public class UIControl : MonoBehaviour
     {
         var newButton = GameObject.Instantiate(buttonTemplate);
         newButton.GetComponentInChildren<Text>().text = button.Text;
-        newButton.GetComponent<Button>().onClick.AddListener(()=>
+        newButton.GetComponent<Button>().onClick.AddListener(() =>
         {
             button.OnButtonClick();
         });

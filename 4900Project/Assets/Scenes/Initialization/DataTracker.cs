@@ -1,7 +1,10 @@
-﻿using System.Collections;
+﻿using Dialogue;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 //cribbed over from inventory as holdover until can link them properly
 //public class ItemTester : IInventoryItem
@@ -50,6 +53,13 @@ public class DataTracker : MonoBehaviour
     public static DataTracker instance = null;
 
 
+    [SerializeField]
+
+
+
+    //internal information 
+    private UIControl dialogueControler; 
+
     private int startingCapacity = 10;
     private int startingHp = 100;
     private int starterCash = 100;
@@ -87,11 +97,55 @@ public class DataTracker : MonoBehaviour
     {
         Awake();
 
-
-        /* Lets load in the town scene then the dialog for the first quest */
         SceneManager.LoadScene("InventoryTestScene", LoadSceneMode.Additive);
 
-        SceneManager.LoadScene("EncounterTestScene", LoadSceneMode.Additive);
+
+        string currentTown = "Town name"; 
+
+        IDButton endBtn = new DButton()
+        {
+            Text = "Done.",
+            OnButtonClick = DFunctions.CloseDialogue
+        };
+
+        List<IDPage> dialoguePages = new List<IDPage>();
+        List<IDButton> dialogueButtons = new List<IDButton>();
+        dialogueButtons.Add(new DButton()
+        {
+            Text = "Continue",
+            OnButtonClick = DFunctions.GoToNextPage
+        });
+        dialoguePages.Add(new DPage()
+        {
+            Text = "Welcome to Split Ends! \n\n You're in a town called " + currentTown + "Yada yada coolio stuffs.",
+            Buttons = new List<IDButton>() {
+                new DButton()
+                {
+                    Text = "Continue",
+                    OnButtonClick = DFunctions.GoToNextPage
+                }
+            }
+        });
+
+        dialoguePages.Add(new DPage()
+        {
+            Text = "There's a rumor that a sherif need something in the town! We recomend checking them out. ",
+            Buttons = new List<IDButton>() {
+                new DButton()
+                {
+                    Text = "Okay!",
+                    OnButtonClick = DFunctions.CloseDialogue
+                }
+            }
+        });
+
+        IDialogue dialogue = DialogueManager.CreateDialogue(dialoguePages);
+
+
+
+        /* Lets load in the town scene then the dialog for the first quest */
+
+        //SceneManager.LoadScene("EncounterTestScene", LoadSceneMode.Additive);
 
 
 
