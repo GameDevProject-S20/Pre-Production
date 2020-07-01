@@ -52,4 +52,10 @@ public class QuestManager : MonoBehaviour
         inactiveQuests.Add(qn, quest);
         allQuests.Add(qn, quest);
     }
+
+    // Can call this, but shouldn't need to after the journal has been initialized
+    public void UpdateJournal()
+    {
+        QuestJournal.Instance.SyncQuests(completedQuests, activeQuests);
+    }
 }
