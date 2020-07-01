@@ -9,11 +9,11 @@ public class Inventory
     public float weightLimit {get; set;}
     float weightOverflowModifier = 1.0f; // for now this does nothing. might be used later if we allow the player to overfill their inventory at a cost
 
-
     // ! Test
     public Inventory(){
         weightLimit = 100000;
         if (itemsMaster.Count == 0){
+            //name, displayName, tooltip, description, value, weight)
             Item item1 = new Item("item1", "Item 1", "", "", 1, 1);
             Item item2 = new Item("item2", "Item 2", "", "", 2, 2);
             Item item3 = new Item("item3", "Item 3", "", "", 3, 3);
@@ -36,7 +36,7 @@ public class Inventory
 
     // Copy Constructor
     public Inventory(Inventory sourceInventory){
-        contents = sourceInventory.contents;
+        contents = new Dictionary<string, int>(sourceInventory.contents);
         weightLimit = sourceInventory.weightLimit;
         weightOverflowModifier = sourceInventory.weightOverflowModifier;
     }
