@@ -6,12 +6,12 @@ public class OverworldMapManager : MonoBehaviour
 {
     public OverworldMap.LocationGraph Graph { get; } = new OverworldMap.LocationGraph();
 
-    public GameObject uiPrefab;
+    public GameObject uiObject;
     private OverworldMapUI view;
 
     void Start()
     {
-        view = Instantiate(uiPrefab, transform).GetComponent<OverworldMapUI>();
+        view = uiObject.GetComponent<OverworldMapUI>();
         view.SetGraph(Graph);
     }
 
