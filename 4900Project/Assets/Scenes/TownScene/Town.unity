@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -464,7 +464,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 532526603}
-  - component: {fileID: 532526602}
   - component: {fileID: 532526601}
   m_Layer: 0
   m_Name: PlaceHolder
@@ -487,18 +486,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textBox: {fileID: 1417584791}
   currentTown: 1
---- !u!114 &532526602
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 532526600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63e97f779d40b7e4d9bee15043dbeb20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &532526603
 Transform:
   m_ObjectHideFlags: 0

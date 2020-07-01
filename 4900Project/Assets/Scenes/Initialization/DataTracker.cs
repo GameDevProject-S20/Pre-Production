@@ -93,7 +93,7 @@ public class DataTracker : MonoBehaviour
     //    return null;
     //}
 
-    private void Start()
+    IEnumerator Start()
     {
         Awake();
 
@@ -146,10 +146,13 @@ public class DataTracker : MonoBehaviour
         /* Lets load in the town scene then the dialog for the first quest */
 
         //SceneManager.LoadScene("EncounterTestScene", LoadSceneMode.Additive);
+        yield return new WaitForSeconds(5f);
+        Debug.Log("unload town after 5 secionds (done)");
 
-
-
+        SceneManager.UnloadSceneAsync("Town");
     }
+
+
 
     public void printAll()
     {
