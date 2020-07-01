@@ -15,7 +15,7 @@ public class Shop
 
     public Dictionary<string, float> fromPlayerModifiers = new Dictionary<string, float>();
     public Dictionary<string, float> toPlayerModifiers = new Dictionary<string, float>();
-    public float acceptedPriceDifference = 0.15f;
+    public float acceptedPriceDifference = 0.20f;
 
     public Inventory inventory = new Inventory();
 
