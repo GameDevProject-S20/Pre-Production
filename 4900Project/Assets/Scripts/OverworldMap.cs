@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using UnityEngine;
 
 /// <summary>
 /// Model for the overworld map
@@ -32,30 +31,23 @@ public class OverworldMap
         public string Name { get; }
         public LocationType Type { get; }
         public int LocationId { get; }
+        // Positions should be stored as percentages p, -1 <= p <= 1.
+        //  PosX = 1,  PosY = 1  is the bottom right corner
+        //  PosX = -1, PosY = -1 is the top left corner
+        //  PosX = 0,  PosY = 0  is the centre
         public float PosX { get; }
         public float PosY { get; }
-        public Sprite Icon { get; }
 
-        public LocationNode(int locationId, string name, LocationType type, float posX, float posY, Sprite icon = default(Sprite))
+        public LocationNode(int locationId, string name, LocationType type, float posX, float posY)
         {
+            if (posX < -1f || posX > 1f || posY < -1f || posY > 1f) throw new ArgumentException("Positions X and Y must have values between -1 and 1.");
+
             Id = nextId++;
             LocationId = locationId;
             Name = name;
             Type = type;
             PosX = posX;
             PosY = posY;
-        }
-
-
-        public LocationNode(int locationId, string name, float posX, float posY, int id, Sprite icon = default(Sprite))
-        {
-            Id = nextId++;
-            LocationId = locationId;
-            Name = name;
-            Type = LocationType.TOWN;
-            PosX = posX;
-            PosY = posY;
-            Icon = icon;
         }
     }
 
