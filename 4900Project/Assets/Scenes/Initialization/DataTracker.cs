@@ -54,6 +54,12 @@ public class DataTracker : MonoBehaviour
 
 
     [SerializeField]
+    public Sprite map_closed;
+    public Sprite map_open;
+    public Sprite journal_closed;
+    public Sprite journal_open;
+    public Sprite inventory_closed;
+    public Sprite inventory_open;
 
 
 
@@ -150,6 +156,15 @@ public class DataTracker : MonoBehaviour
         Debug.Log("unload town after 5 secionds (done)");
 
         SceneManager.UnloadSceneAsync("Town");
+
+        yield return new WaitForSeconds(5f);
+        SceneManager.LoadScene("InventoryTestScene", LoadSceneMode.Additive);
+
+        yield return new WaitForSeconds(5f);
+        Debug.Log("unload Inventory after 5 secionds (done)");
+
+        SceneManager.UnloadSceneAsync("InventoryTestScene");
+
     }
 
 
@@ -160,4 +175,64 @@ public class DataTracker : MonoBehaviour
         Debug.Log("Health " + player.Health.ToString());
         //Debug.Log(player.Items.ToString());
     }
+
+
+
+    /**********************************
+     * HUD Button Clicks *
+     **********************************/ 
+
+
+    public void OnMapClick()
+    {
+        Image btn = (Image) GameObject.Find("MapButton").GetComponent("Image"); 
+
+        if (btn.sprite == map_closed)
+        {
+            Debug.Log("Open up Map");
+            btn.sprite = map_open;
+        } else
+        {
+            Debug.Log("Closed the map"); 
+            btn.sprite = map_closed;
+        }
+
+
+    }
+
+    public void onJounralClick()
+    {
+        Image btn = (Image)GameObject.Find("JournalButton").GetComponent("Image");
+
+        if (btn.sprite == journal_closed)
+        {
+            Debug.Log("Open up journal");
+            btn.sprite = journal_open;
+        }
+        else
+        {
+            Debug.Log("Closed the JOURNAL");
+            btn.sprite = journal_closed;
+        }
+    }
+
+    public void onInventoryClick()
+    {
+        Image btn = (Image)GameObject.Find("InventoryButton").GetComponent("Image");
+
+        if (btn.sprite == inventory_closed) 
+        {
+            Debug.Log("Open up inventory");
+            btn.sprite = inventory_open;
+        }
+        else
+        {
+            Debug.Log("Closed the INVentory");
+            btn.sprite = inventory_closed;
+        }
+    }
+
+
+
+
 }
