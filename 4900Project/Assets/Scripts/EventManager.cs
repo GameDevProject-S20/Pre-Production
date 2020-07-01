@@ -19,17 +19,24 @@ public class EventManager : MonoBehaviour
 
     //=======================================================//
 
+    [System.Serializable]
     public class GenericEvent : UnityEvent<string>{};
     public GenericEvent onEventTrigger;
 
+    [System.Serializable]
     public class TransactionEvent : UnityEvent<string, int>{};
     public TransactionEvent onTransaction;
 
+    [System.Serializable]
     public class TownEnterEvent : UnityEvent<int>{};
     public TownEnterEvent onTownEnter;
 
+    [System.Serializable]
     public class DialogueSelectionEvent : UnityEvent<string>{};
     public DialogueSelectionEvent onDialogueSelect;
+
+    [System.Serializable]
+    public class QuestEvent : UnityEvent<Quest> { };
 
     public UnityEvent onInventoryChange;
 
