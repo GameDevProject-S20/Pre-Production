@@ -33,23 +33,19 @@ public class QuestManager : MonoBehaviour
     Dictionary<string, Quest> completedQuests = new Dictionary<string, Quest>();
     Dictionary<string, Quest> allQuests = new Dictionary<string, Quest>();
 
-    [System.Serializable]
-    public class TransactionEvent : UnityEvent<string, int> { };
-    public TransactionEvent transactionEvent;
+    /*public TransactionEvent transactionEvent;
 
-    [System.Serializable]
-    public class DialogueEvent : UnityEvent<string> { };
+
     public DialogueEvent dialogueEvent;
 
-    [System.Serializable]
-    public class QuestEvent : UnityEvent<string> { };
+ 
     public QuestEvent questCompleteEvent;
 
     public QuestEvent questObjectiveCompleted;
 
     public QuestEvent questActivated;
     public QuestEvent questProgressed;
-
+    */
     public void AddQuest(Quest quest)
     {
         string qn = quest.Name;
