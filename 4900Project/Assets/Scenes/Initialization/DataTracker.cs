@@ -155,15 +155,8 @@ public class DataTracker : MonoBehaviour
         yield return new WaitForSeconds(5f);
         Debug.Log("unload town after 5 secionds (done)");
 
-        SceneManager.UnloadSceneAsync("Town");
+        //SceneManager.UnloadSceneAsync("Town");
 
-        yield return new WaitForSeconds(5f);
-        SceneManager.LoadScene("InventoryTestScene", LoadSceneMode.Additive);
-
-        yield return new WaitForSeconds(5f);
-        Debug.Log("unload Inventory after 5 secionds (done)");
-
-        SceneManager.UnloadSceneAsync("InventoryTestScene");
 
     }
 
@@ -223,11 +216,14 @@ public class DataTracker : MonoBehaviour
         if (btn.sprite == inventory_closed) 
         {
             Debug.Log("Open up inventory");
+            SceneManager.LoadScene("InventoryTestScene", LoadSceneMode.Additive);
+
             btn.sprite = inventory_open;
         }
         else
         {
             Debug.Log("Closed the INVentory");
+            SceneManager.UnloadSceneAsync("InventoryTestScene");
             btn.sprite = inventory_closed;
         }
     }
