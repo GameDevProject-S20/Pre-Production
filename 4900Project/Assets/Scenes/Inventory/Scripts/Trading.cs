@@ -185,7 +185,7 @@ public class Trading : MonoBehaviour
             float totalOfferValue = offer.totalValue(shop.fromPlayerModifiers);
             float difference =  totalOfferValue - totalCartValue;
             Debug.Log("cart value:" + totalCartValue + "  offer value:" + totalOfferValue + "   difference:" + difference);
-            if (difference >= totalCartValue * shop.acceptedPriceDifference) {
+            if (difference > totalCartValue * shop.acceptedPriceDifference) {
                 return 1;
             }
             else if (Mathf.Abs(difference) <= totalCartValue * shop.acceptedPriceDifference){
