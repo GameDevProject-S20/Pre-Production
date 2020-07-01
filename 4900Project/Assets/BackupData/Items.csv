@@ -1,0 +1,13 @@
+Name,Encountered,_value,Asset,Weight,Description
+Coin,TRUE,1,"<some way to 
+reference the 
+art asset here>",0,"The currency people began to use after the Shattering once the chaos began to settle. Since most governments collapsed, most people just started using all the old denominations of coin interchangably. 
+Old paper money is hardly seen anymore, but some people will still accept it."
+Food,TRUE,10,,1,"Being able to eat it is one thing, making it taste good is another challenge entirely."
+Fuel,TRUE,15.25,,2,"Nothing special, just the fuel used to power most vessels nowadays."
+Medicine,FALSE,50,,1,"After the Shattering medicine went fast. nowadays people mostly rely on natural medicines. The old stuff is still pretty rare, but people are beginning to learn how to recreate some of it, herbs can only do so much after all."
+Vegetable Seeds ,FALSE,5,,0.5,A lot of people grow some of their own food. Before things calmed down people didn't have much choice. Even now with things being a bit more normal it's still a good idea to have veggies growing. Helps people stay fed.
+Scrap Iron,FALSE,20,,5,"Salvage parts are a lot more valuable nowadays. They can be used in repairs, fashioning upgrades, or even just to sell if you need a quick buck. "
+Jewlery,FALSE,100,,0.5,Luxery Item. Not good for much but since it's hard to find in good condition it sells for a respectable amount.
+Blacksmiths Hammer,FALSE,10,,5,An old smith's hammer that looks like its seen a great deal of use. The name Andre is etched into the handle.
+Lead,FALSE,30,,10,"Frequently used for radiation shielding, which became much more of a problem after the Shattering. Used in repairs and upgrades."

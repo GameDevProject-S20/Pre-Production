@@ -1,5 +1,5 @@
 ## What am I addressing?
-{tag the issue number here with a #}
+closes {tag the issue number here with a #}
 
 ## How/Why did I address it?
 {what's the implementation like}
