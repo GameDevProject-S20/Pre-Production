@@ -10,12 +10,12 @@ public class QuestJournal
     {
         get
         {
-            if (!instance) instance = new QuestJournal();
+            if (instance == null) instance = new QuestJournal();
             return instance;
         }
     }
 
-    private static QuestJournal instance;
+    private static QuestJournal instance = null;
 
     private QuestJournal()
     { }
