@@ -97,7 +97,7 @@ public class DataTracker : MonoBehaviour
     {
         Awake();
 
-        SceneManager.LoadScene("InventoryTestScene", LoadSceneMode.Additive);
+        SceneManager.LoadScene("Town", LoadSceneMode.Additive);
 
 
         string currentTown = "Town name"; 
