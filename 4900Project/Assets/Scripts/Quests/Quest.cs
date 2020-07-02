@@ -60,10 +60,15 @@ public class Quest
 
         // Advance to the next stage
         CurrentStage++;
-        foreach (TransactionCondition condition in stages[CurrentStage].conditions){
-            Debug.Log("Adding the next stage listener");
-            EventManager.Current.onTransaction.AddListener((string item, int count) => condition.DefaultHandler(item, count));
+         if (CurrentStage != stages.Count)
+        {
+            EventManager.Current.onTransaction.RemoveAllListeners();
+            foreach (TransactionCondition condition in stages[CurrentStage].conditions){
+                Debug.Log("Adding the next stage listener");
+                EventManager.Current.onTransaction.AddListener((string item, int count) => condition.DefaultHandler(item, count));
+            }
         }
+
 
         // If we are at the last stage, complete the quest
         if (CurrentStage == stages.Count)
@@ -77,6 +82,7 @@ public class Quest
             else
             {
                 Complete();
+                Debug.Log("Quest Complete!");
             }
         }
     }
@@ -272,25 +278,31 @@ public class LocationSpecificTransactionCondition : TransactionCondition
     }
 
     public override void DefaultHandler(string item, int count) {
+
         TranscationTypeEnum transactionDirection;
         if (count < 0) {
             transactionDirection = TranscationTypeEnum.sell;
+
         } else {
             transactionDirection = TranscationTypeEnum.buy;
+
         }
 
         if (item == ItemName)
         {
+
             CurrentCount += count;
             if (transactionDirection == TransactionType) {
-                IsSatisfied = CurrentCount == RequiredCount;
+                IsSatisfied = Mathf.Abs(CurrentCount) >= RequiredCount;
             }
+
             if (!(DataTracker.Current.currentNode == ReqNodeId))
                 IsSatisfied = false;
+            Debug.Log(IsSatisfied);
             if (IsSatisfied) OnCompletion.Invoke();
         }
 
-        Debug.Log(transactionDirection+ " is 1 if this condition is selling to the general store");
+        //Debug.Log(transactionDirection+ " is 1 if this condition is selling to the general store");
     }
 }
 

@@ -212,10 +212,10 @@ public class Trading : MonoBehaviour
             shop.inventory.removeItem(item.Key, item.Value);
 
             EventManager.Current.onTransaction.Invoke(item.Key, item.Value);
-            foreach (var quest in DataTracker.Current.QuestManager.GetQuests())
-            {
-                Debug.Log("Quest Stage is currently currently set to: " + quest.CurrentStage);
-            }
+           // foreach (var quest in DataTracker.Current.QuestManager.GetQuests())
+           // {
+            //    Debug.Log("Quest Stage is currently currently set to: " + quest.CurrentStage);
+           // }
         }
         foreach (var item in offer.getContents()){
             shop.inventory.addItem(item.Key, item.Value);
@@ -224,10 +224,10 @@ public class Trading : MonoBehaviour
 
             //Quest Trade Conditions must be negative for selling items, positive for buying
             EventManager.Current.onTransaction.Invoke(item.Key, -item.Value);
-            foreach (var quest in DataTracker.Current.QuestManager.GetQuests())
-            {
-                Debug.Log("Quest Stage is currently currently set to: " + quest.CurrentStage);
-            }
+           // foreach (var quest in DataTracker.Current.QuestManager.GetQuests())
+            //{
+           //     Debug.Log("Quest Stage is currently currently set to: " + quest.CurrentStage);
+            //}
         }
 
 
