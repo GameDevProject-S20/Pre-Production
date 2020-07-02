@@ -37,6 +37,7 @@ public class EventManager : MonoBehaviour
 
     [System.Serializable]
     public class QuestEvent : UnityEvent<Quest> { };
+    public QuestEvent onQuestUpdate = new QuestEvent();
 
     public UnityEvent onInventoryChange;
 
