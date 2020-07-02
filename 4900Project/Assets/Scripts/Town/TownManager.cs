@@ -38,10 +38,10 @@ public class TownManager : MonoBehaviour
 
 
     // Get the town at the current node using the Data Tracker
-   /* public Town GetCurrentTownData()
+    public Town GetCurrentTownData()
     {
-        return GetTownById(DataTracker.instance.GetCurrentNode().IdOfLandmarkAtNode);
-    }*/
+        return GetTownById(DataTracker.Current.currentNode);
+    }
 
     //town retrieval
     public Town GetTownById(int id)

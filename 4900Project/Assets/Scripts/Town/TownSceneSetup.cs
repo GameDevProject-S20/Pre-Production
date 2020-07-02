@@ -13,19 +13,16 @@ public class TownSceneSetup : MonoBehaviour
     //-Once shops are completed, display shops
     //-UI design for final product
     //-implement universal buttons
-    //-Once data tracker done, have it always pull current town id
-    //-Once quests setup, reintergrate
     [SerializeField]
     Text textBox;
 
     private Town townData;
-
-    //placeholder int
-    public int currentTown = 1;
+    public int currentTown;
     // Start is called before the first frame update
     void Start()
     {
-        townData = TownManager.current.GetTownById(currentTown);
+        townData = TownManager.current.GetCurrentTownData();
+        currentTown = townData.Id;
         Setup();
 
     }
