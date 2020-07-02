@@ -89,7 +89,7 @@ public class Tutorial : MonoBehaviour
         // Add Event For Transactions
         // Invoke that event here for testing
         // Should be invoked by the store instead once testing confirmed.
-        DataTracker.Current.EventManager.Transaction.Invoke();
+        //DataTracker.Current.EventManager.Transaction.Invoke();
 
         foreach (var quest in DataTracker.Current.QuestManager.GetQuests())
         {

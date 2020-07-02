@@ -28,7 +28,7 @@ public class DataTracker : MonoBehaviour
         Player.Inventory.addItem("item1", 2);
         Player.Inventory.addItem("item2", 8);
         Player.Inventory.addItem("item4", 6);
-        Player.Inventory.addItem("item9", 3);
+        Player.Inventory.addItem("item8", 3);
         Player.Inventory.addItem("item5", 1);
         Player.Inventory.addItem("item7", 6);
 
