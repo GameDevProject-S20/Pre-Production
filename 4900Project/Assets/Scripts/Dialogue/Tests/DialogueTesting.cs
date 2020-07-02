@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
-using Dialogue;
-
+/*
 namespace Tests
 {
     public class DialogueTesting
@@ -145,3 +144,4 @@ namespace Tests
         }
     }
 }
+*/

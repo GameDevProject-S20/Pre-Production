@@ -2,30 +2,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 
-public class QuestManager : MonoBehaviour
+public class QuestManager
 {
-    private static QuestManager _current;
-    public static QuestManager current { get { return _current; } }
+    private static QuestManager instance;
 
-    public static UnityEvent Loaded = new UnityEvent();
-
-    public void Awake()
+    public static QuestManager Instance
     {
-        if (_current != null && _current != this)
+        get
         {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            _current = this;
-            Loaded.Invoke();
+            if (instance == null) instance = new QuestManager();
+            return instance;
         }
     }
+
+    private QuestManager() {}
 
     //quest lists
     Dictionary<string, Quest> inactiveQuests = new Dictionary<string, Quest>();
@@ -37,11 +30,15 @@ public class QuestManager : MonoBehaviour
     //events 
     public EventManager.TransactionEvent transactionEvent;
     public EventManager.DialogueSelectionEvent dialogueEvent;
-    public EventManager.QuestEvent QuestCompleteEvent;
-    public EventManager.QuestEvent QuestObjectiveCompleted;
-    public EventManager.QuestEvent QuestActivated;
-    public EventManager.QuestEvent QuestProgressed;
+    public EventManager.QuestEvent QuestCompleteEvent = new EventManager.QuestEvent();
+    public EventManager.QuestEvent QuestObjectiveCompleted = new EventManager.QuestEvent();
+    public EventManager.QuestEvent QuestActivated = new EventManager.QuestEvent();
+    public EventManager.QuestEvent QuestProgressed = new EventManager.QuestEvent();
     
+    void Awake(){
+        transactionEvent = EventManager.Current.onTransaction; 
+    }
+
     //add quest to list
     public void AddQuest(Quest quest)
     {
@@ -61,8 +58,10 @@ public class QuestManager : MonoBehaviour
             QuestProgressed.Invoke(quest);
         });
 
-        QuestActivated.Invoke(quest);
-
+        if (QuestActivated != null)
+        {
+            QuestActivated.Invoke(quest);
+        }
     }
 
 

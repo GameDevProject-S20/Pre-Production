@@ -45,6 +45,7 @@ public class Shop
             inventory.addItem("item3", 3);
             inventory.addItem("item5", 2);
             inventory.addItem("item7", 1);
+            inventory.addItem("Medicine", 1);
         }
     }
 

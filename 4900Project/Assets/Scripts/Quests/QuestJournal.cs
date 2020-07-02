@@ -31,12 +31,6 @@ public class QuestJournal
     private List<Quest> activeQuests;
     private List<Quest> completedQuests;
 
-    // Make sure has the most current QuestManager
-    private QuestManager mgr
-    {
-        get => QuestManager.current;
-    }
-
     private QuestJournal()
     {
         activeQuests = new List<Quest>();
@@ -58,7 +52,7 @@ public class QuestJournal
     // Get the quest manager to send the completed/active quests
     private void requestQuests()
     {
-        mgr.UpdateJournal();
+        DataTracker.Current.QuestManager.UpdateJournal();
     }
 
     // Add or remove it from the list
