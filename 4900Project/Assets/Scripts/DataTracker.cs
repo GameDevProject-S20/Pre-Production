@@ -30,6 +30,15 @@ public class DataTracker : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
     }
+
+
+    public OverworldMap.LocationNode GetCurrentNode(){
+        OverworldMap.LocationNode node;
+        if (WorldMap.GetNode(currentNode, out node)){
+            return node;
+        }
+        return null;
+    }
 }
 
 public class PlayerData {
