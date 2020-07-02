@@ -12,6 +12,15 @@ public class TownMenu : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI descriptionTextField;
 
+    [SerializeField]
+    GameObject button1;
+
+    [SerializeField]
+    GameObject button2;
+
+    int action1;
+    int action2;
+
     // stores the town data for later reference
     private Town townData;
 
@@ -19,6 +28,17 @@ public class TownMenu : MonoBehaviour
         townData = TownManager.Current.GetCurrentTownData();
         nameTextField.text = townData.Name;
         descriptionTextField.text = "They are led by <color="+townData.Colour+">"+ townData.Leader +"</color>.";
+
+        action1 = townData.shops[0];
+        action2 = townData.shops[1];
+
+        Shop shop1 = ShopManager.Current.GetShopById(townData.shops[0]);
+        button1.transform.Find("Text").Find("Text_ActionName").GetComponent<TextMeshProUGUI>().text = shop1.name;
+        button1.transform.Find("Text").Find("Text_ActionDescription").GetComponent<TextMeshProUGUI>().text = shop1.shortDescription;
+
+        Shop shop2 = ShopManager.Current.GetShopById(townData.shops[1]);
+        button2.transform.Find("Text").Find("Text_ActionName").GetComponent<TextMeshProUGUI>().text = shop2.name;
+        button2.transform.Find("Text").Find("Text_ActionDescription").GetComponent<TextMeshProUGUI>().text = shop2.shortDescription;
     }
 
 
@@ -38,6 +58,12 @@ public class TownMenu : MonoBehaviour
     public void OnButtonClick(){
         SceneManager.LoadScene("MapScene");
     }
+
+    public void OnStoreButtonClick(int id){
+        DataTracker.Current.currentShop = (id == 0) ? action1 : action2;
+        SceneManager.LoadScene("InventoryTestScene");
+    }
+
 
 
 }

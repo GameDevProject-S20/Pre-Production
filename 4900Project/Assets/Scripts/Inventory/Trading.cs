@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class Trading : MonoBehaviour
 {
@@ -25,6 +27,8 @@ public class Trading : MonoBehaviour
     Transform cartListObject;
     [SerializeField]
     Transform offerFeedback;
+    [SerializeField]
+    TextMeshProUGUI Name;
 
     public void Start() {
         shop = ShopManager.Current.GetShopById(DataTracker.Current.currentShop);
@@ -32,6 +36,7 @@ public class Trading : MonoBehaviour
         copyOfShopInventory = new Inventory(shop.inventory);
         buildShopList();
         buildPlayerList();
+        Name.text = shop.name;
     }
 
     //======================================================================//
@@ -215,6 +220,10 @@ public class Trading : MonoBehaviour
         buildShopList();
         buildOfferList();
         buildCartList();
+    }
+
+    public void leave(){
+        SceneManager.LoadScene("Town");
     }
 
 }
