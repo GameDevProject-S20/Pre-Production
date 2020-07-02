@@ -206,12 +206,16 @@ public class Trading : MonoBehaviour
 
     void makeTrade(){
         foreach (var item in cart.getContents()){
+            // Should use event system
             DataTracker.Current.Player.Inventory.addItem(item.Key, item.Value);
             copyOfPlayerInventory.addItem(item.Key, item.Value);
+            shop.inventory.removeItem(item.Key, item.Value);
         }
         foreach (var item in offer.getContents()){
             shop.inventory.addItem(item.Key, item.Value);
             copyOfShopInventory.addItem(item.Key, item.Value);
+            DataTracker.Current.Player.Inventory.removeItem(item.Key, item.Value);
+
         }
 
         cart.getContents().Clear();
