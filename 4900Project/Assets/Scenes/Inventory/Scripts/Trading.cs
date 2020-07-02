@@ -23,6 +23,8 @@ public class Trading : MonoBehaviour
     Transform offerListObject;
     [SerializeField]
     Transform cartListObject;
+    [SerializeField]
+    Transform offerFeedback;
 
     public void init(Shop shop_) {
         shop = shop_;
@@ -148,13 +150,18 @@ public class Trading : MonoBehaviour
         switch (validateTrade())
         {
             case 0:
-            break;
-            case 1: makeTrade();
-            break;
-            case 2: makeTrade();
-            break;
-            case 3: Debug.Log("Too Low!");
-            break;
+                break;
+            case 1:
+                offerFeedback.GetComponent<TMPro.TextMeshProUGUI>().text = "My now, what a generous offer!";
+                makeTrade();
+                break;
+            case 2:
+                offerFeedback.GetComponent<TMPro.TextMeshProUGUI>().text = "A fair offer, you got yourself a deal";
+                makeTrade();
+                break;
+            case 3:
+                offerFeedback.GetComponent<TMPro.TextMeshProUGUI>().text = "This ain't a charity, make a real offer would ya";
+                break;
         }
     }
 
@@ -177,7 +184,7 @@ public class Trading : MonoBehaviour
             float totalCartValue = cart.totalValue(shop.toPlayerModifiers);
             float totalOfferValue = offer.totalValue(shop.fromPlayerModifiers);
             float difference =  totalOfferValue - totalCartValue;
-            if (difference >= 0){
+            if(difference > totalCartValue * shop.acceptedPriceDifference) {
                 return 1;
             }
             else if (Mathf.Abs(difference) <= totalCartValue * shop.acceptedPriceDifference){

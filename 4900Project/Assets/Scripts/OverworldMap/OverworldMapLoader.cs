@@ -2,15 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestMap : MonoBehaviour
+public class OverworldMapLoader
 {
-    public OverworldMapManager manager;
-
-    private bool drawn;
-
-    // Start is called before the first frame update
-    void Start()
-    {
+    public static OverworldMap.LocationGraph CreateTestMap(){
+        OverworldMap.LocationGraph graph = new OverworldMap.LocationGraph();
         OverworldMap.LocationNode Town1, Town2, Town3, Town4, Town5, Node1, Node2, Node3,
          Node4, Node5, Node6, Node7, Node8, Node9, Node10, Node11, Node12, Node13;
 
@@ -34,7 +29,7 @@ public class TestMap : MonoBehaviour
         Node13 = new OverworldMap.LocationNode(9, "Node13", OverworldMap.LocationType.NONE, -0.09f, 0.28f);
 
 
-        manager.Graph
+        graph
         .AddNode(Town1).AddNode(Town2).AddNode(Town3).AddNode(Town4).AddNode(Town5).AddNode(Node1)
         .AddNode(Node2).AddNode(Node3).AddNode(Node4).AddNode(Node5).AddNode(Node6).AddNode(Node7)
         .AddNode(Node8).AddNode(Node9).AddNode(Node10).AddNode(Node11).AddNode(Node12).AddNode(Node13)
@@ -46,14 +41,7 @@ public class TestMap : MonoBehaviour
         .AddEdge(Node2, Node1).AddEdge(Node2, Node3).AddEdge(Node3, Node4).AddEdge(Node4, Node5)
         .AddEdge(Node5, Node6).AddEdge(Node6, Node7).AddEdge(Node7, Node8).AddEdge(Node8, Node9)
         .AddEdge(Node9, Node10).AddEdge(Node10, Node11).AddEdge(Node1, Node13).AddEdge(Node13, Node12).AddEdge(Node9, Node12);
-    }
 
-    void Update()
-    {
-        if (!drawn)
-        {
-            manager.RequestDraw();
-            drawn = true;
-        }
+        return graph;
     }
 }

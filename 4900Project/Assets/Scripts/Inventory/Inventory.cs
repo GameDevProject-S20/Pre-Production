@@ -36,7 +36,7 @@ public class Inventory
 
     // Copy Constructor
     public Inventory(Inventory sourceInventory){
-        contents = sourceInventory.contents;
+        contents = new Dictionary<string, int>(sourceInventory.contents);
         weightLimit = sourceInventory.weightLimit;
         weightOverflowModifier = sourceInventory.weightOverflowModifier;
     }
