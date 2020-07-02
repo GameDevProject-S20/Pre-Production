@@ -23,6 +23,23 @@ namespace FileConstants
     /// </summary>
     public static class Files
     {
+        // Map Nodes CSV
+        public static readonly FileStorageData MapNodes = new FileStorageData()
+        {
+            GoogleDriveFileId = "1i1cUu69oow5PH3hmv5p58bzLhZmD1UZA5tenLA-naBc",
+            LocalBackupFile = $"{Application.dataPath}/BackupData/MapNodes.csv",
+            MimeType = "text/csv"
+        };
+
+        // Map Edges CSV
+        public static readonly FileStorageData MapEdges = new FileStorageData()
+        {
+            GoogleDriveFileId = "1fMqdC04SyVIH8xEcV4zjlIZiB_13rb2t5jFLWFGtvdc",
+            LocalBackupFile = $"{Application.dataPath}/BackupData/MapEdges.csv",
+            MimeType = "text/csv"
+        };
+
+        /*
         // Dialog CSV
         public static readonly FileStorageData Dialog = new FileStorageData()
         {
@@ -54,6 +71,7 @@ namespace FileConstants
             LocalBackupFile = $"{Application.dataPath}/BackupData/Tutorial.csv",
             MimeType = "text/csv"
         };
+        */
 
         // Note: For testing purposes only - test CSV
         public static readonly FileStorageData TestFile = new FileStorageData()
@@ -67,10 +85,12 @@ namespace FileConstants
         // Any file added into the list should also be added here
         public static readonly IEnumerable<FileStorageData> FilesList = new List<FileStorageData>()
         {
-            Files.Dialog,
+            Files.MapNodes,
+            Files.MapEdges,
+            /*Files.Dialog,
             Files.Items,
             Files.Town,
-            Files.Tutorial,
+            Files.Tutorial,*/
             Files.TestFile
         };
     }
