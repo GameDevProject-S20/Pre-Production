@@ -6,50 +6,17 @@ public class OverworldMapUI : MonoBehaviour
 {
     public GameObject LocationPrefab;
     public GameObject PathPrefab;
-    private OverworldMap.LocationGraph graph;
-
-    private bool drawQueued; // Used to avoid OnStart sync issues  
 
     // Start is called before the first frame update
     void Start()
     {
-        SetVisible(false);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (drawQueued)
-        {
-            DrawGraph();
-            drawQueued = false;
-        }
-    }
-
-    private void SetVisible(bool visible)
-    {
-        foreach (var r in gameObject.GetComponentsInChildren<Renderer>())
-        {
-            r.enabled = visible;
-        }
-    }
-
-    public void SetGraph(OverworldMap.LocationGraph graph)
-    {
-        this.graph = graph;
-    }
-
-    public void QueueDraw()
-    {
-        drawQueued = true;
+        DrawGraph();
     }
 
     private void DrawGraph()
     {
-        SetVisible(true);
-
         // Draw nodes
-        foreach (var node in graph.GetNodeEnumerable())
+        foreach (var node in DataTracker.Current.WorldMap.GetNodeEnumerable())
         {
             GameObject nodeObj = Instantiate(LocationPrefab, transform.parent);
             Vector3 pos = new Vector3(node.PosX, 0, node.PosY) * 10;
@@ -66,7 +33,7 @@ public class OverworldMapUI : MonoBehaviour
 
         // Draw edges
         // Currently not rendering at the correct location on the map -- how do we fix this?
-        foreach (var edge in graph.GetEdgeEnumerable())
+        foreach (var edge in DataTracker.Current.WorldMap.GetEdgeEnumerable())
         {
             GameObject line = Instantiate(PathPrefab, transform.parent);
             LineRenderer lr = line.GetComponent<LineRenderer>();
