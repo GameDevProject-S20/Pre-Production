@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class OverworldMapUI : MonoBehaviour
 {
@@ -28,6 +29,15 @@ public class OverworldMapUI : MonoBehaviour
                 nodeObj.transform.Find("TownMesh").gameObject.SetActive(true);
                 nodeObj.transform.Rotate(new Vector3(0, Random.Range(0, 360), 0), Space.Self);
             }
+
+            // Set up player movement
+            Button btn = nodeObj.GetComponent(typeof(Button)) as Button;
+            btn.OnClick.AddListener(() => {
+                // Move player
+            });
+
+            // OR:
+            // btn.OnClick.AddListener(DataTracker.MovePlayer);  // register function
         }
 
 
