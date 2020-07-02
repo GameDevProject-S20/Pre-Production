@@ -10,7 +10,7 @@ public class TownManager : MonoBehaviour
 
     //ensure only one copy active
     private static TownManager _current;
-    public static TownManager current { get { return _current; } }
+    public static TownManager Current { get { return _current; } }
     Dictionary<int, Town> towns = new Dictionary<int, Town>();
 
     private void Awake()
@@ -24,27 +24,36 @@ public class TownManager : MonoBehaviour
             _current = this;
         }
 
-        // Loading in town data from CSV will replace this
-        Town dummy = new Town(0, "Smithsville", "Sarif");
-        dummy.AlterRep(-10);
-        dummy.AddShop(0);
-        dummy.AddShop(1);
-        towns.Add(dummy.Id, dummy);
-        dummy = new Town(1, "Real Town", "Real Leader");
-        dummy.AlterRep(10);
-        dummy.AddShop(2);
-        towns.Add(dummy.Id, dummy);
-        dummy = new Town(2, "Test", "Tester");
-        dummy.AddShop(3);
-        towns.Add(dummy.Id, dummy);
+         // Load in town data from CSV
+        GameData.LoadCsv<Town>(FileConstants.Files.Town, out IEnumerable<Town> result);
+        var resultString = new System.Text.StringBuilder();
+        resultString.AppendLine("Loading in from file:");
+        foreach (Town data in result)
+        {
+            towns.Add(data.Id, data);
+            resultString.AppendLine("\tCreated town #" + data.Id + ": " + data.Name);
+        }
+        UnityEngine.Debug.Log(resultString);
+
+
+        towns[0].AddShop(0);
+        towns[0].AddShop(1);
+        towns[1].AddShop(2);
+        towns[1].AddShop(3);
+        towns[2].AddShop(4);
+        towns[2].AddShop(5);
+        towns[3].AddShop(6);
+        towns[3].AddShop(7);
+        towns[4].AddShop(8);
+        towns[4].AddShop(9);
     }
 
 
     // Get the town at the current node using the Data Tracker
-   /* public Town GetCurrentTownData()
+    public Town GetCurrentTownData()
     {
-        return GetTownById(DataTracker.instance.GetCurrentNode().IdOfLandmarkAtNode);
-    }*/
+        return GetTownById(DataTracker.Current.GetCurrentNode().LocationId);
+    }
 
     //town retrieval
     public Town GetTownById(int id)
@@ -59,4 +68,10 @@ public class TownManager : MonoBehaviour
             return null;
         }
     }
+
+
+    //! Test Function
+    //! Add shops to towns
+
+
 }

@@ -9,16 +9,17 @@ public class Town
     public int Id { get; }
     public string Name { get; set; }
     public string Leader { get; set; }
-    public List<int> shops;
-    public int Reputation { get; set; }
+    public string Colour {get; set;} //hex code
 
-    public Town(int a, string b, string c)
+    public List<int> shops;
+
+    public Town(int Id, string Name, string Leader, string Colour="#FFFF5E0")
     {
-        Id = a;
-        Name = b;
-        Leader = c;
+        this.Id = Id;
+        this.Name = Name;
+        this.Leader = Leader;
+        this.Colour = Colour;
         shops = new List<int>();
-        Reputation = 50;
     }
 
     public void AddShop(int i)
@@ -26,7 +27,7 @@ public class Town
         shops.Add(i);
     }
 
-    public void RemoveShopById(int i)
+    public void RemoveShop(int i)
     {
         for(int j = 0; j < shops.Count; j++)
         {
@@ -37,12 +38,4 @@ public class Town
             }
         }
     }
-
-
-    public void AlterRep(int i)
-    {
-        Reputation += i;
-        Reputation = Mathf.Clamp(Reputation, 0, 100);
-    }
-
 }

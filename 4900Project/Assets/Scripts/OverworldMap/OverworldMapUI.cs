@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class OverworldMapUI : MonoBehaviour
 {
@@ -12,7 +14,8 @@ public class OverworldMapUI : MonoBehaviour
     [SerializeField]
     GameObject playerMarker;
 
-
+    [SerializeField]
+    Button enterNodeButton;
 
     //Movement variables
     float translateSmoothTime = 0.1f;
@@ -23,6 +26,7 @@ public class OverworldMapUI : MonoBehaviour
     void Start()
     {
         DrawGraph();
+        Camera.main.transform.position = playerMarker.transform.position + new Vector3(0, 6, 0);
     }
 
     private void DrawGraph()
@@ -81,11 +85,24 @@ public class OverworldMapUI : MonoBehaviour
                 if (DataTracker.Current.WorldMap.HasEdge(selected, DataTracker.Current.currentNode)){
                     DataTracker.Current.currentNode = selected;
                     targetPos = hit.collider.gameObject.transform.position;
+                    OverworldMap.LocationNode node;
+                    if (DataTracker.Current.WorldMap.GetNode(selected, out node)){
+                        if (node.Type == OverworldMap.LocationType.TOWN){
+                            enterNodeButton.interactable = true;
+                        }
+                        else{
+                            enterNodeButton.interactable = false;
+                        }
+                    }
                 }
             }
         }
 
         playerMarker.transform.position = Vector3.SmoothDamp(playerMarker.transform.position, targetPos, ref translatSmoothVelocity, translateSmoothTime);
+    }
+
+    public void OnButtonClick(){
+        SceneManager.LoadScene("Town");
     }
 
 }

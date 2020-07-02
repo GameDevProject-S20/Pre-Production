@@ -66,8 +66,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Boolean_5244A413: 0
-    - Boolean_6AFAABA5: 0
+    - Boolean_5244A413: 1
+    - Boolean_6AFAABA5: 1
     - Vector1_2307BAA: 1
     - _AlphaClip: 0
     - _Blend: 0

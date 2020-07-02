@@ -8,7 +8,7 @@ public class Shop
 
     int id;
     public string name;
-    string shortDescription;
+    public string shortDescription;
     string description;
     ShopTypes type;
 
