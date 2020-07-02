@@ -12,11 +12,11 @@ public class Town
     public List<int> shops;
     public int Reputation { get; set; }
 
-    public Town(int a, string b, string c)
+    public Town(int Id, string Name, string Leader)
     {
-        Id = a;
-        Name = b;
-        Leader = c;
+        this.Id = Id;
+        this.Name = Name;
+        this.Leader = Leader;
         shops = new List<int>();
         Reputation = 50;
     }

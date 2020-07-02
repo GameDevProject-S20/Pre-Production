@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using FileConstants;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,20 +24,16 @@ public class TownManager : MonoBehaviour
         {
             _current = this;
         }
-
-        // Loading in town data from CSV will replace this
-        Town dummy = new Town(0, "Smithsville", "Sarif");
-        dummy.AlterRep(-10);
-        dummy.AddShop(0);
-        dummy.AddShop(1);
-        towns.Add(dummy.Id, dummy);
-        dummy = new Town(1, "Real Town", "Real Leader");
-        dummy.AlterRep(10);
-        dummy.AddShop(2);
-        towns.Add(dummy.Id, dummy);
-        dummy = new Town(2, "Test", "Tester");
-        dummy.AddShop(3);
-        towns.Add(dummy.Id, dummy);
+        int ids = 0;
+        // Loading in town data from CSV
+        GameData.LoadCsv<TownTemp>(Files.Town, out IEnumerable<TownTemp> result);
+        Town dummy;
+        foreach (TownTemp data in result)
+        {
+            dummy = new Town(ids, data.Name, data.Leader);
+            towns.Add(ids, dummy);
+            ids++;
+        }
     }
 
 
@@ -59,4 +56,12 @@ public class TownManager : MonoBehaviour
             return null;
         }
     }
+}
+
+public class TownTemp
+{
+    public int Id { get; }
+    public string Name { get; set; }
+    public string Leader { get; set; }
+    public string Colour { get; set; }
 }

@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using FileConstants;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 
 public class TownSceneSetup : MonoBehaviour
 {
@@ -25,7 +27,7 @@ public class TownSceneSetup : MonoBehaviour
     {
         townData = TownManager.current.GetTownById(currentTown);
         Setup();
-        
+
     }
 
     void Setup()
@@ -44,9 +46,9 @@ public class TownSceneSetup : MonoBehaviour
         {
             currentTown = 0;
         }
-        if(currentTown > 2)
+        if(currentTown > 4)
         {
-            currentTown = 2;
+            currentTown = 4;
         }
         townData = TownManager.current.GetTownById(currentTown);
         Setup();

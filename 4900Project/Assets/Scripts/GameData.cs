@@ -30,6 +30,7 @@ public class GameData
     {
         // Retrieve the stream for fetching our data
         GetFileStream(fileData.GoogleDriveFileId, fileData.LocalBackupFile, "text/csv", out Stream dataStream);
+
         // Read the contents of the stream into T objects
         using (var reader = new StreamReader(dataStream))
         {
