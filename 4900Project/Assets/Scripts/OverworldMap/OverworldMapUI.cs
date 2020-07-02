@@ -1,11 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class OverworldMapUI : MonoBehaviour
 {
-    public GameObject LocationPrefab;
-    public GameObject PathPrefab;
+    [SerializeField]
+    GameObject LocationPrefab;
+    [SerializeField]
+    GameObject PathPrefab;
+    [SerializeField]
+    GameObject playerMarker;
+
+
+
+    //Movement variables
+    float translateSmoothTime = 0.1f;
+	Vector3 translatSmoothVelocity;
+    Vector3 targetPos;
 
     // Start is called before the first frame update
     void Start()
@@ -23,10 +35,15 @@ public class OverworldMapUI : MonoBehaviour
             nodeObj.transform.position += pos;
             nodeObj.transform.SetParent(transform, true);
             nodeObj.name = node.Name;
+            nodeObj.GetComponent<MapNode>().nodeID = node.Id;
             if (node.Type == OverworldMap.LocationType.TOWN){
                 nodeObj.transform.Find("Icon").gameObject.SetActive(false);
                 nodeObj.transform.Find("TownMesh").gameObject.SetActive(true);
                 nodeObj.transform.Rotate(new Vector3(0, Random.Range(0, 360), 0), Space.Self);
+            }
+            if (node.Id == DataTracker.Current.currentNode){
+                playerMarker.transform.position = nodeObj.transform.position;
+                targetPos = playerMarker.transform.position;
             }
         }
 
@@ -49,5 +66,26 @@ public class OverworldMapUI : MonoBehaviour
             lr.SetPositions(lineEnds);
             line.transform.SetParent(transform, true);
         }
+
     }
+
+    private void Update() 
+    {
+        if (Input.GetMouseButtonDown(0)){
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            
+            if(Physics.Raycast (ray, out hit,999, LayerMask.GetMask("MapNode")))
+            {
+                int selected =hit.collider.gameObject.GetComponent<MapNode>().nodeID;
+                if (DataTracker.Current.WorldMap.HasEdge(selected, DataTracker.Current.currentNode)){
+                    DataTracker.Current.currentNode = selected;
+                    targetPos = hit.collider.gameObject.transform.position;
+                }
+            }
+        }
+
+        playerMarker.transform.position = Vector3.SmoothDamp(playerMarker.transform.position, targetPos, ref translatSmoothVelocity, translateSmoothTime);
+    }
+
 }
