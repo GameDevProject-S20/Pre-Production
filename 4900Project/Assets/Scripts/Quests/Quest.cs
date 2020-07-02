@@ -20,6 +20,7 @@ public class Quest
     public UnityEvent QuestComplete = new UnityEvent();
     public UnityEvent QuestProgressed = new UnityEvent();
 
+
     // Player reference
     //public Trader Player = DataTracker.instance.player;
 
@@ -53,9 +54,16 @@ public class Quest
         {
             effect(player);// Invoking function
         }*/
+        
+        // Call the Check handler unique for each instance of Quest
+
 
         // Advance to the next stage
         CurrentStage++;
+        foreach (TransactionCondition condition in stages[CurrentStage].conditions){
+            Debug.Log("Adding the next stage listener");
+            EventManager.Current.onTransaction.AddListener((string item, int count) => condition.DefaultHandler(item, count));
+        }
 
         // If we are at the last stage, complete the quest
         if (CurrentStage == stages.Count)
@@ -206,11 +214,11 @@ public class ListenForEventCondition : QuestCondition
 // Selling with subtract from buying and vice versa.
 public class TransactionCondition : QuestCondition
 {
-    string ItemName;
+    protected string ItemName;
     public enum TranscationTypeEnum { buy, sell };
-    TranscationTypeEnum TransactionType;
-    int RequiredCount = 0;
-    int CurrentCount = 0;
+    protected TranscationTypeEnum TransactionType;
+    protected int RequiredCount = 0;
+    protected int CurrentCount = 0;
 
     public TransactionCondition(string _description, string _itemName, int _requiredCount, TranscationTypeEnum _transactionType, UnityEvent _onCompletion)
      : base(_description, _onCompletion)
@@ -227,21 +235,22 @@ public class TransactionCondition : QuestCondition
     public override void Initialize()
     {
         //add when QM done
-        //QuestManager.current.TransactionEvent.AddListener((string item, int count) => DefaultHandler(item, count));
     }
 
-    protected void DefaultHandler(string item, int count)
+    public virtual void DefaultHandler(string item, int count)
     {
+        TranscationTypeEnum transactionDirection;
+        if (count < 0) {
+            transactionDirection = TranscationTypeEnum.sell;
+        } else {
+            transactionDirection = TranscationTypeEnum.buy;
+        }
+
         if (item == ItemName)
         {
             CurrentCount += count;
-            if (TransactionType == TranscationTypeEnum.sell)
-            {
-                IsSatisfied = CurrentCount <= RequiredCount;
-            }
-            else
-            {
-                IsSatisfied = CurrentCount >= RequiredCount;
+            if (transactionDirection == TransactionType) {
+                IsSatisfied = CurrentCount == RequiredCount;
             }
             if (IsSatisfied) OnCompletion.Invoke();
         }
@@ -262,16 +271,26 @@ public class LocationSpecificTransactionCondition : TransactionCondition
         ReqNodeId = _nodeId;
     }
 
-    public override void Initialize()
-    {
-       /* QuestManager.current.TransactionEvent.AddListener((string item, int count) =>
+    public override void DefaultHandler(string item, int count) {
+        TranscationTypeEnum transactionDirection;
+        if (count < 0) {
+            transactionDirection = TranscationTypeEnum.sell;
+        } else {
+            transactionDirection = TranscationTypeEnum.buy;
+        }
+
+        if (item == ItemName)
         {
-            if (DataTracker.instance.player.CurrNodeId == reqNodeId)
-            {
-                // Transaction only counts if completed in required location
-                DefaultHandler(item, count);
+            CurrentCount += count;
+            if (transactionDirection == TransactionType) {
+                IsSatisfied = CurrentCount == RequiredCount;
             }
-        });*/
+            if (!(DataTracker.Current.currentNode == ReqNodeId))
+                IsSatisfied = false;
+            if (IsSatisfied) OnCompletion.Invoke();
+        }
+
+        Debug.Log(transactionDirection+ " is 1 if this condition is selling to the general store");
     }
 }
 
@@ -290,7 +309,7 @@ public class DialogueCondition : QuestCondition
         //QuestManager.current.dialogueEvent.AddListener((string buttonText) => DefaultHandler(buttonText));
     }
 
-    protected void DefaultHandler(string buttonText)
+    public void DefaultHandler(string buttonText)
     {
         if (buttonText == this.ButtonText)
         {
