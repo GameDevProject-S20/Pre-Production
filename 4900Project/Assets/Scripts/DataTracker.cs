@@ -18,11 +18,11 @@ public class DataTracker : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public PlayerData player = new PlayerData();
-
+    public PlayerData Player = new PlayerData();
+    public OverworldMap.LocationGraph WorldMap = OverworldMapLoader.CreateTestMap();
 
 }
 
 public class PlayerData {
-    Inventory inventory = new Inventory();
+    Inventory Inventory = new Inventory();
 }
