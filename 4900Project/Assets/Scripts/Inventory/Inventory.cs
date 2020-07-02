@@ -14,11 +14,11 @@ public class Inventory
         weightLimit = 100000;
         if (itemsMaster.Count == 0){
 
-            Item item1 = new Item("item1", "Herbal Medicine", "", "", 1, 1);
+            Item item1 = new Item("item1", "Herbs", "", "", 1, 1);
             Item item2 = new Item("item2", "Scrap Metal", "", "", 2, 2);
             Item item3 = new Item("item3", "Morphine", "", "", 3, 3);
             Item item4 = new Item("item4", "Food Ration", "", "", 5, 5);
-            Item item5 = new Item("item5", "Modern Medicine", "", "", 8, 8);
+            Item item5 = new Item("item5", "Gunpowder", "", "", 8, 8);
             Item item6 = new Item("item6", "Fuel", "", "", 13, 13);
             Item item7 = new Item("item7", "Prothetic Leg", "", "", 21, 21);
             Item item8 = new Item("item8", "Radio", "", "", 34, 34);

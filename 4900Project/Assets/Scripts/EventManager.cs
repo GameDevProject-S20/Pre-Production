@@ -25,7 +25,7 @@ public class EventManager : MonoBehaviour
 
     [System.Serializable]
     public class TransactionEvent : UnityEvent<string, int>{};
-    public TransactionEvent onTransaction;
+    public TransactionEvent onTransaction = new TransactionEvent();
 
     [System.Serializable]
     public class TownEnterEvent : UnityEvent<int>{};

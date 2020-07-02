@@ -18,7 +18,7 @@ public class QuestManager
         }
     }
 
-    private QuestManager() { }
+    private QuestManager() {}
 
     //quest lists
     Dictionary<string, Quest> inactiveQuests = new Dictionary<string, Quest>();
@@ -30,11 +30,15 @@ public class QuestManager
     //events 
     public EventManager.TransactionEvent transactionEvent;
     public EventManager.DialogueSelectionEvent dialogueEvent;
-    public EventManager.QuestEvent QuestCompleteEvent;
-    public EventManager.QuestEvent QuestObjectiveCompleted;
-    public EventManager.QuestEvent QuestActivated;
-    public EventManager.QuestEvent QuestProgressed;
+    public EventManager.QuestEvent QuestCompleteEvent = new EventManager.QuestEvent();
+    public EventManager.QuestEvent QuestObjectiveCompleted = new EventManager.QuestEvent();
+    public EventManager.QuestEvent QuestActivated = new EventManager.QuestEvent();
+    public EventManager.QuestEvent QuestProgressed = new EventManager.QuestEvent();
     
+    void Awake(){
+        transactionEvent = EventManager.Current.onTransaction; 
+    }
+
     //add quest to list
     public void AddQuest(Quest quest)
     {
