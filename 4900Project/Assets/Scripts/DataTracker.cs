@@ -21,6 +21,8 @@ public class DataTracker : MonoBehaviour
     public PlayerData Player = new PlayerData();
     public OverworldMap.LocationGraph WorldMap = OverworldMapLoader.CreateTestMap();
 
+    public int currentNode = 0;
+
 }
 
 public class PlayerData {
