@@ -26,9 +26,9 @@ public class Trading : MonoBehaviour
     [SerializeField]
     Transform offerFeedback;
 
-    public void init(Shop shop_) {
-        shop = shop_;
-        copyOfPlayerInventory = new Inventory(TradingTest.player.inventory);
+    public void Start() {
+        shop = ShopManager.Current.GetShopById(DataTracker.Current.currentShop);
+        copyOfPlayerInventory = new Inventory(DataTracker.Current.Player.Inventory);
         copyOfShopInventory = new Inventory(shop.inventory);
         buildShopList();
         buildPlayerList();
@@ -201,7 +201,7 @@ public class Trading : MonoBehaviour
 
     void makeTrade(){
         foreach (var item in cart.getContents()){
-            TradingTest.player.inventory.addItem(item.Key, item.Value);
+            DataTracker.Current.Player.Inventory.addItem(item.Key, item.Value);
             copyOfPlayerInventory.addItem(item.Key, item.Value);
         }
         foreach (var item in offer.getContents()){

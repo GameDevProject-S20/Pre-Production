@@ -9,8 +9,6 @@ public class Inventory
     public float weightLimit {get; set;}
     float weightOverflowModifier = 1.0f; // for now this does nothing. might be used later if we allow the player to overfill their inventory at a cost
 
-
-    // ! Test
     public Inventory(){
         weightLimit = 100000;
         if (itemsMaster.Count == 0){
