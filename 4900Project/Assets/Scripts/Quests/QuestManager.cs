@@ -2,30 +2,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 
-public class QuestManager : MonoBehaviour
+public class QuestManager
 {
-    private static QuestManager _current;
-    public static QuestManager current { get { return _current; } }
+    private static QuestManager instance;
 
-    public static UnityEvent Loaded = new UnityEvent();
-
-    public void Awake()
+    public static QuestManager Instance
     {
-        if (_current != null && _current != this)
+        get
         {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            _current = this;
-            Loaded.Invoke();
+            if (instance == null) instance = new QuestManager();
+            return instance;
         }
     }
+
+    private QuestManager() { }
 
     //quest lists
     Dictionary<string, Quest> inactiveQuests = new Dictionary<string, Quest>();
@@ -61,8 +54,10 @@ public class QuestManager : MonoBehaviour
             QuestProgressed.Invoke(quest);
         });
 
-        QuestActivated.Invoke(quest);
-
+        if (QuestActivated != null)
+        {
+            QuestActivated.Invoke(quest);
+        }
     }
 
 
