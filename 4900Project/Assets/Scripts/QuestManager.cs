@@ -27,25 +27,22 @@ public class QuestManager : MonoBehaviour
         }
     }
 
+    //quest lists
     Dictionary<string, Quest> inactiveQuests = new Dictionary<string, Quest>();
     Dictionary<string, Quest> activeQuests = new Dictionary<string, Quest>();
     Dictionary<string, Quest> readyQuests = new Dictionary<string, Quest>();
     Dictionary<string, Quest> completedQuests = new Dictionary<string, Quest>();
     Dictionary<string, Quest> allQuests = new Dictionary<string, Quest>();
 
+    //events 
     public EventManager.TransactionEvent transactionEvent;
-
-
     public EventManager.DialogueSelectionEvent dialogueEvent;
-
- 
     public EventManager.QuestEvent QuestCompleteEvent;
-
     public EventManager.QuestEvent QuestObjectiveCompleted;
-
     public EventManager.QuestEvent QuestActivated;
     public EventManager.QuestEvent QuestProgressed;
     
+    //add quest to list
     public void AddQuest(Quest quest)
     {
         string qn = quest.Name;
@@ -68,6 +65,8 @@ public class QuestManager : MonoBehaviour
 
     }
 
+
+    // load quest from inactive list to active
     public void StartQuest(string questName)
     {
         if (inactiveQuests.ContainsKey(questName))
@@ -77,6 +76,8 @@ public class QuestManager : MonoBehaviour
         }
     }
 
+
+    //IComplete a quest and shift it to the proper spot
     public void CompleteQuest(string questName)
     {
         GetQuest(questName, out Quest questData);
@@ -93,6 +94,7 @@ public class QuestManager : MonoBehaviour
         QuestCompleteEvent.Invoke(questData);
     }
 
+    //get values
     public void GetReadyQuests(out IEnumerable<string> quests)
     {
         quests = readyQuests.Keys;
@@ -107,8 +109,6 @@ public class QuestManager : MonoBehaviour
     {
         return allQuests.Values;
     }
-
-
 
     // Can call this, but shouldn't need to after the journal has been initialized
     public void UpdateJournal()
