@@ -11,6 +11,7 @@ public class DataTracker : MonoBehaviour
     public OverworldMap.LocationGraph WorldMap = OverworldMapLoader.CreateTestMap();
     [SerializeField]
     public int currentShop = 0; // Needed if we want store to be their own scene. If we make the store window a prefab, we don't need this.
+    public int currentNode = 0;
 
 
 
@@ -29,11 +30,6 @@ public class DataTracker : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
     }
-
-    public PlayerData Player = new PlayerData();
-    public OverworldMap.LocationGraph WorldMap = OverworldMapLoader.CreateTestMap();
-
-    public int currentNode = 0;
 }
 
 public class PlayerData {
