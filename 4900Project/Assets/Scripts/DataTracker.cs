@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Encounters;
 
 public class DataTracker : MonoBehaviour
 {
@@ -9,11 +10,12 @@ public class DataTracker : MonoBehaviour
 
     public PlayerData Player = new PlayerData();
     public OverworldMap.LocationGraph WorldMap = OverworldMapLoader.CreateTestMap();
+    public QuestManager QuestManager = QuestManager.Instance;
+    public EncounterManager EncounterManager = EncounterManager.Instance;
+
     [SerializeField]
     public int currentShop = 0; // Needed if we want store to be their own scene. If we make the store window a prefab, we don't need this.
     public int currentNode = 0;
-
-
 
     private void Awake() {
         if (_current != null && _current != this)
@@ -22,7 +24,7 @@ public class DataTracker : MonoBehaviour
         } else {
             _current = this;
         }
-    
+
         Player.Inventory.addItem("item1", 4);
         Player.Inventory.addItem("item4", 3);
         Player.Inventory.addItem("item5", 1);

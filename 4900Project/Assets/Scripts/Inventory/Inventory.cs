@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Inventory
 {
+    // Move this to Item Manager
     public static Dictionary<string, Item> itemsMaster = new Dictionary<string, Item>();
     Dictionary<string, int> contents = new Dictionary<string, int>();
     public float weightLimit {get; set;}
@@ -20,6 +21,7 @@ public class Inventory
             Item item6 = new Item("item6", "Item 6", "", "", 13, 13);
             Item item7 = new Item("item7", "Item 7", "", "", 21, 21);
             Item item8 = new Item("item8", "Item 8", "", "", 34, 34);
+            Item medicine = new Item("Medicine", "Medicine", "", "", 9, 9);
 
             itemsMaster.Add(item1.name, item1);
             itemsMaster.Add(item2.name, item2);
@@ -29,6 +31,7 @@ public class Inventory
             itemsMaster.Add(item6.name, item6);
             itemsMaster.Add(item7.name, item7);
             itemsMaster.Add(item8.name, item8);
+            itemsMaster.Add(medicine.name, medicine);
         }
     }
 
