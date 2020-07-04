@@ -55,6 +55,17 @@ namespace Tests
         }
 
         /// <summary>
+        /// Creates local backups of all remote files.
+        /// Ideally, this shouldn't be a test -- but running it as a test allows us to automate it at the click of a button;
+        /// so leaving it like this until we get a better solution
+        /// </summary>
+        [Test]
+        public void CreateBackups()
+        {
+            GameData.CreateBackups();
+        }
+
+        /// <summary>
         /// Runs through a single CSV Test Class to verify its values against what we expect
         /// </summary>
         /// <param name="csvData"></param>
