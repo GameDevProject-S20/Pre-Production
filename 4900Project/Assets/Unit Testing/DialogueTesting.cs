@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Dialogue;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
-/*
+
 namespace Tests
 {
     public class DialogueTesting
@@ -144,4 +145,3 @@ namespace Tests
         }
     }
 }
-*/
