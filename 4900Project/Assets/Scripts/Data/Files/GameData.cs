@@ -9,6 +9,7 @@ using System;
 using UnityEngine.SocialPlatforms;
 using System.CodeDom;
 using FileConstants;
+using UnityEngine;
 
 public class GameData
 {
@@ -28,19 +29,20 @@ public class GameData
     /// <param name="data">The resultant data loaded from the CSV.</param>
     public static void LoadCsv<T>(FileStorageData fileData, out IEnumerable<T> data)
     {
-        // Retrieve the stream for fetching our data
-        GetFileStream(fileData.GoogleDriveFileId, fileData.LocalBackupFile, "text/csv", out Stream dataStream);
-
-        // Read the contents of the stream into T objects
-        using (var reader = new StreamReader(dataStream))
-        {
-            FillOutCsvRecords<T>(reader, out data);
-        }
-
-        // Cleanup
-        dataStream.Dispose();
+        data = ProcessFile<IEnumerable<T>>(fileData, FillOutCsvRecords<T>);
     }
     
+    /// <summary>
+    /// Loads a JSON document using the paths indicated by the passed in fileData. Returns the result through the output "data" parameter.
+    /// </summary>
+    /// <typeparam name="T">The type of object to load in. The keys here should match the keys in the JSON object.</typeparam>
+    /// <param name="fileData">The FileStorageData representing the file to load in.</param>
+    /// <param name="data">Output parameter through which the result data will be returned.</param>
+    public static void LoadJson<T>(FileStorageData fileData, out T data)
+    {
+        data = ProcessFile<T>(fileData, LoadRecordFromJson<T>);
+    }
+
     /// <summary>
     /// Runs through the list of files to create each backup.
     /// </summary>
@@ -49,7 +51,7 @@ public class GameData
         // Go through the list one-by-one to create the backup
         foreach (var file in Files.FilesList)
         {
-            CreateBackupFile(file.GoogleDriveFileId, file.LocalBackupFile, file.MimeType);
+            CreateBackupFile(file.GoogleDriveFileId, file.LocalBackupFile);
         }
     }
     
@@ -59,10 +61,10 @@ public class GameData
     /// <param name="googleDriveFileId">The file ID to create the backup from</param>
     /// <param name="localFilePath">The location on disk to store the backup</param>
     /// <param name="mimeType">The mime type of the file content. Defaults to text/csv.</param>
-    protected static bool CreateBackupFile(string googleDriveFileId, string localFilePath, string mimeType = "text/csv")
+    protected static bool CreateBackupFile(string googleDriveFileId, string localFilePath)
     {
         // Attempt to download the file from Google Drive
-        var canAccessGoogleDrive = DownloadFileFromGoogleDrive(googleDriveFileId, mimeType, out Stream dataStream);
+        var canAccessGoogleDrive = DownloadFileFromGoogleDrive(googleDriveFileId, out Stream dataStream);
         if (!canAccessGoogleDrive)
         {
             return false;
@@ -80,23 +82,31 @@ public class GameData
     }
 
     /// <summary>
-    /// Retrieves a file stream, attempting to download the file from Google Drive and defaulting to a local backup if Drive fails.
+    /// Helper function for processing files. Takes in the FileStorageData for a file and a processor function to run,
+    /// then returns back the result from the processor function.
     /// </summary>
-    /// <param name="googleDriveFileId">The file id to download from Google Drive</param>
-    /// <param name="localFilePath">The path to the same file, stored locally</param>
-    /// <param name="mimeType">The mime type of the file to download</param>
-    /// <param name="dataStream">The resultant data stream</param>
-    protected static void GetFileStream(string googleDriveFileId, string localFilePath, string mimeType, out Stream dataStream)
+    /// <param name="fileData">The data of the file we want to read from</param>
+    /// <param name="processor">The function to run. It should take in a StreamReader and return the list of results.</param>
+    protected static T ProcessFile<T>(FileStorageData fileData, Func<StreamReader, T> processor)
     {
-        // Attempt to download the file from Google Drive first, to get our most recent copy
-        var canDownloadDrive = DownloadFileFromGoogleDrive(googleDriveFileId, mimeType, out dataStream);
-        if (canDownloadDrive)
+        // Create a placeholder for the result; this will be returned from the function
+        T result;
+
+        // Retrieve the stream for fetching our data
+        GetFileStream(fileData.GoogleDriveFileId, fileData.LocalBackupFile, out Stream dataStream);
+
+        // Read the contents of the stream into our StreamReader
+        using (var reader = new StreamReader(dataStream))
         {
-            return;
+            // Call the passed in function to process the data into our result
+            result = processor(reader);
         }
 
-        // If that fails, default to our local file
-        dataStream = File.OpenRead(localFilePath);
+        // Cleanup
+        dataStream.Dispose();
+
+        // And return the result
+        return result;
     }
 
     /// <summary>
@@ -105,7 +115,7 @@ public class GameData
     /// <typeparam name="T">The type of object to load in. Note that the field keys should match the headers of the CSV.</typeparam>
     /// <param name="reader">The reader stream</param>
     /// <param name="resultData">The resultant data, where each record is one single row from the csv</param>
-    protected static void FillOutCsvRecords<T>(TextReader reader, out IEnumerable<T> resultData)
+    protected static IEnumerable<T> FillOutCsvRecords<T>(TextReader reader)
     {
         // Creating a new List object here to store all the data
         var outputList = new List<T>();
@@ -122,10 +132,39 @@ public class GameData
             }
         }
 
-        // Last step is to set up the output to point to our result data
-        resultData = outputList;
+        return outputList;
     }
 
+    /// <summary>
+    /// Reads in a JSON record, given a Stream of the JSON file contents.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="reader"></param>
+    /// <returns></returns>
+    protected static T LoadRecordFromJson<T>(StreamReader reader)
+    {
+        return JsonUtility.FromJson<T>(reader.ReadToEnd());
+    }
+
+    /// <summary>
+    /// Retrieves a file stream, attempting to download the file from Google Drive and defaulting to a local backup if Drive fails.
+    /// </summary>
+    /// <param name="googleDriveFileId">The file id to download from Google Drive</param>
+    /// <param name="localFilePath">The path to the same file, stored locally</param>
+    /// <param name="mimeType">The mime type of the file to download</param>
+    /// <param name="dataStream">The resultant data stream</param>
+    protected static void GetFileStream(string googleDriveFileId, string localFilePath, out Stream dataStream)
+    {
+        // Attempt to download the file from Google Drive first, to get our most recent copy
+        var canDownloadDrive = DownloadFileFromGoogleDrive(googleDriveFileId, out dataStream);
+        if (canDownloadDrive)
+        {
+            return;
+        }
+
+        // If that fails, default to our local file
+        dataStream = File.OpenRead(localFilePath);
+    }
 
     /// <summary>
     /// Downloads a file that has been stored in Google Drive.
@@ -133,12 +172,12 @@ public class GameData
     /// <param name="fileId">The ID of the file to download</param>
     /// <param name="mimeType">The mime type to expect for the file</param>
     /// <param name="result">The result stream where data will be saved to</param>
-    protected static bool DownloadFileFromGoogleDrive(string fileId, string mimeType, out Stream result)
+    protected static bool DownloadFileFromGoogleDrive(string fileId, out Stream result)
     {
         result = new MemoryStream();
 
         // Download the file into our result stream
-        var export = googleDrive.Files.Export(fileId, mimeType);
+        var export = googleDrive.Files.Get(fileId);
         var response = export.DownloadWithStatus(result);
 
         // Note: Once the data is written to the stream, the stream position will be set to the end

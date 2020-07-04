@@ -16,9 +16,9 @@ public class LoadCsvTest : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
-    { 
+    {
         // Load in all the data
-        GameData.LoadCsv<Foo>(Files.TestFile, out IEnumerable<Foo> result);
+        GameData.LoadCsv<Foo>(Files.TestCsv, out IEnumerable<Foo> result);
 
         // Outputs all the data in the logs
         var resultString = new System.Text.StringBuilder();
