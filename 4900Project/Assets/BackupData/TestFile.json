@@ -1,4 +1,4 @@
 {
-	"IsATest": true,
-	"Name": "Google Drive"
+	"CanLoadJson": true,
+	"Name": "Test Json"
 }
