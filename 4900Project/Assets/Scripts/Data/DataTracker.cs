@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Encounters;
+using Quests;
 
 public class DataTracker : MonoBehaviour
 {
@@ -12,10 +13,13 @@ public class DataTracker : MonoBehaviour
     public OverworldMap.LocationGraph WorldMap = OverworldMapLoader.CreateTestMap();
     public QuestManager QuestManager = QuestManager.Instance;
     public EncounterManager EncounterManager = EncounterManager.Instance;
+    public EventManager EventManager = EventManager.Instance;
+    public TownManager TownManager = TownManager.Instance;
+    public ShopManager ShopManager = ShopManager.Instance;
 
     [SerializeField]
-    public int currentShop = 0; // Needed if we want store to be their own scene. If we make the store window a prefab, we don't need this.
-    public int currentNode = 0;
+    public int currentShopId = 0; // Needed if we want store to be their own scene. If we make the store window a prefab, we don't need this.
+    public int currentLocationId = 0;
 
     private void Awake() {
         if (_current != null && _current != this)
@@ -32,16 +36,23 @@ public class DataTracker : MonoBehaviour
         Player.Inventory.addItem("item5", 1);
         Player.Inventory.addItem("item7", 6);
 
+        ShopManager.LoadData();
+        TownManager.LoadData();
+
         DontDestroyOnLoad(gameObject);
     }
 
-
     public OverworldMap.LocationNode GetCurrentNode(){
         OverworldMap.LocationNode node;
-        if (WorldMap.GetNode(currentNode, out node)){
+        if (WorldMap.GetNode(currentLocationId, out node)){
             return node;
         }
         return null;
+    }
+
+    public void PrintQuest()
+    {
+        Debug.Log(QuestManager.GetActiveQuest());
     }
 }
 

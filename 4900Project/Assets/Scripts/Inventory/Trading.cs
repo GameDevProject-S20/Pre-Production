@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.XR.WSA.Input;
 
 public class Trading : MonoBehaviour
 {
@@ -31,7 +31,7 @@ public class Trading : MonoBehaviour
     TextMeshProUGUI Name;
 
     public void Start() {
-        shop = ShopManager.Current.GetShopById(DataTracker.Current.currentShop);
+        shop = ShopManager.Instance.GetShopById(DataTracker.Current.currentShopId);
         copyOfPlayerInventory = new Inventory(DataTracker.Current.Player.Inventory);
         copyOfShopInventory = new Inventory(shop.inventory);
         buildShopList();
@@ -205,31 +205,34 @@ public class Trading : MonoBehaviour
     }
 
     void makeTrade(){
+
+        EventManager.Transaction.Entity from = EventManager.Transaction.Entity.SYSTEM;
+        EventManager.Transaction.Entity to = EventManager.Transaction.Entity.PLAYER;
+
         foreach (var item in cart.getContents()){
-            // Should use event system
-            DataTracker.Current.Player.Inventory.addItem(item.Key, item.Value);
-            copyOfPlayerInventory.addItem(item.Key, item.Value);
+
             shop.inventory.removeItem(item.Key, item.Value);
 
-            EventManager.Current.onTransaction.Invoke(item.Key, item.Value);
-           // foreach (var quest in DataTracker.Current.QuestManager.GetQuests())
-           // {
-            //    Debug.Log("Quest Stage is currently currently set to: " + quest.CurrentStage);
-           // }
+            copyOfPlayerInventory.addItem(item.Key, item.Value);
+            DataTracker.Current.Player.Inventory.addItem(item.Key, item.Value);
+
+            EventManager.Transaction.Details transactionDetails = new EventManager.Transaction.Details(item.Key, item.Value, DataTracker.Current.currentShopId, from, to);
+            DataTracker.Current.EventManager.OnTransaction.Invoke(transactionDetails);
         }
+
+        from = EventManager.Transaction.Entity.PLAYER;
+        to = EventManager.Transaction.Entity.SYSTEM;
+
         foreach (var item in offer.getContents()){
+
+            DataTracker.Current.Player.Inventory.removeItem(item.Key, item.Value);
+            
             shop.inventory.addItem(item.Key, item.Value);
             copyOfShopInventory.addItem(item.Key, item.Value);
-            DataTracker.Current.Player.Inventory.removeItem(item.Key, item.Value);
 
-            //Quest Trade Conditions must be negative for selling items, positive for buying
-            EventManager.Current.onTransaction.Invoke(item.Key, -item.Value);
-           // foreach (var quest in DataTracker.Current.QuestManager.GetQuests())
-            //{
-           //     Debug.Log("Quest Stage is currently currently set to: " + quest.CurrentStage);
-            //}
+            EventManager.Transaction.Details transactionDetails = new EventManager.Transaction.Details(item.Key, item.Value, DataTracker.Current.currentShopId, from, to);
+            DataTracker.Current.EventManager.OnTransaction.Invoke(transactionDetails);
         }
-
 
         cart.getContents().Clear();
         offer.getContents().Clear();

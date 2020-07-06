@@ -45,7 +45,7 @@ public class OverworldMapUI : MonoBehaviour
                 nodeObj.transform.Find("TownMesh").gameObject.SetActive(true);
                 nodeObj.transform.Rotate(new Vector3(0, Random.Range(0, 360), 0), Space.Self);
             }
-            if (node.Id == DataTracker.Current.currentNode){
+            if (node.Id == DataTracker.Current.currentLocationId){
                 playerMarker.transform.position = nodeObj.transform.position;
                 targetPos = playerMarker.transform.position;
             }
@@ -82,8 +82,8 @@ public class OverworldMapUI : MonoBehaviour
             if(Physics.Raycast (ray, out hit,999, LayerMask.GetMask("MapNode")))
             {
                 int selected =hit.collider.gameObject.GetComponent<MapNode>().nodeID;
-                if (DataTracker.Current.WorldMap.HasEdge(selected, DataTracker.Current.currentNode)){
-                    DataTracker.Current.currentNode = selected;
+                if (DataTracker.Current.WorldMap.HasEdge(selected, DataTracker.Current.currentLocationId)){
+                    DataTracker.Current.currentLocationId = selected;
                     targetPos = hit.collider.gameObject.transform.position;
                     OverworldMap.LocationNode node;
                     if (DataTracker.Current.WorldMap.GetNode(selected, out node)){

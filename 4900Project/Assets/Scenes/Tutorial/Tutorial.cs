@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
 using Encounters;
+using Quests;
+using System.Linq;
 
 public class Tutorial : MonoBehaviour
 {
@@ -44,34 +46,41 @@ public class Tutorial : MonoBehaviour
 
     private void BeginQuest()
     {
-        var quest = new Quest.Builder("Medicine Quest")
-            .SetDescription("Purchase medicine to sell in Riverbed.")
-            //.SetCorrespondingTownName(null)
-            //.SetUsesTurnInButton(true)
-            //.SetDisplayName("Medicine Quest")
+        Quest.DebugPipe debugPipe = new Quest.DebugPipe(
+            (Quest q) => Debug.Log(string.Format("Completed Quest: {0}", q.Name)), 
+            (Stage s) => Debug.Log(string.Format("Completed Stage: {0}", s.Description)), 
+            (Condition c) => Debug.Log(string.Format("Completed Condition: {0}", c.Description))
+        );
+
+        Debug.Log(string.Join("\n", TownManager.Instance.GetTownEnumerable().Select(t => string.Format("{0}: {1}", t.Id, t.Name))));
+
+        Quest quest = new Quest.Builder("Medicine Quest")
+            .SetDescription("Find medicine and sell it in York.")
+
+            .AddStage(new Stage.Builder("Purchase medicine in Smithsville.")
+                .AddOnCompleteListener(debugPipe.OnStageComplete)
+                .AddCondition(new LocationSpecificTransactionCondition("Purchase 1 medicine at the Smithsville Pharmacy", "Medicine", 1, TransactionCondition.TransactionTypeEnum.BUY, TownManager.Instance.GetTownByName("Smithsville").Id)
+                    .AddListener(debugPipe.OnConditionComplete)
+                )
+            )    
+            
+            .AddStage(new Stage.Builder("Sell Medicine in York.")
+                .AddOnCompleteListener(debugPipe.OnStageComplete)
+                .AddCondition(new LocationSpecificTransactionCondition("Sell 1 medicine to the York General Store", "Medicine", 1, TransactionCondition.TransactionTypeEnum.SELL, TownManager.Instance.GetTownByName("York").Id)
+                    .AddListener(debugPipe.OnConditionComplete)
+                )
+            )
+
+            //.AddOnCompleteListener(debugPipe.OnQuestComplete)
             .Build();
 
-        
-            QuestStage s = new QuestStage();
-            s.Description = "Purchase 1 medicine in Smithsville.";
-            // TODO: Need the Node ID
-            TransactionCondition condition = new LocationSpecificTransactionCondition("Purchase 1 Medicine in Smithsville", "Medicine", 1, TransactionCondition.TranscationTypeEnum.buy, Quest.OnCompletion, 0);
-            s.conditions.Add(condition);
-            EventManager.Current.onTransaction.AddListener((string item, int count) => condition.DefaultHandler(item, count));
-            quest.AddStage(s);
-        
+        /*DataTracker.Current.QuestManager.AddQuest(quest);
+        DataTracker.Current.QuestManager.StartQuest("Medicine Quest");*/
 
-        
-            QuestStage s2 = new QuestStage();
-            s.Description = "Sell 1 Medicine in Riverbed.";
-            // TODO: Need the Node ID
-            TransactionCondition condition2 = new LocationSpecificTransactionCondition("Sell 1 Medicine in Riverbed", "Medicine", 1, TransactionCondition.TranscationTypeEnum.sell, Quest.OnCompletion, 3);
-            s2.conditions.Add(condition2);
-            quest.AddStage(s2);
-        
+    }
 
-        DataTracker.Current.QuestManager.AddQuest(quest);
-        DataTracker.Current.QuestManager.StartQuest("Medicine Quest");
+    private void ConditionDebugger()
+    {
 
     }
 
