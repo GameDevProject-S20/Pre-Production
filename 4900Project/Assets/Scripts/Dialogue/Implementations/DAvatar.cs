@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Scripts.Dialogue.Implementations
+namespace Dialogue
 {
     /// <summary>
     /// Simple implementation for an Avatar

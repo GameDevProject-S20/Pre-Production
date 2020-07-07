@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Scripts.Dialogue.Interfaces
+namespace Dialogue
 {
     /// <summary>
     /// Describes an Avatar. The Avatar will be shown on the page with a name and a character image.

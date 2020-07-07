@@ -18,6 +18,13 @@ namespace Dialogue
         protected IEnumerable<IDPage> Pages { get; set; }
         protected IEnumerator<IDPage> PageEnumerator;
 
+        /// <summary>
+        /// History of the Dialogue. 
+        /// This refers to all the pages that the Dialogue has already gone through,
+        /// and the responses that the user gave for those pages.
+        /// </summary>
+        public List<IDHistory> History { get; protected set; }
+
         // Events
         /// <summary>
         /// Called when the page is updated.
@@ -101,14 +108,22 @@ namespace Dialogue
         }
 
         /// <summary>
-        /// Activates a button, given its index.
+        /// Convenience method for activating a button given the button's index.
         /// </summary>
         /// <param name="buttonIndex">The index of the button to activate</param>
         public void PressButton(int buttonIndex)
         {
             var page = GetPage();
             var button = page.GetButton(buttonIndex);
-
+            PressButton(button);
+        }
+        /// <summary>
+        /// Activates a button given the IDButton to activate.
+        /// </summary>
+        /// <param name="button"></param>
+        public void PressButton(IDButton button)
+        {
+            AddToHistory(GetPage(), button.Text);
             button.OnButtonClick();
         }
 
@@ -128,6 +143,22 @@ namespace Dialogue
         protected void Update()
         {
             PageUpdated.Invoke();
+        }
+
+        /// <summary>
+        /// Adds a new page & response into the Dialogue history.
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="response"></param>
+        protected void AddToHistory(IDPage page, string response)
+        {
+            var history = new DHistory()
+            {
+                Page = page,
+                Response = response
+            };
+
+            History.Add(history);
         }
     }
 }
