@@ -78,7 +78,6 @@ namespace Quests
 
             // Advance to the next stage
             CurrentStage++;
-            stages[CurrentStage-1].SetActive();
 
             /*if (CurrentStage != stages.Count)
             {
@@ -96,6 +95,10 @@ namespace Quests
             {
                 IsCompleted = true;
                 OnQuestComplete.Invoke(this);
+            }
+            else
+            {
+                stages[CurrentStage].SetActive();
             }
         }
 
@@ -332,10 +335,6 @@ namespace Quests
             ItemName = _itemName;
             RequiredCount = _requiredCount;
             TransactionType = _transactionType;
-            if (TransactionType == TransactionTypeEnum.SELL)
-            {
-                _requiredCount = -RequiredCount;
-            }
 
             // Wanted to add a list of listeners to Condition class, but it involves a lot of type generics that make the code messy
             transactionAction = new UnityAction<EventManager.Transaction.Details>((EventManager.Transaction.Details details) => Handler(details)); 
@@ -343,6 +342,7 @@ namespace Quests
 
         public override void SetActive()
         {
+            Debug.Log(string.Format("Condition activated: {0}", this));
             DataTracker.Current.EventManager.OnTransactionHandlers.Add(transactionAction)/*OnTransaction.AddListener(transactionAction)*/;
         }
 
@@ -358,15 +358,17 @@ namespace Quests
             if (details.ItemName == ItemName && GetTransactionType(details.From, details.To) == TransactionType)
             {
                 CurrentCount += details.ItemCount;
-                if (CurrentCount == RequiredCount)
+                if (CurrentCount >= RequiredCount)
                 {
                     Satisfy();
                 }
             }
         }
         
+        //ARL Todo: Throw error if Activated post cleanup
         public override void Cleanup()
         {
+            Debug.Log(string.Format("Condition DEactivated: {0}", this));
             DataTracker.Current.EventManager.OnTransactionHandlers.Remove(transactionAction);//OnTransaction.RemoveListener(transactionAction);
         }
 
@@ -391,11 +393,11 @@ namespace Quests
 
         protected override void Handler(EventManager.Transaction.Details details)
         {
-            if (details.ItemName == ItemName && GetTransactionType(details.From, details.To) == TransactionType)
+            /*if (details.ItemName == ItemName && GetTransactionType(details.From, details.To) == TransactionType)
             {
                 Debug.Log(details.ToString());
                 Debug.Log(string.Format("current: {0}, expected: {1}", TownManager.Instance.GetTownById(DataTracker.Current.currentLocationId).Name, TownManager.Instance.GetTownById(ReqLocId).Name));
-            }
+            }*/
             // Should be a better way to look up currentLocation (should probably be in the player info)
             if (DataTracker.Current.currentLocationId != ReqLocId) return;
             base.Handler(details);

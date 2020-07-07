@@ -53,6 +53,7 @@ public class DataTracker : MonoBehaviour
     public void PrintQuest()
     {
         Debug.Log(QuestManager.GetActiveQuest());
+        Debug.Log(string.Format("Active Handlers: [{0}]\n{1}", EventManager.OnTransactionHandlers.Count, string.Join("\n", EventManager.OnTransactionHandlers)));
     }
 }
 

@@ -58,6 +58,7 @@ public class EventManager
         }
     }
 
+    //ARL Todo: Return to OnTransaction
     public List<UnityAction<Transaction.Details>> OnTransactionHandlers = new List<UnityAction<Transaction.Details>>();
     public Transaction.Event OnTransaction = new Transaction.Event();
 
