@@ -49,6 +49,7 @@ namespace Dialogue
             this.IsVisible = true;
             this.Pages = pages;
             this.PageEnumerator = pages.GetEnumerator();
+            this.History = new List<IDHistory>();
 
             // initialize the events
             PageUpdated = new DialogueUpdatedEvent();
