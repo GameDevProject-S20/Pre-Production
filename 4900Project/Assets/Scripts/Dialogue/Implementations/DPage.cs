@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Dialogue.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ namespace Dialogue
         // Properties
         public string Text { get; set; }
         public IEnumerable<IDButton> Buttons { get; set; }
+        public IDAvatar Avatar { get; set; }
 
         // Public Methods
         /// <summary>

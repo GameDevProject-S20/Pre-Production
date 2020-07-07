@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Dialogue.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,11 @@ namespace Dialogue
         /// The list of buttons to show with the page.
         /// </summary>
         IEnumerable<IDButton> Buttons { get; set; }
+
+        /// <summary>
+        /// Defines a path to an avatar image. This will be placed with the Dialogue page to show who's talking.
+        /// </summary>
+        IDAvatar Avatar { get; set; }
 
         IDButton GetButton(int buttonIndex);
     }
