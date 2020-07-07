@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Tests
 {
-    public class DataReaderTests
+    public class DataReaderTests : GameData
     {
         // Test Classes - These are used to store the data
         [Serializable]
@@ -98,6 +98,26 @@ namespace Tests
             GameData.CreateBackups();
         }
         
+        /// <summary>
+        /// Verifies that the GameData reader can hook up to Google Drive for downloading JSON.
+        /// </summary>
+        [Test]
+        public void CanReadJsonFromGoogleDrive()
+        {
+            var canRead = GameData.DownloadFileFromGoogleDrive(Files.TestBasicJson.GoogleDriveFileId, out _);
+            Assert.IsTrue(canRead, "Failed to read the JSON data.");
+        }
+
+        /// <summary>
+        /// Verifies that the GameData reader can hook up to Google Drive for downloading CSV.
+        /// </summary>
+        [Test]
+        public void CanReadCsvFromGoogleDrive()
+        {
+            var canRead = GameData.DownloadFileFromGoogleDrive(Files.TestCsv.GoogleDriveFileId, out _);
+            Assert.IsTrue(canRead, "Failed to load CSV data from Google Drive.");
+        }
+
         /// <summary>
         /// Verifies that the test class was loaded in with two values,
         /// with the values matching what's expected (first - Id 1, Name Google; second - Id 2, Name Drive)
