@@ -8,20 +8,33 @@ using System.Threading.Tasks;
 
 namespace Tests
 {
-    public class DataReaderTests
+    public class DataReaderTests : GameData
     {
         // Test Classes - These are used to store the data
-        protected class CsvTestClass
+        [Serializable]
+        protected class TestClass
         {
-            public int Id { get; set; }
-            public string Name { get; set; }
+            public int Id;
+            public string Name;
         }
 
         [Serializable]
-        protected class JsonTestClass
+        protected class BasicJsonClass
         {
             public bool CanLoadJson;
             public string Name;
+        }
+
+        [Serializable]
+        protected class JsonStringsList
+        {
+            public List<string> List;
+        }
+        
+        [Serializable]
+        protected class JsonClassesList
+        {
+            public List<TestClass> List;
         }
 
         /// <summary>
@@ -31,27 +44,47 @@ namespace Tests
         public void TestCsvReading()
         {
 
-            GameData.LoadCsv<CsvTestClass>(Files.TestCsv, out IEnumerable<CsvTestClass> results);
-
-            // Should have two results
-            Assert.AreEqual(2, results.Count(), $"The results count {results.Count()} did not match the expected count of 2.");
-
-            // Verify the names & IDs match with what's expected
-            VerifyCsvContents(results.ElementAt(0), 1, "Google");
-            VerifyCsvContents(results.ElementAt(1), 2, "Drive");
+            GameData.LoadCsv<TestClass>(Files.TestCsv, out IEnumerable<TestClass> results);
+            VerifyTestClassList(results);
         }
 
         /// <summary>
         /// Runs a JSON test. Loads in the TestJson file, and verifies that output values match what we expect
         /// </summary>
         [Test]
-        public void TestJsonReading()
+        public void BasicJsonReading()
         {
-            GameData.LoadJson<JsonTestClass>(Files.TestJson, out JsonTestClass result);
+            GameData.LoadJson<BasicJsonClass>(Files.TestBasicJson, out BasicJsonClass result);
 
             // Verify that the data loaded correctly
             Assert.AreEqual(true, result.CanLoadJson, "The JSON data could not be read.");
             Assert.AreEqual("Test Json", result.Name, $"The name field {result.Name} did not match what was expected (Test Json).");
+        }
+
+        /// <summary>
+        /// Verifies that a simple string list can be loaded in from JSON.
+        /// </summary>
+        [Test]
+        public void JsonListOfStrings()
+        {
+            GameData.LoadJson<JsonStringsList>(Files.TestJsonStringsList, out JsonStringsList result);
+
+            // Verify that the list loaded with two entities
+            Assert.AreEqual(2, result.List.Count, "The list did not load with expected number of entities (Expected 2).");
+
+            // Verify that the values match
+            Assert.AreEqual("Value 1", result.List.ElementAt(0), "The first element did not match what was expected.");
+            Assert.AreEqual("Value 2", result.List.ElementAt(1), "The second element did not match what was expected.");
+        }
+
+        /// <summary>
+        /// Verifies that we can load in a list of classes.
+        /// </summary>
+        [Test]
+        public void JsonListOfClasses()
+        {
+            GameData.LoadJson<JsonClassesList>(Files.TestJsonListOfClass, out JsonClassesList result);
+            VerifyTestClassList(result.List);
         }
 
         /// <summary>
@@ -64,6 +97,41 @@ namespace Tests
         {
             GameData.CreateBackups();
         }
+        
+        /// <summary>
+        /// Verifies that the GameData reader can hook up to Google Drive for downloading JSON.
+        /// </summary>
+        [Test]
+        public void CanReadJsonFromGoogleDrive()
+        {
+            var canRead = GameData.DownloadFileFromGoogleDrive(Files.TestBasicJson.GoogleDriveFileId, out _);
+            Assert.IsTrue(canRead, "Failed to read the JSON data.");
+        }
+
+        /// <summary>
+        /// Verifies that the GameData reader can hook up to Google Drive for downloading CSV.
+        /// </summary>
+        [Test]
+        public void CanReadCsvFromGoogleDrive()
+        {
+            var canRead = GameData.DownloadFileFromGoogleDrive(Files.TestCsv.GoogleDriveFileId, out _);
+            Assert.IsTrue(canRead, "Failed to load CSV data from Google Drive.");
+        }
+
+        /// <summary>
+        /// Verifies that the test class was loaded in with two values,
+        /// with the values matching what's expected (first - Id 1, Name Google; second - Id 2, Name Drive)
+        /// </summary>
+        /// <param name="testClassList"></param>
+        protected void VerifyTestClassList(IEnumerable<TestClass> testClassList)
+        {
+            // Should have two results
+            Assert.AreEqual(2, testClassList.Count(), $"The results count {testClassList.Count()} did not match the expected count of 2.");
+
+            // Verify the names & IDs match with what's expected
+            VerifyCsvContents(testClassList.ElementAt(0), 1, "Google");
+            VerifyCsvContents(testClassList.ElementAt(1), 2, "Drive");
+        }
 
         /// <summary>
         /// Runs through a single CSV Test Class to verify its values against what we expect
@@ -71,7 +139,7 @@ namespace Tests
         /// <param name="csvData"></param>
         /// <param name="expectedId"></param>
         /// <param name="expectedName"></param>
-        protected void VerifyCsvContents(CsvTestClass csvData, int expectedId, string expectedName)
+        protected void VerifyCsvContents(TestClass csvData, int expectedId, string expectedName)
         {
             // Assert that the ID matches
             Assert.AreEqual(expectedId, csvData.Id, $"The data's ID {csvData.Id} did not match our expected ID of {expectedId}.");
