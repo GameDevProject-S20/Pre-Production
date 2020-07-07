@@ -21,6 +21,6 @@ namespace Dialogue
         /// <summary>
         /// The response that the user gave to that page.
         /// </summary>
-        string Response { get; set; }
+        List<string> Responses { get; set; }
     }
 }

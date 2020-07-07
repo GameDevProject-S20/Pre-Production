@@ -14,6 +14,6 @@ namespace Dialogue
     class DHistory : IDHistory
     {
         public IDPage Page { get; set; }
-        public string Response { get; set; }
+        public List<string> Responses { get; set; }
     }
 }

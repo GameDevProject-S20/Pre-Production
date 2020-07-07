@@ -153,13 +153,29 @@ namespace Dialogue
         /// <param name="response"></param>
         protected void AddToHistory(IDPage page, string response)
         {
-            var history = new DHistory()
+            // There's two situations here:
+            // If the last page of our history is also our current page, then we just want to update that history.
+            // Otherwise, we need to add a new History into our list.
+            IDHistory history;
+            if (History.Count > 0 && History.Last().Page == page)
             {
-                Page = page,
-                Response = response
-            };
+                // In this case, we're still on the same page - we don't want a new History object to be created,
+                //  so just use the one that's already existing
+                history = History.Last();
+            } else
+            {
+                // Otherwise, we are on a new page, so we want to create & add a new page to our history
+                history = new DHistory()
+                {
+                    Page = page,
+                    Responses = new List<string>()
+                };
+                History.Add(history);
+            }
 
-            History.Add(history);
+            // In either case, the 'history' value is the IDHistory that we want to use;
+            // So we need to add the response into that history's list of responses
+            history.Responses.Add(response);
         }
     }
 }
