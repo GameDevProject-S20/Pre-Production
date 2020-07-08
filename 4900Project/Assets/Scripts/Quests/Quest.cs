@@ -130,7 +130,8 @@ namespace Quests
 
         public override string ToString()
         {
-            return string.Join("\n", stages.ConvertAll(s => string.Format("{0} {1}\n\t{2}", (s.Complete) ? "✓" : " ", s.Description, string.Join("\n\t", s.conditions.ConvertAll(c => string.Format("{0} {1}", (c.IsSatisfied) ? "✓" : " ", c))))));
+            return string.Format("*** {0} *** {1}\n\n{2}\n\n============\n{3}\n============", Name, IsCompleted ? "[COMPLETE]" : "[IN PROGRESS]", Description,
+                string.Join("\n============\n\n============\n", stages.ConvertAll(s => string.Format("{0} {1}\n\t{2}", (s.Complete) ? "✓" : " ", s.Description, string.Join("\n\t", s.conditions.ConvertAll(c => string.Format("{0} {1}", (c.IsSatisfied) ? "✓" : " ", c)))))));
         }
 
         /// <summary>
@@ -321,7 +322,6 @@ namespace Quests
 
         public override void AllowProgression()
         {
-            Debug.Log(string.Format("Condition activated: {0}", this));
             if (transactionAction == null)
             {
                 // Wanted to add a list of listeners to Condition class, but it involves a lot of type generics that make the code messy
@@ -332,7 +332,6 @@ namespace Quests
 
         public override void DisallowProgression()
         {
-            Debug.Log(string.Format("Condition DEactivated: {0}", this));
             EventManager.Instance.OnTransaction.RemoveListener(transactionAction);
         }
 
