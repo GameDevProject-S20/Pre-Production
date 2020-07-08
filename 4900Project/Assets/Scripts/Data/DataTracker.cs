@@ -51,6 +51,8 @@ public class DataTracker : MonoBehaviour
         return null;
     }
 
+    // Useed for debugging
+    //   See accompanying button in DataTracker scene
     public void PrintQuest()
     {
         Debug.Log(QuestManager.GetActiveQuest());

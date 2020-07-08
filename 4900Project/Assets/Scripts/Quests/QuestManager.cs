@@ -20,17 +20,18 @@ namespace Quests
             }
         }
 
+        // Quest lists
+        private Dictionary<string, Quest> inactiveQuests = new Dictionary<string, Quest>();
+        private Quest activeQuest = null;
+        private Dictionary<string, Quest> completedQuests = new Dictionary<string, Quest>();
+        private Dictionary<string, Quest> allQuests = new Dictionary<string, Quest>();
+
         private QuestManager() 
         {
             Quest.OnQuestComplete.AddListener((Quest q) => CompleteQuest(q));
         }
 
-        //quest lists
-        Dictionary<string, Quest> inactiveQuests = new Dictionary<string, Quest>();
-        Quest activeQuest = null;
-        Dictionary<string, Quest> completedQuests = new Dictionary<string, Quest>();
-        Dictionary<string, Quest> allQuests = new Dictionary<string, Quest>();
-        //add quest to list
+        // Add quest to list
         public void AddQuest(Quest quest)
         {
             string qn = quest.Name;
@@ -40,7 +41,7 @@ namespace Quests
         }
 
 
-        // load quest from inactive list to active
+        // Load quest from inactive list to active
         public void StartQuest(string questName)
         {
             if (activeQuest != null)
@@ -64,7 +65,7 @@ namespace Quests
         }
 
 
-        //IComplete a quest and shift it to the proper spot
+        // I Complete a quest and shift it to the proper spot
         private void CompleteQuest(Quest quest)
         {
             quest.DisallowProgression();

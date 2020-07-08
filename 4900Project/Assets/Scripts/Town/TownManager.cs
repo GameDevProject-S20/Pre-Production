@@ -78,6 +78,11 @@ public class TownManager
         }
     }
 
+    /// <summary>
+    /// Retrieve town by its name, if it exists
+    /// </summary>
+    /// <param name="name">Name of Town</param>
+    /// <returns>The corresponding town or null if not found</returns>
     public Town GetTownByName(string name)
     {
         foreach (var town in towns.Values)

@@ -3,6 +3,9 @@ using Quests;
 
 namespace SIEvents
 {
+    /// <summary>
+    /// Contains definitions for system-accessable events
+    /// </summary>
     public class Events
     {
         public partial class Transaction

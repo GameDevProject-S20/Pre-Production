@@ -10,6 +10,9 @@ using SIEvents;
 
 namespace Quests
 {
+    /// <summary>
+    /// A Quest object that can toggle progression on and off
+    /// </summary>
     public interface IQuest
     {
         // Set listeners
@@ -23,6 +26,9 @@ namespace Quests
         void DisallowProgression();
     }
 
+    /// <summary>
+    /// A series of tasks for the player to complete
+    /// </summary>
     public class Quest : IQuest
     {
 
@@ -35,6 +41,9 @@ namespace Quests
         public List<Stage> stages = new List<Stage>();
         public bool IsCompleted { get; private set; } = false;
 
+        /// <summary>
+        /// Intended only to be subscribed to by QuestManager
+        /// </summary>
         public static Events.Quest.QuestComplete OnQuestComplete = new Events.Quest.QuestComplete();
         public static Events.Quest.StageComplete OnStageComplete = new Events.Quest.StageComplete();
         public static Events.Quest.ConditionComplete OnConditionComplete = new Events.Quest.ConditionComplete();
@@ -124,6 +133,9 @@ namespace Quests
             return string.Join("\n", stages.ConvertAll(s => string.Format("{0} {1}\n\t{2}", (s.Complete) ? "✓" : " ", s.Description, string.Join("\n\t", s.conditions.ConvertAll(c => string.Format("{0} {1}", (c.IsSatisfied) ? "✓" : " ", c))))));
         }
 
+        /// <summary>
+        /// Builds a new Quest object
+        /// </summary>
         public partial class Builder
         {
             private string name;
@@ -170,7 +182,9 @@ namespace Quests
 
     }
 
-
+    /// <summary>
+    /// Subsections of a Quest
+    /// </summary>
     public class Stage : IQuest
     {
         public List<Condition> conditions = new List<Condition>();
@@ -213,6 +227,9 @@ namespace Quests
             }
         }
 
+        /// <summary>
+        /// Builds a new Stage object
+        /// </summary>
         public partial class Builder
         {
             private string description;
@@ -249,9 +266,11 @@ namespace Quests
         }
     }
 
-
-    // Quest conditions listen for events from the QuestManager
-    // When they're satisfied, they notify the quest to check for completion
+    /// <summary>
+    /// Specific functional conditions that make up a Quest Stage
+    /// 
+    /// They listen for events from the QuestManager and mark themselves as satisfied accordingly
+    /// </summary>
     public abstract class Condition : IQuest
     {
         public bool IsSatisfied { get; private set; } = false;
@@ -317,6 +336,12 @@ namespace Quests
             EventManager.Instance.OnTransaction.RemoveListener(transactionAction);
         }
 
+        /// <summary>
+        /// Used to translate between Transaction Event types defined in the Event System and in this Condition
+        /// </summary>
+        /// <param name="from">The seller</param>
+        /// <param name="to">The buyer</param>
+        /// <returns>Either BUY or SELL, from the player's perspective</returns>
         protected TransactionTypeEnum GetTransactionType(Events.Transaction.Entity from, Events.Transaction.Entity to)
         {
             if (from == to) throw new ArgumentException("From and To cannot be the same source");
