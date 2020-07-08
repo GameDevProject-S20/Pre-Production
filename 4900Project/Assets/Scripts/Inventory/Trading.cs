@@ -124,29 +124,29 @@ public class Trading : MonoBehaviour
     }
 
     void addToCart(string item){
-        cart.addItem(item, 1);
-        copyOfShopInventory.removeItem(item, 1); 
+        cart.AddItem(item, 1);
+        copyOfShopInventory.RemoveItem(item, 1); 
         buildCartList();
         buildShopList();
     }
 
     void addToOffer(string item){
-        offer.addItem(item, 1);
-        copyOfPlayerInventory.removeItem(item, 1);
+        offer.AddItem(item, 1);
+        copyOfPlayerInventory.RemoveItem(item, 1);
         buildOfferList();
         buildPlayerList();
     }
 
     void removeFromCart(string item){
-        copyOfShopInventory.addItem(item, 1);
-        cart.removeItem(item, 1);
+        copyOfShopInventory.AddItem(item, 1);
+        cart.RemoveItem(item, 1);
         buildCartList();
         buildShopList();
     }
 
     void removeFromOffer(string item){
-        copyOfPlayerInventory.addItem(item, 1);
-        offer.removeItem(item, 1);
+        copyOfPlayerInventory.AddItem(item, 1);
+        offer.RemoveItem(item, 1);
         buildPlayerList();
         buildOfferList();
 
@@ -186,9 +186,9 @@ public class Trading : MonoBehaviour
     /// 3: Player offer is too low (not accepted)
     /// </returns>
     int validateTrade(){
-        if (copyOfPlayerInventory.canFitItems(cart.totalWeight())){
-            float totalCartValue = cart.totalValue(shop.toPlayerModifiers);
-            float totalOfferValue = offer.totalValue(shop.fromPlayerModifiers);
+        if (copyOfPlayerInventory.CanFitItems(cart.TotalWeight())){
+            float totalCartValue = cart.TotalValue(shop.toPlayerModifiers);
+            float totalOfferValue = offer.TotalValue(shop.fromPlayerModifiers);
             float difference =  totalOfferValue - totalCartValue;
             if(difference > totalCartValue * shop.acceptedPriceDifference) {
                 return 1;
@@ -212,10 +212,10 @@ public class Trading : MonoBehaviour
 
         foreach (var item in cart.getContents()){
 
-            shop.inventory.removeItem(item.Key, item.Value);
+            shop.inventory.RemoveItem(item.Key, item.Value);
 
-            copyOfPlayerInventory.addItem(item.Key, item.Value);
-            DataTracker.Current.Player.Inventory.addItem(item.Key, item.Value);
+            copyOfPlayerInventory.AddItem(item.Key, item.Value);
+            DataTracker.Current.Player.Inventory.AddItem(item.Key, item.Value);
 
             Events.Transaction.Details transactionDetails = new Events.Transaction.Details(item.Key, item.Value, DataTracker.Current.currentShopId, from, to);
             DataTracker.Current.EventManager.OnTransaction.Invoke(transactionDetails);
@@ -226,10 +226,10 @@ public class Trading : MonoBehaviour
 
         foreach (var item in offer.getContents()){
 
-            DataTracker.Current.Player.Inventory.removeItem(item.Key, item.Value);
+            DataTracker.Current.Player.Inventory.RemoveItem(item.Key, item.Value);
             
-            shop.inventory.addItem(item.Key, item.Value);
-            copyOfShopInventory.addItem(item.Key, item.Value);
+            shop.inventory.AddItem(item.Key, item.Value);
+            copyOfShopInventory.AddItem(item.Key, item.Value);
 
             Events.Transaction.Details transactionDetails = new Events.Transaction.Details(item.Key, item.Value, DataTracker.Current.currentShopId, from, to);
             DataTracker.Current.EventManager.OnTransaction.Invoke(transactionDetails);
