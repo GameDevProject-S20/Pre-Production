@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
+using SIEvents;
 
 namespace Quests
 {
@@ -38,7 +39,8 @@ namespace Quests
             completedQuests = new List<Quest>();
 
             // Set up event listeners
-            EventManager.Instance.onQuestUpdate.AddListener(onQuestUpdate);
+            EventManager.Instance.OnQuestComplete.AddListener(onQuestComplete);
+            EventManager.Instance.OnQuestAdded.AddListener(onQuestAdded);
 
             requestQuests();
         }
@@ -56,8 +58,8 @@ namespace Quests
             DataTracker.Current.QuestManager.UpdateJournal();
         }
 
-        // Add or remove it from the list
-        private void onQuestUpdate(Quest quest)
+        // Remove it from the list
+        private void onQuestComplete(Quest quest)
         {
             if (quest.IsCompleted)
             {
@@ -67,12 +69,14 @@ namespace Quests
                 }
                 activeQuests.Remove(quest);
             }
-            else
+        }
+
+        // Add it to the list
+        private void onQuestAdded(Quest quest)
+        {
+            if (!activeQuests.Contains(quest))
             {
-                if (!activeQuests.Contains(quest))
-                {
-                    activeQuests.Add(quest);
-                }
+                activeQuests.Add(quest);
             }
         }
     }

@@ -6,11 +6,26 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using SIEvents;
 
 namespace Quests
 {
-    public class Quest
+    public interface IQuest
     {
+        // Set listeners
+        //
+        // Warning! 
+        //  This may cause issues with duplicate listeners if called multiple times with no accompanying DisallowProgression call in between.
+        //  UnityEvent is obfuscated, so it is currently impossible to tell without testing
+        void AllowProgression();
+        
+        // Remove listeners
+        void DisallowProgression();
+    }
+
+    public class Quest : IQuest
+    {
+
         private static int Ids = 0;
         public int Id { get; }
         public string Name;
@@ -19,53 +34,56 @@ namespace Quests
         public int CurrentStage { get; private set; }
         public List<Stage> stages = new List<Stage>();
         public bool IsCompleted { get; private set; } = false;
-        //public static UnityEvent OnStageCompletion = new UnityEvent();
-        public class QuestComplete : UnityEvent<Quest> { }
-        public QuestComplete OnQuestComplete;
 
-        // Currently not used
-        public class QuestProgressed : UnityEvent<Quest> { }
-        public QuestProgressed OnQuestProgressed;
+        public static Events.Quest.QuestComplete OnQuestComplete = new Events.Quest.QuestComplete();
+        public static Events.Quest.StageComplete OnStageComplete = new Events.Quest.StageComplete();
+        public static Events.Quest.ConditionComplete OnConditionComplete = new Events.Quest.ConditionComplete();
 
-        public struct DebugPipe
-        {
-            public UnityAction<Quest> OnQuestComplete { get; }
-            public UnityAction<Stage> OnStageComplete { get; }
-            public UnityAction<Condition> OnConditionComplete { get; }
+        private UnityAction<Stage> OnStageCompleteListener;
 
-            public DebugPipe(UnityAction<Quest> onQuestComplete, UnityAction<Stage> onStageComplete, UnityAction<Condition> onConditionComplete)
-            {
-                OnQuestComplete = onQuestComplete;
-                OnStageComplete = onStageComplete;
-                OnConditionComplete = onConditionComplete;
-            }
-        }
+        private bool progressionAllowed;
 
         private Quest()
         {
             Id = Ids++;
             CurrentStage = 0;
-            OnQuestComplete = new QuestComplete();
-            OnQuestProgressed = new QuestProgressed();
-            //OnStageCompletion.AddListener(HandleStageComplete);
+            progressionAllowed = false;
         }
 
-        public void OnStageCompleteHandler()
+        public void AllowProgression()
+        {
+            if (progressionAllowed) return;
+
+            if (OnStageCompleteListener == null)
+            {
+                OnStageCompleteListener = (Stage s) =>
+                    {
+                        if (stages[CurrentStage] == s) OnStageCompleteHandler(s);
+                    };
+            }
+            
+            EventManager.Instance.OnStageComplete.AddListener(OnStageCompleteListener);
+
+            // Allow progression on current stage
+            stages[CurrentStage].AllowProgression();
+        }
+
+        public void DisallowProgression()
+        {
+            if (!progressionAllowed) return;
+
+            EventManager.Instance.OnStageComplete.RemoveListener(OnStageCompleteListener);
+
+            // Disallow progression on current stage
+            stages[CurrentStage].DisallowProgression();
+        }
+
+        private void OnStageCompleteHandler(Stage stage)
         {
             if (IsCompleted)
                 return;
 
-            // ALREADY HANDLED IN STAGE
-            // Check if all conditions in this step have been met
-            /*Stage stage = stages[CurrentStage];
-            foreach (Condition qc in stage.conditions)
-            {
-                if (!qc.IsSatisfied)
-                {
-                    return;
-                }
-            }*/
-
+            //Todo: Move to Stage
             // Apply effects of current stage
             /*Action<Trader> effect;
             if (stageEffects.TryGetValue(stage, out effect))
@@ -73,22 +91,11 @@ namespace Quests
                 effect(player);// Invoking function
             }*/
 
-            // Call the Check handler unique for each instance of Quest
-
+            OnStageComplete.Invoke(stage);
 
             // Advance to the next stage
-            CurrentStage++;
-
-            /*if (CurrentStage != stages.Count)
-            {
-                EventManager.Instance.OnTransaction.RemoveAllListeners();
-                foreach (TransactionCondition condition in stages[CurrentStage].conditions)
-                {
-                    Debug.Log("Adding the next stage listener");
-                    EventManager.Instance.OnTransaction.AddListener((EventManager.Transaction.Details details) => condition.DefaultHandler(details.ItemName, details.ItemCount));
-                }
-            }*/
-
+            DisallowProgression();
+            CurrentStage++; 
 
             // If we are at the last stage, complete the quest
             if (CurrentStage == stages.Count)
@@ -98,7 +105,7 @@ namespace Quests
             }
             else
             {
-                stages[CurrentStage].SetActive();
+                stages[CurrentStage].AllowProgression();
             }
         }
 
@@ -107,18 +114,9 @@ namespace Quests
             return IsCompleted;
         }
 
-        /*void AdvanceToStage(int stage)
-        {
-            CurrentStage = stage;
-        }*/
-
         public void AddStage(Stage stage)
         {
             stages.Add(stage);
-            if (stages.Count == 1)
-            {
-                stages[0].SetActive();
-            }
         }
 
         public override string ToString()
@@ -131,15 +129,11 @@ namespace Quests
             private string name;
             private string description;
             private List<Stage.Builder> stageBuilders;
-            private QuestComplete onComplete;
-            //private bool TurnInButton;
-            //private string TownName;
 
             public Builder(string name)
             {
                 this.name = name;
                 stageBuilders = new List<Stage.Builder>();
-                onComplete = new QuestComplete();
             }
 
             public Builder SetDescription(string description)
@@ -154,26 +148,6 @@ namespace Quests
                 return this;
             }
 
-            public Builder AddOnCompleteListener(UnityAction<Quest> listener)
-            {
-                this.onComplete.AddListener(listener);
-                return this;
-            }
-
-            //Todo: Add stage
-
-            /*public Builder SetTurnInButton(bool uses)
-            {
-                this.TurnInButton = uses;
-                return this;
-            }
-
-            public Builder SetCorrespondingTownName(string name)
-            {
-                this.TownName = name;
-                return this;
-            }*/
-
             public Quest Build()
             {
                 if (stageBuilders.Count == 0) throw new ArgumentException("Quest Requires at least one stage.");
@@ -184,17 +158,12 @@ namespace Quests
                 q.Name = name;
                 if (description != null) q.Description = description;
 
-                // Set quest complete listeners
-                q.OnQuestComplete = onComplete;
-
-                // Add stage complete handlers
-                stageBuilders.ForEach(b => q.AddStage(b.AddOnCompleteListener(s => q.OnStageCompleteHandler()).Build()));
+                // Add stages
+                stageBuilders.ForEach(b => q.AddStage(b.Build()));
 
                 QuestManager.Instance.AddQuest(q);
                 QuestManager.Instance.StartQuest(q.Name);
 
-                //if (TownName != null) q.TownName = TownName;
-                //q.TurnInButton = TurnInButton;
                 return q;
             }
         }
@@ -202,26 +171,37 @@ namespace Quests
     }
 
 
-
-    public class Stage
+    public class Stage : IQuest
     {
-        public partial class StageComplete : UnityEvent<Stage> { };
-        public StageComplete OnComplete;
-
         public List<Condition> conditions = new List<Condition>();
         public string Description { get; }
         public bool Complete { get; private set; }
 
+        private UnityAction<Condition> OnConditionCompleteListener;
+
+        private Stage() { }
         private Stage(string description)
         {
             Description = description;
-            OnComplete = new StageComplete();
             Complete = false;
         }
 
-        public void SetActive()
+        public void AllowProgression()
         {
-            conditions.ForEach(c => c.SetActive());
+            if (OnConditionCompleteListener == null)
+            {
+                OnConditionCompleteListener = (Condition c) => 
+                    { 
+                        if (conditions.Contains(c)) OnConditionCompleteHandler(); 
+                    };
+            }
+            EventManager.Instance.OnConditionComplete.AddListener(OnConditionCompleteListener);
+            conditions.ForEach(c => c.AllowProgression());
+        }
+
+        public void DisallowProgression()
+        {
+            EventManager.Instance.OnConditionComplete.RemoveListener(OnConditionCompleteListener);
         }
 
         public void OnConditionCompleteHandler()
@@ -229,7 +209,7 @@ namespace Quests
             if (conditions.All(c => c.IsSatisfied))
             {
                 Complete = true;
-                OnComplete.Invoke(this);
+                EventManager.Instance.OnStageComplete.Invoke(this);
             }
         }
 
@@ -237,7 +217,6 @@ namespace Quests
         {
             private string description;
             private List<Condition> conditions;
-            private StageComplete onComplete;
 
             private Builder() { }
 
@@ -245,17 +224,11 @@ namespace Quests
             {
                 this.description = description;
                 conditions = new List<Condition>();
-                onComplete = new StageComplete();
             }
 
             public Builder AddCondition(Condition c)
             {
                 conditions.Add(c);
-                return this;
-            }
-            public Builder AddOnCompleteListener(UnityAction<Stage> onComplete)
-            {
-                this.onComplete.AddListener(onComplete);
                 return this;
             }
 
@@ -267,13 +240,10 @@ namespace Quests
                 }
 
                 Stage stage = new Stage(description);
-
-                // Set condition complete handlers
-                conditions.ForEach(cdn => cdn.OnComplete.AddListener(c => stage.OnConditionCompleteHandler()));
+                
+                //conditions.ForEach(cdn => cdn.OnComplete.AddListener(c => stage.OnConditionCompleteHandler()));
                 stage.conditions = conditions;
 
-                // Set listeners
-                if (onComplete != null) stage.OnComplete = onComplete;
                 return stage;
             }
         }
@@ -282,130 +252,93 @@ namespace Quests
 
     // Quest conditions listen for events from the QuestManager
     // When they're satisfied, they notify the quest to check for completion
-    public abstract class Condition
+    public abstract class Condition : IQuest
     {
         public bool IsSatisfied { get; private set; } = false;
         public string Description;
-        public class ConditionComplete : UnityEvent<Condition> { }
-        public ConditionComplete OnComplete;
 
+        private Condition() { }
         public Condition(string _description)
         {
-            OnComplete = new ConditionComplete();
             Description = _description;
         }
+        public abstract void AllowProgression();
 
-        // Use this to turn listeners on
-        public abstract void SetActive();
+        public abstract void DisallowProgression();
 
         protected void Satisfy()
         {
             IsSatisfied = true;
-            Cleanup();
-            OnComplete.Invoke(this);
-        }
-
-        // Only here in order to get around generic complications by creating a builder
-        public Condition AddListener(UnityAction<Condition> listener)
-        {
-            OnComplete.AddListener(listener);
-            return this;
+            DisallowProgression();
+            EventManager.Instance.OnConditionComplete.Invoke(this);
         }
 
         public abstract override string ToString();
-
-        // Used to remove listeners
-        public abstract void Cleanup();
     }
 
     // Transaction condition. Listens for buy / sell events.
     // Selling with subtract from buying and vice versa.
     public class TransactionCondition : Condition
     {
-        protected string ItemName;
         public enum TransactionTypeEnum { BUY, SELL };
-        protected TransactionTypeEnum TransactionType;
-        protected int RequiredCount = 0;
-        protected int CurrentCount = 0;
-        protected UnityAction<EventManager.Transaction.Details> transactionAction;
 
-        public TransactionCondition(string _description, string _itemName, int _requiredCount, TransactionTypeEnum _transactionType)
+        private readonly string ItemName;
+        private readonly TransactionTypeEnum transactionType;
+        private readonly int requiredCount;
+        private int currentCount;
+        private readonly int? ReqLocId;
+
+        protected UnityAction<Events.Transaction.Details> transactionAction;
+
+        public TransactionCondition(string _description, string _itemName, int _requiredCount, TransactionTypeEnum _transactionType, int? requiredLocationId = null)
          : base(_description)
         {
             ItemName = _itemName;
-            RequiredCount = _requiredCount;
-            TransactionType = _transactionType;
-
-            // Wanted to add a list of listeners to Condition class, but it involves a lot of type generics that make the code messy
-            transactionAction = new UnityAction<EventManager.Transaction.Details>((EventManager.Transaction.Details details) => Handler(details)); 
+            currentCount = 0;
+            requiredCount = _requiredCount;
+            transactionType = _transactionType;
+            ReqLocId = requiredLocationId;
         }
 
-        public override void SetActive()
+        public override void AllowProgression()
         {
             Debug.Log(string.Format("Condition activated: {0}", this));
-            DataTracker.Current.EventManager.OnTransactionHandlers.Add(transactionAction)/*OnTransaction.AddListener(transactionAction)*/;
+            if (transactionAction == null)
+            {
+                // Wanted to add a list of listeners to Condition class, but it involves a lot of type generics that make the code messy
+                transactionAction = new UnityAction<Events.Transaction.Details>((Events.Transaction.Details details) => Handler(details));
+            }
+            EventManager.Instance.OnTransaction.AddListener(transactionAction);
         }
 
-        protected TransactionTypeEnum GetTransactionType(EventManager.Transaction.Entity from, EventManager.Transaction.Entity to)
+        public override void DisallowProgression()
+        {
+            Debug.Log(string.Format("Condition DEactivated: {0}", this));
+            EventManager.Instance.OnTransaction.RemoveListener(transactionAction);
+        }
+
+        protected TransactionTypeEnum GetTransactionType(Events.Transaction.Entity from, Events.Transaction.Entity to)
         {
             if (from == to) throw new ArgumentException("From and To cannot be the same source");
-            return (to == EventManager.Transaction.Entity.PLAYER) ? TransactionTypeEnum.BUY : TransactionTypeEnum.SELL;
+            return (to == Events.Transaction.Entity.PLAYER) ? TransactionTypeEnum.BUY : TransactionTypeEnum.SELL;
         }
 
         // As is, you could feasibly immediately buy the item back from the store after completing the quest
-        protected virtual void Handler(EventManager.Transaction.Details details)
+        protected virtual void Handler(Events.Transaction.Details details)
         {
-            if (details.ItemName == ItemName && GetTransactionType(details.From, details.To) == TransactionType)
+            if (details.ItemName == ItemName && GetTransactionType(details.From, details.To) == transactionType)
             {
-                CurrentCount += details.ItemCount;
-                if (CurrentCount >= RequiredCount)
+                currentCount += details.ItemCount;
+                if (currentCount >= requiredCount)
                 {
                     Satisfy();
                 }
             }
         }
-        
-        //ARL Todo: Throw error if Activated post cleanup
-        public override void Cleanup()
-        {
-            Debug.Log(string.Format("Condition DEactivated: {0}", this));
-            DataTracker.Current.EventManager.OnTransactionHandlers.Remove(transactionAction);//OnTransaction.RemoveListener(transactionAction);
-        }
-
+       
         public override string ToString()
         {
-            return string.Format("{0} {1}: {2}/{3}", (TransactionType == TransactionTypeEnum.BUY) ? "Buy" : "Sell", ItemName, CurrentCount, RequiredCount);
-        }
-    }
-
-
-    public class LocationSpecificTransactionCondition : TransactionCondition
-    {
-        private int ReqLocId;
-
-        public LocationSpecificTransactionCondition(string _description, string _itemName, int _requiredCount,
-               TransactionTypeEnum _transactionType, int _locId)
-               : base(_description, _itemName, _requiredCount, _transactionType)
-        {
-            ReqLocId = _locId;
-            Debug.Log(string.Format("{0} vs {1}", _locId, ReqLocId));
-        }
-
-        protected override void Handler(EventManager.Transaction.Details details)
-        {
-            /*if (details.ItemName == ItemName && GetTransactionType(details.From, details.To) == TransactionType)
-            {
-                Debug.Log(details.ToString());
-                Debug.Log(string.Format("current: {0}, expected: {1}", TownManager.Instance.GetTownById(DataTracker.Current.currentLocationId).Name, TownManager.Instance.GetTownById(ReqLocId).Name));
-            }*/
-            // Should be a better way to look up currentLocation (should probably be in the player info)
-            if (DataTracker.Current.currentLocationId != ReqLocId) return;
-            base.Handler(details);
-        }
-
-        public override string ToString()
-        {
-            return string.Format("{0} {1} in [{2}]{3}: {4}/{5}", (TransactionType == TransactionTypeEnum.BUY) ? "Buy" : "Sell", ItemName, ReqLocId, TownManager.Instance.GetTownById(ReqLocId).Name, CurrentCount, RequiredCount);
+            return string.Format("{0} {1}{2}: {3}/{4}", (transactionType == TransactionTypeEnum.BUY) ? "Buy" : "Sell", ItemName, (ReqLocId.HasValue) ? " " + TownManager.Instance.GetTownById(ReqLocId.Value).Name : "", currentCount, requiredCount);
         }
     }
 
@@ -422,7 +355,13 @@ namespace Quests
         }
 
         //Todo
-        public override void SetActive()
+        public override void AllowProgression()
+        {
+            throw new NotImplementedException();
+        }
+
+        //Todo
+        public override void DisallowProgression()
         {
             throw new NotImplementedException();
         }
@@ -435,12 +374,7 @@ namespace Quests
             }
         }
 
-        // Todo
-        public override void Cleanup()
-        {
-            throw new NotImplementedException();
-        }
-
+        //Todo
         public override string ToString()
         {
             throw new NotImplementedException();

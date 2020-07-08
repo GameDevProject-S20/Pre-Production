@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR.WSA.Input;
+using SIEvents;
 
 public class Trading : MonoBehaviour
 {
@@ -206,8 +207,8 @@ public class Trading : MonoBehaviour
 
     void makeTrade(){
 
-        EventManager.Transaction.Entity from = EventManager.Transaction.Entity.SYSTEM;
-        EventManager.Transaction.Entity to = EventManager.Transaction.Entity.PLAYER;
+        Events.Transaction.Entity from = Events.Transaction.Entity.SYSTEM;
+        Events.Transaction.Entity to = Events.Transaction.Entity.PLAYER;
 
         foreach (var item in cart.getContents()){
 
@@ -216,12 +217,12 @@ public class Trading : MonoBehaviour
             copyOfPlayerInventory.addItem(item.Key, item.Value);
             DataTracker.Current.Player.Inventory.addItem(item.Key, item.Value);
 
-            EventManager.Transaction.Details transactionDetails = new EventManager.Transaction.Details(item.Key, item.Value, DataTracker.Current.currentShopId, from, to);
+            Events.Transaction.Details transactionDetails = new Events.Transaction.Details(item.Key, item.Value, DataTracker.Current.currentShopId, from, to);
             DataTracker.Current.EventManager.OnTransaction.Invoke(transactionDetails);
         }
 
-        from = EventManager.Transaction.Entity.PLAYER;
-        to = EventManager.Transaction.Entity.SYSTEM;
+        from = Events.Transaction.Entity.PLAYER;
+        to = Events.Transaction.Entity.SYSTEM;
 
         foreach (var item in offer.getContents()){
 
@@ -230,7 +231,7 @@ public class Trading : MonoBehaviour
             shop.inventory.addItem(item.Key, item.Value);
             copyOfShopInventory.addItem(item.Key, item.Value);
 
-            EventManager.Transaction.Details transactionDetails = new EventManager.Transaction.Details(item.Key, item.Value, DataTracker.Current.currentShopId, from, to);
+            Events.Transaction.Details transactionDetails = new Events.Transaction.Details(item.Key, item.Value, DataTracker.Current.currentShopId, from, to);
             DataTracker.Current.EventManager.OnTransaction.Invoke(transactionDetails);
         }
 

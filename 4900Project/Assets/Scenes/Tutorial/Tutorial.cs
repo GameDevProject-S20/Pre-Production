@@ -34,7 +34,6 @@ public class Tutorial : MonoBehaviour
             {
                             () => {
                                 BeginQuest();
-                                //TempTestQuest();
                                 LoadTown();
                             }
             }
@@ -46,67 +45,21 @@ public class Tutorial : MonoBehaviour
 
     private void BeginQuest()
     {
-        Quest.DebugPipe debugPipe = new Quest.DebugPipe(
-            (Quest q) => Debug.Log(string.Format("Completed Quest: {0}", q.Name)), 
-            (Stage s) => Debug.Log(string.Format("Completed Stage: {0}", s.Description)), 
-            (Condition c) => Debug.Log(string.Format("Completed Condition: {0}", c.Description))
-        );
-
-        Debug.Log(string.Join("\n", TownManager.Instance.GetTownEnumerable().Select(t => string.Format("{0}: {1}", t.Id, t.Name))));
-
         Quest quest = new Quest.Builder("Medicine Quest")
             .SetDescription("Find medicine and sell it in York.")
 
             .AddStage(new Stage.Builder("Purchase medicine in Smithsville.")
-                .AddOnCompleteListener(debugPipe.OnStageComplete)
-                .AddCondition(new LocationSpecificTransactionCondition("Purchase 1 medicine at the Smithsville Pharmacy", "Medicine", 1, TransactionCondition.TransactionTypeEnum.BUY, TownManager.Instance.GetTownByName("Smithsville").Id)
-                    .AddListener(debugPipe.OnConditionComplete)
+                .AddCondition(new TransactionCondition("Purchase 1 medicine at the Smithsville Pharmacy", "Medicine", 1, TransactionCondition.TransactionTypeEnum.BUY, TownManager.Instance.GetTownByName("Smithsville").Id)
                 )
             )    
             
             .AddStage(new Stage.Builder("Sell Medicine in York.")
-                .AddOnCompleteListener(debugPipe.OnStageComplete)
-                .AddCondition(new LocationSpecificTransactionCondition("Sell 1 medicine to the York General Store", "Medicine", 1, TransactionCondition.TransactionTypeEnum.SELL, TownManager.Instance.GetTownByName("York").Id)
-                    .AddListener(debugPipe.OnConditionComplete)
+                .AddCondition(new TransactionCondition("Sell 1 medicine to the York General Store", "Medicine", 1, TransactionCondition.TransactionTypeEnum.SELL, TownManager.Instance.GetTownByName("York").Id)
                 )
             )
 
-            //.AddOnCompleteListener(debugPipe.OnQuestComplete)
             .Build();
-
-        /*DataTracker.Current.QuestManager.AddQuest(quest);
-        DataTracker.Current.QuestManager.StartQuest("Medicine Quest");*/
-
     }
-
-    private void ConditionDebugger()
-    {
-
-    }
-
-    private void TempTestQuest()
-    {
-        // Verify that quest progression works
-        foreach (var quest in DataTracker.Current.QuestManager.GetQuests())
-        {
-            Debug.Log("Quest Stage should be 0. Is: " + quest.CurrentStage);
-        }
-
-        Item item = new Item("Medicine", "Medicine", "It's medicine.", "Yep, it's medicine.", 15f, 0.4f);
-        DataTracker.Current.Player.Inventory.addItem(item.name, 1);
-
-        // Add EventManager to DataTracker
-        // Add Event For Transactions
-        // Invoke that event here for testing
-        // Should be invoked by the store instead once testing confirmed.
-        //DataTracker.Current.EventManager.Transaction.Invoke();
-
-        foreach (var quest in DataTracker.Current.QuestManager.GetQuests())
-        {
-            Debug.Log("Quest Stage should be 1. Is: " + quest.CurrentStage);
-        }
-    }
-
 
     private void LoadTown()
     {

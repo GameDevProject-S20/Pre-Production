@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.UI;
+using SIEvents;
 
 namespace Quests
 {
@@ -19,38 +20,23 @@ namespace Quests
             }
         }
 
-        private QuestManager() { }
+        private QuestManager() 
+        {
+            Quest.OnQuestComplete.AddListener((Quest q) => CompleteQuest(q));
+        }
 
         //quest lists
         Dictionary<string, Quest> inactiveQuests = new Dictionary<string, Quest>();
         Quest activeQuest = null;
         Dictionary<string, Quest> completedQuests = new Dictionary<string, Quest>();
         Dictionary<string, Quest> allQuests = new Dictionary<string, Quest>();
-
-        //events 
-        public EventManager.QuestEvent QuestCompleteEvent = new EventManager.QuestEvent();
-        public EventManager.QuestEvent QuestObjectiveCompleted = new EventManager.QuestEvent();
-        public EventManager.QuestEvent QuestActivated = new EventManager.QuestEvent();
-        public EventManager.QuestEvent QuestProgressed = new EventManager.QuestEvent();
-
         //add quest to list
         public void AddQuest(Quest quest)
         {
             string qn = quest.Name;
             inactiveQuests.Add(qn, quest);
             allQuests.Add(qn, quest);
-
-            quest.OnQuestComplete.AddListener((Quest q) => CompleteQuest(q.Name));
-
-            quest.OnQuestProgressed.AddListener((Quest q) =>
-            {
-                QuestProgressed.Invoke(quest);
-            });
-
-            if (QuestActivated != null)
-            {
-                QuestActivated.Invoke(quest);
-            }
+            EventManager.Instance.OnQuestAdded.Invoke(quest);
         }
 
 
@@ -59,13 +45,15 @@ namespace Quests
         {
             if (activeQuest != null)
             {
-                //Todo: Set inactive
+                // Do we want progress for all quests at once?
+                activeQuest.DisallowProgression();
             }
 
             if (GetQuest(questName, out Quest quest))
             {
                 activeQuest = quest;
                 inactiveQuests.Remove(questName);
+                quest.AllowProgression();
             }
         }
 
@@ -77,14 +65,19 @@ namespace Quests
 
 
         //IComplete a quest and shift it to the proper spot
-        public void CompleteQuest(string questName)
+        private void CompleteQuest(Quest quest)
         {
-            GetQuest(questName, out Quest questData);
-            completedQuests.Add(questName, questData);
+            quest.DisallowProgression();
+            inactiveQuests.Remove(quest.Name);
+            completedQuests.Add(quest.Name, quest);
 
-            activeQuest = null;
-
-            QuestCompleteEvent.Invoke(questData);
+            if (quest == activeQuest) // check only relevant if can make progress on more than one quest at once
+            {
+                if (inactiveQuests.Count > 0)
+                {
+                    activeQuest = inactiveQuests.First().Value;
+                }
+            }
         }
 
         //get values
