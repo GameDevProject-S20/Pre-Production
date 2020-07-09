@@ -17,7 +17,7 @@ namespace SIEvents
             public enum Entity
             {
                 PLAYER,
-                SYSTEM
+                SYSTEM // Represents any system entity, shop or otherwise
             }
 
             public readonly struct Details
@@ -25,8 +25,8 @@ namespace SIEvents
                 public string ItemName { get; }
                 public int ItemCount { get; }
                 public int SystemId { get; } // currently shop id -> can be expanded on if more transaction types happen
-                public Entity From { get; }
-                public Entity To { get; }
+                public Entity From { get; } // The transaction's selling party (e.g. Player)
+                public Entity To { get; }   // The transaction's buying party (e.g. Store)
 
                 public Details(string iname, int icount, int sysid, Entity ifrom, Entity ito)
                 {
