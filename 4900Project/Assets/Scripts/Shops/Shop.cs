@@ -34,18 +34,18 @@ public class Shop
     void InitializeInventory(){
         if(type == ShopTypes.GeneralStore)
         {
-            inventory.addItem("item2", 7);
-            inventory.addItem("item4", 3);
-            inventory.addItem("item6", 4);
-            inventory.addItem("item8", 1);
+            inventory.AddItem("item2", 7);
+            inventory.AddItem("item4", 3);
+            inventory.AddItem("item6", 4);
+            inventory.AddItem("item8", 1);
         }
         else if(type == ShopTypes.Pharmacy)
         {
-            inventory.addItem("item1", 6);
-            inventory.addItem("item3", 3);
-            inventory.addItem("item5", 2);
-            inventory.addItem("item7", 1);
-            inventory.addItem("Medicine", 1);
+            inventory.AddItem("item1", 6);
+            inventory.AddItem("item3", 3);
+            inventory.AddItem("item5", 2);
+            inventory.AddItem("item7", 1);
+            inventory.AddItem("Medicine", 1);
         }
     }
 
