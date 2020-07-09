@@ -34,17 +34,14 @@ public class Shop
     void InitializeInventory(){
         if(type == ShopTypes.GeneralStore)
         {
-            inventory.addItem("item2", 7);
-            inventory.addItem("item4", 3);
-            inventory.addItem("item6", 4);
-            inventory.addItem("item8", 1);
+            inventory.addItem("Rations", 7);
+            inventory.addItem("Concrete", 3);
+            inventory.addItem("Scrap Metal", 4);
+            inventory.addItem("Wrench", 1);
         }
         else if(type == ShopTypes.Pharmacy)
         {
-            inventory.addItem("item1", 6);
-            inventory.addItem("item3", 3);
-            inventory.addItem("item5", 2);
-            inventory.addItem("item7", 1);
+            inventory.addItem("Medical Kit", 1);
             inventory.addItem("Medicine", 1);
         }
     }

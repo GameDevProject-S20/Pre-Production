@@ -13,7 +13,7 @@ public class ShopManager : MonoBehaviour
     public static ShopManager Current { get { return _current; } }
     Dictionary<int, Shop> shops = new Dictionary<int, Shop>();
 
-    private void Awake()
+    private void Start()
     {
         if (_current != null && _current != this)
         {

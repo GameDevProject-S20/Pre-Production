@@ -4,36 +4,12 @@ using UnityEngine;
 
 public class Inventory
 {
-    // Move this to Item Manager
-    public static Dictionary<string, Item> itemsMaster = new Dictionary<string, Item>();
     Dictionary<string, int> contents = new Dictionary<string, int>();
     public float weightLimit {get; set;}
     float weightOverflowModifier = 1.0f; // for now this does nothing. might be used later if we allow the player to overfill their inventory at a cost
 
     public Inventory(){
         weightLimit = 100000;
-        if (itemsMaster.Count == 0){
-
-            Item item1 = new Item("item1", "Herbs", "", "", 1, 1);
-            Item item2 = new Item("item2", "Scrap Metal", "", "", 2, 2);
-            Item item3 = new Item("item3", "Morphine", "", "", 3, 3);
-            Item item4 = new Item("item4", "Food Ration", "", "", 5, 5);
-            Item item5 = new Item("item5", "Gunpowder", "", "", 8, 8);
-            Item item6 = new Item("item6", "Fuel", "", "", 13, 13);
-            Item item7 = new Item("item7", "Prothetic Leg", "", "", 21, 21);
-            Item item8 = new Item("item8", "Radio", "", "", 34, 34);
-            Item medicine = new Item("Medicine", "Medicine", "", "", 9, 9);
-
-            itemsMaster.Add(item1.name, item1);
-            itemsMaster.Add(item2.name, item2);
-            itemsMaster.Add(item3.name, item3);
-            itemsMaster.Add(item4.name, item4);
-            itemsMaster.Add(item5.name, item5);
-            itemsMaster.Add(item6.name, item6);
-            itemsMaster.Add(item7.name, item7);
-            itemsMaster.Add(item8.name, item8);
-            itemsMaster.Add(medicine.name, medicine);
-        }
     }
 
     // Copy Constructor
@@ -103,7 +79,7 @@ public class Inventory
         float totalValue = 0;
         foreach (KeyValuePair<string, int> item in contents)
         {
-            totalValue += item.Value * itemsMaster[item.Key].value;
+            totalValue += item.Value * ItemManager.Current.itemsMaster[item.Key].value;
         }
         return totalValue;
     }
@@ -122,7 +98,7 @@ public class Inventory
             if (mod == 0){
                 mod = 1;
             }
-            totalValue += item.Value * itemsMaster[item.Key].value * mod;
+            totalValue += item.Value * ItemManager.Current.itemsMaster[item.Key].value * mod;
         }
         return totalValue;
     }
@@ -135,7 +111,7 @@ public class Inventory
         float totalWeight = 0;
         foreach (KeyValuePair<string, int> item in contents)
         {
-            totalWeight += item.Value * itemsMaster[item.Key].weight;
+            totalWeight += item.Value * ItemManager.Current.itemsMaster[item.Key].weight;
         }
         return totalWeight;
     }
@@ -150,7 +126,7 @@ public class Inventory
     /// <param name="name">Name of item</param>
     /// <returns>Amount of given item that can fit</returns>
     public int canFitHowMany(string name){
-        return Mathf.FloorToInt((weightLimit * weightOverflowModifier - totalWeight()) / itemsMaster[name].weight);
+        return Mathf.FloorToInt((weightLimit * weightOverflowModifier - totalWeight()) / ItemManager.Current.itemsMaster[name].weight);
     }
 
     /// <summary>
@@ -169,26 +145,8 @@ public class Inventory
     public override string ToString(){
         string output = "";
         foreach (var item in contents){
-            output += itemsMaster[item.Key].displayName + " (" + item.Value +")\n";
+            output += ItemManager.Current.itemsMaster[item.Key].displayName + " (" + item.Value +")\n";
         }
         return output;
-    }
-}
-
-public struct Item{
-    public string name;
-    public string displayName;
-    public string tooltip;
-    public string description;
-    public float value;
-    public float weight;
-
-    public Item(string name_, string displayName_, string tooltip_, string description_, float value_, float weight_){
-        name = name_;
-        displayName = displayName_;
-        tooltip = tooltip_;
-        description = description_;
-        value = value_;
-        weight = weight_;
     }
 }

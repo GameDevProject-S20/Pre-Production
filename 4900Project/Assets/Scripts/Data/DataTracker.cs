@@ -25,12 +25,10 @@ public class DataTracker : MonoBehaviour
             _current = this;
         }
 
-        Player.Inventory.addItem("item1", 2);
-        Player.Inventory.addItem("item2", 8);
-        Player.Inventory.addItem("item4", 6);
-        Player.Inventory.addItem("item8", 3);
-        Player.Inventory.addItem("item5", 1);
-        Player.Inventory.addItem("item7", 6);
+        Player.Inventory.addItem("Rations", 8);
+        Player.Inventory.addItem("Fresh Fruit", 1);
+        Player.Inventory.addItem("Scrap Metal", 6);
+        Player.Inventory.addItem("Wrench", 2);
 
         DontDestroyOnLoad(gameObject);
     }

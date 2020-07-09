@@ -51,10 +51,10 @@ public class Trading : MonoBehaviour
 
         foreach(var item in copyOfShopInventory.getContents()){
             var listItem = GameObject.Instantiate(inventoryListItem, Vector3.zero, Quaternion.identity);
-            listItem.GetComponentInChildren<TextMeshProUGUI>().text = Inventory.itemsMaster[item.Key].displayName + " (" + item.Value + ") " + getValueString(Inventory.itemsMaster[item.Key].value);
+            listItem.GetComponentInChildren<TextMeshProUGUI>().text = ItemManager.Current.itemsMaster[item.Key].displayName + " (" + item.Value + ") " + getValueString(ItemManager.Current.itemsMaster[item.Key].value);
             listItem.transform.SetParent(shopInventoryObject, false);
             listItem.GetComponent<Button>().onClick.AddListener(() => {addToCart(item.Key);});
-            listItem.name = Inventory.itemsMaster[item.Key].displayName + "_button";
+            listItem.name = ItemManager.Current.itemsMaster[item.Key].displayName + "_button";
         }
 
     }
@@ -67,10 +67,10 @@ public class Trading : MonoBehaviour
 
         foreach(var item in copyOfPlayerInventory.getContents()){
             var listItem = GameObject.Instantiate(inventoryListItem, Vector3.zero, Quaternion.identity);
-            listItem.GetComponentInChildren<TextMeshProUGUI>().text = Inventory.itemsMaster[item.Key].displayName + " (" + item.Value + ") " + getValueString(Inventory.itemsMaster[item.Key].value);
+            listItem.GetComponentInChildren<TextMeshProUGUI>().text = ItemManager.Current.itemsMaster[item.Key].displayName + " (" + item.Value + ") " + getValueString(ItemManager.Current.itemsMaster[item.Key].value);
             listItem.transform.SetParent(playerInventoryObject, false);
             listItem.GetComponent<Button>().onClick.AddListener(() => {addToOffer(item.Key);});
-            listItem.name = Inventory.itemsMaster[item.Key].displayName + "_button";
+            listItem.name = ItemManager.Current.itemsMaster[item.Key].displayName + "_button";
         }
     }
 
@@ -82,10 +82,10 @@ public class Trading : MonoBehaviour
         }
         foreach(var item in offer.getContents()){
             var listItem = GameObject.Instantiate(inventoryListItem, Vector3.zero, Quaternion.identity);
-            listItem.GetComponentInChildren<TextMeshProUGUI>().text = Inventory.itemsMaster[item.Key].displayName + " (" + item.Value + ") " + getValueString(Inventory.itemsMaster[item.Key].value);
+            listItem.GetComponentInChildren<TextMeshProUGUI>().text = ItemManager.Current.itemsMaster[item.Key].displayName + " (" + item.Value + ") " + getValueString(ItemManager.Current.itemsMaster[item.Key].value);
             listItem.transform.SetParent(offerListObject, false);
             listItem.GetComponent<Button>().onClick.AddListener(() => {removeFromOffer(item.Key);});
-            listItem.name = Inventory.itemsMaster[item.Key].displayName + "_button";
+            listItem.name = ItemManager.Current.itemsMaster[item.Key].displayName + "_button";
 
         }
     }
@@ -93,13 +93,14 @@ public class Trading : MonoBehaviour
     void buildCartList(){
         foreach(Transform child in cartListObject.transform){
             Destroy(child.gameObject);
+            Destroy(child.gameObject);
         }
         foreach(var item in cart.getContents()){
             var listItem = GameObject.Instantiate(inventoryListItem, Vector3.zero, Quaternion.identity);
-            listItem.GetComponentInChildren<TextMeshProUGUI>().text = Inventory.itemsMaster[item.Key].displayName + " (" + item.Value + ") " + getValueString(Inventory.itemsMaster[item.Key].value);
+            listItem.GetComponentInChildren<TextMeshProUGUI>().text = ItemManager.Current.itemsMaster[item.Key].displayName + " (" + item.Value + ") " + getValueString(ItemManager.Current.itemsMaster[item.Key].value);
             listItem.transform.SetParent(cartListObject, false);
             listItem.GetComponent<Button>().onClick.AddListener(() => {removeFromCart(item.Key);});
-            listItem.name = Inventory.itemsMaster[item.Key].displayName + "_button";
+            listItem.name = ItemManager.Current.itemsMaster[item.Key].displayName + "_button";
 
         }
     }

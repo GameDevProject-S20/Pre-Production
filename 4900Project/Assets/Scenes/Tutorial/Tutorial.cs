@@ -83,8 +83,8 @@ public class Tutorial : MonoBehaviour
             Debug.Log("Quest Stage should be 0. Is: " + quest.CurrentStage);
         }
 
-        Item item = new Item("Medicine", "Medicine", "It's medicine.", "Yep, it's medicine.", 15f, 0.4f);
-        DataTracker.Current.Player.Inventory.addItem(item.name, 1);
+        Item item = ItemManager.Current.itemsMaster["Medicine"];
+        DataTracker.Current.Player.Inventory.addItem(item.displayName, 1);
 
         // Add EventManager to DataTracker
         // Add Event For Transactions
