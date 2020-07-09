@@ -96,11 +96,6 @@ namespace Assets.Scripts.Dialogue.Frontend
                             Text = "No.",
                             OnButtonClick = DFunctions.GoToNextPage
                         }
-                    },
-                    Avatar = new DAvatar()
-                    {
-                        Icon = Resources.Load<Sprite>("Icons/Items/item1"),
-                        Name = "Madeleine"
                     }
                 },
                 new DPage()
@@ -202,6 +197,18 @@ namespace Assets.Scripts.Dialogue.Frontend
         /// <param name="avatar"></param>
         protected void UpdateAvatarDisplay(IDAvatar avatar)
         {
+            // Note: Error case - if no Avatar is being passed in, eg. for old code,
+            //   we want to just hide the avatar & bypass it
+            var hasAvatar = (avatar != null);
+            avatarDisplayImg.SetActive(hasAvatar);
+            avatarDisplayName.SetActive(hasAvatar);
+
+            if (avatar == null)
+            {
+                return;
+            }
+
+            // otherwise, since we have an avatar, we can update that
             avatarDisplayImg.GetComponent<Image>().sprite = avatar.Icon;
             avatarDisplayName.GetComponent<Text>().text = avatar.Name;
         }
