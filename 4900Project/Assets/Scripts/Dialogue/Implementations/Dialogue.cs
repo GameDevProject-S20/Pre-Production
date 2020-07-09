@@ -126,6 +126,9 @@ namespace Dialogue
         {
             AddToHistory(GetPage(), button.Text);
             button.OnButtonClick();
+
+            // Because the history would have updated, fire our changed event
+            PageUpdated.Invoke();
         }
 
         /// <summary>

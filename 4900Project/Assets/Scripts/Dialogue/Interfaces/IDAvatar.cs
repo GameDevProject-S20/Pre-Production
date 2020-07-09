@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Dialogue
 {
@@ -17,8 +18,8 @@ namespace Dialogue
         string Name { get; set; }
 
         /// <summary>
-        /// The path to the avatar's image.
+        /// The avatar's icon.
         /// </summary>
-        string PathToImage { get; set; }
+        Sprite Icon { get; set; }
     }
 }

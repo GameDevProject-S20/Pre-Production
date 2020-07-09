@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Dialogue
 {
@@ -13,6 +14,6 @@ namespace Dialogue
     class DAvatar : IDAvatar
     {
         public string Name { get; set; }
-        public string PathToImage { get; set; }
+        public Sprite Icon { get; set; }
     }
 }

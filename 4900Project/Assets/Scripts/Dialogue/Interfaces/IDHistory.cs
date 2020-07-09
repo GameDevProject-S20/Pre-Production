@@ -11,7 +11,7 @@ namespace Dialogue
     /// The IDHistory class is used to store the History of pages that the Dialog has gone through.
     /// Every IDHistory refers to one single page, along with the response that was selected for that page.
     /// </summary>
-    interface IDHistory
+    public interface IDHistory
     {
         /// <summary>
         /// This refers to the page of the history.
