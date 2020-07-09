@@ -402,7 +402,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 187.16667, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &184512995
 MonoBehaviour:
@@ -576,7 +576,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Madeleine
+  m_Text: Kuriboh
 --- !u!222 &543842017
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -641,12 +641,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<color=#918b7e><margin-left=30%><align=right>Lorem ipsum dolor sit amet,
+  m_text: '<color=#918b7e><margin-left=25%><align=right>Lorem ipsum dolor sit amet,
     consectetur adipiscing elit.</align></margin>
 
     <margin-right=50%>Yes.</margin></color>
 
-    <margin-left=30%><align=right>Nam
+    <margin-left=25%><align=right>Nam
     ut eros nec <color=orange>magna</color> faucibus dapibus a a velit.</align></margin>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1448,7 +1448,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 758.8333, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1215491457
 MonoBehaviour:
@@ -1465,9 +1465,9 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: -1
+  m_PreferredWidth: 750
   m_PreferredHeight: -1
-  m_FlexibleWidth: 7
+  m_FlexibleWidth: 1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
 --- !u!114 &1215491458
@@ -1850,7 +1850,7 @@ MonoBehaviour:
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 1
+  m_ChildControlWidth: 0
   m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
