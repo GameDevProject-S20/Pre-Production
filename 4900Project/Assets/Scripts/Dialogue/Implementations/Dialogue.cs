@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -116,6 +117,13 @@ namespace Dialogue
         {
             var page = GetPage();
             var button = page.GetButton(buttonIndex);
+
+            if (button == null)
+            {
+                UnityEngine.Debug.LogWarning($"Attempted to press Button Index {buttonIndex}, but no button exists.");
+                return;
+            }
+
             PressButton(button);
         }
         /// <summary>
