@@ -14,7 +14,10 @@ public class ShopManager
     {
         get
         {
-            if (instance == null) instance = new ShopManager();
+            if (instance == null)
+            {
+                instance = new ShopManager();
+            }
             return instance;
         }
     }

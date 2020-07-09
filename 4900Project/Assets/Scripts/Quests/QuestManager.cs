@@ -15,7 +15,10 @@ namespace Quests
         {
             get
             {
-                if (instance == null) instance = new QuestManager();
+                if (instance == null)
+                {
+                    instance = new QuestManager();
+                }
                 return instance;
             }
         }

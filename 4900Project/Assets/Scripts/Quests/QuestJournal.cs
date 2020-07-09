@@ -14,7 +14,10 @@ namespace Quests
         {
             get
             {
-                if (instance == null) instance = new QuestJournal();
+                if (instance == null)
+                {
+                    instance = new QuestJournal();
+                }
                 return instance;
             }
         }

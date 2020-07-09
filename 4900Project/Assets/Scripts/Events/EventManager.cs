@@ -15,7 +15,10 @@ namespace SIEvents
         {
             get
             {
-                if (instance == null) instance = new EventManager();
+                if (instance == null)
+                {
+                    instance = new EventManager();
+                }
                 return instance;
             }
         }

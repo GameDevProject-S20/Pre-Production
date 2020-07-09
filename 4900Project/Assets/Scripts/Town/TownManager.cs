@@ -15,7 +15,10 @@ public class TownManager
     {
         get
         {
-            if (instance == null) instance = new TownManager();
+            if (instance == null)
+            {
+                instance = new TownManager();
+            }
             return instance;
         }
     }
