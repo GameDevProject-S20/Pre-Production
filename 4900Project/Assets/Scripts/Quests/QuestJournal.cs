@@ -42,45 +42,16 @@ namespace Quests
             completedQuests = new List<Quest>();
 
             // Set up event listeners
-            EventManager.Instance.OnQuestComplete.AddListener(onQuestComplete);
-            EventManager.Instance.OnQuestAdded.AddListener(onQuestAdded);
+            EventManager.Instance.OnQuestManagerUpdated.AddListener(SyncQuests);
 
-            requestQuests();
+            SyncQuests();
         }
 
         // On game load or something, make sure the class's collections are up to date
-        public void SyncQuests(Dictionary<string, Quest> compQuests, Dictionary<string, Quest> actQuests)
+        public void SyncQuests()
         {
-            completedQuests = compQuests.Values.ToList();
-            activeQuests = actQuests.Values.ToList();
-        }
-
-        // Get the quest manager to send the completed/active quests
-        private void requestQuests()
-        {
-            DataTracker.Current.QuestManager.UpdateJournal();
-        }
-
-        // Remove it from the list
-        private void onQuestComplete(Quest quest)
-        {
-            if (quest.IsCompleted)
-            {
-                if (!completedQuests.Contains(quest))
-                {
-                    completedQuests.Add(quest);
-                }
-                activeQuests.Remove(quest);
-            }
-        }
-
-        // Add it to the list
-        private void onQuestAdded(Quest quest)
-        {
-            if (!activeQuests.Contains(quest))
-            {
-                activeQuests.Add(quest);
-            }
+            activeQuests = QuestManager.Instance.GetActiveQuests().ToList();
+            completedQuests = QuestManager.Instance.GetCompletedQuests().ToList();
         }
     }
 }

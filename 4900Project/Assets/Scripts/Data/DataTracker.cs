@@ -4,6 +4,7 @@ using UnityEngine;
 using Encounters;
 using Quests;
 using SIEvents;
+using System.Linq;
 
 public class DataTracker : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class DataTracker : MonoBehaviour
     public PlayerData Player = new PlayerData();
     public OverworldMap.LocationGraph WorldMap = OverworldMapLoader.CreateTestMap();
     public QuestManager QuestManager = QuestManager.Instance;
+    public QuestJournal QuestJournal = QuestJournal.Instance;
     public EncounterManager EncounterManager = EncounterManager.Instance;
     public EventManager EventManager = EventManager.Instance;
     public TownManager TownManager = TownManager.Instance;
@@ -30,12 +32,12 @@ public class DataTracker : MonoBehaviour
             _current = this;
         }
 
-        Player.Inventory.addItem("item1", 2);
-        Player.Inventory.addItem("item2", 8);
-        Player.Inventory.addItem("item4", 6);
-        Player.Inventory.addItem("item8", 3);
-        Player.Inventory.addItem("item5", 1);
-        Player.Inventory.addItem("item7", 6);
+        Player.Inventory.AddItem("item1", 2);
+        Player.Inventory.AddItem("item2", 8);
+        Player.Inventory.AddItem("item4", 6);
+        Player.Inventory.AddItem("item8", 3);
+        Player.Inventory.AddItem("item5", 1);
+        Player.Inventory.AddItem("item7", 6);
 
         ShopManager.LoadData();
         TownManager.LoadData();
@@ -53,9 +55,10 @@ public class DataTracker : MonoBehaviour
 
     // Useed for debugging
     //   See accompanying button in DataTracker scene
-    public void PrintQuest()
+    public void PrintJournal()
     {
-        Debug.Log(QuestManager.GetActiveQuest());
+        Debug.Log(string.Format("[IN PROGRESS]\n\n{0}", string.Join("\n", QuestJournal.Instance.ActiveQuests.Select(q => q.ToString()))));
+        Debug.Log(string.Format("[COMPLETE]\n\n{0}", string.Join("\n", QuestJournal.Instance.CompletedQuests.Select(q => q.ToString()))));
     }
 }
 

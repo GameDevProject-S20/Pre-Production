@@ -23,90 +23,120 @@ namespace Quests
             }
         }
 
+        private class QuestContainer
+        {
+            public enum State
+            {
+                INACTIVE,
+                ACTIVE,
+                COMPLETE
+            }
+
+            public Quest Quest;
+            public State ActiveState;
+
+            public QuestContainer(Quest quest)
+            {
+                Quest = quest;
+                ActiveState = State.INACTIVE;
+            }
+
+            public void SetActive()
+            {
+                ActiveState = State.ACTIVE;
+                Quest.AllowProgression();
+            }
+
+            public void SetComplete()
+            {
+                ActiveState = State.COMPLETE;
+                Quest.DisallowProgression();
+            }
+        }
+
         // Quest lists
-        private Dictionary<string, Quest> inactiveQuests = new Dictionary<string, Quest>();
-        private Quest activeQuest = null;
-        private Dictionary<string, Quest> completedQuests = new Dictionary<string, Quest>();
-        private Dictionary<string, Quest> allQuests = new Dictionary<string, Quest>();
+        private Dictionary<string, QuestContainer> quests = new Dictionary<string, QuestContainer>();
 
         private QuestManager() 
         {
             Quest.OnQuestComplete.AddListener((Quest q) => CompleteQuest(q));
         }
 
-        // Add quest to list
+        // Add new inactive quest
         public void AddQuest(Quest quest)
         {
             string qn = quest.Name;
-            inactiveQuests.Add(qn, quest);
-            allQuests.Add(qn, quest);
-            EventManager.Instance.OnQuestAdded.Invoke(quest);
+            quests.Add(qn, new QuestContainer(quest));
+            EventManager.Instance.OnQuestManagerUpdated.Invoke();
         }
 
 
-        // Load quest from inactive list to active
+        // Set inactive quest as active
         public void StartQuest(string questName)
         {
-            if (activeQuest != null)
+            if (GetQuestState(questName, out QuestContainer questState))
             {
-                // Do we want progress for all quests at once?
-                activeQuest.DisallowProgression();
-            }
-
-            if (GetQuest(questName, out Quest quest))
-            {
-                activeQuest = quest;
-                inactiveQuests.Remove(questName);
-                quest.AllowProgression();
-            }
-        }
-
-
-        public Quest GetActiveQuest()
-        {
-            return activeQuest;
-        }
-
-
-        // I Complete a quest and shift it to the proper spot
-        private void CompleteQuest(Quest quest)
-        {
-            quest.DisallowProgression();
-            inactiveQuests.Remove(quest.Name);
-            completedQuests.Add(quest.Name, quest);
-
-            if (quest == activeQuest) // check only relevant if can make progress on more than one quest at once
-            {
-                if (inactiveQuests.Count > 0)
+                if (questState.ActiveState == QuestContainer.State.INACTIVE)
                 {
-                    activeQuest = inactiveQuests.First().Value;
+                    questState.SetActive();
+                    EventManager.Instance.OnQuestManagerUpdated.Invoke();
+                }
+                else
+                {
+                    throw new Exception("Quest must be inactive when starting.");
                 }
             }
+            else
+            {
+                throw new ArgumentException("Quest Not Found");
+            }
         }
 
-        //get values
-        /*public void GetReadyQuests(out IEnumerable<string> quests)
+        // Complete active quest
+        private void CompleteQuest(Quest quest)
         {
-            quests = readyQuests.Keys;
-        }*/
-
-        public bool GetQuest(string questName, out Quest questData)
-        {
-            return allQuests.TryGetValue(questName, out questData);
+            if (GetQuestState(quest.Name, out QuestContainer questState))
+            {
+                if (questState.ActiveState == QuestContainer.State.ACTIVE)
+                {
+                    questState.SetComplete();
+                    EventManager.Instance.OnQuestManagerUpdated.Invoke();
+                }
+                else
+                {
+                    throw new Exception("Quest must be active when completing.");
+                }
+            }
+            else
+            {
+                throw new ArgumentException("Quest Not Found");
+            }
         }
 
-        public IEnumerable<Quest> GetQuests()
+        // Get all quests that are either INACTIVE, ACTIVE, or COMPLETE
+        private IEnumerable<Quest> GetQuests(QuestContainer.State withState)
         {
-            return allQuests.Values;
+            return quests.Values.Where(v => v.ActiveState == withState).Select(qs => qs.Quest);
         }
 
-        // Can call this, but shouldn't need to after the journal has been initialized
-        public void UpdateJournal()
+        public IEnumerable<Quest> GetActiveQuests()
         {
-            //ARL Todo: Fix up
-            Dictionary<string, Quest> dict = new Dictionary<string, Quest>();
-            dict.Add(activeQuest.Name, activeQuest);
-            QuestJournal.Instance.SyncQuests(completedQuests, dict);
+            return GetQuests(QuestContainer.State.ACTIVE);
+        }
+
+        public IEnumerable<Quest> GetInctiveQuests()
+        {
+            return GetQuests(QuestContainer.State.INACTIVE);
+        }
+
+        public IEnumerable<Quest> GetCompletedQuests()
+        {
+            return GetQuests(QuestContainer.State.COMPLETE);
+        }
+
+        private bool GetQuestState(string name, out QuestContainer questState)
+        {
+            return quests.TryGetValue(name, out questState);
         }
     }
 }

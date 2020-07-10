@@ -66,6 +66,8 @@ namespace SIEvents
             public class ConditionComplete : UnityEvent<Quests.Condition> { };
             [System.Serializable]
             public class QuestAdded : UnityEvent<Quests.Quest> { };
+            [System.Serializable]
+            public class QuestManagerUpdated : UnityEvent { };
         }
     }
 }

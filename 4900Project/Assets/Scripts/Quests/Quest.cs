@@ -130,8 +130,8 @@ namespace Quests
 
         public override string ToString()
         {
-            return string.Format("*** {0} *** {1}\n\n{2}\n\n============\n{3}\n============", Name, IsCompleted ? "[COMPLETE]" : "[IN PROGRESS]", Description,
-                string.Join("\n============\n\n============\n", stages.ConvertAll(s => string.Format("{0} {1}\n\t{2}", (s.Complete) ? "✓" : " ", s.Description, string.Join("\n\t", s.conditions.ConvertAll(c => string.Format("{0} {1}", (c.IsSatisfied) ? "✓" : " ", c)))))));
+            return string.Format("*** {0} *** {1}\n\n{2}\n\n{3}", Name, IsCompleted ? "[COMPLETE]" : "[IN PROGRESS]", Description,
+                string.Join("\n\n", stages.ConvertAll(s => string.Format("[{0}] {1}\n\t{2}", (s.Complete) ? "✓" : " ", s.Description, string.Join("\n\t", s.conditions.ConvertAll(c => string.Format("{0} {1}", (c.IsSatisfied) ? "✓" : " ", c)))))));
         }
 
         /// <summary>
