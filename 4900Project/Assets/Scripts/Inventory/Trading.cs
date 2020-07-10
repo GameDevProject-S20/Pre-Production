@@ -4,7 +4,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.XR.WSA.Input;
+using SIEvents;
 
 public class Trading : MonoBehaviour
 {
@@ -31,7 +32,7 @@ public class Trading : MonoBehaviour
     TextMeshProUGUI Name;
 
     public void Start() {
-        shop = ShopManager.Current.GetShopById(DataTracker.Current.currentShop);
+        shop = ShopManager.Instance.GetShopById(DataTracker.Current.currentShopId);
         copyOfPlayerInventory = new Inventory(DataTracker.Current.Player.Inventory);
         copyOfShopInventory = new Inventory(shop.inventory);
         buildShopList();
@@ -51,10 +52,10 @@ public class Trading : MonoBehaviour
 
         foreach(var item in copyOfShopInventory.getContents()){
             var listItem = GameObject.Instantiate(inventoryListItem, Vector3.zero, Quaternion.identity);
-            listItem.GetComponentInChildren<TextMeshProUGUI>().text = Inventory.itemsMaster[item.Key].displayName + " (" + item.Value + ") " + getValueString(Inventory.itemsMaster[item.Key].value);
+            listItem.GetComponentInChildren<TextMeshProUGUI>().text = Inventory.itemsMaster[item.Key].DisplayName + " (" + item.Value + ") " + getValueString(Inventory.itemsMaster[item.Key].Value);
             listItem.transform.SetParent(shopInventoryObject, false);
             listItem.GetComponent<Button>().onClick.AddListener(() => {addToCart(item.Key);});
-            listItem.name = Inventory.itemsMaster[item.Key].displayName + "_button";
+            listItem.name = Inventory.itemsMaster[item.Key].DisplayName + "_button";
         }
 
     }
@@ -67,10 +68,10 @@ public class Trading : MonoBehaviour
 
         foreach(var item in copyOfPlayerInventory.getContents()){
             var listItem = GameObject.Instantiate(inventoryListItem, Vector3.zero, Quaternion.identity);
-            listItem.GetComponentInChildren<TextMeshProUGUI>().text = Inventory.itemsMaster[item.Key].displayName + " (" + item.Value + ") " + getValueString(Inventory.itemsMaster[item.Key].value);
+            listItem.GetComponentInChildren<TextMeshProUGUI>().text = Inventory.itemsMaster[item.Key].DisplayName + " (" + item.Value + ") " + getValueString(Inventory.itemsMaster[item.Key].Value);
             listItem.transform.SetParent(playerInventoryObject, false);
             listItem.GetComponent<Button>().onClick.AddListener(() => {addToOffer(item.Key);});
-            listItem.name = Inventory.itemsMaster[item.Key].displayName + "_button";
+            listItem.name = Inventory.itemsMaster[item.Key].DisplayName + "_button";
         }
     }
 
@@ -82,10 +83,10 @@ public class Trading : MonoBehaviour
         }
         foreach(var item in offer.getContents()){
             var listItem = GameObject.Instantiate(inventoryListItem, Vector3.zero, Quaternion.identity);
-            listItem.GetComponentInChildren<TextMeshProUGUI>().text = Inventory.itemsMaster[item.Key].displayName + " (" + item.Value + ") " + getValueString(Inventory.itemsMaster[item.Key].value);
+            listItem.GetComponentInChildren<TextMeshProUGUI>().text = Inventory.itemsMaster[item.Key].DisplayName + " (" + item.Value + ") " + getValueString(Inventory.itemsMaster[item.Key].Value);
             listItem.transform.SetParent(offerListObject, false);
             listItem.GetComponent<Button>().onClick.AddListener(() => {removeFromOffer(item.Key);});
-            listItem.name = Inventory.itemsMaster[item.Key].displayName + "_button";
+            listItem.name = Inventory.itemsMaster[item.Key].DisplayName + "_button";
 
         }
     }
@@ -96,10 +97,10 @@ public class Trading : MonoBehaviour
         }
         foreach(var item in cart.getContents()){
             var listItem = GameObject.Instantiate(inventoryListItem, Vector3.zero, Quaternion.identity);
-            listItem.GetComponentInChildren<TextMeshProUGUI>().text = Inventory.itemsMaster[item.Key].displayName + " (" + item.Value + ") " + getValueString(Inventory.itemsMaster[item.Key].value);
+            listItem.GetComponentInChildren<TextMeshProUGUI>().text = Inventory.itemsMaster[item.Key].DisplayName + " (" + item.Value + ") " + getValueString(Inventory.itemsMaster[item.Key].Value);
             listItem.transform.SetParent(cartListObject, false);
             listItem.GetComponent<Button>().onClick.AddListener(() => {removeFromCart(item.Key);});
-            listItem.name = Inventory.itemsMaster[item.Key].displayName + "_button";
+            listItem.name = Inventory.itemsMaster[item.Key].DisplayName + "_button";
 
         }
     }
@@ -123,29 +124,29 @@ public class Trading : MonoBehaviour
     }
 
     void addToCart(string item){
-        cart.addItem(item, 1);
-        copyOfShopInventory.removeItem(item, 1); 
+        cart.AddItem(item, 1);
+        copyOfShopInventory.RemoveItem(item, 1); 
         buildCartList();
         buildShopList();
     }
 
     void addToOffer(string item){
-        offer.addItem(item, 1);
-        copyOfPlayerInventory.removeItem(item, 1);
+        offer.AddItem(item, 1);
+        copyOfPlayerInventory.RemoveItem(item, 1);
         buildOfferList();
         buildPlayerList();
     }
 
     void removeFromCart(string item){
-        copyOfShopInventory.addItem(item, 1);
-        cart.removeItem(item, 1);
+        copyOfShopInventory.AddItem(item, 1);
+        cart.RemoveItem(item, 1);
         buildCartList();
         buildShopList();
     }
 
     void removeFromOffer(string item){
-        copyOfPlayerInventory.addItem(item, 1);
-        offer.removeItem(item, 1);
+        copyOfPlayerInventory.AddItem(item, 1);
+        offer.RemoveItem(item, 1);
         buildPlayerList();
         buildOfferList();
 
@@ -185,9 +186,9 @@ public class Trading : MonoBehaviour
     /// 3: Player offer is too low (not accepted)
     /// </returns>
     int validateTrade(){
-        if (copyOfPlayerInventory.canFitItems(cart.totalWeight())){
-            float totalCartValue = cart.totalValue(shop.toPlayerModifiers);
-            float totalOfferValue = offer.totalValue(shop.fromPlayerModifiers);
+        if (copyOfPlayerInventory.CanFitItems(cart.TotalWeight())){
+            float totalCartValue = cart.TotalValue(shop.toPlayerModifiers);
+            float totalOfferValue = offer.TotalValue(shop.fromPlayerModifiers);
             float difference =  totalOfferValue - totalCartValue;
             if(difference > totalCartValue * shop.acceptedPriceDifference) {
                 return 1;
@@ -205,31 +206,34 @@ public class Trading : MonoBehaviour
     }
 
     void makeTrade(){
+
+        Events.Transaction.Entity from = Events.Transaction.Entity.SYSTEM;
+        Events.Transaction.Entity to = Events.Transaction.Entity.PLAYER;
+
         foreach (var item in cart.getContents()){
-            // Should use event system
-            DataTracker.Current.Player.Inventory.addItem(item.Key, item.Value);
-            copyOfPlayerInventory.addItem(item.Key, item.Value);
-            shop.inventory.removeItem(item.Key, item.Value);
 
-            EventManager.Current.onTransaction.Invoke(item.Key, item.Value);
-           // foreach (var quest in DataTracker.Current.QuestManager.GetQuests())
-           // {
-            //    Debug.Log("Quest Stage is currently currently set to: " + quest.CurrentStage);
-           // }
+            shop.inventory.RemoveItem(item.Key, item.Value);
+
+            copyOfPlayerInventory.AddItem(item.Key, item.Value);
+            DataTracker.Current.Player.Inventory.AddItem(item.Key, item.Value);
+
+            Events.Transaction.Details transactionDetails = new Events.Transaction.Details(item.Key, item.Value, DataTracker.Current.currentShopId, from, to);
+            DataTracker.Current.EventManager.OnTransaction.Invoke(transactionDetails);
         }
+
+        from = Events.Transaction.Entity.PLAYER;
+        to = Events.Transaction.Entity.SYSTEM;
+
         foreach (var item in offer.getContents()){
-            shop.inventory.addItem(item.Key, item.Value);
-            copyOfShopInventory.addItem(item.Key, item.Value);
-            DataTracker.Current.Player.Inventory.removeItem(item.Key, item.Value);
 
-            //Quest Trade Conditions must be negative for selling items, positive for buying
-            EventManager.Current.onTransaction.Invoke(item.Key, -item.Value);
-           // foreach (var quest in DataTracker.Current.QuestManager.GetQuests())
-            //{
-           //     Debug.Log("Quest Stage is currently currently set to: " + quest.CurrentStage);
-            //}
+            DataTracker.Current.Player.Inventory.RemoveItem(item.Key, item.Value);
+            
+            shop.inventory.AddItem(item.Key, item.Value);
+            copyOfShopInventory.AddItem(item.Key, item.Value);
+
+            Events.Transaction.Details transactionDetails = new Events.Transaction.Details(item.Key, item.Value, DataTracker.Current.currentShopId, from, to);
+            DataTracker.Current.EventManager.OnTransaction.Invoke(transactionDetails);
         }
-
 
         cart.getContents().Clear();
         offer.getContents().Clear();

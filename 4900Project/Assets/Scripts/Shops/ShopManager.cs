@@ -2,28 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShopManager : MonoBehaviour
+public class ShopManager
 {
-     //THINGS TO ADD
+    //THINGS TO ADD
     //-set up to pull from csv
     //-set up to interact with data tracker
 
-    //ensure only one copy active
-    private static ShopManager _current;
-    public static ShopManager Current { get { return _current; } }
+    private static ShopManager instance;
+
+    public static ShopManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = new ShopManager();
+            }
+            return instance;
+        }
+    }
+
     Dictionary<int, Shop> shops = new Dictionary<int, Shop>();
 
-    private void Awake()
+    public void LoadData()
     {
-        if (_current != null && _current != this)
-        {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            _current = this;
-        }
-
         Shop testShop1 = new Shop(0, "George's General Store", "General Store", "", Shop.ShopTypes.GeneralStore);
         Shop testShop2 = new Shop(1, "Phil's Pharmacy", "Medical Supplier", "", Shop.ShopTypes.Pharmacy);
         Shop testShop3 = new Shop(2, "Bill's Bulk Goods", "General Store", "", Shop.ShopTypes.GeneralStore);
@@ -44,9 +46,7 @@ public class ShopManager : MonoBehaviour
         shops.Add(7, testShop8);
         shops.Add(8, testShop9);
         shops.Add(9, testShop10);
-
     }
-
 
     //town retrieval
     public Shop GetShopById(int id)

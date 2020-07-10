@@ -24,15 +24,15 @@ public class Inventory
             Item item8 = new Item("item8", "Radio", "", "", 34, 34);
             Item medicine = new Item("Medicine", "Medicine", "", "", 9, 9);
 
-            itemsMaster.Add(item1.name, item1);
-            itemsMaster.Add(item2.name, item2);
-            itemsMaster.Add(item3.name, item3);
-            itemsMaster.Add(item4.name, item4);
-            itemsMaster.Add(item5.name, item5);
-            itemsMaster.Add(item6.name, item6);
-            itemsMaster.Add(item7.name, item7);
-            itemsMaster.Add(item8.name, item8);
-            itemsMaster.Add(medicine.name, medicine);
+            itemsMaster.Add(item1.Name, item1);
+            itemsMaster.Add(item2.Name, item2);
+            itemsMaster.Add(item3.Name, item3);
+            itemsMaster.Add(item4.Name, item4);
+            itemsMaster.Add(item5.Name, item5);
+            itemsMaster.Add(item6.Name, item6);
+            itemsMaster.Add(item7.Name, item7);
+            itemsMaster.Add(item8.Name, item8);
+            itemsMaster.Add(medicine.Name, medicine);
         }
     }
 
@@ -50,8 +50,8 @@ public class Inventory
     /// <param name="name">Name of the item to add</param>
     /// <param name="amount">Amount to add</param>
     /// <returns>Amount of items added.</returns>
-    public int addItem(string name, int amount){
-        int capacity =  canFitHowMany(name);
+    public int AddItem(string name, int amount){
+        int capacity =  CanFitHowMany(name);
         if (capacity > 0) {
             int currentCount = 0;
             if (contents.TryGetValue(name, out currentCount)){
@@ -71,7 +71,7 @@ public class Inventory
     /// <param name="name">Name of the item to remove</param>
     /// <param name="amount">Amount to remove</param>
     /// <returns>Amount of items removed.</returns>
-    public int removeItem(string name, int amount){
+    public int RemoveItem(string name, int amount){
         int currentCount;
         if (contents.TryGetValue(name, out currentCount)){
             contents[name] = currentCount - amount;
@@ -89,7 +89,7 @@ public class Inventory
     /// </summary>
     /// <param name="name">Name of item</param>
     /// <returns>Amount of item in inventory</returns>
-    public int contains(string name){
+    public int Contains(string name){
         int amount = 0;
         contents.TryGetValue(name, out amount);
         return amount;
@@ -99,11 +99,11 @@ public class Inventory
     /// Calculate the total value of all items in the inventory
     /// </summary>
     /// <returns>Total value</returns>
-    public float totalValue(){
+    public float TotalValue(){
         float totalValue = 0;
         foreach (KeyValuePair<string, int> item in contents)
         {
-            totalValue += item.Value * itemsMaster[item.Key].value;
+            totalValue += item.Value * itemsMaster[item.Key].Value;
         }
         return totalValue;
     }
@@ -113,7 +113,7 @@ public class Inventory
     /// </summary>
     /// <param name="modifiers">Dictionary of float multipliers.</param>
     /// <returns>Total value after modifiers</returns>
-    public float totalValue(Dictionary<string, float> modifiers){
+    public float TotalValue(Dictionary<string, float> modifiers){
         float totalValue = 0;
         foreach (KeyValuePair<string, int> item in contents)
         {
@@ -122,7 +122,7 @@ public class Inventory
             if (mod == 0){
                 mod = 1;
             }
-            totalValue += item.Value * itemsMaster[item.Key].value * mod;
+            totalValue += item.Value * itemsMaster[item.Key].Value * mod;
         }
         return totalValue;
     }
@@ -131,11 +131,11 @@ public class Inventory
     /// Calculate the total weight of all items in the inventory
     /// </summary>
     /// <returns>Total weight</returns>
-    public float totalWeight(){
+    public float TotalWeight(){
         float totalWeight = 0;
         foreach (KeyValuePair<string, int> item in contents)
         {
-            totalWeight += item.Value * itemsMaster[item.Key].weight;
+            totalWeight += item.Value * itemsMaster[item.Key].Weight;
         }
         return totalWeight;
     }
@@ -149,8 +149,8 @@ public class Inventory
     /// </summary>
     /// <param name="name">Name of item</param>
     /// <returns>Amount of given item that can fit</returns>
-    public int canFitHowMany(string name){
-        return Mathf.FloorToInt((weightLimit * weightOverflowModifier - totalWeight()) / itemsMaster[name].weight);
+    public int CanFitHowMany(string name){
+        return Mathf.FloorToInt((weightLimit * weightOverflowModifier - TotalWeight()) / itemsMaster[name].Weight);
     }
 
     /// <summary>
@@ -158,8 +158,8 @@ public class Inventory
     /// </summary>
     /// <param name="weight"></param>
     /// <returns>True if there is enough room in the inventory</returns>
-    public bool canFitItems(float weight){
-        return weight + totalWeight() <= weightLimit * weightOverflowModifier;
+    public bool CanFitItems(float weight){
+        return weight + TotalWeight() <= weightLimit * weightOverflowModifier;
     }
 
     /// <summary>
@@ -169,26 +169,26 @@ public class Inventory
     public override string ToString(){
         string output = "";
         foreach (var item in contents){
-            output += itemsMaster[item.Key].displayName + " (" + item.Value +")\n";
+            output += itemsMaster[item.Key].DisplayName + " (" + item.Value +")\n";
         }
         return output;
     }
 }
 
 public struct Item{
-    public string name;
-    public string displayName;
-    public string tooltip;
-    public string description;
-    public float value;
-    public float weight;
+    public string Name;
+    public string DisplayName;
+    public string Tooltip;
+    public string Description;
+    public float Value;
+    public float Weight;
 
     public Item(string name_, string displayName_, string tooltip_, string description_, float value_, float weight_){
-        name = name_;
-        displayName = displayName_;
-        tooltip = tooltip_;
-        description = description_;
-        value = value_;
-        weight = weight_;
+        Name = name_;
+        DisplayName = displayName_;
+        Tooltip = tooltip_;
+        Description = description_;
+        Value = value_;
+        Weight = weight_;
     }
 }
