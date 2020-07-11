@@ -39,5 +39,8 @@ namespace SIEvents
         public Events.Quest.StageComplete OnStageComplete = new Events.Quest.StageComplete();
         public Events.Quest.ConditionComplete OnConditionComplete = new Events.Quest.ConditionComplete();
         public Events.Quest.QuestManagerUpdated OnQuestManagerUpdated = new Events.Quest.QuestManagerUpdated();
+
+        //=== Dialogue ===============================================//
+        public Events.Dialogue.SelectionEvent onDialogueSelected = new Events.Dialogue.SelectionEvent();
     }
 }
