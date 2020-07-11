@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SIEvents;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,7 +39,7 @@ namespace Dialogue
         {
             return () =>
             {
-                EventManager.Current.onDialogueSelect.Invoke(argument);
+                EventManager.Instance.onDialogueSelected.Invoke(argument);
             };
         }
     }
