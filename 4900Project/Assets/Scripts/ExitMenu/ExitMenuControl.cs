@@ -39,7 +39,14 @@ namespace Assets.Scripts.ExitMenu
             promptOpen = false;
             UnityEngine.Debug.Log("The player has quit the game");
 
-            Application.Quit();
+
+            // If running from the editor: Cancel play mode
+            // Otherwise: Quit the game
+            #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+            #else
+                Application.Quit();
+            #endif
         }
 
         /// <summary>
