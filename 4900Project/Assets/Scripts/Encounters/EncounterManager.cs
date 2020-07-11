@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
 
@@ -27,24 +28,21 @@ namespace Encounters
         private static EncounterManager instance;
         private Random random;
         private Dictionary<int, Encounter> fixedEncounters;
-        private Dictionary<int, Encounter> randomEncounters;
+        // private Dictionary<int, Encounter> randomEncounters;
 
+        private Dictionary<int, Encounter> randomEncounters
+        {
+            get => EncounterCollection.Instance.RandomEncounters;
+        }
+
+        private Queue<Encounter> randomEncounterQueue;
 
         private EncounterManager()
         {
             random = new Random();
             fixedEncounters = new Dictionary<int, Encounter>();
-            randomEncounters = new Dictionary<int, Encounter>();
-            //loadEncounters();
-        }
-
-        public void AddFixedEncounter(Encounter encounter)
-        {
-            fixedEncounters.Add(encounter.Id, encounter);
-        }
-        public void AddRandomEncounter(Encounter encounter)
-        {
-            randomEncounters.Add(encounter.Id, encounter);
+            //randomEncounters = new Dictionary<int, Encounter>();
+            randomEncounterQueue = reloadRandomEncounters();
         }
 
         /// <summary>
@@ -53,7 +51,6 @@ namespace Encounters
         public void RunRandomEncounter()
         {
             Encounter next = randomEncounter();
-            Debug.Log(next);
             next.StartDialogue();
         }
 
@@ -69,14 +66,26 @@ namespace Encounters
 
         // Load from csv or wherever in the future...
         // For now this demonstrates how to create an encounter object.
-        private void loadEncounters()
+        private Queue<Encounter> reloadRandomEncounters()
         {
+            // hard coded for now
+            var nextEncounters = new List<Encounter>(randomEncounters);
+
+            // Shuffle the list and return as a queue
+            return new Queue<Encounter>(nextEncounters.OrderBy(encounterQueue => random.Next()));
         }
 
+        // Return the next random encounter in the shuffled queue
+        // If all events have been used, events will be shuffled again.
         private Encounter randomEncounter()
         {
-            int i = random.Next(randomEncounters.Count);
-            return randomEncounters[i];
+            Encounter enc;
+            if (!encounterQueue.TryDequeue(enc))
+            {
+                encounterQueue = reloadRandomEncounters();
+                enc = encounterQueue.Dequeue();
+            }
+            return enc;
         }
     }
 }
