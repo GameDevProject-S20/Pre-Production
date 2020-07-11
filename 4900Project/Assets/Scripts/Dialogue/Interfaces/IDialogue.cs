@@ -15,6 +15,7 @@ namespace Dialogue
         // Properties
         int Id { get; }
         bool IsVisible { get; }
+        List<IDHistory> History { get; }
 
         // Events
         DialogueUpdatedEvent PageUpdated { get; }
