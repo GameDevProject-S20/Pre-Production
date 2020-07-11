@@ -77,44 +77,6 @@ namespace Assets.Scripts.Dialogue.Frontend
                 UpdateDisplay();
             });
             UpdateDisplay();
-
-            /*DialogueManager.CreateDialogue(new List<IDPage>()
-            {
-                new DPage()
-                {
-                    Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                    Buttons = new List<IDButton>()
-                    {
-                        new DButton()
-                        {
-                            Text = "Yes.",
-                            OnButtonClick = DFunctions.GoToNextPage
-                        },
-                        new DButton()
-                        {
-                            Text = "No.",
-                            OnButtonClick = DFunctions.GoToNextPage
-                        }
-                    }
-                },
-                new DPage()
-                {
-                    Text = "Nam ut eros nec <color=orange>magna</color> faucibus dapibus a a velit.",
-                    Buttons = new List<IDButton>()
-                    {
-                        new DButton()
-                        {
-                            Text = "[ Leave ]",
-                            OnButtonClick = DFunctions.CloseDialogue
-                        }
-                    },
-                    Avatar = new DAvatar()
-                    {
-                        Icon = Resources.Load<Sprite>("Icons/Items/item1"),
-                        Name = "Madeleine"
-                    }
-                }
-             });*/
         }
 
         // Protected Methods
