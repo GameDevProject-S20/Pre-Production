@@ -79,7 +79,7 @@ namespace Assets.Scripts.Dialogue.Frontend
             UpdateDisplay();
 
             // TODO: We want to remove this, but it gives a good example for now
-            DialogueManager.CreateDialogue(new List<IDPage>()
+            /*DialogueManager.CreateDialogue(new List<IDPage>()
             {
                 new DPage()
                 {
@@ -115,7 +115,7 @@ namespace Assets.Scripts.Dialogue.Frontend
                         Name = "Madeleine"
                     }
                 }
-             });
+             });*/
         }
 
         // Protected Methods
