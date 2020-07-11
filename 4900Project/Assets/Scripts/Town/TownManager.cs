@@ -1,30 +1,38 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class TownManager : MonoBehaviour
+public class TownManager
 {
     //THINGS TO ADD
     //-set up to pull from csv
     //-set up to interact with data tracker
 
-    //ensure only one copy active
-    private static TownManager _current;
-    public static TownManager Current { get { return _current; } }
-    Dictionary<int, Town> towns = new Dictionary<int, Town>();
+    private static TownManager instance;
 
-    private void Awake()
+    public static TownManager Instance
     {
-        if (_current != null && _current != this)
+        get
         {
-            Destroy(this.gameObject);
+            if (instance == null)
+            {
+                instance = new TownManager();
+            }
+            return instance;
         }
-        else
-        {
-            _current = this;
-        }
+    }
 
-         // Load in town data from CSV
+    private Dictionary<int, Town> towns = new Dictionary<int, Town>();
+
+    private TownManager()
+    {
+        
+    }
+
+    public void LoadData()
+    {
+        // Load in town data from CSV
         GameData.LoadCsv<Town>(FileConstants.Files.Town, out IEnumerable<Town> result);
         var resultString = new System.Text.StringBuilder();
         resultString.AppendLine("Loading in from file:");
@@ -48,6 +56,10 @@ public class TownManager : MonoBehaviour
         towns[4].AddShop(9);
     }
 
+    public IEnumerable<Town> GetTownEnumerable()
+    {
+        return towns.Values.AsEnumerable();
+    }
 
     // Get the town at the current node using the Data Tracker
     public Town GetCurrentTownData()
@@ -69,6 +81,22 @@ public class TownManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Retrieve town by its name, if it exists
+    /// </summary>
+    /// <param name="name">Name of Town</param>
+    /// <returns>The corresponding town or null if not found</returns>
+    public Town GetTownByName(string name)
+    {
+        foreach (var town in towns.Values)
+        {
+            if (town.Name == name)
+            {
+                return town;
+            }
+        }
+        return null;
+    }
 
     //! Test Function
     //! Add shops to towns

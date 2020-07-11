@@ -54,14 +54,29 @@ namespace FileConstants
         public static readonly FileStorageData TestCsv = new FileStorageData()
         {
             GoogleDriveFileId = "1i_W43TDJLPjL08V7knEnVfbeZonzHhXc5CED3fact8g",
-            LocalBackupFile = $"{Application.dataPath}/BackupData/TestFile.csv"
+            LocalBackupFile = $"{Application.dataPath}/BackupData/Tests/TestFile.csv"
         };
 
-        // Test JSON - for testing only
-        public static readonly FileStorageData TestJson = new FileStorageData()
+        // JSON Tests
+        // basic json
+        public static readonly FileStorageData TestBasicJson = new FileStorageData()
         {
             GoogleDriveFileId = "10gaDHRTOs9TX3XkQQpcj5jYK_jxTGeSw",
-            LocalBackupFile = $"{Application.dataPath}/BackupData/TestFile.json"
+            LocalBackupFile = $"{Application.dataPath}/BackupData/Tests/BasicJson.json"
+        };
+
+        // json list of strings
+        public static readonly FileStorageData TestJsonStringsList = new FileStorageData()
+        {
+            GoogleDriveFileId = "1FJSW9lSejV3_TO0tHCc951GVdbN1YnYS",
+            LocalBackupFile = $"{Application.dataPath}/BackupData/Tests/StringList.json"
+        };
+
+        // json list of classes
+        public static readonly FileStorageData TestJsonListOfClass = new FileStorageData()
+        {
+            GoogleDriveFileId = "1YMCwaA60aDROG_ipxJjl8GF4c-mpQwMl",
+            LocalBackupFile = $"{Application.dataPath}/BackupData/Tests/ListOfClass.json"
         };
 
         // Files list - used for creating backups.
@@ -73,7 +88,9 @@ namespace FileConstants
             Files.Town,
             Files.Tutorial,
             Files.TestCsv,
-            Files.TestJson
+            Files.TestBasicJson,
+            Files.TestJsonStringsList,
+            Files.TestJsonListOfClass
         };
     }
 }

@@ -2,43 +2,42 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Quests;
 
-public class EventManager : MonoBehaviour
+namespace SIEvents
 {
-    private static EventManager _current;
-    public static EventManager Current {get {return _current;}}
-
-    private void Awake() {
-        if (_current != null && _current != this)
+    /// <summary>
+    ///  Maintains all system-accessible events as defined in Events.cs
+    /// </summary>
+    public class EventManager
+    {
+        public static EventManager Instance
         {
-            Destroy(this.gameObject);
-        } else {
-            _current = this;
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new EventManager();
+                }
+                return instance;
+            }
         }
+
+        private static EventManager instance;
+
+        //=== Transaction ============================================//
+
+        public Events.Transaction.Event OnTransaction = new Events.Transaction.Event();
+
+        //=== Town ===================================================//
+
+        public Events.Town.EnterEvent OnTownEnter = new Events.Town.EnterEvent();
+
+        //=== Quest ==================================================//
+
+        public Events.Quest.QuestComplete OnQuestComplete = new Events.Quest.QuestComplete();
+        public Events.Quest.StageComplete OnStageComplete = new Events.Quest.StageComplete();
+        public Events.Quest.ConditionComplete OnConditionComplete = new Events.Quest.ConditionComplete();
+        public Events.Quest.QuestManagerUpdated OnQuestManagerUpdated = new Events.Quest.QuestManagerUpdated();
     }
-
-    //=======================================================//
-
-    [System.Serializable]
-    public class GenericEvent : UnityEvent<string>{};
-    public GenericEvent onEventTrigger;
-
-    [System.Serializable]
-    public class TransactionEvent : UnityEvent<string, int>{};
-    public TransactionEvent onTransaction = new TransactionEvent();
-
-    [System.Serializable]
-    public class TownEnterEvent : UnityEvent<int>{};
-    public TownEnterEvent onTownEnter;
-
-    [System.Serializable]
-    public class DialogueSelectionEvent : UnityEvent<string>{};
-    public DialogueSelectionEvent onDialogueSelect;
-
-    [System.Serializable]
-    public class QuestEvent : UnityEvent<Quest> { };
-    public QuestEvent onQuestUpdate = new QuestEvent();
-
-    public UnityEvent onInventoryChange;
-
 }
