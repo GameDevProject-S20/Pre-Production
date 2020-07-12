@@ -103,10 +103,18 @@ public class OverworldMapUI : MonoBehaviour
     }
 
     public void OnButtonClick(){
-        Debug.Log("OverworlMapUI.OnButtonClick");
-        //SceneManager.LoadScene("Town");
-        //SceneManager.LoadScene("EncounterTestScene");
-        SceneManager.LoadScene("Encounter");
+        OverworldMap.LocationNode node = DataTracker.Current.GetCurrentNode();
+        switch (node.Type)
+        {
+            case OverworldMap.LocationType.TOWN:
+                SceneManager.LoadScene("Town");
+                break;
+            case OverworldMap.LocationType.EVENT:
+                SceneManager.LoadScene("Encounter");
+                break;
+            default:
+                break;
+        }
     }
 
 }
