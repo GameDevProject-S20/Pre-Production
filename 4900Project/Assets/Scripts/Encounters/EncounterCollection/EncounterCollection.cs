@@ -43,7 +43,7 @@ namespace Encounters
                         "2 Scrap Metal added.",
                         "res2"
                     },
-                    new Action[]
+                    new Action[]  // successful action
                     {
                         () => {
                             var inventory = DataTracker.Current.Player.Inventory;
@@ -63,7 +63,7 @@ namespace Encounters
                             SceneManager.LoadScene("MapScene");
                         }
                     },
-                    new Func<bool>[]
+                    new Func<bool>[]  // condition (whether the player can take the action or not)
                     {
                         () => {
                             return true;
@@ -71,6 +71,16 @@ namespace Encounters
                         () => {
                             return false;
                         }
+                    },
+                    new String[]  // Text to display on failure
+                    {
+                        "Failed",
+                        "Failed"
+                    },
+                    new Action[]  // Action to take on failure
+                    {
+                        () => {},
+                        () => {}
                     }
                 )
             }

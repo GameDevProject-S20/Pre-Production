@@ -55,6 +55,13 @@ namespace Encounters
         { get; }
 
         /// <summary>
+        /// Result text to appear if the action chosen by the player cannot be completed
+        /// IE. doesn't have the correct items in inventory
+        /// </summary>
+        public ReadOnlyCollection<string> FailText
+        { get; }
+
+        /// <summary>
         /// Effects that should map to each dialogue choice.
         /// Indexes correspond to ButtonText.
         /// </summary>
@@ -68,6 +75,12 @@ namespace Encounters
         public ReadOnlyCollection<Func<bool>> Conditions
         { get; }
 
+        /// <summary>
+        /// Effects to execute if the player cannot complete an action
+        /// </summary>
+        public ReadOnlyCollection<Action> FailEffects
+        { get; }
+
         private List<IDPage> dialoguePages;
         private List<IDButton> dialogueButtons;
         private int dialogueStage;
@@ -75,12 +88,14 @@ namespace Encounters
         public Encounter(string name, string tag, string bodyText,
                          IEnumerable<string> buttonText, IEnumerable<string> resultText,
                          IEnumerable<Action> effects)
-        : this(name, tag, bodyText, buttonText, resultText, effects, new Func<bool>[0])
+        : this(name, tag, bodyText, buttonText, resultText, effects,
+               new Func<bool>[0], new String[0], new Action[0])
         { }
 
         public Encounter(string name, string tag, string bodyText,
                          IEnumerable<string> buttonText, IEnumerable<string> resultText,
-                         IEnumerable<Action> effects, IEnumerable<Func<bool>> conditions)
+                         IEnumerable<Action> effects, IEnumerable<Func<bool>> conditions,
+                         IEnumerable<string> failText, IEnumerable<Action> failEffects)
         {
             Id = nextId++;  // static int id for now
             Name = name;
@@ -90,11 +105,43 @@ namespace Encounters
             ButtonText = new ReadOnlyCollection<string>(new List<string>(buttonText));
             ResultText = new ReadOnlyCollection<string>(new List<string>(resultText));
             Effects = new ReadOnlyCollection<Action>(new List<Action>(effects));
-            Conditions = new ReadOnlyCollection<Func<bool>>(new List<Func<bool>>(conditions));
             if (ButtonText.Count != ResultText.Count || ButtonText.Count != Effects.Count)
             {
                 throw new ArgumentException("buttonText, resultText, and effects must have the same length!");
             }
+
+            // Default unspecified conditions to true
+            var conds = new List<Func<bool>>(conditions);
+            if (conds.Count < Effects.Count)
+            {
+                for (int i = conds.Count; i < Effects.Count; i++)
+                {
+                    conds.Add(() => true);
+                }
+            }
+            Conditions = new ReadOnlyCollection<Func<bool>>(conds);
+
+            // Failure Dialoge
+            var failTxt = new List<string>(failText);
+            if (failTxt.Count < ResultText.Count)
+            {
+                for (int i = failTxt.Count; i < ResultText.Count; i++)
+                {
+                    failTxt.Add("Action failed.");
+                }
+            }
+            FailText = new ReadOnlyCollection<string>(failTxt);
+
+            // Failure effects
+            var failEffs = new List<Action>(failEffects);
+            if (failEffs.Count < Effects.Count)
+            {
+                for (int i = failEffs.Count; i < Effects.Count; i++)
+                {
+                    failEffs.Add(() => {});
+                }
+            }
+            FailEffects = new ReadOnlyCollection<Action>(failEffs);
 
             dialoguePages = new List<IDPage>();
             dialogueButtons = new List<IDButton>();
@@ -157,8 +204,17 @@ namespace Encounters
                     Text = ButtonText[idx],
                     OnButtonClick = () =>
                     {
-                        dialoguePages[++dialogueStage].Text = ResultText[idx];
-                        Effects[idx]();  // call effect function
+                        // check conditions
+                        if (Conditions[idx]())
+                        {
+                            dialoguePages[++dialogueStage].Text = ResultText[idx];
+                            Effects[idx]();  // call effect function
+                        }
+                        else
+                        {
+                            dialoguePages[++dialogueStage].Text = FailText[idx];
+                            FailEffects[idx]();
+                        }
                         DFunctions.GoToNextPage();
                     }
                 });
