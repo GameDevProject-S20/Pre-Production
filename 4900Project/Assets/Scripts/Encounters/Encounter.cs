@@ -61,6 +61,13 @@ namespace Encounters
         public ReadOnlyCollection<Action> Effects
         { get; }
 
+        /// <summary>
+        /// Conditions that must be met for an effect to resolve.
+        /// Should return a bool.
+        /// </summary>
+        public ReadOnlyCollection<Func<bool>> Conditions
+        { get; }
+
         private List<IDPage> dialoguePages;
         private List<IDButton> dialogueButtons;
         private int dialogueStage;
@@ -68,6 +75,12 @@ namespace Encounters
         public Encounter(string name, string tag, string bodyText,
                          IEnumerable<string> buttonText, IEnumerable<string> resultText,
                          IEnumerable<Action> effects)
+        : this(name, tag, bodyText, buttonText, resultText, effects, new Func<bool>[0])
+        { }
+
+        public Encounter(string name, string tag, string bodyText,
+                         IEnumerable<string> buttonText, IEnumerable<string> resultText,
+                         IEnumerable<Action> effects, IEnumerable<Func<bool>> conditions)
         {
             Id = nextId++;  // static int id for now
             Name = name;
@@ -77,6 +90,7 @@ namespace Encounters
             ButtonText = new ReadOnlyCollection<string>(new List<string>(buttonText));
             ResultText = new ReadOnlyCollection<string>(new List<string>(resultText));
             Effects = new ReadOnlyCollection<Action>(new List<Action>(effects));
+            Conditions = new ReadOnlyCollection<Func<bool>>(new List<Func<bool>>(conditions));
             if (ButtonText.Count != ResultText.Count || ButtonText.Count != Effects.Count)
             {
                 throw new ArgumentException("buttonText, resultText, and effects must have the same length!");
