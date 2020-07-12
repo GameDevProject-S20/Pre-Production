@@ -41,7 +41,7 @@ namespace Encounters
                     new string[]
                     {
                         "2 Scrap Metal added.",
-                        "res2"
+                        "1 Explosive removed, 1 Fusion Core added"
                     },
                     new Action[]  // successful action
                     {
@@ -52,35 +52,33 @@ namespace Encounters
                         },
                         () => {
                             var inventory = DataTracker.Current.Player.Inventory;
-                            if (inventory.Contains("item99") > 0)  // Explosive
-                            {
-                                inventory.AddItem("item3", 1);  // Fusion core
-                            }
-                            else
-                            {
-                                // How do we display to the player that they can't do that?
-                            }
+                            inventory.RemoveItem("item99", 1);
+                            inventory.AddItem("item3", 1);  // Fusion core
                             SceneManager.LoadScene("MapScene");
                         }
                     },
                     new Func<bool>[]  // condition (whether the player can take the action or not)
                     {
                         () => {
+                            // Always available
                             return true;
                         },
                         () => {
-                            return false;
+                            // Only available if the player has 1 explosive
+                            return DataTracker.Current.Player.Inventory.Contains("item99") > 0;
                         }
                     },
                     new String[]  // Text to display on failure
                     {
-                        "Failed",
-                        "Failed"
+                        "",
+                        "You do not have enough explosives!"
                     },
                     new Action[]  // Action to take on failure
                     {
                         () => {},
-                        () => {}
+                        () => {
+                            // Restart encounter or.....?
+                        }
                     }
                 )
             }
