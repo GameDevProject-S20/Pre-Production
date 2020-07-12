@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -132,9 +132,6 @@ GameObject:
   - component: {fileID: 2065480053}
   - component: {fileID: 2065480052}
   - component: {fileID: 2065480056}
-  - component: {fileID: 2065480051}
-  - component: {fileID: 2065480054}
-  - component: {fileID: 2065480055}
   m_Layer: 0
   m_Name: DataTracker
   m_TagString: Untagged
@@ -142,36 +139,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2065480051
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2065480050}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 150ec3fd77fb02345830ed7602ee0f69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onEventTrigger:
-    m_PersistentCalls:
-      m_Calls: []
-  onTransaction:
-    m_PersistentCalls:
-      m_Calls: []
-  onTownEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onDialogueSelect:
-    m_PersistentCalls:
-      m_Calls: []
-  onQuestUpdate:
-    m_PersistentCalls:
-      m_Calls: []
-  onInventoryChange:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &2065480052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,8 +151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a2585fbc558a914bbd4f3d92b3be474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentShop: 1
-  currentNode: 0
+  currentShopId: 0
+  currentLocationId: 0
 --- !u!4 &2065480053
 Transform:
   m_ObjectHideFlags: 0
@@ -200,30 +167,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2065480054
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2065480050}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95ae3d50863a3fc4ba80229c5c43ba0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2065480055
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2065480050}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63e97f779d40b7e4d9bee15043dbeb20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2065480056
 MonoBehaviour:
   m_ObjectHideFlags: 0
