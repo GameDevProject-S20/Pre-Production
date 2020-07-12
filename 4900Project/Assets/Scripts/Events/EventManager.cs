@@ -33,6 +33,10 @@ namespace SIEvents
 
         public Events.Town.EnterEvent OnTownEnter = new Events.Town.EnterEvent();
 
+        //=== Encounters ============================================//
+
+        public Events.EncounterLocation.EncounterEvent OnEncounterEnter = new Events.EncounterLocation.EncounterEvent();
+
         //=== Quest ==================================================//
 
         public Events.Quest.QuestComplete OnQuestComplete = new Events.Quest.QuestComplete();

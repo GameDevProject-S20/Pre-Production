@@ -87,7 +87,8 @@ public class OverworldMapUI : MonoBehaviour
                     targetPos = hit.collider.gameObject.transform.position;
                     OverworldMap.LocationNode node;
                     if (DataTracker.Current.WorldMap.GetNode(selected, out node)){
-                        if (node.Type == OverworldMap.LocationType.TOWN){
+                        Debug.Log(node.Name);
+                        if (node.Type == OverworldMap.LocationType.TOWN || node.Type == OverworldMap.LocationType.EVENT){
                             enterNodeButton.interactable = true;
                         }
                         else{
@@ -102,7 +103,10 @@ public class OverworldMapUI : MonoBehaviour
     }
 
     public void OnButtonClick(){
-        SceneManager.LoadScene("Town");
+        Debug.Log("OverworlMapUI.OnButtonClick");
+        //SceneManager.LoadScene("Town");
+        //SceneManager.LoadScene("EncounterTestScene");
+        SceneManager.LoadScene("Encounter");
     }
 
 }

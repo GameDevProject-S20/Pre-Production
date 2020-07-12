@@ -15,7 +15,9 @@ public class OverworldMapLoader
         Town4 = new OverworldMap.LocationNode(3, "Town4", OverworldMap.LocationType.TOWN, 0.67f, 0.10f);
         Town5 = new OverworldMap.LocationNode(4, "Town5", OverworldMap.LocationType.TOWN, 0.12f, 0.65f);
         Node1 = new OverworldMap.LocationNode(-1, "Node1", OverworldMap.LocationType.NONE, -0.24f, 0.2f);
-        Node2 = new OverworldMap.LocationNode(-1, "Node2", OverworldMap.LocationType.NONE, -0.13f, 0.06f);
+
+        Node2 = new OverworldMap.LocationNode(-1, "Event1", OverworldMap.LocationType.EVENT, -0.13f, 0.06f);
+
         Node3 = new OverworldMap.LocationNode(-1, "Node3", OverworldMap.LocationType.NONE, -0.23f, -0.09f);
         Node4 = new OverworldMap.LocationNode(-1, "Node4", OverworldMap.LocationType.NONE, -0.15f, -0.29f);
         Node5 = new OverworldMap.LocationNode(-1, "Node5", OverworldMap.LocationType.NONE, 0f, -0.16f);
