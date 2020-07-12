@@ -57,7 +57,8 @@ namespace Encounters
         public void RunRandomEncounter()
         {
             Encounter next = randomEncounter();
-            next.StartDialogue();
+            Debug.Log(next);
+            next.Run();
         }
 
         public void RunFixedEncounter(int id)
@@ -65,7 +66,7 @@ namespace Encounters
             fixedEncounters.TryGetValue(id, out Encounter encounter);
             if (encounter != null)
             {
-                encounter.StartDialogue();
+                encounter.Run();
             }
             Debug.Log(encounter.Id + " : " + ((encounter != null) ? "Found" : "Not Found"));
         }

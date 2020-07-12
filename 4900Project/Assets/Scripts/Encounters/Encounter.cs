@@ -5,7 +5,8 @@ using System.Text;
 using System.Linq;
 using UnityEngine;
 using Dialogue;
-
+using SIEvents;
+using UnityEngine.Events;
 
 namespace Encounters
 {
@@ -40,12 +41,14 @@ namespace Encounters
         /// </summary>
         public string BodyText
         { get; }
-        ///
+
         /// <summary>
         /// Choice text presented to the player via buttons.
         /// </summary>
         public ReadOnlyCollection<string> ButtonText
         { get; }
+
+        public IDialogue Dialogue { get; }
 
         /// <summary>
         /// Result text dependent on the action selected by the player.
@@ -61,13 +64,17 @@ namespace Encounters
         public ReadOnlyCollection<Action> Effects
         { get; }
 
+        private ReadOnlyCollection<Condition> Conditions;
+
+        private UnityAction<Condition> onConditionCompleteListener;
+
         protected List<IDPage> dialoguePages;
         protected List<IDButton> dialogueButtons;
         protected int dialogueStage;
 
         public Encounter(string name, string tag, string bodyText,
                          IEnumerable<string> buttonText, IEnumerable<string> resultText,
-                         IEnumerable<Action> effects)
+                         IEnumerable<Action> effects, IEnumerable<Condition> conditions = default)
         {
             Id = nextId++;  // static int id for now
             Name = name;
@@ -86,14 +93,42 @@ namespace Encounters
             dialogueButtons = new List<IDButton>();
             dialogueStage = 0;
             initDialogue();
+
+
+            // Setup Conditions
+            if (Conditions != null)
+            {
+                Conditions = new ReadOnlyCollection<Condition>(new List<Condition>(conditions));
+                onConditionCompleteListener = (Condition c) =>
+                {
+                    if (conditions.Contains(c)) runIfConditionsSatisfied();
+                };
+
+                EventManager.Instance.OnConditionComplete.AddListener(onConditionCompleteListener);
+
+                foreach (var c in Conditions)
+                {
+                    c.AllowProgression();
+                }
+            }        
         }
 
-        /// <summary>
-        /// Call this to start the encounter, by displaying the dialogue to the player
-        /// </summary>
-        public void StartDialogue()
+        private bool runIfConditionsSatisfied()
         {
-            IDialogue dialogue = DialogueManager.CreateDialogue(dialoguePages);
+            if (Conditions.All(c => c.IsSatisfied))
+            {
+                DialogueManager.Instance.StartDialogue(Dialogue);
+                return true;
+            }
+            return false;
+        }
+
+        public void Run()
+        {
+            if (!runIfConditionsSatisfied())
+            {
+                throw new System.Exception("Conditions not yet satisfied!");
+            }
         }
 
         // Debug purposes
