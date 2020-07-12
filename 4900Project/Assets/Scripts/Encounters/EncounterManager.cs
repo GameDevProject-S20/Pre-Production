@@ -27,8 +27,11 @@ namespace Encounters
 
         private static EncounterManager instance;
         private Random random;
-        private Dictionary<int, Encounter> fixedEncounters;
-        // private Dictionary<int, Encounter> randomEncounters;
+
+        private Dictionary<int, Encounter> fixedEncounters
+        {
+            get => EncounterCollection.Instance.FixedEncounters;
+        }
 
         private Dictionary<int, Encounter> randomEncounters
         {
@@ -40,9 +43,12 @@ namespace Encounters
         private EncounterManager()
         {
             random = new Random();
-            fixedEncounters = new Dictionary<int, Encounter>();
-            //randomEncounters = new Dictionary<int, Encounter>();
             randomEncounterQueue = reloadRandomEncounters();
+        }
+
+        public void AddFixedEncounter(Encounter enc)
+        {
+            EncounterCollection.Instance.FixedEncounters.Add(enc.Id, enc);
         }
 
         /// <summary>
@@ -69,10 +75,10 @@ namespace Encounters
         private Queue<Encounter> reloadRandomEncounters()
         {
             // hard coded for now
-            var nextEncounters = new List<Encounter>(randomEncounters);
+            var nextEncounters = new List<Encounter>(randomEncounters.Values);
 
             // Shuffle the list and return as a queue
-            return new Queue<Encounter>(nextEncounters.OrderBy(encounterQueue => random.Next()));
+            return new Queue<Encounter>(nextEncounters.OrderBy(randomEncounterQueue => random.Next()));
         }
 
         // Return the next random encounter in the shuffled queue
@@ -80,10 +86,13 @@ namespace Encounters
         private Encounter randomEncounter()
         {
             Encounter enc;
-            if (!encounterQueue.TryDequeue(enc))
+            try
             {
-                encounterQueue = reloadRandomEncounters();
-                enc = encounterQueue.Dequeue();
+                enc = randomEncounterQueue.Dequeue();
+            } catch (InvalidOperationException e)
+            {
+                randomEncounterQueue = reloadRandomEncounters();
+                enc = randomEncounterQueue.Dequeue();
             }
             return enc;
         }

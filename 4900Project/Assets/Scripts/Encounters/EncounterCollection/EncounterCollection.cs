@@ -8,7 +8,7 @@ namespace Encounters
 {
     public class EncounterCollection
     {
-        public EncounterCollection Instance
+        public static EncounterCollection Instance
         {
             get
             {
@@ -17,7 +17,12 @@ namespace Encounters
             }
         }
 
-        public EncounterCollection instance = null;
+        public static EncounterCollection instance = null;
+
+        public Dictionary<int, Encounter> FixedEncounters = new Dictionary<int, Encounter>()
+        {
+        };
+
         public Dictionary<int, Encounter> RandomEncounters = new Dictionary<int, Encounter>()
         {
             {

@@ -9,8 +9,8 @@ public class EncounterInvoker : MonoBehaviour
 {
     void Start()
     {
+        /*
         var mgr = EncounterManager.Instance;
-
         Encounter enc = new Encounter(
             "Uranium Deposit Discovered!",
             "Scavenging",
@@ -37,5 +37,6 @@ public class EncounterInvoker : MonoBehaviour
 
         mgr.AddFixedEncounter(enc);
         mgr.RunFixedEncounter(enc.Id);
+        */
     }
 }
