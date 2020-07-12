@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
+using Assets.Scripts.ExitMenu;
 
 public class StartMenuButtonHandler : MonoBehaviour
 {
@@ -50,6 +51,6 @@ public class StartMenuButtonHandler : MonoBehaviour
 
     public void OnQuitPress(){
         // Application.Quit() will close the application
-        Application.Quit();
+        ExitMenuControl.BringUpExitMenu();
     }
 }

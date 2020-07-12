@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.ExitMenu
 {
-    class ExitMenuControl
+    public class ExitMenuControl
     {
         protected static bool promptOpen;
 
