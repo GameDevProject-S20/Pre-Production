@@ -31,17 +31,13 @@ public class DataTracker : MonoBehaviour
         } else {
             _current = this;
         }
-
-        Player.Inventory.AddItem("item1", 2);
-        Player.Inventory.AddItem("item2", 8);
-        Player.Inventory.AddItem("item4", 6);
-        Player.Inventory.AddItem("item8", 3);
-        Player.Inventory.AddItem("item5", 1);
-        Player.Inventory.AddItem("item7", 6);
-
         ShopManager.LoadData();
         TownManager.LoadData();
-
+        Player.Inventory.weightLimit = 10000000f;
+        Player.Inventory.AddItem("Rations", 8);
+        Player.Inventory.AddItem("Fresh Fruit", 1);
+        Player.Inventory.AddItem("Scrap Metal", 6);
+        Player.Inventory.AddItem("Wrench", 2);
         DontDestroyOnLoad(gameObject);
     }
 

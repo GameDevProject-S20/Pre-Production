@@ -4,36 +4,12 @@ using UnityEngine;
 
 public class Inventory
 {
-    // Move this to Item Manager
-    public static Dictionary<string, Item> itemsMaster = new Dictionary<string, Item>();
     Dictionary<string, int> contents = new Dictionary<string, int>();
     public float weightLimit {get; set;}
     float weightOverflowModifier = 1.0f; // for now this does nothing. might be used later if we allow the player to overfill their inventory at a cost
 
     public Inventory(){
-        weightLimit = 100000;
-        if (itemsMaster.Count == 0){
-
-            Item item1 = new Item("item1", "Herbs", "", "", 1, 1);
-            Item item2 = new Item("item2", "Scrap Metal", "", "", 2, 2);
-            Item item3 = new Item("item3", "Morphine", "", "", 3, 3);
-            Item item4 = new Item("item4", "Food Ration", "", "", 5, 5);
-            Item item5 = new Item("item5", "Gunpowder", "", "", 8, 8);
-            Item item6 = new Item("item6", "Fuel", "", "", 13, 13);
-            Item item7 = new Item("item7", "Prothetic Leg", "", "", 21, 21);
-            Item item8 = new Item("item8", "Radio", "", "", 34, 34);
-            Item medicine = new Item("Medicine", "Medicine", "", "", 9, 9);
-
-            itemsMaster.Add(item1.Name, item1);
-            itemsMaster.Add(item2.Name, item2);
-            itemsMaster.Add(item3.Name, item3);
-            itemsMaster.Add(item4.Name, item4);
-            itemsMaster.Add(item5.Name, item5);
-            itemsMaster.Add(item6.Name, item6);
-            itemsMaster.Add(item7.Name, item7);
-            itemsMaster.Add(item8.Name, item8);
-            itemsMaster.Add(medicine.Name, medicine);
-        }
+        weightLimit = 1000;
     }
 
     // Copy Constructor
@@ -103,7 +79,7 @@ public class Inventory
         float totalValue = 0;
         foreach (KeyValuePair<string, int> item in contents)
         {
-            totalValue += item.Value * itemsMaster[item.Key].Value;
+            totalValue += item.Value * ItemManager.Current.itemsMaster[item.Key].Value;
         }
         return totalValue;
     }
@@ -122,7 +98,7 @@ public class Inventory
             if (mod == 0){
                 mod = 1;
             }
-            totalValue += item.Value * itemsMaster[item.Key].Value * mod;
+            totalValue += item.Value * ItemManager.Current.itemsMaster[item.Key].Value * mod;
         }
         return totalValue;
     }
@@ -135,7 +111,7 @@ public class Inventory
         float totalWeight = 0;
         foreach (KeyValuePair<string, int> item in contents)
         {
-            totalWeight += item.Value * itemsMaster[item.Key].Weight;
+            totalWeight += item.Value * ItemManager.Current.itemsMaster[item.Key].Weight;
         }
         return totalWeight;
     }
@@ -150,7 +126,7 @@ public class Inventory
     /// <param name="name">Name of item</param>
     /// <returns>Amount of given item that can fit</returns>
     public int CanFitHowMany(string name){
-        return Mathf.FloorToInt((weightLimit * weightOverflowModifier - TotalWeight()) / itemsMaster[name].Weight);
+        return Mathf.FloorToInt((weightLimit * weightOverflowModifier - TotalWeight()) / ItemManager.Current.itemsMaster[name].Weight);
     }
 
     /// <summary>
@@ -169,26 +145,8 @@ public class Inventory
     public override string ToString(){
         string output = "";
         foreach (var item in contents){
-            output += itemsMaster[item.Key].DisplayName + " (" + item.Value +")\n";
+            output += ItemManager.Current.itemsMaster[item.Key].DisplayName + " (" + item.Value +")\n";
         }
         return output;
-    }
-}
-
-public struct Item{
-    public string Name;
-    public string DisplayName;
-    public string Tooltip;
-    public string Description;
-    public float Value;
-    public float Weight;
-
-    public Item(string name_, string displayName_, string tooltip_, string description_, float value_, float weight_){
-        Name = name_;
-        DisplayName = displayName_;
-        Tooltip = tooltip_;
-        Description = description_;
-        Value = value_;
-        Weight = weight_;
     }
 }
