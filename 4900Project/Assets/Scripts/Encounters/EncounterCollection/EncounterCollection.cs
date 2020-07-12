@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 namespace Encounters
@@ -42,8 +44,12 @@ namespace Encounters
                     },
                     new Action[]
                     {
-                        () => {},
-                        () => {}
+                        () => {
+                            SceneManager.LoadScene("MapScene");
+                        },
+                        () => {
+                            SceneManager.LoadScene("MapScene");
+                        }
                     }
                 )
             }
