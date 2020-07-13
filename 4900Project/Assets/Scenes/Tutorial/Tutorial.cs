@@ -27,16 +27,15 @@ public class Tutorial : MonoBehaviour
              },
              new string[]
              {
+                            ""
              },
              new Action[]
              {
                              () => {
                                  EncounterManager.Instance.GetFixedEncounter(2).AllowProgression();
-                                 // Go to the world map
+                                 SceneManager.LoadScene("MapScene");
                              }
-             },
-             new List<Condition>(),
-             1
+             }
          );
 
         Encounter enc2 = new Encounter(
@@ -61,7 +60,7 @@ public class Tutorial : MonoBehaviour
                                      }
              },
              new List<Condition>(),
-             2
+             0
          );
 
         Encounter enc3 = new Encounter(
@@ -105,7 +104,7 @@ public class Tutorial : MonoBehaviour
                                                         EncounterManager.Instance.GetFixedEncounter(5).AllowProgression();
                                                     }
             },
-            new List<Condition>(new OnStageCompleteCondition(/**/)),
+            new List<Condition> { new StageCompleteCondition("", 1, 1) },
             3
         );
 
@@ -126,7 +125,7 @@ public class Tutorial : MonoBehaviour
                                                             () => {
                                                             }
             },
-            new List<Condition>(new OnQuestCompleteCondition(/**/)),
+            new List<Condition> { new QuestCompleteCondition("", 1) },
             2
         );
 
