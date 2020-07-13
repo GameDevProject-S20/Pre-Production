@@ -51,6 +51,11 @@ namespace Encounters
             EncounterCollection.Instance.FixedEncounters.Add(enc.Id, enc);
         }
 
+        public void AddRandomEncounter(Encounter enc)
+        {
+            EncounterCollection.Instance.RandomEncounters.Add(enc.Id, enc);
+        }
+
         /// <summary>
         /// Call this to get a random encounter
         /// </summary>
@@ -58,7 +63,7 @@ namespace Encounters
         {
             Encounter next = randomEncounter();
             Debug.Log(next);
-            next.Run();
+            next.StartDialogue();
         }
 
         public void RunFixedEncounter(int id)
@@ -66,9 +71,8 @@ namespace Encounters
             fixedEncounters.TryGetValue(id, out Encounter encounter);
             if (encounter != null)
             {
-                encounter.Run();
+                encounter.StartDialogue();
             }
-            Debug.Log(encounter.Id + " : " + ((encounter != null) ? "Found" : "Not Found"));
         }
 
         // Load from csv or wherever in the future...
@@ -96,6 +100,15 @@ namespace Encounters
                 enc = randomEncounterQueue.Dequeue();
             }
             return enc;
+        }
+
+        public Encounter GetFixedEncounter(int id)
+        {
+            if (fixedEncounters.TryGetValue(id, out Encounter value))
+            {
+                return value;
+            }
+            return null;
         }
     }
 }

@@ -141,7 +141,7 @@ namespace Encounters
                             dialoguePages[dialoguePages.Count - 1].GetButton(0).OnButtonClick = () => {
                                 DFunctions.CloseDialogue();
                                 resetEncounter();
-                                Run();
+                                StartDialogue();
                             };
                         }
                         DFunctions.GoToNextPage();

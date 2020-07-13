@@ -9,38 +9,134 @@ using SIEvents;
 
 public class Tutorial : MonoBehaviour
 {
-    private Encounter enc;
-
     void Start()
     {
-        Dialogue();
+        init();
+        // Set player to node 1
     }
 
-    private void Dialogue()
+    private void init()
     {
-        enc = new Encounter(
+        Encounter enc1 = new Encounter(
+             "Enc 1",
+             "Tutorial",
+             "The cart's gas is running so low...\nI need to get into town as soon as possible.\nLooks like there's one not too far ahead...",
+             new string[]
+             {
+                             "Travel."
+             },
+             new string[]
+             {
+             },
+             new Action[]
+             {
+                             () => {
+                                 EncounterManager.Instance.GetFixedEncounter(2).AllowProgression();
+                                 // Go to the world map
+                             }
+             },
+             new List<Condition>(),
+             1
+         );
+
+        Encounter enc2 = new Encounter(
+             "Enc 2",
+             "Tutorial",
+             "Welcome to the first town!",
+             new string[]
+             {
+                                     "Take items."
+             },
+             new string[]
+             {
+                                     "Received Gas and Medicine!",
+             },
+             new Action[]
+             {
+                                     () => {
+                                         // Give gas
+                                         // Give medicine
+                                         BeginQuest();
+                                         EncounterManager.Instance.GetFixedEncounter(3).AllowProgression();
+                                     }
+             },
+             new List<Condition>(),
+             2
+         );
+
+        Encounter enc3 = new Encounter(
+            "Enc 3",
             "Tutorial",
-            "Tutorial",
-            "Welcome to town! I'm the Sheriff of these here parts! You'll be able to find the things you can do in my town on the Town Menu screen. Now, don't be going messing around in my town or you'll be hearing from me and your reputation will suffer. These are hard times and we can't be just letting anyone into our community, if your reputation drops low enough you'd best keep away. I see you're a traveling merchant, I hear the town of York is looking for some medicine. You can get that from the Pharmacy and bring it to them. Good luck!",
+            "Welcome to the second town!",
             new string[]
             {
-                            "Accept Quest"
+                                            "Done."
             },
             new string[]
             {
-                            "Purchase some medicine to sell in the town of Riverbed.",
+                                            "Exchange the medicine for wood at the local store.",
             },
             new Action[]
             {
-                            () => {
-                                BeginQuest();
-                                LoadTown();
-                            }
-            }
+                                            () => {
+                                                EncounterManager.Instance.GetFixedEncounter(4).AllowProgression();
+                                                // Go to shop
+                                            }
+            },
+            new List<Condition>(),
+            3
         );
 
-        DataTracker.Current.EncounterManager.AddFixedEncounter(enc);
-        DataTracker.Current.EncounterManager.RunFixedEncounter(enc.Id);
+        Encounter enc4 = new Encounter(
+            "Enc 4",
+            "Tutorial",
+            "Thanks for selling that medicine! Here's some gas for your travel back to town",
+            new string[]
+            {
+                                                    "Done."
+            },
+            new string[]
+            {
+                                                    "",
+            },
+            new Action[]
+            {
+                                                    () => {
+                                                        EncounterManager.Instance.GetFixedEncounter(5).AllowProgression();
+                                                    }
+            },
+            new List<Condition>(new OnStageCompleteCondition(/**/)),
+            3
+        );
+
+        Encounter enc5 = new Encounter(
+            "Enc 5",
+            "Tutorial",
+            "Thanks completing that tutorial!",
+            new string[]
+            {
+                                                            "Done."
+            },
+            new string[]
+            {
+                                                            "",
+            },
+            new Action[]
+            {
+                                                            () => {
+                                                            }
+            },
+            new List<Condition>(new OnQuestCompleteCondition(/**/)),
+            2
+        );
+
+        EncounterManager.Instance.AddFixedEncounter(enc1);
+        EncounterManager.Instance.AddFixedEncounter(enc2);
+        EncounterManager.Instance.AddFixedEncounter(enc3);
+        EncounterManager.Instance.AddFixedEncounter(enc4);
+        EncounterManager.Instance.AddFixedEncounter(enc5);
+
+        enc1.AllowProgression();
     }
 
     private void BeginQuest()
@@ -51,8 +147,8 @@ public class Tutorial : MonoBehaviour
             .AddStage(new Stage.Builder("Purchase medicine in Smithsville.")
                 .AddCondition(new TransactionCondition("Purchase 1 medicine at the Smithsville Pharmacy", "Medicine", 1, TransactionCondition.TransactionTypeEnum.BUY, TownManager.Instance.GetTownByName("Smithsville").Id)
                 )
-            )    
-            
+            )
+
             .AddStage(new Stage.Builder("Sell Medicine in York.")
                 .AddCondition(new TransactionCondition("Sell 1 medicine to the York General Store", "Medicine", 1, TransactionCondition.TransactionTypeEnum.SELL, TownManager.Instance.GetTownByName("York").Id)
                 )
