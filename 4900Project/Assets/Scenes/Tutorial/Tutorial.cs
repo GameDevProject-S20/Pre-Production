@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using System;
 using Encounters;
 using Quests;
-using System.Linq;
+using SIEvents;
 
 public class Tutorial : MonoBehaviour
 {

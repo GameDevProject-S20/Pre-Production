@@ -10,7 +10,7 @@ namespace Dialogue
     /// <summary>
     /// The actual implementation for a Dialogue.
     /// </summary>
-    public class Dialogue : IDialogue
+    class Dialogue : IDialogue
     {
         // Properties
         public int Id { get; protected set; }

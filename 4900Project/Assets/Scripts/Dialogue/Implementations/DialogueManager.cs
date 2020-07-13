@@ -53,7 +53,6 @@ namespace Dialogue
             // Create the dialog for that ID, and add it to the list
             IDialogue dialog = new Dialogue(dialogs.Count, dialoguePages);
             dialogs.Add(dialog);
-            activeDialogs.Add(dialog);
 
             // Hook into the events for updating the active dialog / firing dialog changes
             // When a dialog is opened, set it as the active dialog
@@ -85,11 +84,16 @@ namespace Dialogue
                 UpdateActiveDialogue();
             });
 
-            // Update with the new active dialog
-            UpdateActiveDialogue();
-
             // Return the new dialog
             return dialog;
+        }
+
+        public void StartDialogue(IDialogue dialogue)
+        {
+            activeDialogs.Add(dialogue);
+
+            // Update with the new active dialog
+            UpdateActiveDialogue();
         }
 
         /// <summary>

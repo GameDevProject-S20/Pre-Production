@@ -16,7 +16,7 @@ namespace Encounters
 
         public int Id { get; }
 
-        public Dialogue.Dialogue Dialogue { get; }
+        public IDialogue Dialogue { get; }
 
         public List<Condition> Conditions;
 
@@ -30,28 +30,37 @@ namespace Encounters
 
             onConditionCompleteListener = (Condition c) =>
             {
-                if (conditions.Contains(c)) onConditionCompleteHandler();
+                if (conditions.Contains(c)) runIfConditionsSatisfied();
             };
             EventManager.Instance.OnConditionComplete.AddListener(onConditionCompleteListener);
             Conditions.ForEach(c => c.AllowProgression());
         }
 
-        private void onConditionCompleteHandler()
+        private bool runIfConditionsSatisfied()
         {
             if (Conditions.All(c => c.IsSatisfied))
             {
-                DialogueManager.Instance.StartDialogue(dialogue);
+                DialogueManager.Instance.StartDialogue(Dialogue);
+                return true;
+            }
+            return false;
+        }
+        public void Run()
+        {
+            if (!runIfConditionsSatisfied())
+            {
+                throw new System.Exception("Conditions not yet satisfied!");
             }
         }
 
         public class Builder
         {
-            private Dialogue.Dialogue dialogue;
+            private IDialogue dialogue;
             private List<Condition> conditions;
 
             private Builder() { }
 
-            public Builder(Dialogue.Dialogue dialogue)
+            public Builder(IDialogue dialogue)
             {
                 this.dialogue = dialogue;
                 conditions = new List<Condition>();
