@@ -60,16 +60,6 @@ namespace Encounters
             next.StartDialogue();
         }
 
-        public void RunFixedEncounter(int id)
-        {
-            fixedEncounters.TryGetValue(id, out Encounter encounter);
-            if (encounter != null)
-            {
-                encounter.StartDialogue();
-            }
-            Debug.Log(encounter.Id + " : " + ((encounter != null) ? "Found" : "Not Found"));
-        }
-
         // Load from csv or wherever in the future...
         // For now this demonstrates how to create an encounter object.
         private Queue<Encounter> reloadRandomEncounters()
@@ -95,6 +85,15 @@ namespace Encounters
                 enc = randomEncounterQueue.Dequeue();
             }
             return enc;
+        }
+
+        public Encounter GetFixedEncounter(int id)
+        {
+            if (fixedEncounters.TryGetValue(id, out Encounter value))
+            {
+                return value;
+            }
+            return null;
         }
     }
 }

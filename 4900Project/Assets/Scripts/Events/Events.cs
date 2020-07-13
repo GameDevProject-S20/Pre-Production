@@ -8,7 +8,7 @@ namespace SIEvents
     /// </summary>
     public class Events
     {
-        public partial class Transaction
+        public class TransactionEvents
         {
             [System.Serializable]
             public class Event : UnityEvent<Details> { };
@@ -44,7 +44,7 @@ namespace SIEvents
             }
         }
 
-        public partial class Town
+        public class TownEvents
         {
             [System.Serializable]
             public class EnterEvent : UnityEvent<Town> { };
@@ -56,20 +56,20 @@ namespace SIEvents
             public class EncounterEvent : UnityEvent<EncounterLocation> { };
         }
 
-        public partial class Dialogue
+        public class DialogueEvents
         {
             [System.Serializable]
             public class SelectionEvent : UnityEvent<string> { };
         }
 
-        public partial class Quest
+        public class QuestEvents
         {
             [System.Serializable]
             public class QuestComplete : UnityEvent<Quests.Quest> { };
             [System.Serializable]
             public class StageComplete : UnityEvent<Quests.Stage> { };
             [System.Serializable]
-            public class ConditionComplete : UnityEvent<Quests.Condition> { };
+            public class ConditionComplete : UnityEvent<SIEvents.Condition> { };
             [System.Serializable]
             public class QuestAdded : UnityEvent<Quests.Quest> { };
             [System.Serializable]

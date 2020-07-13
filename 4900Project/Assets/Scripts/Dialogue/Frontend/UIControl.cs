@@ -15,7 +15,7 @@ public class UIControl : MonoBehaviour
     
     void Start()
     {
-        DialogueManager.ActiveDialogueChanged.AddListener(() =>
+        DialogueManager.Instance.ActiveDialogueChanged.AddListener(() =>
         {
             UpdateDialogDisplay();
         });
@@ -99,7 +99,7 @@ public class UIControl : MonoBehaviour
      
     protected void UpdateDialogDisplay()
     {
-        var dialog = DialogueManager.GetActiveDialogue();
+        var dialog = DialogueManager.Instance.GetActiveDialogue();
 
         // If we don't have an active dialog, hide the UI
         if (dialog == null)

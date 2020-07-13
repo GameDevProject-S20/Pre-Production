@@ -5,7 +5,8 @@ using System.Text;
 using System.Linq;
 using UnityEngine;
 using Dialogue;
-
+using SIEvents;
+using UnityEngine.Events;
 
 namespace Encounters
 {
@@ -13,7 +14,7 @@ namespace Encounters
     /// Encounter data structure
     /// Takes in data and builds a dialogue structure, that can be presented to the player.
     /// </summary>
-    public class Encounter
+    public class Encounter : IProgressor
     {
         private static int nextId = 0;
 
@@ -61,21 +62,34 @@ namespace Encounters
         public ReadOnlyCollection<Action> Effects
         { get; }
 
+        /// <summary>
+        /// Conditions that must be satisfied before the encounter will occur
+        /// Intended for Fixed Encounters only
+        /// </summary>
+        public ReadOnlyCollection<Condition> Conditions
+        { get; }
+
+        /// <summary>
+        /// The town to be entered in order to trigger the encounter
+        /// Intended for Fixed Encounters only
+        /// </summary>
+        private int? fixedEncounterTownId;
+
         protected List<IDPage> dialoguePages;
         protected List<IDButton> dialogueButtons;
         protected int dialogueStage;
 
-        public Encounter(string name, string tag, string bodyText,
-                         IEnumerable<string> buttonText, IEnumerable<string> resultText,
-                         IEnumerable<Action> effects)
-        : this(name, tag, bodyText, buttonText, resultText, effects,
-               new Func<bool>[0], new String[0], new Action[0])
-        { }
+        private UnityAction<Condition> onConditionCompleteListener;
+        private UnityAction<Town> onTownEnterListener;
+
+        /// <summary>
+        /// Used to indicate whether the encounter has passed its conditions or not
+        /// </summary>
+        private bool ready;
 
         public Encounter(string name, string tag, string bodyText,
                          IEnumerable<string> buttonText, IEnumerable<string> resultText,
-                         IEnumerable<Action> effects, IEnumerable<Func<bool>> conditions,
-                         IEnumerable<string> failText, IEnumerable<Action> failEffects)
+                         IEnumerable<Action> effects, IEnumerable<Condition> conditions = default, int? fixedEncounterTownId = null)
         {
             Id = nextId++;  // static int id for now
             Name = name;
@@ -85,6 +99,8 @@ namespace Encounters
             ButtonText = new ReadOnlyCollection<string>(new List<string>(buttonText));
             ResultText = new ReadOnlyCollection<string>(new List<string>(resultText));
             Effects = new ReadOnlyCollection<Action>(new List<Action>(effects));
+            Conditions = new ReadOnlyCollection<Condition>(new List<Condition>(conditions));
+
             if (ButtonText.Count != ResultText.Count || ButtonText.Count != Effects.Count)
             {
                 throw new ArgumentException("buttonText, resultText, and effects must have the same length!");
@@ -93,15 +109,18 @@ namespace Encounters
             dialoguePages = new List<IDPage>();
             dialogueButtons = new List<IDButton>();
             dialogueStage = 0;
+
             initDialogue();
         }
+
+
 
         /// <summary>
         /// Call this to start the encounter, by displaying the dialogue to the player
         /// </summary>
         public void StartDialogue()
         {
-            IDialogue dialogue = DialogueManager.CreateDialogue(dialoguePages);
+            IDialogue dialogue = DialogueManager.Instance.CreateDialogue(dialoguePages);
         }
 
         // Debug purposes
@@ -173,6 +192,53 @@ namespace Encounters
                     endBtn
                 }
             });
+        }
+
+        public void AllowProgression()
+        {
+            // Add town enter listener
+            if (fixedEncounterTownId.HasValue)
+            {
+                if (onTownEnterListener == null)
+                {
+                    onTownEnterListener = (Town t) =>
+                    {
+                        if (t.Id == fixedEncounterTownId.Value && ready)
+                        {
+                            StartDialogue();
+                            DisallowProgression();
+                        }
+                    };
+
+                    EventManager.Instance.OnTownEnter.AddListener(onTownEnterListener);
+                }
+            }
+
+            // Add condition listener
+            if (Conditions.Count > 0)
+            {
+                if (onConditionCompleteListener == null)
+                {
+                    onConditionCompleteListener = (Condition _) =>
+                    {
+                        if (Conditions.All(c => c.IsSatisfied))
+                        {
+                            ready = true;
+                        }
+                    };
+
+                    EventManager.Instance.OnConditionComplete.AddListener(onConditionCompleteListener);
+                }
+            }
+            else
+            {
+                ready = true;
+            }
+        }
+
+        public void DisallowProgression()
+        {
+            EventManager.Instance.OnConditionComplete.RemoveListener(onConditionCompleteListener);
         }
     }
 }
