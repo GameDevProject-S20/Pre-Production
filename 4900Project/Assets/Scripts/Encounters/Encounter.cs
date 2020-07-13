@@ -55,35 +55,15 @@ namespace Encounters
         { get; }
 
         /// <summary>
-        /// Result text to appear if the action chosen by the player cannot be completed
-        /// IE. doesn't have the correct items in inventory
-        /// </summary>
-        public ReadOnlyCollection<string> FailText
-        { get; }
-
-        /// <summary>
         /// Effects that should map to each dialogue choice.
         /// Indexes correspond to ButtonText.
         /// </summary>
         public ReadOnlyCollection<Action> Effects
         { get; }
 
-        /// <summary>
-        /// Conditions that must be met for an effect to resolve.
-        /// Should return a bool.
-        /// </summary>
-        public ReadOnlyCollection<Func<bool>> Conditions
-        { get; }
-
-        /// <summary>
-        /// Effects to execute if the player cannot complete an action
-        /// </summary>
-        public ReadOnlyCollection<Action> FailEffects
-        { get; }
-
-        private List<IDPage> dialoguePages;
-        private List<IDButton> dialogueButtons;
-        private int dialogueStage;
+        protected List<IDPage> dialoguePages;
+        protected List<IDButton> dialogueButtons;
+        protected int dialogueStage;
 
         public Encounter(string name, string tag, string bodyText,
                          IEnumerable<string> buttonText, IEnumerable<string> resultText,
@@ -109,39 +89,6 @@ namespace Encounters
             {
                 throw new ArgumentException("buttonText, resultText, and effects must have the same length!");
             }
-
-            // Default unspecified conditions to true
-            var conds = new List<Func<bool>>(conditions);
-            if (conds.Count < Effects.Count)
-            {
-                for (int i = conds.Count; i < Effects.Count; i++)
-                {
-                    conds.Add(() => true);
-                }
-            }
-            Conditions = new ReadOnlyCollection<Func<bool>>(conds);
-
-            // Failure Dialoge
-            var failTxt = new List<string>(failText);
-            if (failTxt.Count < ResultText.Count)
-            {
-                for (int i = failTxt.Count; i < ResultText.Count; i++)
-                {
-                    failTxt.Add("Action failed.");
-                }
-            }
-            FailText = new ReadOnlyCollection<string>(failTxt);
-
-            // Failure effects
-            var failEffs = new List<Action>(failEffects);
-            if (failEffs.Count < Effects.Count)
-            {
-                for (int i = failEffs.Count; i < Effects.Count; i++)
-                {
-                    failEffs.Add(() => {});
-                }
-            }
-            FailEffects = new ReadOnlyCollection<Action>(failEffs);
 
             dialoguePages = new List<IDPage>();
             dialogueButtons = new List<IDButton>();
@@ -177,7 +124,6 @@ namespace Encounters
             return sb.ToString();
         }
 
-        
         /// <summary>
         /// Builds the dialogue tree
         /// </summary>
@@ -204,17 +150,8 @@ namespace Encounters
                     Text = ButtonText[idx],
                     OnButtonClick = () =>
                     {
-                        // check conditions
-                        if (Conditions[idx]())
-                        {
-                            dialoguePages[++dialogueStage].Text = ResultText[idx];
-                            Effects[idx]();  // call effect function
-                        }
-                        else
-                        {
-                            dialoguePages[++dialogueStage].Text = FailText[idx];
-                            FailEffects[idx]();
-                        }
+                        dialoguePages[++dialogueStage].Text = ResultText[idx];
+                        Effects[idx]();  // call effect function
                         DFunctions.GoToNextPage();
                     }
                 });

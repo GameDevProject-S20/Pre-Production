@@ -28,7 +28,7 @@ namespace Encounters
         public Dictionary<int, Encounter> RandomEncounters = new Dictionary<int, Encounter>()
         {
             {
-                0, new Encounter(
+                0, new RandomEncounter(
                     "Crashed Ship",
                     "Loot",
                     "You encounter a desolate spacecraft, seemingly crashed here ages ago. Whatever happened to the crew, they're long gone. "
@@ -78,6 +78,7 @@ namespace Encounters
                         () => {},
                         () => {
                             // Restart encounter or.....?
+                            //EncounterManager.Instance.RepeatRandomEncounter();
                         }
                     }
                 )
