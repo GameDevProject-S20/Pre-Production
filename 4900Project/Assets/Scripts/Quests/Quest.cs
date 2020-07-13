@@ -32,7 +32,7 @@ namespace Quests
         public static Events.QuestEvents.StageComplete OnStageComplete = new Events.QuestEvents.StageComplete();
         public static Events.QuestEvents.ConditionComplete OnConditionComplete = new Events.QuestEvents.ConditionComplete();
 
-        private UnityAction<Stage> OnStageCompleteListener;
+        private UnityAction<Quest, Stage> OnStageCompleteListener;
 
         private bool progressionAllowed;
 
@@ -49,7 +49,7 @@ namespace Quests
 
             if (OnStageCompleteListener == null)
             {
-                OnStageCompleteListener = (Stage s) =>
+                OnStageCompleteListener = (Quest _, Stage s) =>
                     {
                         if (stages[CurrentStage] == s) OnStageCompleteHandler(s);
                     };
@@ -84,7 +84,7 @@ namespace Quests
                 effect(player);// Invoking function
             }*/
 
-            OnStageComplete.Invoke(stage);
+            OnStageComplete.Invoke(this, stage);
 
             // Advance to the next stage
             DisallowProgression();
@@ -155,8 +155,11 @@ namespace Quests
                 q.Name = name;
                 if (description != null) q.Description = description;
 
-                // Add stages
-                stageBuilders.ForEach(b => q.AddStage(b.Build()));
+                // Link stages to quest and add them
+                stageBuilders.ForEach(b =>
+                {
+                    q.AddStage(b.SetParentQuest(q).Build());
+                });
 
                 QuestManager.Instance.AddQuest(q);
                 QuestManager.Instance.StartQuest(q.Name);
@@ -175,6 +178,8 @@ namespace Quests
         public List<Condition> conditions = new List<Condition>();
         public string Description { get; }
         public bool Complete { get; private set; }
+
+        private Quest parentQuest;
 
         private UnityAction<Condition> OnConditionCompleteListener;
 
@@ -208,7 +213,7 @@ namespace Quests
             if (conditions.All(c => c.IsSatisfied))
             {
                 Complete = true;
-                EventManager.Instance.OnStageComplete.Invoke(this);
+                EventManager.Instance.OnStageComplete.Invoke(parentQuest, this);
             }
         }
 
@@ -219,6 +224,7 @@ namespace Quests
         {
             private string description;
             private List<Condition> conditions;
+            private Quest parentQuest;
 
             private Builder() { }
 
@@ -234,6 +240,12 @@ namespace Quests
                 return this;
             }
 
+            public Builder SetParentQuest(Quest q)
+            {
+                parentQuest = q;
+                return this;
+            }
+
             public Stage Build()
             {
                 if (conditions.Count == 0)
@@ -245,6 +257,8 @@ namespace Quests
                 
                 //conditions.ForEach(cdn => cdn.OnComplete.AddListener(c => stage.OnConditionCompleteHandler()));
                 stage.conditions = conditions;
+
+                stage.parentQuest = parentQuest;
 
                 return stage;
             }

@@ -99,7 +99,10 @@ namespace Encounters
             ButtonText = new ReadOnlyCollection<string>(new List<string>(buttonText));
             ResultText = new ReadOnlyCollection<string>(new List<string>(resultText));
             Effects = new ReadOnlyCollection<Action>(new List<Action>(effects));
-            Conditions = new ReadOnlyCollection<Condition>(new List<Condition>(conditions));
+            if (conditions != default)
+            {
+                Conditions = new ReadOnlyCollection<Condition>(new List<Condition>(conditions));
+            }
 
             if (ButtonText.Count != ResultText.Count || ButtonText.Count != Effects.Count)
             {
@@ -216,7 +219,7 @@ namespace Encounters
             }
 
             // Add condition listener
-            if (Conditions.Count > 0)
+            if (Conditions != null && Conditions.Count > 0)
             {
                 if (onConditionCompleteListener == null)
                 {
@@ -234,12 +237,20 @@ namespace Encounters
             else
             {
                 ready = true;
+                if (!fixedEncounterTownId.HasValue)
+                {
+                    StartDialogue();
+                    DisallowProgression();
+                }
             }
         }
 
         public void DisallowProgression()
         {
-            EventManager.Instance.OnConditionComplete.RemoveListener(onConditionCompleteListener);
+            if (onConditionCompleteListener != null)
+            {
+                EventManager.Instance.OnConditionComplete.RemoveListener(onConditionCompleteListener);
+            }
         }
     }
 }

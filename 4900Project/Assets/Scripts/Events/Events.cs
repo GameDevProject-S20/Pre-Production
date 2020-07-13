@@ -61,7 +61,7 @@ namespace SIEvents
             [System.Serializable]
             public class QuestComplete : UnityEvent<Quests.Quest> { };
             [System.Serializable]
-            public class StageComplete : UnityEvent<Quests.Stage> { };
+            public class StageComplete : UnityEvent<Quests.Quest, Quests.Stage> { };
             [System.Serializable]
             public class ConditionComplete : UnityEvent<SIEvents.Condition> { };
             [System.Serializable]
