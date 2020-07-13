@@ -42,6 +42,7 @@ namespace Encounters
         {
             fixedEncounters.Add(encounter.Id, encounter);
         }
+
         public void AddRandomEncounter(Encounter encounter)
         {
             randomEncounters.Add(encounter.Id, encounter);
@@ -54,7 +55,7 @@ namespace Encounters
         {
             Encounter next = randomEncounter();
             Debug.Log(next);
-            next.Run(); // Expects random encounters to have no conditions
+            next.StartDialogue();
         }
 
         // Load from csv or wherever in the future...
@@ -67,6 +68,15 @@ namespace Encounters
         {
             int i = random.Next(randomEncounters.Count);
             return randomEncounters[i];
+        }
+
+        public Encounter GetFixedEncounter(int id)
+        {
+            if (fixedEncounters.TryGetValue(id, out Encounter value))
+            {
+                return value;
+            }
+            return null;
         }
     }
 }

@@ -36,6 +36,6 @@ public class EncounterInvoker : MonoBehaviour
         );
 
         mgr.AddFixedEncounter(enc);
-        mgr.RunFixedEncounter(enc.Id);
+        //mgr.RunFixedEncounter(enc.Id);
     }
 }
