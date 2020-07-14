@@ -44,10 +44,13 @@ namespace SIEvents
             }
         }
 
-        public partial class Town
+        public partial class Map 
         {
             [System.Serializable]
-            public class EnterEvent : UnityEvent<Town> { };
+            public class TownEnter : UnityEvent<Town> { };
+
+            [System.Serializable]
+            public class MapNodeVisit : UnityEvent<OverworldMap.LocationNode> { };
         }
 
         public partial class Dialogue

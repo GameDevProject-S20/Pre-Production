@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using SIEvents;
 
 
 public class OverworldMapUI : MonoBehaviour
@@ -86,7 +87,10 @@ public class OverworldMapUI : MonoBehaviour
                     DataTracker.Current.currentLocationId = selected;
                     targetPos = hit.collider.gameObject.transform.position;
                     OverworldMap.LocationNode node;
+
                     if (DataTracker.Current.WorldMap.GetNode(selected, out node)){
+                        DataTracker.Current.EventManager.onNodeVisit.Invoke(node); 
+
                         if (node.Type == OverworldMap.LocationType.TOWN){
                             enterNodeButton.interactable = true;
                         }
@@ -102,6 +106,10 @@ public class OverworldMapUI : MonoBehaviour
     }
 
     public void OnButtonClick(){
+        var node = DataTracker.Current.GetCurrentNode();
+        Town town = DataTracker.Current.TownManager.GetTownById(node.LocationId);
+        if (node.Type == OverworldMap.LocationType.TOWN)
+            DataTracker.Current.EventManager.OnTownEnter.Invoke(town);
         SceneManager.LoadScene("Town");
     }
 

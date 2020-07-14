@@ -29,9 +29,11 @@ namespace SIEvents
 
         public Events.Transaction.Event OnTransaction = new Events.Transaction.Event();
 
-        //=== Town ===================================================//
+        //=== Map ===================================================//
 
-        public Events.Town.EnterEvent OnTownEnter = new Events.Town.EnterEvent();
+        public Events.Map.TownEnter OnTownEnter = new Events.Map.TownEnter();
+
+        public Events.Map.MapNodeVisit onNodeVisit = new Events.Map.MapNodeVisit();
 
         //=== Quest ==================================================//
 

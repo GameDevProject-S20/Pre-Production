@@ -366,6 +366,41 @@ namespace Quests
         }
     }
 
+    public class VisitCondition : Condition
+    {
+        //Potentially have a targetType, and use this Condition to visit either any specific town, or any specific type of town.
+        OverworldMap.LocationNode target;
+        private UnityAction<OverworldMap.LocationNode> visitAction;
+        public VisitCondition(string _description, OverworldMap.LocationNode targetNode)
+         : base(_description)
+        {
+            target = targetNode;
+        }
+
+        public override void AllowProgression()
+        {
+            visitAction = new UnityAction<OverworldMap.LocationNode>((OverworldMap.LocationNode target) => Handler(target));
+            EventManager.Instance.onNodeVisit.AddListener(visitAction);
+        }
+
+        public override void DisallowProgression()
+        {
+            EventManager.Instance.onNodeVisit.RemoveListener(visitAction);
+        }
+        protected virtual void Handler(OverworldMap.LocationNode location)
+        {
+            if (target.Id == location.Id)
+            {
+                Satisfy();
+            }
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Condition: {0}, visit node {1} is {3}.", Description, target, (IsSatisfied ? "satisfied" : "not satisfied"));
+        }
+    }
+
     public class DialogueCondition : Condition
     {
         string ButtonText;
