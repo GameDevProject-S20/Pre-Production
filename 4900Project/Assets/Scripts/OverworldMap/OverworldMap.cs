@@ -26,6 +26,11 @@ public class OverworldMap
     /// </summary>
     public partial class LocationNode
     {
+        // ! I've broken this incremental ID system
+        // ! Since nodes already have an ID in the CSV, we cannot assign one to them here
+        // ! For now, this is okay - we are only creating nodes from the data
+        // ! In the future, we'll have to replace this system if we want to create new nodes during gameplay
+        // ! - Zac
         private static int nextId = 0;
         public int Id { get; }
 
@@ -44,6 +49,18 @@ public class OverworldMap
             if (posX < -1f || posX > 1f || posY < -1f || posY > 1f) throw new ArgumentException("Positions X and Y must have values between -1 and 1.");
 
             Id = nextId++;
+            LocationId = locationId;
+            Name = name;
+            Type = type;
+            PosX = posX;
+            PosY = posY;
+        }
+
+        public LocationNode(int locationId, int id, string name, LocationType type, float posX, float posY)
+        {
+            if (posX < -1f || posX > 1f || posY < -1f || posY > 1f) throw new ArgumentException("Positions X and Y must have values between -1 and 1.");
+
+            Id = id;
             LocationId = locationId;
             Name = name;
             Type = type;
