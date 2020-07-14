@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Initializer/InitializerScene.unity
     guid: 040faff04902ec940825814fd4e1de0f
   - enabled: 1
-    path: Assets/Scenes/DataTracker/DataTracker.unity
+    path: Assets/Scenes/DataTracker.unity
     guid: 31341d52f9e758f48ab73904773b911c
   - enabled: 1
     path: Assets/Scenes/Tutorial/TutorialScene.unity
@@ -30,9 +30,15 @@ EditorBuildSettings:
     path: Assets/Scenes/Inventory/InventoryTestScene.unity
     guid: 8d6699ad28dbcaf46ace09cbb1631420
   - enabled: 1
-    path: Assets/Scenes/Encounter/Encounter.unity
+    path: Assets/Scenes/Encounter/EncounterTestScene.unity
     guid: b28899e20532af473844b2f0967d82fb
   - enabled: 1
     path: Assets/Scenes/Default/DefaultScene.unity
     guid: 422e8afbdce46d247b9c070f15dc0512
+  - enabled: 1
+    path: Assets/Scenes/anotused_DataTracker/DataTracker.unity
+    guid: 3fe708a3dea2daa488a9c760432b1989
+  - enabled: 1
+    path: Assets/Scenes/Encounter/Encounter.unity
+    guid: 8b26071c89b3bde9f8b67b26a20e2744
   m_configObjects: {}
