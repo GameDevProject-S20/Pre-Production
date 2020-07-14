@@ -88,16 +88,16 @@ public class OverworldMapUI : MonoBehaviour
                     //will be done with percent of max capacity later, just testing with constants for now
                     int fuelrate;
                     int dayrate;
-					if (weight > 40) {
+                    if (weight > 40) {
                         fuelrate = 3;
                         dayrate = 2;
-					}else if(weight > 20) {
+                    } else if(weight > 20) {
                         fuelrate = 2;
                         dayrate = 1;
-					} else {
+                    } else {
                         fuelrate = 1;
                         dayrate = 1;
-					}
+                    }
                     if (Input.GetMouseButtonDown(0)) //left click for node info (player is more likely to see first this way)
                     {
                         Debug.Log("Weight="+weight);
@@ -106,9 +106,9 @@ public class OverworldMapUI : MonoBehaviour
                         Debug.Log("Current day: " + DataTracker.Current.dayCount);
                         Debug.Log("You will have " + (fuel - fuelrate) + " fuel left after traveling here");
                         Debug.Log("It will be day " + (DataTracker.Current.dayCount + dayrate) + " after traveling here");
-                        
 
-					} else if(fuel-fuelrate>0)
+
+                    } else if(fuel-fuelrate>0)
                     {
                         DataTracker.Current.Player.Inventory.RemoveItem("Fuel", fuelrate);
                         DataTracker.Current.dayCount += dayrate;
@@ -124,10 +124,10 @@ public class OverworldMapUI : MonoBehaviour
                                 enterNodeButton.interactable = false;
                             }
                         }
-					} else
+                    } else
                     {
                         Debug.Log("You're out of fuel! On the bright side not only will the scavengers get a good payday from your remains, but you'll serve as a good reminder to always check the tanks before leaving port\nGAME OVER");
-					}
+                    }
                 }
             }
         }
