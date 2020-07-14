@@ -68,14 +68,6 @@ namespace Encounters
         public Encounter(string name, string tag, string bodyText,
                          IEnumerable<string> buttonText, IEnumerable<string> resultText,
                          IEnumerable<Action> effects)
-        : this(name, tag, bodyText, buttonText, resultText, effects,
-               new Func<bool>[0], new String[0], new Action[0])
-        { }
-
-        public Encounter(string name, string tag, string bodyText,
-                         IEnumerable<string> buttonText, IEnumerable<string> resultText,
-                         IEnumerable<Action> effects, IEnumerable<Func<bool>> conditions,
-                         IEnumerable<string> failText, IEnumerable<Action> failEffects)
         {
             Id = nextId++;  // static int id for now
             Name = name;
