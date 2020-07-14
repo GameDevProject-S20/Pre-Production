@@ -596,10 +596,10 @@ MonoBehaviour:
     type: 3}
   PathPrefab: {fileID: 4415612377149101909, guid: 540495216011cd347b0d278306c32374,
     type: 3}
-  PlayerMarker: {fileID: 198410445}
+  playerMarker: {fileID: 198410445}
+  enterNodeButton: {fileID: 901572006}
   TownMenu: {fileID: 1103049394}
   EnterNodeButtonCanvas: {fileID: 914171981}
-  EnterNodeButton: {fileID: 901572006}
 --- !u!1 &870156002
 GameObject:
   m_ObjectHideFlags: 0
