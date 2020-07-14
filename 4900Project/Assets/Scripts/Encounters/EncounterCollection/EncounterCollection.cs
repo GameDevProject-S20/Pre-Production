@@ -31,12 +31,12 @@ namespace Encounters
                 0, new RandomEncounter(
                     "Crashed Ship",
                     "Loot",
-                    "You encounter a desolate spacecraft, seemingly crashed here ages ago. Whatever happened to the crew, they're long gone. "
+                    "You encounter a desolate spacecraft, seemingly crashed here ages ago. "
                     + "There are scraps littering the outside of the shuttle, but the door is jammed closed.",
                     new string[]
                     {
-                        "[Take] Gather up as much scrap metal as you can carry, and return to your ship. (+2 scrap metal)",
-                        "[Search] (Requires 1 explosive) Blast open the door, and loot the inside of the ship (+1 fusion core)"
+                        "Gather up as much scrap metal as you can carry (+2 Scrap Metal)",
+                        "(Requires an RPG) Blast open the door, and loot the ship (+1 Body Armor)"
                     },
                     new string[]
                     {
@@ -47,13 +47,12 @@ namespace Encounters
                     {
                         () => {
                             var inventory = DataTracker.Current.Player.Inventory;
-                            inventory.AddItem("item2", 2);  // Scrap Metal
+                            inventory.AddItem("Scrap Metal", 2);  // Scrap Metal
                             SceneManager.LoadScene("MapScene");
                         },
                         () => {
                             var inventory = DataTracker.Current.Player.Inventory;
-                            inventory.RemoveItem("item99", 1);
-                            inventory.AddItem("item3", 1);  // Fusion core
+                            inventory.AddItem("Body Armor", 1);  // Fusion core
                             SceneManager.LoadScene("MapScene");
                         }
                     },
@@ -65,7 +64,7 @@ namespace Encounters
                         },
                         () => {
                             // Only available if the player has 1 explosive
-                            return DataTracker.Current.Player.Inventory.Contains("item99") > 0;
+                            return DataTracker.Current.Player.Inventory.Contains("RPG") > 0;
                         }
                     },
                     new String[]  // Text to display on failure
@@ -79,6 +78,7 @@ namespace Encounters
                         () => {
                             // Restart encounter or.....?
                             //EncounterManager.Instance.RepeatRandomEncounter();
+                            SceneManager.LoadScene("MapScene");
                         }
                     }
                 )

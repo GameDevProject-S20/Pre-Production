@@ -91,12 +91,15 @@ namespace Encounters
         /// </summary>
         private void initDialogue()
         {
-
+            Debug.Log("Dialogue init'd");
             // Generic button to end dialogue
             IDButton endBtn = new DButton()
             {
                 Text = "Done.",
-                OnButtonClick = DFunctions.CloseDialogue
+                OnButtonClick = () => {
+                    DFunctions.CloseDialogue();
+                    resetEncounter();
+                }
             };
 
             // This loop builds buttons by adding text,
@@ -144,6 +147,11 @@ namespace Encounters
                     endBtn
                 }
             });
+        }
+
+        private void resetEncounter()
+        {
+            dialogueStage = 0;
         }
 
     }
