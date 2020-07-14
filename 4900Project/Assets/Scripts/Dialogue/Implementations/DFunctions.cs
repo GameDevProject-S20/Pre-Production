@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SIEvents;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,11 +30,17 @@ namespace Dialogue
         };
 
         /// <summary>
-        /// Fires off a notification to our EventManager indicating that the button was pressed.
+        /// Invokes the onDialogueSelect event of the EventManager.
+        /// Accepts one string argument which will be passed through to the onDialogueSelect event.
         /// </summary>
-        public static readonly Action NotifyEventManager = () =>
+        /// <param name="argument">The argument to pass through. The onDialogueSelect event will be fired with the value of this parameter.</param>
+        /// <returns>An Action that the OnButtonClick handler should be hooked up to.</returns>
+        public static Action NotifyEventManager(string argument)
         {
-            // TODO
-        };
+            return () =>
+            {
+                EventManager.Instance.onDialogueSelected.Invoke(argument);
+            };
+        }
     }
 }

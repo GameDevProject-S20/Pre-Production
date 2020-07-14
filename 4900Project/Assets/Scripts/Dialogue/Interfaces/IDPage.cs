@@ -21,6 +21,11 @@ namespace Dialogue
         /// </summary>
         IEnumerable<IDButton> Buttons { get; set; }
 
+        /// <summary>
+        /// Defines a path to an avatar image. This will be placed with the Dialogue page to show who's talking.
+        /// </summary>
+        IDAvatar Avatar { get; set; }
+
         IDButton GetButton(int buttonIndex);
     }
 }

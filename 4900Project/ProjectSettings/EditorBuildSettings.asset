@@ -35,7 +35,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Default/DefaultScene.unity
     guid: 422e8afbdce46d247b9c070f15dc0512
-  - enabled: 0
-    path: Assets/Scenes/DataReadingScene/DataReadingScene.unity
-    guid: ed9690cf7493ab64daa2894574a913c6
   m_configObjects: {}
