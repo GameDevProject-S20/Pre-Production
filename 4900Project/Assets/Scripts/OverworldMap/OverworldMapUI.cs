@@ -88,10 +88,10 @@ public class OverworldMapUI : MonoBehaviour
                     //will be done with percent of max capacity later, just testing with constants for now
                     int fuelrate;
                     int dayrate;
-                    if (weight > 40) {
+                    if (weight > 60) {
                         fuelrate = 3;
                         dayrate = 2;
-                    } else if(weight > 20) {
+                    } else if(weight > 30) {
                         fuelrate = 2;
                         dayrate = 1;
                     } else {
