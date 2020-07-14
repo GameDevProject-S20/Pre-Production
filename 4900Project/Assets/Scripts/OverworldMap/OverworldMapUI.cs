@@ -12,10 +12,13 @@ public class OverworldMapUI : MonoBehaviour
     [SerializeField]
     GameObject PathPrefab;
     [SerializeField]
-    GameObject playerMarker;
-
+    GameObject PlayerMarker;
     [SerializeField]
-    Button enterNodeButton;
+    GameObject TownMenu;
+    [SerializeField]
+    GameObject EnterNodeButtonCanvas; 
+    [SerializeField]
+    Button EnterNodeButton;
 
     //Movement variables
     float translateSmoothTime = 0.1f;
@@ -26,7 +29,7 @@ public class OverworldMapUI : MonoBehaviour
     void Start()
     {
         DrawGraph();
-        Camera.main.transform.position = playerMarker.transform.position + new Vector3(0, 6, 0);
+        Camera.main.transform.position = PlayerMarker.transform.position + new Vector3(0, 6, 0);
     }
 
     private void DrawGraph()
@@ -46,8 +49,8 @@ public class OverworldMapUI : MonoBehaviour
                 nodeObj.transform.Rotate(new Vector3(0, Random.Range(0, 360), 0), Space.Self);
             }
             if (node.Id == DataTracker.Current.currentLocationId){
-                playerMarker.transform.position = nodeObj.transform.position;
-                targetPos = playerMarker.transform.position;
+                PlayerMarker.transform.position = nodeObj.transform.position;
+                targetPos = PlayerMarker.transform.position;
             }
         }
 
@@ -88,21 +91,31 @@ public class OverworldMapUI : MonoBehaviour
                     OverworldMap.LocationNode node;
                     if (DataTracker.Current.WorldMap.GetNode(selected, out node)){
                         if (node.Type == OverworldMap.LocationType.TOWN){
-                            enterNodeButton.interactable = true;
+                            EnterNodeButton.interactable = true;
                         }
                         else{
-                            enterNodeButton.interactable = false;
+                            EnterNodeButton.interactable = false;
                         }
                     }
                 }
             }
         }
 
-        playerMarker.transform.position = Vector3.SmoothDamp(playerMarker.transform.position, targetPos, ref translatSmoothVelocity, translateSmoothTime);
+        PlayerMarker.transform.position = Vector3.SmoothDamp(PlayerMarker.transform.position, targetPos, ref translatSmoothVelocity, translateSmoothTime);
     }
 
     public void OnButtonClick(){
-        SceneManager.LoadScene("Town");
+        //SceneManager.LoadScene("Town"); //old way 
+
+        //New way with PreFabs! (becuase they're preFABULOUS!) 
+        TownMenu.SetActive(true);
+        EnterNodeButtonCanvas.SetActive(false); 
+    }
+
+    public void TownMapClosed()
+    {
+        TownMenu.SetActive(false); 
+        EnterNodeButtonCanvas.SetActive(true);
     }
 
 }
