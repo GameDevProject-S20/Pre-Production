@@ -32,7 +32,7 @@ public class Tutorial : MonoBehaviour
              new Action[]
              {
                              () => {
-                                 EncounterManager.Instance.GetFixedEncounter(2).AllowProgression();
+                                 EncounterManager.Instance.GetFixedEncounter(1).AllowProgression();
                                  SceneManager.LoadScene("MapScene");
                              }
              }
@@ -41,7 +41,7 @@ public class Tutorial : MonoBehaviour
         Encounter enc2 = new Encounter(
              "Enc 2",
              "Tutorial",
-             "Welcome to the first town!",
+             "Welcome to York!",
              new string[]
              {
                                      "Take items."
@@ -56,17 +56,17 @@ public class Tutorial : MonoBehaviour
                                          // Give gas
                                          // Give medicine
                                          BeginQuest();
-                                         EncounterManager.Instance.GetFixedEncounter(3).AllowProgression();
+                                         EncounterManager.Instance.GetFixedEncounter(2).AllowProgression();
                                      }
              },
-             new List<Condition>(),
-             0
+             null,
+             1
          );
 
         Encounter enc3 = new Encounter(
             "Enc 3",
             "Tutorial",
-            "Welcome to the second town!",
+            "Welcome to Big Rock!",
             new string[]
             {
                                             "Done."
@@ -78,12 +78,12 @@ public class Tutorial : MonoBehaviour
             new Action[]
             {
                                             () => {
-                                                EncounterManager.Instance.GetFixedEncounter(4).AllowProgression();
+                                                EncounterManager.Instance.GetFixedEncounter(3).AllowProgression();
                                                 // Go to shop
                                             }
             },
-            new List<Condition>(),
-            3
+            null,
+            2
         );
 
         Encounter enc4 = new Encounter(
@@ -101,11 +101,11 @@ public class Tutorial : MonoBehaviour
             new Action[]
             {
                                                     () => {
-                                                        EncounterManager.Instance.GetFixedEncounter(5).AllowProgression();
+                                                        EncounterManager.Instance.GetFixedEncounter(4).AllowProgression();
                                                     }
             },
-            new List<Condition> { new StageCompleteCondition("", 1, 1) },
-            3
+            new List<Condition> { new QuestCompleteCondition("", 0) },
+            2
         );
 
         Encounter enc5 = new Encounter(
@@ -125,8 +125,8 @@ public class Tutorial : MonoBehaviour
                                                             () => {
                                                             }
             },
-            new List<Condition> { new QuestCompleteCondition("", 1) },
-            2
+            new List<Condition> { new QuestCompleteCondition("", 0) },
+            1
         );
 
         EncounterManager.Instance.AddFixedEncounter(enc1);
@@ -141,15 +141,15 @@ public class Tutorial : MonoBehaviour
     private void BeginQuest()
     {
         Quest quest = new Quest.Builder("Medicine Quest")
-            .SetDescription("Find medicine and sell it in York.")
+            .SetDescription("Find medicine and sell it in Big Rock.")
 
-            .AddStage(new Stage.Builder("Purchase medicine in Smithsville.")
-                .AddCondition(new TransactionCondition("Purchase 1 medicine at the Smithsville Pharmacy", "Medicine", 1, TransactionCondition.TransactionTypeEnum.BUY, TownManager.Instance.GetTownByName("Smithsville").Id)
+            .AddStage(new Stage.Builder("Purchase medicine in York.")
+                .AddCondition(new TransactionCondition("Purchase 1 medicine at the York Pharmacy", "Medicine", 1, TransactionCondition.TransactionTypeEnum.BUY, TownManager.Instance.GetTownByName("York").Id)
                 )
             )
 
-            .AddStage(new Stage.Builder("Sell Medicine in York.")
-                .AddCondition(new TransactionCondition("Sell 1 medicine to the York General Store", "Medicine", 1, TransactionCondition.TransactionTypeEnum.SELL, TownManager.Instance.GetTownByName("York").Id)
+            .AddStage(new Stage.Builder("Sell Medicine in Big Rock.")
+                .AddCondition(new TransactionCondition("Sell 1 medicine to the Big Rock General Store", "Medicine", 1, TransactionCondition.TransactionTypeEnum.SELL, TownManager.Instance.GetTownByName("Big Rock").Id)
                 )
             )
 

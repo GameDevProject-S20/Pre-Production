@@ -107,6 +107,12 @@ namespace Encounters
                 EncounterRunConditions = new ReadOnlyCollection<Condition>(new List<Condition>(encounterRunConditions));
             }
 
+            if (fixedEncounterTownId.HasValue)
+            {
+                this.fixedEncounterTownId = fixedEncounterTownId;
+            }
+
+
             if (ButtonText.Count != ResultText.Count || ButtonText.Count != Effects.Count)
             {
                 throw new ArgumentException("buttonText, resultText, and effects must have the same length!");
@@ -120,13 +126,11 @@ namespace Encounters
         }
 
 
-
-        /// <summary>
-        /// Call this to start the encounter, by displaying the dialogue to the player
-        /// </summary>
-        public void StartDialogue()
+        public void RunEncounter()
         {
-            IDialogue dialogue = DialogueManager.Instance.CreateDialogue(dialoguePages);
+            DisallowProgression();
+            EncounterManager.Instance.RemoveFixedEncounter(this);
+            DialogueManager.Instance.CreateDialogue(dialoguePages);
         }
 
         // Debug purposes
@@ -209,10 +213,10 @@ namespace Encounters
                 {
                     onTownEnterListener = (Town t) =>
                     {
+                        Debug.Log(string.Format("On Town Enter: {0} caught by encounter {1}", t.Name, Name));
                         if (t.Id == fixedEncounterTownId.Value && ready)
                         {
-                            StartDialogue();
-                            DisallowProgression();
+                            RunEncounter();
                         }
                     };
 
@@ -225,6 +229,7 @@ namespace Encounters
             {
                 if (onConditionCompleteListener == null)
                 {
+                    // Add listener
                     onConditionCompleteListener = (Condition _) =>
                     {
                         if (Conditions.All(c => c.IsSatisfied))
@@ -234,15 +239,21 @@ namespace Encounters
                     };
 
                     EventManager.Instance.OnConditionComplete.AddListener(onConditionCompleteListener);
+
+                    // Enable conditions
+                    foreach (var c in Conditions)
+                    {
+                        c.AllowProgression();
+                    }
                 }
             }
             else
             {
+                // IF there are no conditions nor towns required, this will run as soon as AllowProgression is called
                 ready = true;
                 if (!fixedEncounterTownId.HasValue)
                 {
-                    StartDialogue();
-                    DisallowProgression();
+                    RunEncounter();
                 }
             }
         }
@@ -252,6 +263,11 @@ namespace Encounters
             if (onConditionCompleteListener != null)
             {
                 EventManager.Instance.OnConditionComplete.RemoveListener(onConditionCompleteListener);
+            }
+
+            if (onTownEnterListener != null)
+            {
+                EventManager.Instance.OnTownEnter.RemoveListener(onTownEnterListener);
             }
         }
     }

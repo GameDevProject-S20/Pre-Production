@@ -50,7 +50,10 @@ namespace Encounters
         {
             EncounterCollection.Instance.FixedEncounters.Add(enc.Id, enc);
         }
-
+        public void RemoveFixedEncounter(Encounter encounter)
+        {
+            fixedEncounters.Remove(encounter.Id);
+        }
         public void AddRandomEncounter(Encounter enc)
         {
             EncounterCollection.Instance.RandomEncounters.Add(enc.Id, enc);
@@ -63,7 +66,7 @@ namespace Encounters
         {
             Encounter next = randomEncounter();
             Debug.Log(next);
-            next.StartDialogue();
+            next.RunEncounter();
         }
 
         public void RunFixedEncounter(int id)
@@ -71,7 +74,7 @@ namespace Encounters
             fixedEncounters.TryGetValue(id, out Encounter encounter);
             if (encounter != null)
             {
-                encounter.StartDialogue();
+                encounter.RunEncounter();
             }
         }
 
