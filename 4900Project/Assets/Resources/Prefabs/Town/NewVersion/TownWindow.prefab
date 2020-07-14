@@ -1350,7 +1350,7 @@ MonoBehaviour:
   FoodIcon: {fileID: 21300000, guid: 74a92418ef481cd42a7ff8a367530e15, type: 3}
   FuelIcon: {fileID: 21300000, guid: 07e4a1403598fc142aa64e7d30b80fb3, type: 3}
   MedicineIcon: {fileID: 21300000, guid: ea040ecd91fd65241891309ab747f72e, type: 3}
-  GeneralStoreIcon: {fileID: 0}
+  GeneralStoreIcon: {fileID: 21300000, guid: ac49d00755b86dc46bd33e2bfc6e3194, type: 3}
   IconMissing: {fileID: 21300000, guid: 48a2031da6891144d8449a2bc8034e9a, type: 3}
   TempTownIconBadCode: {fileID: 21300000, guid: 09bf262f584c1dd45a8e6fc2a60041f0,
     type: 3}

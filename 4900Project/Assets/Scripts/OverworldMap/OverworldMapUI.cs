@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
+using Encounters;
 
 public class OverworldMapUI : MonoBehaviour
 {
@@ -18,7 +18,7 @@ public class OverworldMapUI : MonoBehaviour
     Button enterNodeButton;
 
     [SerializeField]
-    GameObject TownMenu;
+    GameObject TownMenuGameObject;
     [SerializeField]
     GameObject EnterNodeButtonCanvas;
 
@@ -122,11 +122,16 @@ public class OverworldMapUI : MonoBehaviour
         switch (node.Type)
         {
             case OverworldMap.LocationType.TOWN:
-                TownMenu.SetActive(true);
+                TownMenuGameObject.GetComponent<TownWindow>().UpdatePrefab(); 
+                Debug.Log("town");
+                TownMenuGameObject.SetActive(true);
                 EnterNodeButtonCanvas.SetActive(false);
                 break;
             case OverworldMap.LocationType.EVENT:
-                SceneManager.LoadScene("Encounter", LoadSceneMode.Additive);
+                Debug.Log("Event");
+                //SceneManager.LoadScene("Encounter", LoadSceneMode.Additive);
+                var mgr = EncounterManager.Instance;
+                mgr.RunRandomEncounter();
                 break;
             default:
                 break;
@@ -135,7 +140,7 @@ public class OverworldMapUI : MonoBehaviour
 
     public void TownMapClosed()
     {
-        TownMenu.SetActive(false); 
+        TownMenuGameObject.SetActive(false); 
         EnterNodeButtonCanvas.SetActive(true);
     }
 

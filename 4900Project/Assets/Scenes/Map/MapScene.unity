@@ -598,7 +598,7 @@ MonoBehaviour:
     type: 3}
   playerMarker: {fileID: 198410445}
   enterNodeButton: {fileID: 901572006}
-  TownMenu: {fileID: 1103049394}
+  TownMenuGameObject: {fileID: 1103049394}
   EnterNodeButtonCanvas: {fileID: 914171981}
 --- !u!1 &870156002
 GameObject:
@@ -656,7 +656,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Enter Town
+  m_text: Enter Node
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4ec0308ae3de2464b8136c0ed64e3255, type: 2}
   m_sharedMaterial: {fileID: 790893843913795537, guid: 4ec0308ae3de2464b8136c0ed64e3255,
@@ -850,17 +850,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1103049395}
-        m_MethodName: UpdatePrefab
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
 --- !u!114 &901572007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1190,18 +1179,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1103049392}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1103049395 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 500967336385207291, guid: 6c6896da1a52d2f45a6bad0c18c6ef1d,
-    type: 3}
-  m_PrefabInstance: {fileID: 1103049392}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1103049394}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ac9c5fe5aa1c4d41b9862a8d595ff81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1828162959
 GameObject:
   m_ObjectHideFlags: 0

@@ -48,12 +48,12 @@ namespace Encounters
                         () => {
                             var inventory = DataTracker.Current.Player.Inventory;
                             inventory.AddItem("Scrap Metal", 2);  // Scrap Metal
-                            SceneManager.UnloadSceneAsync("Encounter");
+                            //SceneManager.UnloadSceneAsync("Encounter");
                         },
                         () => {
                             var inventory = DataTracker.Current.Player.Inventory;
                             inventory.AddItem("Body Armor", 1);
-                            SceneManager.UnloadSceneAsync("Encounter");
+                            //SceneManager.UnloadSceneAsync("Encounter");
                         }
                     },
                     new Func<bool>[]  // condition (whether the player can take the action or not)
@@ -74,9 +74,7 @@ namespace Encounters
                     },
                     new Action[]  // Action to take on failure
                     {
-                        () => {
-                            SceneManager.UnloadSceneAsync("Encounter");
-                        },
+                        () => {},
                         () => {}
                     }
                 )
@@ -102,10 +100,10 @@ namespace Encounters
                         () => {
                             var inventory = DataTracker.Current.Player.Inventory;
                             inventory.AddItem("Fresh Fruit", 3);
-                            SceneManager.UnloadSceneAsync("Encounter");
+                            //SceneManager.UnloadSceneAsync("Encounter");
                         },
                         () => {
-                            SceneManager.UnloadSceneAsync("Encounter");
+                            //SceneManager.UnloadSceneAsync("Encounter");
                         }
                     },
                     new Func<bool>[]  // condition (whether the player can take the action or not)
@@ -123,7 +121,7 @@ namespace Encounters
                     new Action[]  // Action to take on failure
                     {
                         () => {
-                            SceneManager.UnloadSceneAsync("Encounter");
+                            //SceneManager.UnloadSceneAsync("Encounter");
                         },
                         () => {}
                     }
