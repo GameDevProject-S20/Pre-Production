@@ -51,14 +51,33 @@ public class TownWindow : MonoBehaviour
 
     private void Start()
     {
-        ActionMenu = transform.Find("TownBackground").Find("DataBorder").Find("DataBackground").Find("TownActionsBorder").Find("TownActionsBackground").Find("ActionList").Find("ActionGrid");
+        UpdatePrefab();
+
+    }
+
+    public void UpdatePrefab()
+    {
+        Debug.Log("Update the prefab for new town");
+
+
+
         townData = TownManager.Instance.GetCurrentTownData();
+
+        ActionMenu = transform.Find("TownBackground").Find("DataBorder").Find("DataBackground").Find("TownActionsBorder").Find("TownActionsBackground").Find("ActionList").Find("ActionGrid");
+
+        // We need to reset the action items for this town since it's changed. 
+        foreach (Transform child in ActionMenu)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+
+
         transform.Find("TownBackground").Find("TownName").GetComponent<Text>().text = townData.Name;
         transform.Find("TownBackground").Find("DataBorder").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("Description").GetComponent<Text>().text = townData.Description;
 
 
         //use rarity tier of town to determine proper icon
-        if (townData.tier!= rarity.None)
+        if (townData.tier != rarity.None)
         {
             switch (townData.tier)
             {
@@ -82,12 +101,12 @@ public class TownWindow : MonoBehaviour
         else
         {
             transform.Find("TownBackground").Find("DataBorder").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("RarityIcon").GetComponent<Image>().sprite = IconMissing;
-       }
+        }
 
         //Post tag images related to town
-        for(int i=1;i<5;i++)
+        for (int i = 1; i < 5; i++)
         {
-            if(townData.tags.Count >= i)
+            if (townData.tags.Count >= i)
             {
                 switch (townData.tags[i - 1])
                 {
@@ -109,7 +128,7 @@ public class TownWindow : MonoBehaviour
         }
 
         //find town image
-        if(townData.Icon != null)
+        if (townData.Icon != null)
         {
             transform.Find("TownBackground").Find("DataBorder").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").GetComponent<Image>().sprite = townData.Icon;
         }
@@ -122,7 +141,7 @@ public class TownWindow : MonoBehaviour
         //first the leader
         GameObject NewAction = Instantiate(ActionPrefab, new Vector3(0, 0, 0), Quaternion.identity);
         NewAction.transform.parent = ActionMenu;
-        if(townData.LeaderPortrait != null)
+        if (townData.LeaderPortrait != null)
         {
             NewAction.transform.Find("Portrait").GetComponent<Image>().sprite = townData.LeaderPortrait;
         }
@@ -136,7 +155,7 @@ public class TownWindow : MonoBehaviour
         //need to set talking interaction on button
 
         //And now every shop
-        for(int i = 0; i < townData.shops.Count; i++)
+        for (int i = 0; i < townData.shops.Count; i++)
         {
             NewAction = Instantiate(ActionPrefab, new Vector3(0, 0, 0), Quaternion.identity);
             NewAction.transform.parent = ActionMenu;
@@ -148,8 +167,10 @@ public class TownWindow : MonoBehaviour
             {
                 NewAction.transform.Find("Portrait").GetComponent<Image>().sprite = IconMissing;
             }
+
             NewAction.transform.Find("Name").GetComponent<Text>().text = ShopManager.Instance.GetShopById(townData.shops[i]).name;
             NewAction.transform.Find("Description").GetComponent<Text>().text = ShopManager.Instance.GetShopById(townData.shops[i]).shortDescription;
+            
             if (ShopManager.Instance.GetShopById(townData.shops[i]).type == Shop.ShopTypes.GeneralStore)
             {
                 NewAction.transform.Find("Interaction").GetComponent<Image>().sprite = GeneralStoreIcon;
@@ -158,8 +179,17 @@ public class TownWindow : MonoBehaviour
             {
                 NewAction.transform.Find("Interaction").GetComponent<Image>().sprite = MedicineIcon;
             }
-            //NewAction.transform.Find("Interaction").GetComponent<Image>().onClick.AddListener(() => however we're opening the trade window);
-        }
 
+
+            //on click, need to tell the DataTracker what shop I really want. MUST use a new int. 
+            int x = townData.shops[i];
+            NewAction.transform.Find("Interaction").GetComponent<Button>().onClick.AddListener(() =>
+            {
+                DataTracker.Current.currentShopId = x;
+                SceneManager.LoadScene("InventoryTestScene", LoadSceneMode.Additive); // Currently using additive for the shop. 
+            });
+        }
     }
+
+
 }
