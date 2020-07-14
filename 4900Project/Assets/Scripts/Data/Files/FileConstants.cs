@@ -50,6 +50,20 @@ namespace FileConstants
             LocalBackupFile = $"{Application.dataPath}/BackupData/Tutorial.csv"
         };
 
+        // json list of strings
+        public static readonly FileStorageData MapNodes = new FileStorageData()
+        {
+            GoogleDriveFileId = "1b1C8UP12nCt-iiDYuMc3kQePnF-iLi_7bjDVvu7_2mA",
+            LocalBackupFile = $"{Application.dataPath}/BackupData/MapNodes.csv"
+        };
+
+        // json list of classes
+        public static readonly FileStorageData MapEdges = new FileStorageData()
+        {
+            GoogleDriveFileId = "1AENRNM6BTT52Vu0uAsx8bfJUlDVi6LDNIlzMLOAQZnM",
+            LocalBackupFile = $"{Application.dataPath}/BackupData/MapEdges.csv"
+        };
+
         // Note: For testing purposes only - test CSV
         public static readonly FileStorageData TestCsv = new FileStorageData()
         {
@@ -90,7 +104,10 @@ namespace FileConstants
             Files.TestCsv,
             Files.TestBasicJson,
             Files.TestJsonStringsList,
-            Files.TestJsonListOfClass
+            Files.TestJsonListOfClass,
+            Files.MapNodes,
+            Files.MapEdges
+
         };
     }
 }

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +13,11 @@ public class OverworldMapUI : MonoBehaviour
     GameObject PathPrefab;
     [SerializeField]
     GameObject playerMarker;
+
+    [SerializeField]
+    Transform NodesContainer;
+    [SerializeField]
+    Transform PathsContainer;
 
     [SerializeField]
     Button enterNodeButton;
@@ -40,7 +45,7 @@ public class OverworldMapUI : MonoBehaviour
         foreach (var node in DataTracker.Current.WorldMap.GetNodeEnumerable())
         {
             GameObject nodeObj = Instantiate(LocationPrefab, transform.parent);
-            Vector3 pos = new Vector3(node.PosX, 0, node.PosY) * 10;
+            Vector3 pos = new Vector3(node.PosX, 0, node.PosY) * DataTracker.Current.mapScale * 2;
             nodeObj.transform.position += pos;
             nodeObj.transform.SetParent(transform, true);
             nodeObj.name = node.Name;
@@ -64,11 +69,12 @@ public class OverworldMapUI : MonoBehaviour
         foreach (var edge in DataTracker.Current.WorldMap.GetEdgeEnumerable())
         {
             GameObject line = Instantiate(PathPrefab, transform.parent);
+            line.name = "Edge_" + edge.Item1.Id + "-" + edge.Item2.Id;
             LineRenderer lr = line.GetComponent<LineRenderer>();
             Vector3[] lineEnds =
                 {
-                    new Vector3(edge.Item1.PosX, 0, edge.Item1.PosY)* 10,
-                    new Vector3(edge.Item2.PosX, 0, edge.Item2.PosY)* 10
+                    new Vector3(edge.Item1.PosX, 0, edge.Item1.PosY)* DataTracker.Current.mapScale * 2,
+                    new Vector3(edge.Item2.PosX, 0, edge.Item2.PosY)* DataTracker.Current.mapScale * 2
                 };
             Vector3 a = lineEnds[0] - 0.2f * (lineEnds[0] - lineEnds[1]);
             Vector3 b = lineEnds[1] - 0.2f * (lineEnds[1] - lineEnds[0]);
@@ -143,8 +149,4 @@ public class OverworldMapUI : MonoBehaviour
         TownMenuGameObject.SetActive(false); 
         EnterNodeButtonCanvas.SetActive(true);
     }
-
-
-
-
 }
