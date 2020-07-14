@@ -73,6 +73,11 @@ public class ItemManager : MonoBehaviour
         itemsMaster.Add(temp.DisplayName, temp);
 
         tempList = new List<typetag>();
+        tempList.Add(typetag.Tools_And_Parts); //we will prob want a different tag for player essentials.
+        temp = new Item("Fuel", "A neccesity for travel between colonies", "Fuel is the lifeblood of traders, never leave port without first checking your tank. ", 1, 1, tempList);
+        itemsMaster.Add(temp.DisplayName, temp);
+
+        tempList = new List<typetag>();
         tempList.Add(typetag.Food);
         tempList.Add(typetag.Luxury);
         temp = new Item("Fresh Fruit", "Tasty, but spoils without proper storage", "A rarity in a good portion of the world, which makes is quite valuable to the right people. ", 5, 1, tempList);

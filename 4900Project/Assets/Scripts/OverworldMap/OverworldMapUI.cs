@@ -75,7 +75,7 @@ public class OverworldMapUI : MonoBehaviour
 
     private void Update() 
     {
-        if (Input.GetMouseButtonDown(0)){
+        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             
@@ -83,17 +83,51 @@ public class OverworldMapUI : MonoBehaviour
             {
                 int selected =hit.collider.gameObject.GetComponent<MapNode>().nodeID;
                 if (DataTracker.Current.WorldMap.HasEdge(selected, DataTracker.Current.currentLocationId)){
-                    DataTracker.Current.currentLocationId = selected;
-                    targetPos = hit.collider.gameObject.transform.position;
-                    OverworldMap.LocationNode node;
-                    if (DataTracker.Current.WorldMap.GetNode(selected, out node)){
-                        if (node.Type == OverworldMap.LocationType.TOWN){
-                            enterNodeButton.interactable = true;
+                    float weight = DataTracker.Current.Player.Inventory.TotalWeight();
+                    int fuel = DataTracker.Current.Player.Inventory.Contains("Fuel");
+                    //will be done with percent of max capacity later, just testing with constants for now
+                    int fuelrate;
+                    int dayrate;
+					if (weight > 40) {
+                        fuelrate = 3;
+                        dayrate = 2;
+					}else if(weight > 20) {
+                        fuelrate = 2;
+                        dayrate = 1;
+					} else {
+                        fuelrate = 1;
+                        dayrate = 1;
+					}
+                    if (Input.GetMouseButtonDown(0)) //left click for node info (player is more likely to see first this way)
+                    {
+                        Debug.Log("Weight="+weight);
+                        Debug.Log("Traveling here will take "+dayrate+" day(s) and " + fuelrate + " fuel"); //example weight-fuel/time rates: below 30% max weight = 1 fuel 1 day, 31-100% weight = 2 fuel 1 day, >100% = 3 fuel 2 days
+                        Debug.Log("Current fuel: " + fuel);
+                        Debug.Log("Current day: " + DataTracker.Current.dayCount);
+                        Debug.Log("You will have " + (fuel - fuelrate) + " fuel left after traveling here");
+                        Debug.Log("It will be day " + (DataTracker.Current.dayCount + dayrate) + " after traveling here");
+                        
+
+					} else if(fuel-fuelrate>0)
+                    {
+                        DataTracker.Current.Player.Inventory.RemoveItem("Fuel", fuelrate);
+                        DataTracker.Current.dayCount += dayrate;
+                       //update date/fuel
+                       //check enough fuel, gameover if not enough
+                        DataTracker.Current.currentLocationId = selected;
+                        targetPos = hit.collider.gameObject.transform.position;
+                        OverworldMap.LocationNode node;
+                        if (DataTracker.Current.WorldMap.GetNode(selected, out node)) {
+                            if (node.Type == OverworldMap.LocationType.TOWN) {
+                                enterNodeButton.interactable = true;
+                            } else {
+                                enterNodeButton.interactable = false;
+                            }
                         }
-                        else{
-                            enterNodeButton.interactable = false;
-                        }
-                    }
+					} else
+                    {
+                        Debug.Log("You're out of fuel! On the bright side not only will the scavengers get a good payday from your remains, but you'll serve as a good reminder to always check the tanks before leaving port\nGAME OVER");
+					}
                 }
             }
         }
