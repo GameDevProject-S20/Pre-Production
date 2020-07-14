@@ -70,7 +70,7 @@ namespace Encounters
                     new String[]  // Text to display on failure
                     {
                         "",
-                        "You do not have enough explosives!"
+                        "You do not have an RPG!"
                     },
                     new Action[]  // Action to take on failure
                     {

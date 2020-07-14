@@ -91,15 +91,23 @@ namespace Encounters
         /// </summary>
         private void initDialogue()
         {
+            Action defaultEndBtnClick = () => {
+                DFunctions.CloseDialogue();
+                resetEncounter();
+            };
+
             Debug.Log("Dialogue init'd");
             // Generic button to end dialogue
             IDButton endBtn = new DButton()
             {
                 Text = "Done.",
+                OnButtonClick = defaultEndBtnClick
+                /*
                 OnButtonClick = () => {
                     DFunctions.CloseDialogue();
                     resetEncounter();
                 }
+                */
             };
 
             // This loop builds buttons by adding text,
@@ -120,11 +128,21 @@ namespace Encounters
                         {
                             dialoguePages[++dialogueStage].Text = ResultText[idx];
                             Effects[idx]();  // call effect function
+
+                            // End the dialogue
+                            dialoguePages[dialoguePages.Count - 1].GetButton(0).OnButtonClick = defaultEndBtnClick;
                         }
                         else
                         {
                             dialoguePages[++dialogueStage].Text = FailText[idx];
                             FailEffects[idx]();
+
+                            // Repeat the initial encounter text
+                            dialoguePages[dialoguePages.Count - 1].GetButton(0).OnButtonClick = () => {
+                                DFunctions.CloseDialogue();
+                                resetEncounter();
+                                StartDialogue();
+                            };
                         }
                         DFunctions.GoToNextPage();
                     }
