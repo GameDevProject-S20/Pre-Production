@@ -13,7 +13,10 @@ public class OverworldMapUI : MonoBehaviour
     GameObject PathPrefab;
     [SerializeField]
     GameObject playerMarker;
-
+    [SerializeField]
+    GameObject TownMenu;
+    [SerializeField]
+    GameObject EnterNodeButton; 
     [SerializeField]
     Button enterNodeButton;
 
@@ -102,7 +105,17 @@ public class OverworldMapUI : MonoBehaviour
     }
 
     public void OnButtonClick(){
-        SceneManager.LoadScene("Town");
+        //SceneManager.LoadScene("Town"); //old way 
+
+        //New way with PreFabs! (becuase they're preFABULOUS!) 
+        TownMenu.SetActive(true);
+        EnterNodeButton.SetActive(false); 
+    }
+
+    public void TownMapClosed()
+    {
+        TownMenu.SetActive(false); 
+        EnterNodeButton.SetActive(true);
     }
 
 }

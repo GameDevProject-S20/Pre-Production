@@ -243,7 +243,8 @@ public class Trading : MonoBehaviour
     }
 
     public void leave(){
-        SceneManager.LoadScene("Town");
+        //SceneManager.LoadScene("Town");
+        SceneManager.UnloadSceneAsync("InventoryTestScene"); 
     }
 
 }
