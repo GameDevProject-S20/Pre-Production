@@ -52,7 +52,7 @@ namespace Encounters
                         },
                         () => {
                             var inventory = DataTracker.Current.Player.Inventory;
-                            inventory.AddItem("Body Armor", 1);  // Fusion core
+                            inventory.AddItem("Body Armor", 1);
                             SceneManager.LoadScene("MapScene");
                         }
                     },
@@ -63,7 +63,7 @@ namespace Encounters
                             return true;
                         },
                         () => {
-                            // Only available if the player has 1 explosive
+                            // Only available if the player has 1 rpg
                             return DataTracker.Current.Player.Inventory.Contains("RPG") > 0;
                         }
                     },
@@ -75,11 +75,53 @@ namespace Encounters
                     new Action[]  // Action to take on failure
                     {
                         () => {},
+                        () => {}
+                    }
+                )
+            },
+            {
+                1, new RandomEncounter(
+                    "Farmer's Market",
+                    "Loot",
+                    "You encounter a quaint farmer's market, one stall selling rare exotic fruits."
+                    + "Surely an amicable deal can be struck?",
+                    new string[]
+                    {
+                        "Offer 1 Medicine (+3 Fresh Fruit)",
+                        "You don't want any fruit"
+                    },
+                    new string[]
+                    {
+                        "3 Fresh Fruit added.",
+                        "You never get tired of Rations..."
+                    },
+                    new Action[]  // successful action
+                    {
                         () => {
-                            // Restart encounter or.....?
-                            //EncounterManager.Instance.RepeatRandomEncounter();
+                            var inventory = DataTracker.Current.Player.Inventory;
+                            inventory.AddItem("Fresh Fruit", 3);
+                            SceneManager.LoadScene("MapScene");
+                        },
+                        () => {
                             SceneManager.LoadScene("MapScene");
                         }
+                    },
+                    new Func<bool>[]  // condition (whether the player can take the action or not)
+                    {
+                        () => {
+                            return DataTracker.Current.Player.Inventory.Contains("Medicine") > 0;
+                        },
+                        () => true
+                    },
+                    new String[]  // Text to display on failure
+                    {
+                        "You don't have any medicine!",
+                        ""
+                    },
+                    new Action[]  // Action to take on failure
+                    {
+                        () => {},
+                        () => {}
                     }
                 )
             }

@@ -27,7 +27,9 @@ public class OverworldMapLoader
         Node9 = new OverworldMap.LocationNode(-1, "Node9", OverworldMap.LocationType.NONE, 0.3f, 0.29f);
         Node10 = new OverworldMap.LocationNode(-1, "Node10", OverworldMap.LocationType.NONE, 0.17f, 0.44f);
         Node11 = new OverworldMap.LocationNode(-1, "Node11", OverworldMap.LocationType.NONE, -0.07f, 0.49f);
-        Node12 = new OverworldMap.LocationNode(-1, "Node12", OverworldMap.LocationType.NONE, 0.125f, 0.233f);
+
+        Node12 = new OverworldMap.LocationNode(-1, "Event2", OverworldMap.LocationType.EVENT, 0.125f, 0.233f);
+
         Node13 = new OverworldMap.LocationNode(-1, "Node13", OverworldMap.LocationType.NONE, -0.09f, 0.28f);
 
 
