@@ -48,4 +48,56 @@ public class OverworldMapLoader
 
         return graph;
     }
+
+    public static OverworldMap.LocationGraph LoadMap(){
+        OverworldMap.LocationGraph graph = new OverworldMap.LocationGraph();
+        // Load in node data from CSV
+        GameData.LoadCsv<Node>(FileConstants.Files.MapNodes, out IEnumerable<Node> resultN);
+        var resultString = new System.Text.StringBuilder();
+        resultString.AppendLine("Loading in from file:");
+        foreach (Node data in resultN)
+        {
+            graph.AddNode(new OverworldMap.LocationNode(data.LocationId, data.Id, data.Name, (OverworldMap.LocationType)System.Enum.Parse(typeof(OverworldMap.LocationType), data.Type), data.PosX / DataTracker.Current.mapScale, data.PosY / DataTracker.Current.mapScale));
+            resultString.AppendLine("Added Node #" + data.Id + ": " + data.Name);
+        }
+        UnityEngine.Debug.Log(resultString);
+
+        // Load in edge data from CSV
+        GameData.LoadCsv<Edge>(FileConstants.Files.MapEdges, out IEnumerable<Edge> resultE);
+        resultString = new System.Text.StringBuilder();
+        resultString.AppendLine("Loading in from file:");
+        foreach (Edge data in resultE)
+        {
+            OverworldMap.LocationNode A;
+            OverworldMap.LocationNode B;
+            bool aFound = graph.GetNode(data.idOfSource, out A);
+            bool bFound = graph.GetNode(data.idOfTarget, out B);
+            if (aFound && bFound){
+                graph.AddEdge(A, B);
+                resultString.AppendLine("Added Edge from node #" + data.idOfSource + " to node # " + data.idOfTarget);
+            }
+        }
+        UnityEngine.Debug.Log(resultString);
+
+        return graph;
+    }
+
+    // Temporary node for loading data
+    // To be used until we figure out how we want to handle LocationID
+    public class Node {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Type { get; set; }
+        public float PosX { get; set; }
+        public float PosY { get; set; }
+        public int LocationId {get; set;}
+    }
+
+    public class Edge{
+        public int idOfSource { get; set; }
+        public int idOfTarget { get; set; }
+    }
+
+
+
 }
