@@ -1844,10 +1844,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b131d23b057148443a2daaa6e8e36816, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameTextField: {fileID: 4601075224911822685}
-  descriptionTextField: {fileID: 4601075224745008526}
-  button1: {fileID: 1516978659}
-  button2: {fileID: 1436827689}
+  NameTextField: {fileID: 4601075224911822685}
+  DescriptionTextField: {fileID: 4601075224745008526}
+  Button1: {fileID: 1516978659}
+  Button2: {fileID: 1436827689}
 --- !u!4 &1461711027
 Transform:
   m_ObjectHideFlags: 0
