@@ -61,9 +61,9 @@ namespace Encounters
         public ReadOnlyCollection<Action> Effects
         { get; }
 
-        private List<IDPage> dialoguePages;
-        private List<IDButton> dialogueButtons;
-        private int dialogueStage;
+        protected List<IDPage> dialoguePages;
+        protected List<IDButton> dialogueButtons;
+        protected int dialogueStage;
 
         public Encounter(string name, string tag, string bodyText,
                          IEnumerable<string> buttonText, IEnumerable<string> resultText,
@@ -116,7 +116,6 @@ namespace Encounters
             return sb.ToString();
         }
 
-        
         /// <summary>
         /// Builds the dialogue tree
         /// </summary>

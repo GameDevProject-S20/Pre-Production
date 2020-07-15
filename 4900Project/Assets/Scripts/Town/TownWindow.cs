@@ -191,5 +191,12 @@ public class TownWindow : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This should only be used in the Town scene after the tutorial text. 
+    /// </summary>
+    public void OnClickBringToMap()
+    {
+        SceneManager.LoadScene("MapScene", LoadSceneMode.Single); 
+    }
 
 }
