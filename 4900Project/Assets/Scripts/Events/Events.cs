@@ -50,6 +50,12 @@ namespace SIEvents
             public class EnterEvent : UnityEvent<Town> { };
         }
 
+        public partial class EncounterLocation
+        {
+            [System.Serializable]
+            public class EncounterEvent : UnityEvent<EncounterLocation> { };
+        }
+
         public partial class Dialogue
         {
             [System.Serializable]
