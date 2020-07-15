@@ -27,6 +27,8 @@ public class OverworldMapUI : MonoBehaviour
     [SerializeField]
     GameObject EnterNodeButtonCanvas;
 
+    bool isActive = true;
+
     //Movement variables
     float translateSmoothTime = 0.1f;
     Vector3 translatSmoothVelocity;
@@ -55,6 +57,11 @@ public class OverworldMapUI : MonoBehaviour
                 nodeObj.transform.Find("Icon").gameObject.SetActive(false);
                 nodeObj.transform.Find("TownMesh").gameObject.SetActive(true);
                 nodeObj.transform.Rotate(new Vector3(0, Random.Range(0, 360), 0), Space.Self);
+            }
+            else if (node.Type == OverworldMap.LocationType.EVENT)
+            {
+                nodeObj.transform.Find("Icon").gameObject.SetActive(false);
+                nodeObj.transform.Find("EncounterMark").gameObject.SetActive(true);
             }
             if (node.Id == DataTracker.Current.currentLocationId)
             {
@@ -88,7 +95,7 @@ public class OverworldMapUI : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && isActive)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -132,6 +139,7 @@ public class OverworldMapUI : MonoBehaviour
                 Debug.Log("town");
                 TownMenuGameObject.SetActive(true);
                 EnterNodeButtonCanvas.SetActive(false);
+                isActive = false;
                 break;
             case OverworldMap.LocationType.EVENT:
                 Debug.Log("Event");
@@ -148,5 +156,6 @@ public class OverworldMapUI : MonoBehaviour
     {
         TownMenuGameObject.SetActive(false); 
         EnterNodeButtonCanvas.SetActive(true);
+        isActive = true;
     }
 }
