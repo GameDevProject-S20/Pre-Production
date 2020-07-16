@@ -1,9 +1,10 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using SIEvents;
 
 public class TownMenu : MonoBehaviour
 {
@@ -65,13 +66,4 @@ public class TownMenu : MonoBehaviour
         DataTracker.Current.currentShopId = (id == 0) ? action1 : action2;
         SceneManager.LoadScene("InventoryTestScene", LoadSceneMode.Additive);
     }
-
-
-}
-
-public struct ActionListItem {
-    public Sprite Icon;
-    public string Name;
-    public string Description;
-    public string SceneName;
 }
