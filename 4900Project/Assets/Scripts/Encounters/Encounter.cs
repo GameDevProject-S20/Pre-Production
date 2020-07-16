@@ -129,7 +129,7 @@ namespace Encounters
         public void RunEncounter()
         {
             DisallowProgression();
-            EncounterManager.Instance.RemoveFixedEncounter(this);
+            //EncounterManager.Instance.RemoveFixedEncounter(this);
             DialogueManager.Instance.CreateDialogue(dialoguePages);
         }
 
@@ -162,7 +162,7 @@ namespace Encounters
             // Generic button to end dialogue
             IDButton endBtn = new DButton()
             {
-                Text = "Done.",
+                Text = "[Close]",
                 OnButtonClick = DFunctions.CloseDialogue
             };
 

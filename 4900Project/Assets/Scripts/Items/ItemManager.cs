@@ -116,6 +116,11 @@ public class ItemManager : MonoBehaviour
         itemsMaster.Add(temp.DisplayName, temp);
 
         tempList = new List<typetag>();
+        tempList.Add(typetag.Tools_And_Parts);
+        temp = new Item("Generator", "Creates electricity", "Consumes fuel to generate power. Vital for survival.", 40, 25, tempList);
+        itemsMaster.Add(temp.DisplayName, temp);
+
+        tempList = new List<typetag>();
         tempList.Add(typetag.Combat);
         temp = new Item("Body Armor", "Keeps you intact", "Armor meant to protect from the typical bandit raid.", 4, 5, tempList);
         itemsMaster.Add(temp.DisplayName, temp);
