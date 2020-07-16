@@ -197,7 +197,7 @@ public class TownWindow : MonoBehaviour
             {
                 DataTracker.Current.currentShopId = x;
                 SceneManager.sceneUnloaded += OnSceneUnloaded;
-                SceneManager.LoadScene("InventoryTestScene", LoadSceneMode.Additive); // Currently using additive for the shop. 
+                SceneManager.LoadScene("ShopScene", LoadSceneMode.Additive); // Currently using additive for the shop. 
             });
 
         // ! I am hardcoding this as a test
@@ -221,7 +221,7 @@ public class TownWindow : MonoBehaviour
 
     private void OnSceneUnloaded(Scene s)
     {
-        if (s.name == "InventoryTestScene")
+        if (s.name == "ShopScene")
         {
             EventManager.Instance.OnTownEnter.Invoke(townData);
         }

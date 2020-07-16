@@ -141,8 +141,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Very Long Item Name (25) * * *
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 4ec0308ae3de2464b8136c0ed64e3255, type: 2}
-  m_sharedMaterial: {fileID: 790893843913795537, guid: 4ec0308ae3de2464b8136c0ed64e3255,
+  m_fontAsset: {fileID: 11400000, guid: 6224ef042c2d196469ff6dd8f2fd1335, type: 2}
+  m_sharedMaterial: {fileID: 5821933458624671305, guid: 6224ef042c2d196469ff6dd8f2fd1335,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -168,11 +168,11 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 12
+  m_fontSize: 14
   m_fontSizeBase: 12
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 14
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_textAlignment: 514

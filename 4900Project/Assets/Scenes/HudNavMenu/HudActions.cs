@@ -18,7 +18,7 @@ public class HudActions : MonoBehaviour
     }
     public void OnInventoryButtonClick()
     {
-        SceneManager.LoadScene("InventoryTestScene", LoadSceneMode.Additive);
+        SceneManager.LoadScene("InventoryScene", LoadSceneMode.Additive);
 
     }
 
