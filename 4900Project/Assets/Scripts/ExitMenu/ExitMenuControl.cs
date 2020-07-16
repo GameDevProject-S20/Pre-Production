@@ -28,7 +28,7 @@ namespace Assets.Scripts.ExitMenu
 
             // Pops up a new Dialogue with the exit prompt
             var menu = GetDialoguePages();
-            DialogueManager.CreateDialogue(menu);
+            DialogueManager.Instance.CreateDialogue(menu);
         }
 
         /// <summary>

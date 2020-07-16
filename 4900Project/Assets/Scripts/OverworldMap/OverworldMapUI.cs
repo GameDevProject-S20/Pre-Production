@@ -129,8 +129,7 @@ public class OverworldMapUI : MonoBehaviour
         if (Vector3.Distance(playerMarker.transform.position, targetPos) > 0.1f){
             Vector3 dir = ((targetPos - playerMarker.transform.position).normalized);
             float theta = Vector2.SignedAngle(new Vector2(dir.x, dir.z), Vector2.left);
-            print(theta);
-            playerMarker.transform.Find("truck").transform.eulerAngles = new Vector3(-90, 0, theta );
+            playerMarker.transform.eulerAngles = new Vector3(-90, 0, theta );
         }
         else{
             isTravelling = false;
