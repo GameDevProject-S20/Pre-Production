@@ -63,3 +63,14 @@ public class DataTracker : MonoBehaviour
         Debug.Log(string.Format("[COMPLETE]\n\n{0}", string.Join("\n", QuestJournal.Instance.CompletedQuests.Select(q => q.ToString()))));
     }
 }
+
+public class PlayerData {
+    public int health = 100;
+    int healthCap = 100;
+    public Inventory Inventory = new Inventory();
+
+    public void addHealth(int h){
+        health += h;
+        health = Mathf.Clamp(health, 0, healthCap);
+    }
+}
