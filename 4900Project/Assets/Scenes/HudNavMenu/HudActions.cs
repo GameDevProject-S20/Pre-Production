@@ -14,11 +14,6 @@ public class HudActions : MonoBehaviour
         Debug.Log("Invetory Button Clicked Clicked HUD");
     }
 
-    public void OnJournalButtonClick()
-    {
-        Debug.Log("Journal Button Clicked Clicked HUD");
-    }
-
     public void OnMenuButtonClick()
     {
         ExitMenuControl.BringUpExitMenu();
