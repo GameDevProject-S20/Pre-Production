@@ -108,7 +108,6 @@ namespace Quests
                 if (questState.ActiveState == QuestContainer.State.ACTIVE)
                 {
                     questState.SetComplete();
-                    EventManager.Instance.OnQuestComplete.Invoke(quest);
                     EventManager.Instance.OnQuestManagerUpdated.Invoke();
                 }
                 else
