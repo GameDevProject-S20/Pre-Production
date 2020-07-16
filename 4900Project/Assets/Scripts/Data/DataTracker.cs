@@ -12,14 +12,15 @@ public class DataTracker : MonoBehaviour
     public static DataTracker Current {get {return _current;}}
 
     public PlayerData Player = new PlayerData();
-    public OverworldMap.LocationGraph WorldMap = OverworldMapLoader.CreateTestMap();
+    public OverworldMap.LocationGraph WorldMap;
     public QuestManager QuestManager = QuestManager.Instance;
     public QuestJournal QuestJournal = QuestJournal.Instance;
     public EncounterManager EncounterManager = EncounterManager.Instance;
     public EventManager EventManager = EventManager.Instance;
     public TownManager TownManager = TownManager.Instance;
     public ShopManager ShopManager = ShopManager.Instance;
-
+    [SerializeField]
+    public int mapScale = 5;
     [SerializeField]
     public int currentShopId = 0; // Needed if we want store to be their own scene. If we make the store window a prefab, we don't need this.
     public int currentLocationId = 0;
@@ -31,6 +32,7 @@ public class DataTracker : MonoBehaviour
         } else {
             _current = this;
         }
+        WorldMap = OverworldMapLoader.LoadMap();
         ShopManager.LoadData();
         TownManager.LoadData();
         Player.Inventory.weightLimit = 10000000f;

@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public enum rarity {Abundant, Common, Uncommon, Rare, Unique}
-public enum typetag {Food,Luxury,Medicine,Building_Materials, Tools_And_Parts, Combat}
+public enum rarity {None, Abundant, Common, Uncommon, Rare, Unique}
+public enum typetag {Food,Luxury,Medicine,Building_Materials, Tools_And_Parts, Combat,Fuel}
 
 public struct Item 
 {
