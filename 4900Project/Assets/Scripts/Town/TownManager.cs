@@ -44,10 +44,10 @@ public class TownManager
         UnityEngine.Debug.Log(resultString);
 
 
-        towns[0].AddShop(0);
-        towns[0].AddShop(1);
+        //towns[0].AddShop(0);
+        //towns[0].AddShop(1);
         towns[1].AddShop(2);
-        towns[1].AddShop(3);
+        //towns[1].AddShop(3);
         towns[2].AddShop(4);
         towns[2].AddShop(5);
         towns[3].AddShop(6);

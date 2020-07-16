@@ -23,10 +23,13 @@ namespace Encounters
 
         public Dictionary<int, Encounter> FixedEncounters = new Dictionary<int, Encounter>()
         {
+      
+                
         };
 
         public Dictionary<int, Encounter> RandomEncounters = new Dictionary<int, Encounter>()
         {
+            
         };
 
         private EncounterCollection()

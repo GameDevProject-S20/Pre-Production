@@ -100,7 +100,7 @@ namespace Encounters
             // Generic button to end dialogue
             IDButton endBtn = new DButton()
             {
-                Text = "Done.",
+                Text = "[Close]",
                 OnButtonClick = defaultEndBtnClick
                 /*
                 OnButtonClick = () => {

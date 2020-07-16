@@ -94,6 +94,7 @@ namespace Quests
             if (CurrentStage == stages.Count)
             {
                 IsCompleted = true;
+                Debug.Log("Completed Quest: " + this.Name);
                 OnQuestComplete.Invoke(this);
             }
             else
