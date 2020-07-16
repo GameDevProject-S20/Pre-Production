@@ -10,8 +10,8 @@ public class HudActions : MonoBehaviour
 
     public void OnInventoryButtonClick()
     {
-        //SceneManager.LoadScene("InventoryTestScene", LoadSceneMode.Additive);
-        Debug.Log("Invetory Button Clicked Clicked HUD");
+        SceneManager.LoadScene("InventoryTestScene", LoadSceneMode.Additive);
+
     }
 
     public void OnMenuButtonClick()
