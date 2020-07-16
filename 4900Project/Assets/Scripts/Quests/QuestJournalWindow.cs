@@ -57,6 +57,11 @@ public class QuestJournalWindow : MonoBehaviour
         {
             foreach (Quest quest in completedQuests) 
             {
+                if (activeQuests.Count == 0 && completedQuests.Count > 0)
+                {
+                    selectedQuest = completedQuests[0];
+                    updateFields();
+                }
 
                 if (GameObject.Find(quest.Name) == null) 
                 {
