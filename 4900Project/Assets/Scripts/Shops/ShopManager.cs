@@ -29,6 +29,7 @@ public class ShopManager
         Shop testShop1 = new Shop(0, "George's General Store", "General Store", "", Shop.ShopTypes.GeneralStore);
         Shop testShop2 = new Shop(1, "Phil's Pharmacy", "Medical Supplier", "", Shop.ShopTypes.Pharmacy);
         Shop testShop3 = new Shop(2, "Bill's Bulk Goods", "General Store", "", Shop.ShopTypes.GeneralStore);
+        testShop3.inventory.AddItem("Generator", 1);
         Shop testShop4 = new Shop(3, "Hal's Hospital", "Medical Supplier", "", Shop.ShopTypes.Pharmacy);
         Shop testShop5 = new Shop(4, "Dan's Depot", "General Store", "", Shop.ShopTypes.GeneralStore);
         Shop testShop6 = new Shop(5, "Carl's Clinic", "Medical Supplier", "", Shop.ShopTypes.Pharmacy);

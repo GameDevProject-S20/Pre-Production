@@ -49,6 +49,10 @@ namespace Encounters
         public void AddFixedEncounter(Encounter enc)
         {
             fixedEncounters.Add(enc.Id, enc);
+
+            foreach(var e in fixedEncounters){
+                Debug.Log(e.Key + " - " + e.Value.Name);
+            }
         }
 
         public void RemoveFixedEncounter(Encounter encounter)
@@ -58,7 +62,7 @@ namespace Encounters
 
         public void AddRandomEncounter(Encounter enc)
         {
-            fixedEncounters.Add(enc.Id, enc);
+            randomEncounters.Add(enc.Id, enc);
         }
 
         /// <summary>
@@ -116,6 +120,20 @@ namespace Encounters
         public override string ToString()
         {
             return string.Format("Fixed Encounters: {0}\nRandomEncounters: {1}", string.Join(", ", fixedEncounters.Keys), string.Join(", ", randomEncounters.Keys));
+        }
+
+        // Listen for TriggerEncounter events and trigger an encounter
+        // Allows encounters to be triggered by systems without needing a reference to the EncounterManager
+        // Also allows other systems (such as quests) to know when an encounter has been triggered
+        public void encounterTriggerListener(int id=-1){
+            if (id == -1)
+            {
+                RunRandomEncounter();
+            }
+            else
+            {
+                RunFixedEncounter(id);
+            }
         }
     }
 }

@@ -52,8 +52,11 @@ namespace SIEvents
 
         public class EncounterEvents
         {
+            //[System.Serializable]
+            //public class EncounterEvent : UnityEvent<EncounterLocation> { };
             [System.Serializable]
-            public class EncounterEvent : UnityEvent<EncounterLocation> { };
+            public class TriggerEncounterEvent : UnityEvent<int> { };
+            
         }
 
         public class DialogueEvents
@@ -74,6 +77,12 @@ namespace SIEvents
             public class QuestAdded : UnityEvent<Quests.Quest> { };
             [System.Serializable]
             public class QuestManagerUpdated : UnityEvent { };
+        }
+
+        public partial class MapEvents
+        {
+            [System.Serializable]
+            public class NodeEvent : UnityEvent<OverworldMap.LocationNode> { };
         }
     }
 }

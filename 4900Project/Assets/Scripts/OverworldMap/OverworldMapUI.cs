@@ -32,15 +32,31 @@ public class OverworldMapUI : MonoBehaviour
     bool isActive = true;
     bool isTravelling = false;
     //Movement variables
-    float translateSmoothTime = 1.5f;
+    float translateSmoothTime = 1f;
     Vector3 translatSmoothVelocity;
     Vector3 targetPos;
+
+    MapNode targetNode;
 
     // Start is called before the first frame update
     void Start()
     {
         DrawGraph();
         Camera.main.transform.position = playerMarker.transform.position + new Vector3(0, 6, 0);
+    }
+
+    private void RedrawMap(){
+        Clear();
+        DrawGraph();
+    }
+
+    private void Clear(){
+        foreach(Transform child in NodesContainer.transform){
+            GameObject.Destroy(child.transform);
+        }
+        foreach(Transform child in PathsContainer.transform){
+            GameObject.Destroy(child.transform);
+        }
     }
 
     private void DrawGraph()
@@ -104,45 +120,62 @@ public class OverworldMapUI : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, 999, LayerMask.GetMask("MapNode")))
             {
-                int selected = hit.collider.gameObject.GetComponent<MapNode>().nodeID;
-                if (DataTracker.Current.WorldMap.HasEdge(selected, DataTracker.Current.currentLocationId))
+                MapNode selected = hit.collider.gameObject.GetComponent<MapNode>();
+                if (DataTracker.Current.WorldMap.HasEdge(selected.nodeID, DataTracker.Current.currentLocationId))
                 {
-                    DataTracker.Current.currentLocationId = selected;
+                    targetNode = selected;
                     targetPos = hit.collider.gameObject.transform.position;
                     isTravelling = true;
-                    OverworldMap.LocationNode node;
-                    if (DataTracker.Current.WorldMap.GetNode(selected, out node))
-                    {
-                        Debug.Log(node.Name);
-                        if (node.Type == OverworldMap.LocationType.TOWN || node.Type == OverworldMap.LocationType.EVENT)
-                        {
-                            enterNodeButton.interactable = true;
-                        }
-                        else
-                        {
-                            enterNodeButton.interactable = false;
-                        }
-                    }
+                    
                 }
             }
         }
 
+        // Move the player
         playerMarker.transform.position = Vector3.SmoothDamp(playerMarker.transform.position, targetPos, ref translatSmoothVelocity, translateSmoothTime);
-        if (Vector3.Distance(playerMarker.transform.position, targetPos) > 0.1f){
+        if (Vector3.Distance(playerMarker.transform.position, targetPos) > 0.2f){
             Vector3 dir = ((targetPos - playerMarker.transform.position).normalized);
             float theta = Vector2.SignedAngle(new Vector2(dir.x, dir.z), Vector2.left);
-            playerMarker.transform.eulerAngles = new Vector3(-90, 0, theta );
+            playerMarker.transform.Find("truck").transform.eulerAngles = new Vector3(-90, 0, theta );
         }
-        else{
+        // On Arrival
+        else if (isTravelling) {
+            OnNodeArrival();
             isTravelling = false;
         }
     }
 
-
+    /// <summary>
+    /// Upon arriving at a node...
+    /// ...enable the 'Enter Node' button
+    /// ...trigger any encounters
+    /// ...trigger an event
+    /// </summary>
+    void OnNodeArrival(){
+        OverworldMap.LocationNode node;
+        if (DataTracker.Current.WorldMap.GetNode(targetNode.nodeID, out node))
+        {
+            DataTracker.Current.EventManager.OnNodeEnter.Invoke(node);
+            DataTracker.Current.currentLocationId = node.Id;
+            Debug.Log(node.Name);
+            if (node.Type == OverworldMap.LocationType.TOWN)
+            {
+                enterNodeButton.gameObject.SetActive(true);
+            }
+            else
+            {
+                if (node.Type == OverworldMap.LocationType.EVENT || node.LocationId != -1)
+                {
+                    DataTracker.Current.EventManager.TriggerEncounter.Invoke(node.LocationId);
+                }
+                enterNodeButton.gameObject.SetActive(false);
+            }
+        }
+    }
 
     public void OnButtonClick()
     {
-        OverworldMap.LocationNode node = DataTracker.Current.GetCurrentNode();
+        /*OverworldMap.LocationNode node = DataTracker.Current.GetCurrentNode();
         switch (node.Type)
         {
             case OverworldMap.LocationType.TOWN:
@@ -152,15 +185,13 @@ public class OverworldMapUI : MonoBehaviour
                 EnterNodeButtonCanvas.SetActive(false);
                 isActive = false;
                 break;
-            case OverworldMap.LocationType.EVENT:
-                Debug.Log("Event");
-                //SceneManager.LoadScene("Encounter", LoadSceneMode.Additive);
-                var mgr = EncounterManager.Instance;
-                mgr.RunRandomEncounter();
-                break;
             default:
                 break;
-        }
+        }*/
+        TownMenuGameObject.GetComponent<TownWindow>().UpdatePrefab(); 
+        TownMenuGameObject.SetActive(true);
+        EnterNodeButtonCanvas.SetActive(false);
+        isActive = false;
     }
 
 

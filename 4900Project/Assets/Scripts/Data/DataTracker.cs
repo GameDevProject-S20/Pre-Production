@@ -25,7 +25,7 @@ public class DataTracker : MonoBehaviour
     public int mapScale = 5;
     [SerializeField]
     public int currentShopId = 0; // Needed if we want store to be their own scene. If we make the store window a prefab, we don't need this.
-    public int currentLocationId = 0;
+    public int currentLocationId = 14;
 
     private void Awake() {
         if (_current != null && _current != this)
@@ -41,8 +41,11 @@ public class DataTracker : MonoBehaviour
         Player.Inventory.AddItem("Rations", 8);
         Player.Inventory.AddItem("Fresh Fruit", 1);
         Player.Inventory.AddItem("Scrap Metal", 6);
-        Player.Inventory.AddItem("Wrench", 2);
+        Player.Inventory.AddItem("Wrench", 1);
         DontDestroyOnLoad(gameObject);
+
+        EventManager.TriggerEncounter.AddListener(EncounterManager.encounterTriggerListener);
+        EventManager.onDataTrackerLoad.Invoke();
     }
 
     public OverworldMap.LocationNode GetCurrentNode(){
@@ -61,3 +64,4 @@ public class DataTracker : MonoBehaviour
         Debug.Log(string.Format("[COMPLETE]\n\n{0}", string.Join("\n", QuestJournal.Instance.CompletedQuests.Select(q => q.ToString()))));
     }
 }
+
