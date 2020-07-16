@@ -225,14 +225,16 @@ namespace Encounters
             }
 
             // Add condition listener
-            if (Conditions != null && Conditions.Count > 0)
+            if (EncounterRunConditions != null && EncounterRunConditions.Count > 0)
             {
                 if (onConditionCompleteListener == null)
                 {
                     // Add listener
-                    onConditionCompleteListener = (Condition _) =>
+                    onConditionCompleteListener = (Condition c) =>
                     {
-                        if (Conditions.All(c => c.IsSatisfied))
+                        if (!EncounterRunConditions.Contains(c)) return;
+
+                        if (EncounterRunConditions.All(cond => cond.IsSatisfied))
                         {
                             ready = true;
                         }
@@ -241,7 +243,7 @@ namespace Encounters
                     EventManager.Instance.OnConditionComplete.AddListener(onConditionCompleteListener);
 
                     // Enable conditions
-                    foreach (var c in Conditions)
+                    foreach (var c in EncounterRunConditions)
                     {
                         c.AllowProgression();
                     }
