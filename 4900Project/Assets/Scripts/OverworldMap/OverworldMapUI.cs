@@ -28,9 +28,9 @@ public class OverworldMapUI : MonoBehaviour
     GameObject EnterNodeButtonCanvas;
 
     bool isActive = true;
-
+    bool isTravelling = false;
     //Movement variables
-    float translateSmoothTime = 0.1f;
+    float translateSmoothTime = 1.5f;
     Vector3 translatSmoothVelocity;
     Vector3 targetPos;
 
@@ -95,7 +95,7 @@ public class OverworldMapUI : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && isActive)
+        if (Input.GetMouseButtonDown(0) && isActive && !isTravelling)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -107,6 +107,7 @@ public class OverworldMapUI : MonoBehaviour
                 {
                     DataTracker.Current.currentLocationId = selected;
                     targetPos = hit.collider.gameObject.transform.position;
+                    isTravelling = true;
                     OverworldMap.LocationNode node;
                     if (DataTracker.Current.WorldMap.GetNode(selected, out node))
                     {
@@ -125,6 +126,15 @@ public class OverworldMapUI : MonoBehaviour
         }
 
         playerMarker.transform.position = Vector3.SmoothDamp(playerMarker.transform.position, targetPos, ref translatSmoothVelocity, translateSmoothTime);
+        if (Vector3.Distance(playerMarker.transform.position, targetPos) > 0.1f){
+            Vector3 dir = ((targetPos - playerMarker.transform.position).normalized);
+            float theta = Vector2.SignedAngle(new Vector2(dir.x, dir.z), Vector2.left);
+            print(theta);
+            playerMarker.transform.Find("truck").transform.eulerAngles = new Vector3(-90, 0, theta );
+        }
+        else{
+            isTravelling = false;
+        }
     }
 
 
