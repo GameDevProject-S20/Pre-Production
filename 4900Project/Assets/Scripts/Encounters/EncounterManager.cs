@@ -48,15 +48,17 @@ namespace Encounters
 
         public void AddFixedEncounter(Encounter enc)
         {
-            EncounterCollection.Instance.FixedEncounters.Add(enc.Id, enc);
+            fixedEncounters.Add(enc.Id, enc);
         }
+
         public void RemoveFixedEncounter(Encounter encounter)
         {
             fixedEncounters.Remove(encounter.Id);
         }
+
         public void AddRandomEncounter(Encounter enc)
         {
-            EncounterCollection.Instance.RandomEncounters.Add(enc.Id, enc);
+            fixedEncounters.Add(enc.Id, enc);
         }
 
         /// <summary>
@@ -107,11 +109,13 @@ namespace Encounters
 
         public Encounter GetFixedEncounter(int id)
         {
-            if (fixedEncounters.TryGetValue(id, out Encounter value))
-            {
-                return value;
-            }
-            return null;
+            EncounterCollection.Instance.FixedEncounters.TryGetValue(id, out Encounter value);
+            return value;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Fixed Encounters: {0}\nRandomEncounters: {1}", string.Join(", ", fixedEncounters.Keys), string.Join(", ", randomEncounters.Keys));
         }
     }
 }

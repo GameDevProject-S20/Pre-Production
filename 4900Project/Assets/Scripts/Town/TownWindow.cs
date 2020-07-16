@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using SIEvents;
 
 public class TownWindow : MonoBehaviour
 {
@@ -186,9 +187,22 @@ public class TownWindow : MonoBehaviour
             NewAction.transform.Find("Interaction").GetComponent<Button>().onClick.AddListener(() =>
             {
                 DataTracker.Current.currentShopId = x;
+                SceneManager.sceneUnloaded += OnSceneUnloaded;
                 SceneManager.LoadScene("InventoryTestScene", LoadSceneMode.Additive); // Currently using additive for the shop. 
             });
         }
+
+        EventManager.Instance.OnTownEnter.Invoke(townData);
+    }
+
+    private void OnSceneUnloaded(Scene s)
+    {
+        if (s.name == "InventoryTestScene")
+        {
+            EventManager.Instance.OnTownEnter.Invoke(townData);
+        }
+
+        SceneManager.sceneUnloaded -= OnSceneUnloaded;
     }
 
     /// <summary>
