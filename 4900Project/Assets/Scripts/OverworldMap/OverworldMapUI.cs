@@ -26,6 +26,8 @@ public class OverworldMapUI : MonoBehaviour
     GameObject TownMenuGameObject;
     [SerializeField]
     GameObject EnterNodeButtonCanvas;
+    [SerializeField]
+    public GameObject QuestJournalCanvas;
 
     bool isActive = true;
     bool isTravelling = false;
@@ -121,7 +123,6 @@ public class OverworldMapUI : MonoBehaviour
                 MapNode selected = hit.collider.gameObject.GetComponent<MapNode>();
                 if (DataTracker.Current.WorldMap.HasEdge(selected.nodeID, DataTracker.Current.currentLocationId))
                 {
-                    
                     int weightClass = DataTracker.Current.Player.Inventory.WeightClass();
                     Debug.Log(DataTracker.Current.Player.Inventory.weightLimit);
                     Debug.Log(weightClass);
@@ -161,7 +162,8 @@ public class OverworldMapUI : MonoBehaviour
                     {
                         Debug.Log("You're out of fuel! On the bright side not only will the scavengers get a good payday from your remains, but you'll serve as a good reminder to always check the tanks before leaving port\nGAME OVER");
                     }
-
+                    
+                                      
                 }
             }
         }
@@ -214,7 +216,7 @@ public class OverworldMapUI : MonoBehaviour
         switch (node.Type)
         {
             case OverworldMap.LocationType.TOWN:
-                TownMenuGameObject.GetComponent<TownWindow>().UpdatePrefab();
+                TownMenuGameObject.GetComponent<TownWindow>().UpdatePrefab(); 
                 Debug.Log("town");
                 TownMenuGameObject.SetActive(true);
                 EnterNodeButtonCanvas.SetActive(false);
@@ -223,15 +225,16 @@ public class OverworldMapUI : MonoBehaviour
             default:
                 break;
         }*/
-        TownMenuGameObject.GetComponent<TownWindow>().UpdatePrefab();
+        TownMenuGameObject.GetComponent<TownWindow>().UpdatePrefab(); 
         TownMenuGameObject.SetActive(true);
         EnterNodeButtonCanvas.SetActive(false);
         isActive = false;
     }
 
+
     public void TownMapClosed()
     {
-        TownMenuGameObject.SetActive(false);
+        TownMenuGameObject.SetActive(false); 
         EnterNodeButtonCanvas.SetActive(true);
         isActive = true;
     }
