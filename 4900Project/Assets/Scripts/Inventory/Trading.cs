@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEngine.XR.WSA.Input;
+//using UnityEngine.XR.WSA.Input;
 using SIEvents;
 
 public class Trading : MonoBehaviour
