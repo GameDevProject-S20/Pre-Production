@@ -9,10 +9,10 @@ public class HudActions : MonoBehaviour
 {
 
     public void OnInventoryButtonClick()
-        {
-            SceneManager.LoadScene("InventoryTestScene", LoadSceneMode.Additive);
-            Debug.Log("Clicked");
-        }
+    {
+        SceneManager.LoadScene("InventoryTestScene", LoadSceneMode.Additive);
+
+    }
 
     public void OnMenuButtonClick()
     {
