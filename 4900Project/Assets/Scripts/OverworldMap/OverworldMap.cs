@@ -36,7 +36,7 @@ public class OverworldMap
 
         public string Name { get; }
         public LocationType Type { get; }
-        public int LocationId { get; }
+        public int LocationId { get; set; }
         // Positions should be stored as percentages p, -1 <= p <= 1.
         //  PosX = 1,  PosY = 1  is the bottom right corner
         //  PosX = -1, PosY = -1 is the top left corner

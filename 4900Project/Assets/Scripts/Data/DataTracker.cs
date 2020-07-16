@@ -43,6 +43,8 @@ public class DataTracker : MonoBehaviour
         Player.Inventory.AddItem("Scrap Metal", 6);
         Player.Inventory.AddItem("Wrench", 2);
         DontDestroyOnLoad(gameObject);
+
+        EventManager.TriggerEncounter.AddListener(EncounterManager.encounterTriggerListener);
     }
 
     public OverworldMap.LocationNode GetCurrentNode(){
