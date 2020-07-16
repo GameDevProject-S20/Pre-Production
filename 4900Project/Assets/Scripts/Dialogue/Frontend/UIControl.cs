@@ -72,7 +72,7 @@ namespace Assets.Scripts.Dialogue.Frontend
             }
 
             // Listen for the DialogueManager to update, so that we can update our display
-            DialogueManager.ActiveDialogueChanged.AddListener(() =>
+            DialogueManager.Instance.ActiveDialogueChanged.AddListener(() =>
             {
                 UpdateDisplay();
             });
@@ -85,7 +85,7 @@ namespace Assets.Scripts.Dialogue.Frontend
         {
             button.onClick.AddListener(() =>
             {
-                DialogueManager.GetActiveDialogue().PressButton(index);
+                DialogueManager.Instance.GetActiveDialogue().PressButton(index);
             });
         }
 
@@ -95,7 +95,7 @@ namespace Assets.Scripts.Dialogue.Frontend
         /// </summary>
         protected void UpdateDisplay()
         {
-            var dialogue = DialogueManager.GetActiveDialogue();
+            var dialogue = DialogueManager.Instance.GetActiveDialogue();
 
             // If we don't have an active dialog, hide the UI
             if (dialogue == null)

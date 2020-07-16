@@ -5,56 +5,253 @@ using UnityEngine.SceneManagement;
 using System;
 using Encounters;
 using Quests;
-using System.Linq;
+using SIEvents;
 
 public class Tutorial : MonoBehaviour
 {
-    private Encounter enc;
-
     void Start()
     {
-        Dialogue();
+        init();
+        // Set player to node 1
     }
 
-    private void Dialogue()
+    private void init()
     {
-        enc = new Encounter(
+        Encounter enc1 = new Encounter(
+             "Enc 1",
+             "Tutorial",
+             "The cart's gas is running so low...\nI need to get into town as soon as possible.\nLooks like there's one not too far ahead...",
+             new string[]
+             {
+                             "Travel."
+             },
+             new string[]
+             {
+                            ""
+             },
+             new Action[]
+             {
+                             () => {
+                                 Debug.Log(EncounterManager.Instance);
+                                 EncounterManager.Instance.GetFixedEncounter(1).AllowProgression();
+                                 SceneManager.LoadScene("MapScene");
+                             }
+             }
+         );
+
+        Encounter enc2 = new Encounter(
+             "Enc 2",
+             "Tutorial",
+             "Welcome to Smithsville!",
+             new string[]
+             {
+                                     "Take items."
+             },
+             new string[]
+             {
+                                     "Received Gas and Medicine!",
+             },
+             new Action[]
+             {
+                                     () => {
+                                         // Give gas
+                                         // Give medicine
+                                         BeginQuest();
+                                         EncounterManager.Instance.GetFixedEncounter(2).AllowProgression();
+                                     }
+             },
+             null,
+             TownManager.Instance.GetTownByName("Smithsville").Id
+         );
+
+        Encounter enc3 = new Encounter(
+            "Enc 3",
             "Tutorial",
-            "Tutorial",
-            "Welcome to town! I'm the Sheriff of these here parts! You'll be able to find the things you can do in my town on the Town Menu screen. Now, don't be going messing around in my town or you'll be hearing from me and your reputation will suffer. These are hard times and we can't be just letting anyone into our community, if your reputation drops low enough you'd best keep away. I see you're a traveling merchant, I hear the town of York is looking for some medicine. You can get that from the Pharmacy and bring it to them. Good luck!",
+            "Welcome to York!",
             new string[]
             {
-                            "Accept Quest"
+                                            "Done."
             },
             new string[]
             {
-                            "Purchase some medicine to sell in the town of Riverbed.",
+                                            "Exchange the medicine for wood at the local store.",
             },
             new Action[]
             {
-                            () => {
-                                BeginQuest();
-                                LoadTown();
-                            }
+                                            () => {
+                                                EncounterManager.Instance.GetFixedEncounter(3).AllowProgression();
+                                                // Go to shop
+                                            }
+            },
+            null,
+            TownManager.Instance.GetTownByName("York").Id
+        );
+
+        Encounter enc4 = new Encounter(
+            "Enc 4",
+            "Tutorial",
+            "Thanks for selling that medicine! Here's some gas for your travel back to town",
+            new string[]
+            {
+                                                    "Done."
+            },
+            new string[]
+            {
+                                                    "",
+            },
+            new Action[]
+            {
+                                                    () => {
+                                                        EncounterManager.Instance.GetFixedEncounter(4).AllowProgression();
+                                                    }
+            },
+            new List<Condition> { new QuestCompleteCondition("", 0) },
+            TownManager.Instance.GetTownByName("York").Id
+        );
+
+        Encounter enc5 = new Encounter(
+            "Enc 5",
+            "Tutorial",
+            "Thanks completing that tutorial!",
+            new string[]
+            {
+                                                            "Done."
+            },
+            new string[]
+            {
+                                                            "",
+            },
+            new Action[]
+            {
+                                                            () => {
+                                                            }
+            },
+            new List<Condition> { new QuestCompleteCondition("", 0) },
+            TownManager.Instance.GetTownByName("Smithsville").Id
+        );
+
+        EncounterManager.Instance.AddFixedEncounter(enc1);
+        EncounterManager.Instance.AddFixedEncounter(enc2);
+        EncounterManager.Instance.AddFixedEncounter(enc3);
+        EncounterManager.Instance.AddFixedEncounter(enc4);
+        EncounterManager.Instance.AddFixedEncounter(enc5);
+
+        enc1.AllowProgression();
+
+        RandomEncounter renc6 = new RandomEncounter(
+            "Crashed Ship",
+            "Loot",
+            "You encounter a desolate spacecraft, seemingly crashed here ages ago. "
+            + "There are scraps littering the outside of the shuttle, but the door is jammed closed.",
+            new string[]
+            {
+                    "Gather up as much scrap metal as you can carry (+2 Scrap Metal)",
+                    "(Requires an RPG) Blast open the door, and loot the ship (+1 Body Armor)"
+            },
+            new string[]
+            {
+                    "2 Scrap Metal added.",
+                    "1 Explosive removed, 1 Fusion Core added"
+            },
+            new Action[]  // successful action
+            {
+                    () => {
+                        var inventory = DataTracker.Current.Player.Inventory;
+                        inventory.AddItem("Scrap Metal", 2);  // Scrap Metal
+                        //SceneManager.UnloadSceneAsync("Encounter");
+                    },
+                    () => {
+                        var inventory = DataTracker.Current.Player.Inventory;
+                        inventory.AddItem("Body Armor", 1);
+                        //SceneManager.UnloadSceneAsync("Encounter");
+                    }
+            },
+            new Func<bool>[]  // condition (whether the player can take the action or not)
+            {
+                    () => {
+                        // Always available
+                        return true;
+                    },
+                    () => {
+                        // Only available if the player has 1 rpg
+                        return DataTracker.Current.Player.Inventory.Contains("RPG") > 0;
+                    }
+            },
+            new String[]  // Text to display on failure
+            {
+                    "",
+                    "You do not have an RPG!"
+            },
+            new Action[]  // Action to take on failure
+            {
+                    () => {},
+                    () => {}
             }
         );
 
-        DataTracker.Current.EncounterManager.AddFixedEncounter(enc);
-        DataTracker.Current.EncounterManager.RunFixedEncounter(enc.Id);
+        RandomEncounter renc7 = new RandomEncounter(
+            "Farmer's Market",
+            "Loot",
+            "You encounter a quaint farmer's market, one stall selling rare exotic fruits."
+            + "Surely an amicable deal can be struck?",
+            new string[]
+            {
+                    "Offer 1 Medicine (+3 Fresh Fruit)",
+                    "You don't want any fruit"
+            },
+            new string[]
+            {
+                    "3 Fresh Fruit added.",
+                    "You never get tired of Rations..."
+            },
+            new Action[]  // successful action
+            {
+                    () => {
+                        var inventory = DataTracker.Current.Player.Inventory;
+                        inventory.AddItem("Fresh Fruit", 3);
+                        //SceneManager.UnloadSceneAsync("Encounter");
+                    },
+                    () => {
+                        //SceneManager.UnloadSceneAsync("Encounter");
+                    }
+            },
+            new Func<bool>[]  // condition (whether the player can take the action or not)
+            {
+                    () => {
+                        return DataTracker.Current.Player.Inventory.Contains("Medicine") > 0;
+                    },
+                    () => true
+            },
+            new String[]  // Text to display on failure
+            {
+                    "You don't have any medicine!",
+                    ""
+            },
+            new Action[]  // Action to take on failure
+            {
+                    () => {
+                        //SceneManager.UnloadSceneAsync("Encounter");
+                    },
+                    () => {}
+            }
+        );
+        
+        EncounterManager.Instance.AddRandomEncounter(renc6);
+        EncounterManager.Instance.AddRandomEncounter(renc7);
     }
 
     private void BeginQuest()
     {
         Quest quest = new Quest.Builder("Medicine Quest")
-            .SetDescription("Find medicine and sell it in York.")
+            .SetDescription("Find medicine and sell it in Big Rock.")
 
-            .AddStage(new Stage.Builder("Purchase medicine in Smithsville.")
-                .AddCondition(new TransactionCondition("Purchase 1 medicine at the Smithsville Pharmacy", "Medicine", 1, TransactionCondition.TransactionTypeEnum.BUY, TownManager.Instance.GetTownByName("Smithsville").Id)
+            .AddStage(new Stage.Builder("Purchase medicine in York.")
+                .AddCondition(new TransactionCondition("Purchase 1 medicine at the York Pharmacy", "Medicine", 1, TransactionCondition.TransactionTypeEnum.BUY, TownManager.Instance.GetTownByName("York").Id)
                 )
-            )    
-            
-            .AddStage(new Stage.Builder("Sell Medicine in York.")
-                .AddCondition(new TransactionCondition("Sell 1 medicine to the York General Store", "Medicine", 1, TransactionCondition.TransactionTypeEnum.SELL, TownManager.Instance.GetTownByName("York").Id)
+            )
+
+            .AddStage(new Stage.Builder("Sell Medicine in Big Rock.")
+                .AddCondition(new TransactionCondition("Sell 1 medicine to the Big Rock General Store", "Medicine", 1, TransactionCondition.TransactionTypeEnum.SELL, TownManager.Instance.GetTownByName("Big Rock").Id)
                 )
             )
 

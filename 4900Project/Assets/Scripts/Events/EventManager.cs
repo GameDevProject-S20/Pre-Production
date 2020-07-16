@@ -27,25 +27,26 @@ namespace SIEvents
 
         //=== Transaction ============================================//
 
-        public Events.Transaction.Event OnTransaction = new Events.Transaction.Event();
+        public Events.TransactionEvents.Event OnTransaction = new Events.TransactionEvents.Event();
 
         //=== Town ===================================================//
 
-        public Events.Town.EnterEvent OnTownEnter = new Events.Town.EnterEvent();
+        public Events.TownEvents.EnterEvent OnTownEnter = new Events.TownEvents.EnterEvent();
 
         //=== Encounters ============================================//
 
-        public Events.EncounterLocation.EncounterEvent OnEncounterEnter = new Events.EncounterLocation.EncounterEvent();
+        public Events.EncounterEvents.EncounterEvent OnEncounterEnter = new Events.EncounterEvents.EncounterEvent();
 
         //=== Quest ==================================================//
 
-        public Events.Quest.QuestAdded onQuestAdded = new Events.Quest.QuestAdded();
-        public Events.Quest.QuestComplete OnQuestComplete = new Events.Quest.QuestComplete();
-        public Events.Quest.StageComplete OnStageComplete = new Events.Quest.StageComplete();
-        public Events.Quest.ConditionComplete OnConditionComplete = new Events.Quest.ConditionComplete();
-        public Events.Quest.QuestManagerUpdated OnQuestManagerUpdated = new Events.Quest.QuestManagerUpdated();
+        public Events.QuestEvents.QuestAdded OnQuestAdded = new Events.QuestEvents.QuestAdded();
+        public Events.QuestEvents.QuestComplete OnQuestComplete = new Events.QuestEvents.QuestComplete();
+        public Events.QuestEvents.StageComplete OnStageComplete = new Events.QuestEvents.StageComplete();
+        public Events.QuestEvents.ConditionComplete OnConditionComplete = new Events.QuestEvents.ConditionComplete();
+        public Events.QuestEvents.QuestManagerUpdated OnQuestManagerUpdated = new Events.QuestEvents.QuestManagerUpdated();
 
         //=== Dialogue ===============================================//
-        public Events.Dialogue.SelectionEvent onDialogueSelected = new Events.Dialogue.SelectionEvent();
+
+        public Events.DialogueEvents.SelectionEvent onDialogueSelected = new Events.DialogueEvents.SelectionEvent();
     }
 }

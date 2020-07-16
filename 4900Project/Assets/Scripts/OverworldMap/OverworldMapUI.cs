@@ -15,6 +15,11 @@ public class OverworldMapUI : MonoBehaviour
     GameObject playerMarker;
 
     [SerializeField]
+    Transform NodesContainer;
+    [SerializeField]
+    Transform PathsContainer;
+
+    [SerializeField]
     Button enterNodeButton;
 
     [SerializeField]
@@ -24,8 +29,10 @@ public class OverworldMapUI : MonoBehaviour
     [SerializeField]
     GameObject QuestJournalCanvas;
 
+    bool isActive = true;
+    bool isTravelling = false;
     //Movement variables
-    float translateSmoothTime = 0.1f;
+    float translateSmoothTime = 1.5f;
     Vector3 translatSmoothVelocity;
     Vector3 targetPos;
 
@@ -42,7 +49,7 @@ public class OverworldMapUI : MonoBehaviour
         foreach (var node in DataTracker.Current.WorldMap.GetNodeEnumerable())
         {
             GameObject nodeObj = Instantiate(LocationPrefab, transform.parent);
-            Vector3 pos = new Vector3(node.PosX, 0, node.PosY) * 10;
+            Vector3 pos = new Vector3(node.PosX, 0, node.PosY) * DataTracker.Current.mapScale * 2;
             nodeObj.transform.position += pos;
             nodeObj.transform.SetParent(transform, true);
             nodeObj.name = node.Name;
@@ -52,6 +59,11 @@ public class OverworldMapUI : MonoBehaviour
                 nodeObj.transform.Find("Icon").gameObject.SetActive(false);
                 nodeObj.transform.Find("TownMesh").gameObject.SetActive(true);
                 nodeObj.transform.Rotate(new Vector3(0, Random.Range(0, 360), 0), Space.Self);
+            }
+            else if (node.Type == OverworldMap.LocationType.EVENT)
+            {
+                nodeObj.transform.Find("Icon").gameObject.SetActive(false);
+                nodeObj.transform.Find("EncounterMark").gameObject.SetActive(true);
             }
             if (node.Id == DataTracker.Current.currentLocationId)
             {
@@ -66,11 +78,12 @@ public class OverworldMapUI : MonoBehaviour
         foreach (var edge in DataTracker.Current.WorldMap.GetEdgeEnumerable())
         {
             GameObject line = Instantiate(PathPrefab, transform.parent);
+            line.name = "Edge_" + edge.Item1.Id + "-" + edge.Item2.Id;
             LineRenderer lr = line.GetComponent<LineRenderer>();
             Vector3[] lineEnds =
                 {
-                    new Vector3(edge.Item1.PosX, 0, edge.Item1.PosY)* 10,
-                    new Vector3(edge.Item2.PosX, 0, edge.Item2.PosY)* 10
+                    new Vector3(edge.Item1.PosX, 0, edge.Item1.PosY)* DataTracker.Current.mapScale * 2,
+                    new Vector3(edge.Item2.PosX, 0, edge.Item2.PosY)* DataTracker.Current.mapScale * 2
                 };
             Vector3 a = lineEnds[0] - 0.2f * (lineEnds[0] - lineEnds[1]);
             Vector3 b = lineEnds[1] - 0.2f * (lineEnds[1] - lineEnds[0]);
@@ -84,12 +97,7 @@ public class OverworldMapUI : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown("space"))
-        {
-           QuestJournalCanvas.SetActive(true);
-        }
-
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && isActive && !isTravelling)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -101,6 +109,7 @@ public class OverworldMapUI : MonoBehaviour
                 {
                     DataTracker.Current.currentLocationId = selected;
                     targetPos = hit.collider.gameObject.transform.position;
+                    isTravelling = true;
                     OverworldMap.LocationNode node;
                     if (DataTracker.Current.WorldMap.GetNode(selected, out node))
                     {
@@ -119,6 +128,14 @@ public class OverworldMapUI : MonoBehaviour
         }
 
         playerMarker.transform.position = Vector3.SmoothDamp(playerMarker.transform.position, targetPos, ref translatSmoothVelocity, translateSmoothTime);
+        if (Vector3.Distance(playerMarker.transform.position, targetPos) > 0.1f){
+            Vector3 dir = ((targetPos - playerMarker.transform.position).normalized);
+            float theta = Vector2.SignedAngle(new Vector2(dir.x, dir.z), Vector2.left);
+            playerMarker.transform.eulerAngles = new Vector3(-90, 0, theta );
+        }
+        else{
+            isTravelling = false;
+        }
     }
 
 
@@ -133,6 +150,7 @@ public class OverworldMapUI : MonoBehaviour
                 Debug.Log("town");
                 TownMenuGameObject.SetActive(true);
                 EnterNodeButtonCanvas.SetActive(false);
+                isActive = false;
                 break;
             case OverworldMap.LocationType.EVENT:
                 Debug.Log("Event");
@@ -150,9 +168,6 @@ public class OverworldMapUI : MonoBehaviour
     {
         TownMenuGameObject.SetActive(false); 
         EnterNodeButtonCanvas.SetActive(true);
+        isActive = true;
     }
-
-
-
-
 }
