@@ -206,8 +206,8 @@ public class Trading : MonoBehaviour
 
     void makeTrade(){
 
-        Events.Transaction.Entity from = Events.Transaction.Entity.SYSTEM;
-        Events.Transaction.Entity to = Events.Transaction.Entity.PLAYER;
+        Events.TransactionEvents.Entity from = Events.TransactionEvents.Entity.SYSTEM;
+        Events.TransactionEvents.Entity to = Events.TransactionEvents.Entity.PLAYER;
 
         foreach (var item in cart.getContents()){
 
@@ -216,12 +216,12 @@ public class Trading : MonoBehaviour
             copyOfPlayerInventory.AddItem(item.Key, item.Value);
             DataTracker.Current.Player.Inventory.AddItem(item.Key, item.Value);
 
-            Events.Transaction.Details transactionDetails = new Events.Transaction.Details(item.Key, item.Value, DataTracker.Current.currentShopId, from, to);
+            Events.TransactionEvents.Details transactionDetails = new Events.TransactionEvents.Details(item.Key, item.Value, DataTracker.Current.currentShopId, from, to);
             DataTracker.Current.EventManager.OnTransaction.Invoke(transactionDetails);
         }
 
-        from = Events.Transaction.Entity.PLAYER;
-        to = Events.Transaction.Entity.SYSTEM;
+        from = Events.TransactionEvents.Entity.PLAYER;
+        to = Events.TransactionEvents.Entity.SYSTEM;
 
         foreach (var item in offer.getContents()){
 
@@ -230,7 +230,7 @@ public class Trading : MonoBehaviour
             shop.inventory.AddItem(item.Key, item.Value);
             copyOfShopInventory.AddItem(item.Key, item.Value);
 
-            Events.Transaction.Details transactionDetails = new Events.Transaction.Details(item.Key, item.Value, DataTracker.Current.currentShopId, from, to);
+            Events.TransactionEvents.Details transactionDetails = new Events.TransactionEvents.Details(item.Key, item.Value, DataTracker.Current.currentShopId, from, to);
             DataTracker.Current.EventManager.OnTransaction.Invoke(transactionDetails);
         }
 
@@ -243,7 +243,8 @@ public class Trading : MonoBehaviour
     }
 
     public void leave(){
-        SceneManager.LoadScene("Town");
+        //SceneManager.LoadScene("Town");
+        SceneManager.UnloadSceneAsync("InventoryTestScene"); 
     }
 
 }

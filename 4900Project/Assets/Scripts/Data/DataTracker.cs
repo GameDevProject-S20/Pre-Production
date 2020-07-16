@@ -5,21 +5,24 @@ using Encounters;
 using Quests;
 using SIEvents;
 using System.Linq;
+using Dialogue;
 
 public class DataTracker : MonoBehaviour
 {
     private static DataTracker _current;
     public static DataTracker Current {get {return _current;}}
 
-    public PlayerData Player = new PlayerData();
-    public OverworldMap.LocationGraph WorldMap = OverworldMapLoader.CreateTestMap();
+    public Player Player = Player.Instance;
+    public OverworldMap.LocationGraph WorldMap;
     public QuestManager QuestManager = QuestManager.Instance;
     public QuestJournal QuestJournal = QuestJournal.Instance;
     public EncounterManager EncounterManager = EncounterManager.Instance;
+    public DialogueManager DialogueManager = DialogueManager.Instance;
     public EventManager EventManager = EventManager.Instance;
     public TownManager TownManager = TownManager.Instance;
     public ShopManager ShopManager = ShopManager.Instance;
-
+    [SerializeField]
+    public int mapScale = 5;
     [SerializeField]
     public int currentShopId = 0; // Needed if we want store to be their own scene. If we make the store window a prefab, we don't need this.
     public int currentLocationId = 0;
@@ -32,6 +35,7 @@ public class DataTracker : MonoBehaviour
         } else {
             _current = this;
         }
+        WorldMap = OverworldMapLoader.LoadMap();
         ShopManager.LoadData();
         TownManager.LoadData();
         Player.Inventory.weightLimit = 10000000f;
@@ -58,9 +62,4 @@ public class DataTracker : MonoBehaviour
         Debug.Log(string.Format("[IN PROGRESS]\n\n{0}", string.Join("\n", QuestJournal.Instance.ActiveQuests.Select(q => q.ToString()))));
         Debug.Log(string.Format("[COMPLETE]\n\n{0}", string.Join("\n", QuestJournal.Instance.CompletedQuests.Select(q => q.ToString()))));
     }
-    
-}
-
-public class PlayerData {
-    public Inventory Inventory = new Inventory();
 }

@@ -1,22 +1,19 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using SIEvents;
 
 public class TownMenu : MonoBehaviour
 {
     [SerializeField]
-    TextMeshProUGUI nameTextField;
-    [SerializeField]
-    TextMeshProUGUI descriptionTextField;
+    public TextMeshProUGUI NameTextField;
+    public TextMeshProUGUI DescriptionTextField;
+    public GameObject Button1;
+    public GameObject Button2;
 
-    [SerializeField]
-    GameObject button1;
-
-    [SerializeField]
-    GameObject button2;
 
     int action1;
     int action2;
@@ -25,20 +22,26 @@ public class TownMenu : MonoBehaviour
     private Town townData;
 
     private void Start() {
+        UpdateTown(); 
+    }
+
+    public void UpdateTown()
+    {
+
         townData = TownManager.Instance.GetCurrentTownData();
-        nameTextField.text = townData.Name;
-        descriptionTextField.text = "They are led by <color="+townData.Colour+">"+ townData.Leader +"</color>.";
+        NameTextField.text = townData.Name;
+        DescriptionTextField.text = "They are led by <color=" + townData.Colour + ">" + townData.Leader + "</color>.";
 
         action1 = townData.shops[0];
         action2 = townData.shops[1];
 
         Shop shop1 = ShopManager.Instance.GetShopById(townData.shops[0]);
-        button1.transform.Find("Text").Find("Text_ActionName").GetComponent<TextMeshProUGUI>().text = shop1.name;
-        button1.transform.Find("Text").Find("Text_ActionDescription").GetComponent<TextMeshProUGUI>().text = shop1.shortDescription;
+        Button1.transform.Find("Text").Find("Text_ActionName").GetComponent<TextMeshProUGUI>().text = shop1.name;
+        Button1.transform.Find("Text").Find("Text_ActionDescription").GetComponent<TextMeshProUGUI>().text = shop1.shortDescription;
 
         Shop shop2 = ShopManager.Instance.GetShopById(townData.shops[1]);
-        button2.transform.Find("Text").Find("Text_ActionName").GetComponent<TextMeshProUGUI>().text = shop2.name;
-        button2.transform.Find("Text").Find("Text_ActionDescription").GetComponent<TextMeshProUGUI>().text = shop2.shortDescription;
+        Button2.transform.Find("Text").Find("Text_ActionName").GetComponent<TextMeshProUGUI>().text = shop2.name;
+        Button2.transform.Find("Text").Find("Text_ActionDescription").GetComponent<TextMeshProUGUI>().text = shop2.shortDescription;
     }
 
 
@@ -61,16 +64,6 @@ public class TownMenu : MonoBehaviour
 
     public void OnStoreButtonClick(int id){
         DataTracker.Current.currentShopId = (id == 0) ? action1 : action2;
-        SceneManager.LoadScene("InventoryTestScene");
+        SceneManager.LoadScene("InventoryTestScene", LoadSceneMode.Additive);
     }
-
-
-
-}
-
-public struct ActionListItem {
-    public Sprite Icon;
-    public string Name;
-    public string Description;
-    public string SceneName;
 }

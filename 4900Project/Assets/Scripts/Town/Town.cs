@@ -10,6 +10,12 @@ public class Town
     public string Name { get; set; }
     public string Leader { get; set; }
     public string Colour {get; set;} //hex code
+    public rarity tier;
+    public List<typetag> tags;
+    public Sprite Icon;
+    public Sprite LeaderPortrait;
+    public string Description = "No Description Set";
+    public string LeaderBlurb = "No Blurb Set";
 
     public List<int> shops;
 
@@ -20,6 +26,7 @@ public class Town
         this.Leader = Leader;
         this.Colour = Colour;
         shops = new List<int>();
+        tags = new List<typetag>();
     }
 
     public void AddShop(int i)

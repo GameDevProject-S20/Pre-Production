@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
 
@@ -26,25 +27,38 @@ namespace Encounters
 
         private static EncounterManager instance;
         private Random random;
-        private Dictionary<int, Encounter> fixedEncounters;
-        private Dictionary<int, Encounter> randomEncounters;
 
+        private Dictionary<int, Encounter> fixedEncounters
+        {
+            get => EncounterCollection.Instance.FixedEncounters;
+        }
+
+        private Dictionary<int, Encounter> randomEncounters
+        {
+            get => EncounterCollection.Instance.RandomEncounters;
+        }
+
+        private Queue<Encounter> randomEncounterQueue;
 
         private EncounterManager()
         {
             random = new Random();
-            fixedEncounters = new Dictionary<int, Encounter>();
-            randomEncounters = new Dictionary<int, Encounter>();
-            //loadEncounters();
+            randomEncounterQueue = reloadRandomEncounters();
         }
 
-        public void AddFixedEncounter(Encounter encounter)
+        public void AddFixedEncounter(Encounter enc)
         {
-            fixedEncounters.Add(encounter.Id, encounter);
+            fixedEncounters.Add(enc.Id, enc);
         }
-        public void AddRandomEncounter(Encounter encounter)
+
+        public void RemoveFixedEncounter(Encounter encounter)
         {
-            randomEncounters.Add(encounter.Id, encounter);
+            fixedEncounters.Remove(encounter.Id);
+        }
+
+        public void AddRandomEncounter(Encounter enc)
+        {
+            fixedEncounters.Add(enc.Id, enc);
         }
 
         /// <summary>
@@ -54,7 +68,7 @@ namespace Encounters
         {
             Encounter next = randomEncounter();
             Debug.Log(next);
-            next.StartDialogue();
+            next.RunEncounter();
         }
 
         public void RunFixedEncounter(int id)
@@ -62,21 +76,46 @@ namespace Encounters
             fixedEncounters.TryGetValue(id, out Encounter encounter);
             if (encounter != null)
             {
-                encounter.StartDialogue();
+                encounter.RunEncounter();
             }
-            Debug.Log(encounter.Id + " : " + ((encounter != null) ? "Found" : "Not Found"));
         }
 
         // Load from csv or wherever in the future...
         // For now this demonstrates how to create an encounter object.
-        private void loadEncounters()
+        private Queue<Encounter> reloadRandomEncounters()
         {
+            // hard coded for now
+            var nextEncounters = new List<Encounter>(randomEncounters.Values);
+
+            // Shuffle the list and return as a queue
+            return new Queue<Encounter>(nextEncounters.OrderBy(randomEncounterQueue => random.Next()));
         }
 
+        // Return the next random encounter in the shuffled queue
+        // If all events have been used, events will be shuffled again.
         private Encounter randomEncounter()
         {
-            int i = random.Next(randomEncounters.Count);
-            return randomEncounters[i];
+            Encounter enc;
+            try
+            {
+                enc = randomEncounterQueue.Dequeue();
+            } catch (InvalidOperationException e)
+            {
+                randomEncounterQueue = reloadRandomEncounters();
+                enc = randomEncounterQueue.Dequeue();
+            }
+            return enc;
+        }
+
+        public Encounter GetFixedEncounter(int id)
+        {
+            EncounterCollection.Instance.FixedEncounters.TryGetValue(id, out Encounter value);
+            return value;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Fixed Encounters: {0}\nRandomEncounters: {1}", string.Join(", ", fixedEncounters.Keys), string.Join(", ", randomEncounters.Keys));
         }
     }
 }

@@ -5,7 +5,8 @@ using System.Text;
 using System.Linq;
 using UnityEngine;
 using Dialogue;
-
+using SIEvents;
+using UnityEngine.Events;
 
 namespace Encounters
 {
@@ -13,7 +14,7 @@ namespace Encounters
     /// Encounter data structure
     /// Takes in data and builds a dialogue structure, that can be presented to the player.
     /// </summary>
-    public class Encounter
+    public class Encounter : IProgressor
     {
         private static int nextId = 0;
 
@@ -40,14 +41,13 @@ namespace Encounters
         /// </summary>
         public string BodyText
         { get; }
-        ///
+
         /// <summary>
         /// Choice text presented to the player via buttons.
         /// </summary>
         public ReadOnlyCollection<string> ButtonText
         { get; }
 
-        /// <summary>
         /// Result text dependent on the action selected by the player.
         /// Indexes correspond to ButtonText.
         /// </summary>
@@ -61,13 +61,37 @@ namespace Encounters
         public ReadOnlyCollection<Action> Effects
         { get; }
 
-        private List<IDPage> dialoguePages;
-        private List<IDButton> dialogueButtons;
-        private int dialogueStage;
+
+        private ReadOnlyCollection<Condition> Conditions;
+        
+        /// <summary>
+        /// Conditions that must be satisfied before the encounter will occur
+        /// Intended for Fixed Encounters only
+        /// </summary>
+        public ReadOnlyCollection<Condition> EncounterRunConditions
+        { get; }
+
+        /// <summary>
+        /// The town to be entered in order to trigger the encounter
+        /// Intended for Fixed Encounters only
+        /// </summary>
+        private int? fixedEncounterTownId;
+
+        private UnityAction<Condition> onConditionCompleteListener;
+        private UnityAction<Town> onTownEnterListener;
+
+        /// <summary>
+        /// Used to indicate whether the encounter has passed its conditions or not
+        /// </summary>
+        private bool ready;
+
+        protected List<IDPage> dialoguePages;
+        protected List<IDButton> dialogueButtons;
+        protected int dialogueStage;
 
         public Encounter(string name, string tag, string bodyText,
                          IEnumerable<string> buttonText, IEnumerable<string> resultText,
-                         IEnumerable<Action> effects)
+                         IEnumerable<Action> effects, IEnumerable<Condition> encounterRunConditions = default, int? fixedEncounterTownId = null)
         {
             Id = nextId++;  // static int id for now
             Name = name;
@@ -77,6 +101,18 @@ namespace Encounters
             ButtonText = new ReadOnlyCollection<string>(new List<string>(buttonText));
             ResultText = new ReadOnlyCollection<string>(new List<string>(resultText));
             Effects = new ReadOnlyCollection<Action>(new List<Action>(effects));
+
+            if (encounterRunConditions != null)
+            {
+                EncounterRunConditions = new ReadOnlyCollection<Condition>(new List<Condition>(encounterRunConditions));
+            }
+
+            if (fixedEncounterTownId.HasValue)
+            {
+                this.fixedEncounterTownId = fixedEncounterTownId;
+            }
+
+
             if (ButtonText.Count != ResultText.Count || ButtonText.Count != Effects.Count)
             {
                 throw new ArgumentException("buttonText, resultText, and effects must have the same length!");
@@ -84,16 +120,17 @@ namespace Encounters
 
             dialoguePages = new List<IDPage>();
             dialogueButtons = new List<IDButton>();
-            dialogueStage = 0;
+            dialogueStage = 0;   
+
             initDialogue();
         }
 
-        /// <summary>
-        /// Call this to start the encounter, by displaying the dialogue to the player
-        /// </summary>
-        public void StartDialogue()
+
+        public void RunEncounter()
         {
-            IDialogue dialogue = DialogueManager.CreateDialogue(dialoguePages);
+            DisallowProgression();
+            EncounterManager.Instance.RemoveFixedEncounter(this);
+            DialogueManager.Instance.CreateDialogue(dialoguePages);
         }
 
         // Debug purposes
@@ -116,7 +153,6 @@ namespace Encounters
             return sb.ToString();
         }
 
-        
         /// <summary>
         /// Builds the dialogue tree
         /// </summary>
@@ -166,6 +202,73 @@ namespace Encounters
                     endBtn
                 }
             });
+        }
+
+        public void AllowProgression()
+        {
+            // Add town enter listener
+            if (fixedEncounterTownId.HasValue)
+            {
+                if (onTownEnterListener == null)
+                {
+                    onTownEnterListener = (Town t) =>
+                    {
+                        Debug.Log(string.Format("On Town Enter: {0} caught by encounter {1}", t.Name, Name));
+                        if (t.Id == fixedEncounterTownId.Value && ready)
+                        {
+                            RunEncounter();
+                        }
+                    };
+
+                    EventManager.Instance.OnTownEnter.AddListener(onTownEnterListener);
+                }
+            }
+
+            // Add condition listener
+            if (Conditions != null && Conditions.Count > 0)
+            {
+                if (onConditionCompleteListener == null)
+                {
+                    // Add listener
+                    onConditionCompleteListener = (Condition _) =>
+                    {
+                        if (Conditions.All(c => c.IsSatisfied))
+                        {
+                            ready = true;
+                        }
+                    };
+
+                    EventManager.Instance.OnConditionComplete.AddListener(onConditionCompleteListener);
+
+                    // Enable conditions
+                    foreach (var c in Conditions)
+                    {
+                        c.AllowProgression();
+                    }
+                }
+            }
+            else
+            {
+                // IF there are no conditions nor towns required, this will run as soon as AllowProgression is called
+                ready = true;
+                if (!fixedEncounterTownId.HasValue)
+                {
+                    RunEncounter();
+                }
+            }
+        }
+
+        public void DisallowProgression()
+        {
+            if (onConditionCompleteListener != null)
+            {
+                EventManager.Instance.OnConditionComplete.RemoveListener(onConditionCompleteListener);
+            }
+
+            if (onTownEnterListener != null)
+            {
+                EventManager.Instance.OnTownEnter.RemoveListener(onTownEnterListener);
+            }
         }
     }
 }
