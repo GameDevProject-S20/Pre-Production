@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,6 +26,8 @@ public class OverworldMapUI : MonoBehaviour
     GameObject TownMenuGameObject;
     [SerializeField]
     GameObject EnterNodeButtonCanvas;
+    [SerializeField]
+    public GameObject QuestJournalCanvas;
 
     bool isActive = true;
     bool isTravelling = false;
@@ -191,6 +193,7 @@ public class OverworldMapUI : MonoBehaviour
         EnterNodeButtonCanvas.SetActive(false);
         isActive = false;
     }
+
 
     public void TownMapClosed()
     {

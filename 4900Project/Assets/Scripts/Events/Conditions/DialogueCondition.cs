@@ -39,7 +39,8 @@ namespace SIEvents
         //Todo
         public override string ToString()
         {
-            throw new NotImplementedException();
+            return "";
+            //throw new NotImplementedException();
         }
     }
 }
