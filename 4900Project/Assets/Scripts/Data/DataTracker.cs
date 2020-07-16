@@ -40,9 +40,9 @@ public class DataTracker : MonoBehaviour
         TownManager.LoadData();
         Player.Inventory.weightLimit = 150f;
         Player.Inventory.AddItem("Rations", 8);
-        Player.Inventory.AddItem("Fuel", 35);
+        Player.Inventory.AddItem("Fuel", 3);
         Player.Inventory.AddItem("Fresh Fruit", 1);
-        Player.Inventory.AddItem("Scrap Metal", 6);
+        Player.Inventory.AddItem("Scrap Metal", 9);
         Player.Inventory.AddItem("Wrench", 1);
         DontDestroyOnLoad(gameObject);
 

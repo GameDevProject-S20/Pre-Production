@@ -53,6 +53,11 @@ namespace SIEvents
 
         public Events.MapEvents.NodeEvent OnNodeEnter = new Events.MapEvents.NodeEvent();
 
+        //=== Player =================================================//
+
+        public Events.PlayerEvents.HealthEvent OnHealthChange = new Events.PlayerEvents.HealthEvent();
+
+
         //=== Misc ===================================================//
         public UnityEvent onDataTrackerLoad = new UnityEvent();
     }

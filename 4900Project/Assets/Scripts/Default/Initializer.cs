@@ -73,7 +73,7 @@ public class Initializer : MonoBehaviour
              new Action[]
              {
                                      () => {
-                                         // Add fuel
+                                        DataTracker.Current.Player.Inventory.AddItem("Fuel", 12);
                                          DataTracker.Current.Player.Inventory.AddItem("Medicine", 8);
                                          BeginQuest();
                                          EncounterManager.Instance.GetFixedEncounter(3).AllowProgression();
@@ -381,7 +381,7 @@ RandomEncounter renc6 = new RandomEncounter(
                     + "The owner calls to you. 'Hey there, friend! Good deal on gas, just for you!' ",
                     new string[]
                     {
-                        "Purchase 3 gas for 3 scrap metal.",
+                        "Purchase 9 gas for 3 scrap metal.",
                         "Leave."
                     },
                     new string[]
@@ -393,7 +393,7 @@ RandomEncounter renc6 = new RandomEncounter(
                     {
                         () => {
                             
-                            //SceneManager.UnloadSceneAsync("Encounter");
+                            DataTracker.Current.Player.Inventory.AddItem("Fuel", 9);
                         },
                         () => {
 
@@ -404,7 +404,7 @@ RandomEncounter renc6 = new RandomEncounter(
                     {
                         () => {
                             // Always available
-                            return false;
+                            return DataTracker.Current.Player.Inventory.Contains("Scrap Metal") > 2;
                         },
                         () => {
                             // Always available

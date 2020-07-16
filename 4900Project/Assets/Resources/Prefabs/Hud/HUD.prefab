@@ -112,6 +112,7 @@ GameObject:
   - component: {fileID: 5971513799645339458}
   - component: {fileID: 5971513799645339461}
   - component: {fileID: 5971513799645339460}
+  - component: {fileID: 5708132719165841529}
   m_Layer: 5
   m_Name: navbar
   m_TagString: Untagged
@@ -209,6 +210,22 @@ MonoBehaviour:
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
+--- !u!114 &5708132719165841529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5971513799645339462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feb5e8ecd9c0b5e489e75ccdb4f7dde6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBarText: {fileID: 5971513800802589688}
+  healthBar: {fileID: 5971513800320063291}
+  fuelBarText: {fileID: 5971513801098541603}
+  fuelBar: {fileID: 5971513800688901935}
 --- !u!1 &5971513800099841990
 GameObject:
   m_ObjectHideFlags: 0
@@ -531,7 +548,6 @@ GameObject:
   - component: {fileID: 5971513800320063288}
   - component: {fileID: 5971513800320063291}
   - component: {fileID: 5971513800320063290}
-  - component: {fileID: 5971513800320063293}
   m_Layer: 5
   m_Name: health
   m_TagString: Untagged
@@ -616,18 +632,6 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
---- !u!114 &5971513800320063293
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5971513800320063295}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30bf7bc740c6047b195cc472c3366ca6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5971513800399471695
 GameObject:
   m_ObjectHideFlags: 0
@@ -735,7 +739,6 @@ GameObject:
   - component: {fileID: 5971513800688901932}
   - component: {fileID: 5971513800688901935}
   - component: {fileID: 5971513800688901934}
-  - component: {fileID: 5971513800688901921}
   m_Layer: 5
   m_Name: fuel
   m_TagString: Untagged
@@ -820,18 +823,6 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
---- !u!114 &5971513800688901921
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5971513800688901923}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30bf7bc740c6047b195cc472c3366ca6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5971513800694635578
 GameObject:
   m_ObjectHideFlags: 0

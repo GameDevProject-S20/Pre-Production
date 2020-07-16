@@ -128,8 +128,9 @@ public class OverworldMapUI : MonoBehaviour
 
                     int fuel = DataTracker.Current.Player.Inventory.Contains("Fuel");
                     //will be done with percent of max capacity later, just testing with constants for now
-                    int fuelrate;
-                    int dayrate;
+                    int fuelrate = 1;
+                    int dayrate = 1;
+                    /*
                     if (weightClass == 3) {
                         fuelrate = 3;
                         dayrate = 2;
@@ -139,7 +140,7 @@ public class OverworldMapUI : MonoBehaviour
                     } else {
                         fuelrate = 1;
                         dayrate = 1;
-                    }
+                    }*/
 
                     Debug.Log("Weight=" + DataTracker.Current.Player.Inventory.TotalWeight());
                     Debug.Log("Traveling here will take " + dayrate + " day(s) and " + fuelrate + " fuel"); //example weight-fuel/time rates: below 30% max weight = 1 fuel 1 day, 31-100% weight = 2 fuel 1 day, >100% = 3 fuel 2 days

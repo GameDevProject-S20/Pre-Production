@@ -84,6 +84,13 @@ namespace SIEvents
             [System.Serializable]
             public class NodeEvent : UnityEvent<OverworldMap.LocationNode> { };
         }
+
+        public partial class PlayerEvents
+        {
+            [System.Serializable]
+            public class HealthEvent : UnityEvent<int> { };
+
+        }
     }
 }
 

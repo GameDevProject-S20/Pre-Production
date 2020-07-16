@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SIEvents;
 
 public class Player
 {
@@ -19,8 +20,8 @@ public class Player
 
     public Inventory Inventory = new Inventory();
 
-    int health = 100;
-    int healthCap = 100;
+    public int health {get; set;} = 100 ;
+    public int healthCap {get; set;} = 100;
 
     private Player() { }
 
@@ -31,6 +32,7 @@ public class Player
         {
             health = healthCap;
         }
+        EventManager.Instance.OnHealthChange.Invoke(health);
     }
 
 }
