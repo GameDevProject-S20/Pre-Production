@@ -1354,6 +1354,7 @@ MonoBehaviour:
   IconMissing: {fileID: 21300000, guid: 48a2031da6891144d8449a2bc8034e9a, type: 3}
   TempTownIconBadCode: {fileID: 21300000, guid: 09bf262f584c1dd45a8e6fc2a60041f0,
     type: 3}
+  TalkIcon: {fileID: 21300000, guid: a3f9b1d371d0c134a83fb2a456fb9351, type: 3}
 --- !u!1 &500967336443008794
 GameObject:
   m_ObjectHideFlags: 0

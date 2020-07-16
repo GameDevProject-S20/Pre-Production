@@ -44,6 +44,9 @@ public class TownWindow : MonoBehaviour
     [SerializeField]
     Sprite TempTownIconBadCode;
 
+    [SerializeField]
+    Sprite TalkIcon;
+
 
 
     Transform ActionMenu;
@@ -150,9 +153,11 @@ public class TownWindow : MonoBehaviour
         {
             NewAction.transform.Find("Portrait").GetComponent<Image>().sprite = IconMissing;
         }
+                    NewAction.transform.Find("Portrait").GetComponent<Image>().sprite = townData.LeaderPortrait;
+
         NewAction.transform.Find("Name").GetComponent<Text>().text = townData.Leader;
         NewAction.transform.Find("Description").GetComponent<Text>().text = townData.LeaderBlurb;
-        NewAction.transform.Find("Interaction").GetComponent<Image>().sprite = IconMissing;
+        NewAction.transform.Find("Interaction").GetComponent<Image>().sprite = TalkIcon;
         NewAction.transform.Find("Interaction").GetComponent<Button>().onClick.AddListener(() => 
         {
             DataTracker.Current.EventManager.TriggerEncounter.Invoke(townData.leaderDialogueEncounterId);
