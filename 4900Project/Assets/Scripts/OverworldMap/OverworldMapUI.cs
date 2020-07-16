@@ -149,7 +149,7 @@ public class OverworldMapUI : MonoBehaviour
                     Debug.Log("You will have " + (fuel - fuelrate) + " fuel left after traveling here");
                     Debug.Log("It will be day " + (DataTracker.Current.dayCount + dayrate) + " after traveling here");
 
-                    if (fuel - fuelrate > 0) {
+                    if (fuel - fuelrate >= 0) {
 
                         DataTracker.Current.Player.Inventory.RemoveItem("Fuel", fuelrate);
                         DataTracker.Current.dayCount += dayrate;
