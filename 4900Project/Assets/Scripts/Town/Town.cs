@@ -28,6 +28,23 @@ public class Town
         this.Colour = Colour;
         shops = new List<int>();
         tags = new List<typetag>();
+
+        // Randomly Select an Icon
+        // Do not select the ugly ones
+        int iconId = -1;
+        bool valid = false;
+        while(!valid){
+            iconId = Mathf.FloorToInt(Random.Range(0, 31));
+            if (iconId != 10
+            && iconId != 12
+            && iconId != 15
+            && iconId != 18
+            && iconId != 20) 
+            valid = true;
+        }
+        string path = "Icons/CyberPunk Avatars/" + iconId.ToString("D3");
+        LeaderPortrait = Resources.Load<Sprite>(path);
+
     }
 
     public void AddShop(int i)

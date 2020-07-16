@@ -44,6 +44,9 @@ public class TownWindow : MonoBehaviour
     [SerializeField]
     Sprite TempTownIconBadCode;
 
+    [SerializeField]
+    Sprite TalkIcon;
+
 
 
     Transform ActionMenu;
@@ -150,9 +153,11 @@ public class TownWindow : MonoBehaviour
         {
             NewAction.transform.Find("Portrait").GetComponent<Image>().sprite = IconMissing;
         }
+                    NewAction.transform.Find("Portrait").GetComponent<Image>().sprite = townData.LeaderPortrait;
+
         NewAction.transform.Find("Name").GetComponent<Text>().text = townData.Leader;
         NewAction.transform.Find("Description").GetComponent<Text>().text = townData.LeaderBlurb;
-        NewAction.transform.Find("Interaction").GetComponent<Image>().sprite = IconMissing;
+        NewAction.transform.Find("Interaction").GetComponent<Image>().sprite = TalkIcon;
         NewAction.transform.Find("Interaction").GetComponent<Button>().onClick.AddListener(() => 
         {
             DataTracker.Current.EventManager.TriggerEncounter.Invoke(townData.leaderDialogueEncounterId);
@@ -192,7 +197,7 @@ public class TownWindow : MonoBehaviour
             {
                 DataTracker.Current.currentShopId = x;
                 SceneManager.sceneUnloaded += OnSceneUnloaded;
-                SceneManager.LoadScene("InventoryTestScene", LoadSceneMode.Additive); // Currently using additive for the shop. 
+                SceneManager.LoadScene("ShopScene", LoadSceneMode.Additive); // Currently using additive for the shop. 
             });
 
         // ! I am hardcoding this as a test
@@ -216,7 +221,7 @@ public class TownWindow : MonoBehaviour
 
     private void OnSceneUnloaded(Scene s)
     {
-        if (s.name == "InventoryTestScene")
+        if (s.name == "ShopScene")
         {
             EventManager.Instance.OnTownEnter.Invoke(townData);
         }
