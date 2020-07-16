@@ -206,7 +206,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Tasks
+  m_Text: '
+
+'
 --- !u!114 &3071225594789989512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,7 +308,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1389,7 +1391,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3071225595779767160
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1844,42 +1846,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Task # 1
-
-    Lorem ipsum dolor sit amet, et est cetero pericula. Eu usu
-    odio mucius, qui porro omittantur et, an eam mazim efficiantur. Solet dicam vituperata
-    eu eam, eos ne habeo labitur mediocritatem. Ex duo graece nominavi, intellegat
-    temporibus et vis, ad mei novum reprimique disputando. Dicat quodsi concludaturque
-    eum te. Persius detraxit singulis vim cu, ubique assueverit id vel. Ferri expetenda
-    id duo, qui oportere senserit torquatos ea.
-
-
-    Ex mundi persius splendide
-    eum, nam cu oportere conclusionemque. Magna labore ut eum, an vix iudico dissentias.
-    Vis ne volumus dignissim, cu nam consul platonem. Aeterno oblique oportere no
-    cum, ferri corpora adversarium eu eam, nostro ocurreret vis no. Vim aperiam sententiae
-    in, sea maiorum efficiendi interpretaris ad, ad vix vivendo convenire. Vim eu
-    duis consectetuer, aliquid eruditi comprehensam no mea. Nam id adipiscing referrentur,
-    atqui appareat vis eu.
-
-
-    Et eos novum consul ignota, sea veniam theophrastus
-    in. Vim nemore placerat persequeris ne, no mea deseruisse efficiantur, nec augue
-    persius an. Aeque evertitur argumentum ne pri, vitae utinam duo ex. Mei no nostro
-    timeam, erant dicam utroque no has. Mel summo nostrum mentitum no, eum ne quodsi
-    propriae singulis, quidam fierent atomorum nam ne.
-
-
-    Per in natum aeterno,
-    ea eos malis liber. Ei graeco vocibus his. Essent mollis utamur ei nec, at omnium
-    propriae ius. Mea no ornatus mandamus, sit mundi noluisse in. Per tollit eligendi
-    dissentiunt eu, nullam impedit duo ne.
-
-
-    Elit tota has ea, te vix mazim blandit
-    intellegebat, eirmod assueverit temporibus et vel. Errem ludus semper eum eu,
-    populo delicatissimi per id. Adhuc quando pri ut, cibo cetero laboramus vim ne.
-    Minim tation et eam.'
+  m_Text: 
 --- !u!1 &3071225596471067679
 GameObject:
   m_ObjectHideFlags: 0
@@ -1957,7 +1924,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Quest Description
+  m_Text: '
+
+'
 --- !u!1 &3071225596496597988
 GameObject:
   m_ObjectHideFlags: 0
@@ -2035,6 +2004,6 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Quest #1
+  m_Text: 'No Quests
 
 '

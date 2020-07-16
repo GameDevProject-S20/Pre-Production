@@ -27,7 +27,7 @@ public class OverworldMapUI : MonoBehaviour
     [SerializeField]
     GameObject EnterNodeButtonCanvas;
     [SerializeField]
-    GameObject QuestJournalCanvas;
+    public GameObject QuestJournalCanvas;
 
     bool isActive = true;
     bool isTravelling = false;

@@ -18,4 +18,9 @@ public class HudActions : MonoBehaviour
     {
         ExitMenuControl.BringUpExitMenu();
     }
+
+    public void OnJournalButtonClick()
+    {
+       GameObject.Find("Map").GetComponent<OverworldMapUI>().QuestJournalCanvas.SetActive(true); 
+    }
 }
