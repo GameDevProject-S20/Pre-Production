@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Encounters;
+using SIEvents;
 
 public class OverworldMapUI : MonoBehaviour
 {
@@ -43,6 +44,7 @@ public class OverworldMapUI : MonoBehaviour
     {
         DrawGraph();
         Camera.main.transform.position = playerMarker.transform.position + new Vector3(0, 6, 0);
+        EventManager.Instance.RequestRedraw.AddListener(RedrawMap);
     }
 
     private void RedrawMap(){
@@ -163,7 +165,6 @@ public class OverworldMapUI : MonoBehaviour
                         Debug.Log("You're out of fuel! On the bright side not only will the scavengers get a good payday from your remains, but you'll serve as a good reminder to always check the tanks before leaving port\nGAME OVER");
                     }
                     
-                                      
                 }
             }
         }

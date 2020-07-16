@@ -61,14 +61,14 @@ public class Initializer : MonoBehaviour
         Encounter tutorialStage2 = new Encounter(
              "Tutorial Part 2",
              "Tutorial",
-             "Welcome to Smithsville! Our generator is out and we can't repair it. I will give you fuel if you help us.",
+             "Welcome to Smithsville! Our <color=#2675AD>generator</color> is out and we can't repair it. I will give you fuel if you help us.",
              new string[]
              {
                                      "Accept"
              },
              new string[]
              {
-                                     "Great! Take this medicine and trade for a new generator in York.",
+                                     "Great! Take this medicine and trade for a new <color=#2675AD>generator</color> in York.",
              },
              new Action[]
              {
@@ -93,7 +93,7 @@ public class Initializer : MonoBehaviour
              },
              new string[]
              {
-                                     "Please bring the new generator soon.",
+                                     "Please bring the new <color=#2675AD>generator</color> soon.",
              },
              new Action[]
              {
@@ -113,7 +113,7 @@ public class Initializer : MonoBehaviour
             },
             new string[]
             {
-                                            "Exchange the medicine for a new generator at the local store.",
+                                            "Exchange the medicine for a new <color=#2675AD>generator</color> at the local store.",
             },
             new Action[]
             {
@@ -154,7 +154,7 @@ public class Initializer : MonoBehaviour
         Encounter tutorialStage5 = new RandomEncounter(
                     "Tutorial Part 5",
                     "Tutorial",
-                    "Do you have a replacement generator?",
+                    "Do you have a replacement <color=#2675AD>generator</color>?",
                     new string[]
                     {
                         "Yes. (requires generator)",
@@ -163,7 +163,7 @@ public class Initializer : MonoBehaviour
                     new string[]
                     {
                         "Thanks! Smithsville should be up and running again.",
-                        "Very well. Please bring a generator soon."
+                        "Very well. Please bring a <color=#2675AD>generator</color> soon."
                     },
                     new Action[]  // successful action
                     {
@@ -172,7 +172,10 @@ public class Initializer : MonoBehaviour
                             inventory.RemoveItem("Generator", 1);  // Scrap Metal
                             TownManager.Instance.GetTownByName("Smithsville").leaderDialogueEncounterId = 11;
                             EventManager.Instance.onDialogueSelected.Invoke("TutorialPart5GiveGenerator");
-   
+                            DataTracker.Current.WorldMap.AddEdge(3, 15);
+                            EventManager.Instance.RequestRedraw.Invoke();
+                            TownManager.Instance.GetTownByName("Smithsville").AddShop(0);
+                            TownManager.Instance.GetTownByName("Smithsville").AddShop(1);
                         },
                         () => {
 
