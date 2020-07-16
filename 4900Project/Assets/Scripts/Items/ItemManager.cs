@@ -138,7 +138,7 @@ public class ItemManager : MonoBehaviour
         tempList = new List<typetag>();
         tempList.Add(typetag.Medicine);
         tempList.Add(typetag.Luxury);
-        temp = new Item("Medical Kit", "High end First Aid Kit for dangerous work", "NOt only stocked iwth the best medical supplies on hand, but even contain stimulants and boosters to avoid injury in the first place", 20, 2, tempList);
+        temp = new Item("Medical Kit", "High end First Aid Kit for dangerous work", "NOt only stocked with the best medical supplies on hand, but even contain stimulants and boosters to avoid injury in the first place", 20, 2, tempList);
         itemsMaster.Add(temp.DisplayName, temp);
     }
 
