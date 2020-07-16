@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -125,9 +125,45 @@ public class OverworldMapUI : MonoBehaviour
                 MapNode selected = hit.collider.gameObject.GetComponent<MapNode>();
                 if (DataTracker.Current.WorldMap.HasEdge(selected.nodeID, DataTracker.Current.currentLocationId))
                 {
-                    targetNode = selected;
-                    targetPos = hit.collider.gameObject.transform.position;
-                    isTravelling = true;
+                    int weightClass = DataTracker.Current.Player.Inventory.WeightClass();
+                    Debug.Log(DataTracker.Current.Player.Inventory.weightLimit);
+                    Debug.Log(weightClass);
+
+                    int fuel = DataTracker.Current.Player.Inventory.Contains("Fuel");
+                    //will be done with percent of max capacity later, just testing with constants for now
+                    int fuelrate = 1;
+                    int dayrate = 1;
+                    /*
+                    if (weightClass == 3) {
+                        fuelrate = 3;
+                        dayrate = 2;
+                    } else if (weightClass == 2) {
+                        fuelrate = 2;
+                        dayrate = 1;
+                    } else {
+                        fuelrate = 1;
+                        dayrate = 1;
+                    }*/
+
+                    Debug.Log("Weight=" + DataTracker.Current.Player.Inventory.TotalWeight());
+                    Debug.Log("Traveling here will take " + dayrate + " day(s) and " + fuelrate + " fuel"); //example weight-fuel/time rates: below 30% max weight = 1 fuel 1 day, 31-100% weight = 2 fuel 1 day, >100% = 3 fuel 2 days
+                    Debug.Log("Current fuel: " + fuel);
+                    Debug.Log("Current day: " + DataTracker.Current.dayCount);
+                    Debug.Log("You will have " + (fuel - fuelrate) + " fuel left after traveling here");
+                    Debug.Log("It will be day " + (DataTracker.Current.dayCount + dayrate) + " after traveling here");
+
+                    if (fuel - fuelrate >= 0) {
+
+                        DataTracker.Current.Player.Inventory.RemoveItem("Fuel", fuelrate);
+                        DataTracker.Current.dayCount += dayrate;
+
+                        targetNode = selected;
+                        targetPos = hit.collider.gameObject.transform.position;
+                        isTravelling = true;
+                    } else 
+                    {
+                        Debug.Log("You're out of fuel! On the bright side not only will the scavengers get a good payday from your remains, but you'll serve as a good reminder to always check the tanks before leaving port\nGAME OVER");
+                    }
                     
                 }
             }

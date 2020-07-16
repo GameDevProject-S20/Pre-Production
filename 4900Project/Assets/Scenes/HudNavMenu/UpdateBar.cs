@@ -6,6 +6,7 @@ using System;
 
 public class UpdateBar : MonoBehaviour
 {
+    
     private Text barText;
     private Image bar;
 

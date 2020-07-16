@@ -56,6 +56,11 @@ namespace SIEvents
         public UnityEvent RequestRedraw = new UnityEvent();
 
 
+        //=== Player =================================================//
+
+        public Events.PlayerEvents.HealthEvent OnHealthChange = new Events.PlayerEvents.HealthEvent();
+
+
         //=== Misc ===================================================//
         public UnityEvent onDataTrackerLoad = new UnityEvent();
     }

@@ -73,7 +73,7 @@ public class Initializer : MonoBehaviour
              new Action[]
              {
                                      () => {
-                                         // Add fuel
+                                        DataTracker.Current.Player.Inventory.AddItem("Fuel", 12);
                                          DataTracker.Current.Player.Inventory.AddItem("Medicine", 8);
                                          BeginQuest();
                                          EncounterManager.Instance.GetFixedEncounter(3).AllowProgression();
@@ -162,7 +162,7 @@ public class Initializer : MonoBehaviour
                     },
                     new string[]
                     {
-                        "Thanks! Smithsville should be up and running again.",
+                        "Thanks! Smithsville should be up and running again. Have some fuel.",
                         "Very well. Please bring a <color=#2675AD>generator</color> soon."
                     },
                     new Action[]  // successful action
@@ -170,6 +170,7 @@ public class Initializer : MonoBehaviour
                         () => {
                             var inventory = DataTracker.Current.Player.Inventory;
                             inventory.RemoveItem("Generator", 1);  // Scrap Metal
+                            DataTracker.Current.Player.Inventory.AddItem("Fuel", 16);
                             TownManager.Instance.GetTownByName("Smithsville").leaderDialogueEncounterId = 11;
                             EventManager.Instance.onDialogueSelected.Invoke("TutorialPart5GiveGenerator");
                             DataTracker.Current.WorldMap.AddEdge(3, 15);
@@ -384,7 +385,7 @@ RandomEncounter renc6 = new RandomEncounter(
                     + "The owner calls to you. 'Hey there, friend! Good deal on gas, just for you!' ",
                     new string[]
                     {
-                        "Purchase 3 gas for 3 scrap metal.",
+                        "Purchase 9 gas for 3 scrap metal.",
                         "Leave."
                     },
                     new string[]
@@ -396,7 +397,7 @@ RandomEncounter renc6 = new RandomEncounter(
                     {
                         () => {
                             
-                            //SceneManager.UnloadSceneAsync("Encounter");
+                            DataTracker.Current.Player.Inventory.AddItem("Fuel", 9);
                         },
                         () => {
 
@@ -407,7 +408,7 @@ RandomEncounter renc6 = new RandomEncounter(
                     {
                         () => {
                             // Always available
-                            return false;
+                            return DataTracker.Current.Player.Inventory.Contains("Scrap Metal") > 2;
                         },
                         () => {
                             // Always available
