@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -954,6 +954,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8016332630474784715, guid: 3d8c4d2069991324ea86947402a9ddad,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8016332630533561515, guid: 3d8c4d2069991324ea86947402a9ddad,
         type: 3}
       propertyPath: m_Name
@@ -1169,6 +1174,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8016332630972671133, guid: 3d8c4d2069991324ea86947402a9ddad,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8016332631041560891, guid: 3d8c4d2069991324ea86947402a9ddad,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -1244,6 +1254,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8016332631449703286, guid: 3d8c4d2069991324ea86947402a9ddad,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8016332631956540503, guid: 3d8c4d2069991324ea86947402a9ddad,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -1322,6 +1337,11 @@ PrefabInstance:
     - target: {fileID: 8016332632106535829, guid: 3d8c4d2069991324ea86947402a9ddad,
         type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8016332632106535829, guid: 3d8c4d2069991324ea86947402a9ddad,
+        type: 3}
+      propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8016332632130371801, guid: 3d8c4d2069991324ea86947402a9ddad,
