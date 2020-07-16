@@ -21,6 +21,8 @@ public class OverworldMapUI : MonoBehaviour
     GameObject TownMenuGameObject;
     [SerializeField]
     GameObject EnterNodeButtonCanvas;
+    [SerializeField]
+    GameObject QuestJournalCanvas;
 
     //Movement variables
     float translateSmoothTime = 0.1f;
@@ -82,6 +84,11 @@ public class OverworldMapUI : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown("space"))
+        {
+           QuestJournalCanvas.SetActive(true);
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -137,6 +144,7 @@ public class OverworldMapUI : MonoBehaviour
                 break;
         }
     }
+
 
     public void TownMapClosed()
     {

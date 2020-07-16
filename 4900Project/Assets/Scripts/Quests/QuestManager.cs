@@ -62,6 +62,14 @@ namespace Quests
             Quest.OnQuestComplete.AddListener((Quest q) => CompleteQuest(q));
         }
 
+        public Quest GetQuest(string name)
+        {
+            QuestContainer questContainer;
+            quests.TryGetValue(name, out questContainer);
+            return questContainer.Quest;
+        
+        }
+
         // Add new inactive quest
         public void AddQuest(Quest quest)
         {

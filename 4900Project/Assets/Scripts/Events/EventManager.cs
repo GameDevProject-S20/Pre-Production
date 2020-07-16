@@ -39,6 +39,7 @@ namespace SIEvents
 
         //=== Quest ==================================================//
 
+        public Events.Quest.QuestAdded onQuestAdded = new Events.Quest.QuestAdded();
         public Events.Quest.QuestComplete OnQuestComplete = new Events.Quest.QuestComplete();
         public Events.Quest.StageComplete OnStageComplete = new Events.Quest.StageComplete();
         public Events.Quest.ConditionComplete OnConditionComplete = new Events.Quest.ConditionComplete();

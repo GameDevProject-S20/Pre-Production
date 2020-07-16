@@ -59,6 +59,13 @@ public class Tutorial : MonoBehaviour
             )
 
             .Build();
+
+        Quest secondQuest = new Quest.Builder("Testing Second Quest")
+            .AddStage(new Stage.Builder("Purchase a Wrench in Smithsville.")
+                .AddCondition(new TransactionCondition("Purchase 1 Wrench at the General Store", "Wrench", 1, TransactionCondition.TransactionTypeEnum.BUY, TownManager.Instance.GetTownByName("York").Id)
+                )
+            )
+            .Build();
     }
 
     private void LoadTown()
