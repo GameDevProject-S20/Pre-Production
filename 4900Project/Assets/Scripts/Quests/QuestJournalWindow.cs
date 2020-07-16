@@ -16,21 +16,18 @@ public class QuestJournalWindow : MonoBehaviour
     GameObject QuestCollection;
 
 
-    void Start()
+    void OnEnable()
     {
-
+        
         // Grab text fields from SceneGraph
         NameField = GameObject.Find("Quest Name").GetComponent<UnityEngine.UI.Text>();
         DescriptionField = GameObject.Find("Description").GetComponent<UnityEngine.UI.Text>();
         TaskField = GameObject.Find("Task Text").GetComponent<UnityEngine.UI.Text>();
         QuestCollection = GameObject.Find("Content");
 
-        // Load QuestItem Resource
+        // Load QuestItem resource
         QuestItem = Resources.Load<GameObject>("Prefabs/Quest/Item");
-    }
-    void OnEnable()
-    {
-        
+
         // get active and completed quests from quest journal
         // set Selected Quest to first active quest
         DataTracker.Current.QuestJournal.SyncQuests();
