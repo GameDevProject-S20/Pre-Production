@@ -16,6 +16,7 @@ public class Town
     public Sprite LeaderPortrait;
     public string Description = "No Description Set";
     public string LeaderBlurb = "No Blurb Set";
+    public int leaderDialogueEncounterId = 11;
 
     public List<int> shops;
 

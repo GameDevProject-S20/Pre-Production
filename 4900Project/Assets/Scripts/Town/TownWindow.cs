@@ -155,7 +155,7 @@ public class TownWindow : MonoBehaviour
         NewAction.transform.Find("Interaction").GetComponent<Image>().sprite = IconMissing;
         NewAction.transform.Find("Interaction").GetComponent<Button>().onClick.AddListener(() => 
         {
-            DataTracker.Current.EventManager.TriggerEncounter.Invoke(3);
+            DataTracker.Current.EventManager.TriggerEncounter.Invoke(townData.leaderDialogueEncounterId);
         });
         //need to set talking interaction on button
 
@@ -197,7 +197,7 @@ public class TownWindow : MonoBehaviour
 
         // ! I am hardcoding this as a test
         // ! Add a mechanic to Smithsville
-        if (townData.Id == 0){
+        if (townData.Id == 3){
             NewAction = Instantiate(ActionPrefab, new Vector3(0, 0, 0), Quaternion.identity);
             NewAction.transform.parent = ActionMenu;
             NewAction.transform.Find("Portrait").GetComponent<Image>().sprite = IconMissing;
@@ -206,7 +206,7 @@ public class TownWindow : MonoBehaviour
             NewAction.transform.Find("Interaction").GetComponent<Image>().sprite = IconMissing;
             NewAction.transform.Find("Interaction").GetComponent<Button>().onClick.AddListener(() => 
             {
-                DataTracker.Current.EventManager.TriggerEncounter.Invoke(2);
+                DataTracker.Current.EventManager.TriggerEncounter.Invoke(10);
             });
         }
         }

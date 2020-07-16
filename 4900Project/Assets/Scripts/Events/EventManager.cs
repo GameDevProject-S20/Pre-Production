@@ -52,5 +52,8 @@ namespace SIEvents
         //=== Map ====================================================//
 
         public Events.MapEvents.NodeEvent OnNodeEnter = new Events.MapEvents.NodeEvent();
+
+        //=== Misc ===================================================//
+        public UnityEvent onDataTrackerLoad = new UnityEvent();
     }
 }

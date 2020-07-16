@@ -6,12 +6,12 @@ namespace SIEvents
 {
     public class DialogueCondition : Condition
     {
-        string ButtonText;
+        string DialogueButtonId;
 
-        public DialogueCondition(string _description, string _buttonText)
+        public DialogueCondition(string _description, string _id)
          : base(_description)
         {
-            ButtonText = _buttonText;
+            DialogueButtonId = _id;
 
             //Todo: Use EventManager
         }
@@ -19,18 +19,18 @@ namespace SIEvents
         //Todo
         public override void AllowProgression()
         {
-            throw new NotImplementedException();
+            EventManager.Instance.onDialogueSelected.AddListener(Handler);
         }
 
         //Todo
         public override void DisallowProgression()
         {
-            throw new NotImplementedException();
+            EventManager.Instance.onDialogueSelected.RemoveListener(Handler);
         }
 
-        public void Handler(string buttonText)
+        public void Handler(string dialogueButtonId)
         {
-            if (buttonText == this.ButtonText)
+            if (dialogueButtonId == this.DialogueButtonId)
             {
                 Satisfy();
             }

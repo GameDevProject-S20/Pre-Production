@@ -43,6 +43,20 @@ public class OverworldMapUI : MonoBehaviour
         Camera.main.transform.position = playerMarker.transform.position + new Vector3(0, 6, 0);
     }
 
+    private void RedrawMap(){
+        Clear();
+        DrawGraph();
+    }
+
+    private void Clear(){
+        foreach(Transform child in NodesContainer.transform){
+            GameObject.Destroy(child.transform);
+        }
+        foreach(Transform child in PathsContainer.transform){
+            GameObject.Destroy(child.transform);
+        }
+    }
+
     private void DrawGraph()
     {
         // Draw nodes
@@ -148,7 +162,7 @@ public class OverworldMapUI : MonoBehaviour
             }
             else
             {
-                if (node.Type == OverworldMap.LocationType.EVENT)
+                if (node.Type == OverworldMap.LocationType.EVENT || node.LocationId != -1)
                 {
                     DataTracker.Current.EventManager.TriggerEncounter.Invoke(node.LocationId);
                 }

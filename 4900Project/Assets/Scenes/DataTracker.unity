@@ -151,8 +151,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a2585fbc558a914bbd4f3d92b3be474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mapScale: 5
   currentShopId: 0
-  currentLocationId: 0
+  currentLocationId: 14
 --- !u!4 &2065480053
 Transform:
   m_ObjectHideFlags: 0
