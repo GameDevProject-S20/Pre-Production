@@ -146,7 +146,7 @@ public class Initializer : MonoBehaviour
                                                         //EncounterManager.Instance.GetFixedEncounter(4).AllowProgression();
                                                     }
             },
-            new List<Condition> { new QuestCompleteCondition("", 0) },
+            new List<Condition> { new StageCompleteCondition("", 0, 0) },
             TownManager.Instance.GetTownByName("York").Id
         );
 
