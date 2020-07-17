@@ -26,49 +26,49 @@ namespace FileConstants
         public static readonly FileStorageData Dialog = new FileStorageData()
         {
             GoogleDriveFileId = "1_7nd016Df8DQaQcoTO5uVkwkHLHL_RIIVejc0AGOE_U",
-            LocalBackupFile = $"{Application.dataPath}/BackupData/Dialog.csv"
+            LocalBackupFile = $"{Application.streamingAssetsPath}/BackupData/Dialog.csv"
         };
 
         // Items CSV
         public static readonly FileStorageData Items = new FileStorageData()
         {
             GoogleDriveFileId = "1FfBoXktnMt-L44RBr4YOiQFztfTFeJVKOX56EC_FxjE",
-            LocalBackupFile = $"{Application.dataPath}/BackupData/Items.csv"
+            LocalBackupFile = $"{Application.streamingAssetsPath}/BackupData/Items.csv"
         };
 
         // Town CSV
         public static readonly FileStorageData Town = new FileStorageData()
         {
             GoogleDriveFileId = "1elPXxNyDorlGKN-1HzR7sPzJIHzNZAtes3FTixTM94s",
-            LocalBackupFile = $"{Application.dataPath}/BackupData/Town.csv"
+            LocalBackupFile = $"{Application.streamingAssetsPath}/BackupData/Town.csv"
         };
 
         // Tutorial CSV
         public static readonly FileStorageData Tutorial = new FileStorageData()
         {
             GoogleDriveFileId = "1BB_AqHnOiwcTCAZ9qmOwC-Xm_faD2HiLYtrkgmK1LMA",
-            LocalBackupFile = $"{Application.dataPath}/BackupData/Tutorial.csv"
+            LocalBackupFile = $"{Application.streamingAssetsPath}/BackupData/Tutorial.csv"
         };
 
         // json list of strings
         public static readonly FileStorageData MapNodes = new FileStorageData()
         {
             GoogleDriveFileId = "1b1C8UP12nCt-iiDYuMc3kQePnF-iLi_7bjDVvu7_2mA",
-            LocalBackupFile = $"{Application.dataPath}/BackupData/MapNodes.csv"
+            LocalBackupFile = $"{Application.streamingAssetsPath}/BackupData/MapNodes.csv"
         };
 
         // json list of classes
         public static readonly FileStorageData MapEdges = new FileStorageData()
         {
             GoogleDriveFileId = "1AENRNM6BTT52Vu0uAsx8bfJUlDVi6LDNIlzMLOAQZnM",
-            LocalBackupFile = $"{Application.dataPath}/BackupData/MapEdges.csv"
+            LocalBackupFile = $"{Application.streamingAssetsPath}/BackupData/MapEdges.csv"
         };
 
         // Note: For testing purposes only - test CSV
         public static readonly FileStorageData TestCsv = new FileStorageData()
         {
             GoogleDriveFileId = "1i_W43TDJLPjL08V7knEnVfbeZonzHhXc5CED3fact8g",
-            LocalBackupFile = $"{Application.dataPath}/BackupData/Tests/TestFile.csv"
+            LocalBackupFile = $"{Application.streamingAssetsPath}/BackupData/Tests/TestFile.csv"
         };
 
         // JSON Tests
@@ -76,21 +76,21 @@ namespace FileConstants
         public static readonly FileStorageData TestBasicJson = new FileStorageData()
         {
             GoogleDriveFileId = "10gaDHRTOs9TX3XkQQpcj5jYK_jxTGeSw",
-            LocalBackupFile = $"{Application.dataPath}/BackupData/Tests/BasicJson.json"
+            LocalBackupFile = $"{Application.streamingAssetsPath}/BackupData/Tests/BasicJson.json"
         };
 
         // json list of strings
         public static readonly FileStorageData TestJsonStringsList = new FileStorageData()
         {
             GoogleDriveFileId = "1FJSW9lSejV3_TO0tHCc951GVdbN1YnYS",
-            LocalBackupFile = $"{Application.dataPath}/BackupData/Tests/StringList.json"
+            LocalBackupFile = $"{Application.streamingAssetsPath}/BackupData/Tests/StringList.json"
         };
 
         // json list of classes
         public static readonly FileStorageData TestJsonListOfClass = new FileStorageData()
         {
             GoogleDriveFileId = "1YMCwaA60aDROG_ipxJjl8GF4c-mpQwMl",
-            LocalBackupFile = $"{Application.dataPath}/BackupData/Tests/ListOfClass.json"
+            LocalBackupFile = $"{Application.streamingAssetsPath}/BackupData/Tests/ListOfClass.json"
         };
 
         // Files list - used for creating backups.
