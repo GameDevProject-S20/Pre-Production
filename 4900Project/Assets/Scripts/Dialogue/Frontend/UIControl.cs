@@ -61,6 +61,17 @@ namespace Assets.Scripts.Dialogue.Frontend
         /// </summary>
         public GameObject avatarDisplayName;
 
+        /// <summary>
+        /// The Content of the scroll view
+        /// </summary>
+        public RectTransform contentRect;
+
+        /// <summary>
+        /// This is the main rect of the scroll view.
+        /// It determines the minimum size for content.
+        /// </summary>
+        public RectTransform scrollViewContainerRect;
+
         // Startup / constructor
         void Start()
         {
@@ -106,13 +117,14 @@ namespace Assets.Scripts.Dialogue.Frontend
                 var activePage = dialogue.GetPage();
                 var history = dialogue.History;
 
+                // Show the display
+                Show();
+
                 // Update all the data
                 UpdateButtons(activePage.Buttons);
                 UpdateAvatarDisplay(activePage.Avatar);
                 UpdatePageTextDisplay(history, activePage);
 
-                // Show the display
-                Show();
             }
         }
 
@@ -150,6 +162,49 @@ namespace Assets.Scripts.Dialogue.Frontend
         protected void UpdatePageTextDisplay(IEnumerable<IDHistory> history, IDPage currentPage)
         {
             textDisplay.GetComponent<TextMeshProUGUI>().text = BuildPageString(history, currentPage);
+            UpdatePageScrolling();
+        }
+
+        /// <summary>
+        /// This method controls the Dialogue's scroll bar for the text display.
+        /// The scroll bar will update as text is added in, so that the user is able to scroll through all text.
+        /// </summary>
+        protected void UpdatePageScrolling()
+        {
+            // Setting up variables
+            var textMesh = textDisplay.GetComponent<TextMeshProUGUI>();
+            var textRect = textDisplay.GetComponent<RectTransform>();
+            var scrollRect = scrollViewContainerRect.GetComponent<ScrollRect>();
+
+            // Store the height of the components for reference
+            var textHeight = textMesh.preferredHeight;
+            var scrollHeight = scrollViewContainerRect.sizeDelta.y;
+
+            // BUG: Sometimes this will be called before the layout updates the height.
+            if (scrollHeight == 0)
+            {
+                // In this case, we want to delay the function call
+                Invoke("UpdatePageScrolling", 0.01f);
+            }
+            else
+            {
+                // Based on that, we need to decide on alignment & positioning of the text.
+                // If we don't yet have a full Dialogue, we want everything displaying to the bottom (in which case we need to position it to the bottom);
+                //  otherwise, we want it to be displaying from the top, so that everything will be displayed. In this case, it positions to the top.
+                var alignment = (textHeight < scrollHeight) ? TextAlignmentOptions.Bottom : TextAlignmentOptions.Top;
+                var textPosition = (textHeight < scrollHeight) ? -scrollHeight : 0;
+
+                // Now that we have the variables stored, we can just go through and update:
+                // The contentRect displays the content of the frame. It needs to be sized to newHeight.
+                contentRect.sizeDelta = new Vector2(contentRect.sizeDelta.x, textHeight);
+
+                // Update the text alignment & positioning, based on what was mentioned above
+                textMesh.alignment = alignment;
+                textRect.localPosition = new Vector3(textRect.localPosition.x, textPosition, textRect.localPosition.z);
+
+                // And we want to move them to the bottom of the Dialogue, so that they see the latest text update
+                scrollRect.normalizedPosition = new Vector2(0, 0);
+            }
         }
 
         /// <summary>
