@@ -156,8 +156,11 @@ public class GameData
     protected static void GetFileStream(string googleDriveFileId, string localFilePath, out Stream dataStream)
     {
         // Attempt to download the file from Google Drive first, to get our most recent copy
-        //var canDownloadDrive = DownloadFileFromGoogleDrive(googleDriveFileId, out dataStream);
-        
+        var canDownloadDrive = DownloadFileFromGoogleDrive(googleDriveFileId, out dataStream);
+        if (canDownloadDrive)
+        {
+            return;
+        }
 
         // If that fails, default to our local file
         dataStream = File.OpenRead(localFilePath);
