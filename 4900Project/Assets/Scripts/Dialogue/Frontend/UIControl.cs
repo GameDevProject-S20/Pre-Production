@@ -61,6 +61,17 @@ namespace Assets.Scripts.Dialogue.Frontend
         /// </summary>
         public GameObject avatarDisplayName;
 
+        /// <summary>
+        /// The Content of the scroll view
+        /// </summary>
+        public RectTransform contentRect;
+
+        /// <summary>
+        /// This is the main rect of the scroll view.
+        /// It determines the minimum size for content.
+        /// </summary>
+        public RectTransform scrollViewContainerRect;
+
         // Startup / constructor
         void Start()
         {
@@ -77,6 +88,119 @@ namespace Assets.Scripts.Dialogue.Frontend
                 UpdateDisplay();
             });
             UpdateDisplay();
+
+
+            DialogueManager.Instance.CreateDialogue(new List<IDPage>()
+            {
+                new DPage()
+                {
+                    Text = @"This is a lot of text that will be coming through.",
+                    Buttons = new List<IDButton>()
+                    {
+                        new DButton()
+                        {
+                            Text = "Hello",
+                            OnButtonClick = DFunctions.GoToNextPage
+                        }
+                    }
+                },
+                new DPage()
+                {
+                    Text = @"It goes through one-by-one, line-by-line.",
+                    Buttons = new List<IDButton>()
+                    {
+                        new DButton()
+                        {
+                            Text = "Hello",
+                            OnButtonClick = DFunctions.GoToNextPage
+                        }
+                    }
+                },
+                new DPage()
+                {
+                    Text = @"It does build out quickly.",
+                    Buttons = new List<IDButton>()
+                    {
+                        new DButton()
+                        {
+                            Text = "Hello",
+                            OnButtonClick = DFunctions.GoToNextPage
+                        }
+                    }
+                },
+                new DPage()
+                {
+                    Text = @"But in the end, it's the text that gets too long.",
+                    Buttons = new List<IDButton>()
+                    {
+                        new DButton()
+                        {
+                            Text = "Hello",
+                            OnButtonClick = DFunctions.GoToNextPage
+                        }
+                    }
+                },
+                new DPage()
+                {
+                    Text = @"But that's what we're really searching for in the end, isn't it?",
+                    Buttons = new List<IDButton>()
+                    {
+                        new DButton()
+                        {
+                            Text = "Hello",
+                            OnButtonClick = DFunctions.GoToNextPage
+                        }
+                    }
+                },
+                new DPage()
+                {
+                    Text = @". . .",
+                    Buttons = new List<IDButton>()
+                    {
+                        new DButton()
+                        {
+                            Text = "Hello",
+                            OnButtonClick = DFunctions.GoToNextPage
+                        }
+                    }
+                },
+                new DPage()
+                {
+                    Text = @". . .",
+                    Buttons = new List<IDButton>()
+                    {
+                        new DButton()
+                        {
+                            Text = "Hello",
+                            OnButtonClick = DFunctions.GoToNextPage
+                        }
+                    }
+                },
+                new DPage()
+                {
+                    Text = @". . .",
+                    Buttons = new List<IDButton>()
+                    {
+                        new DButton()
+                        {
+                            Text = "Hello",
+                            OnButtonClick = DFunctions.GoToNextPage
+                        }
+                    }
+                },
+                new DPage()
+                {
+                    Text = @". . .",
+                    Buttons = new List<IDButton>()
+                    {
+                        new DButton()
+                        {
+                            Text = "Hello",
+                            OnButtonClick = DFunctions.CloseDialogue
+                        }
+                    }
+                },
+            });
         }
 
         // Protected Methods
@@ -149,7 +273,35 @@ namespace Assets.Scripts.Dialogue.Frontend
         /// <param name="currentPage"></param>
         protected void UpdatePageTextDisplay(IEnumerable<IDHistory> history, IDPage currentPage)
         {
-            textDisplay.GetComponent<TextMeshProUGUI>().text = BuildPageString(history, currentPage);
+            var textMesh = textDisplay.GetComponent<TextMeshProUGUI>();
+            textMesh.text = BuildPageString(history, currentPage);
+
+
+            // The stuff down here is really hacky, but is designed to keep the scroll rect updating.
+            // I'm not entirely sure it works and I don't believe it actually does.
+            
+            UnityEngine.Debug.Log($"The textMesh now has a height of {textMesh.preferredHeight}");
+
+            var newHeight = Math.Max(textMesh.preferredHeight + 50, scrollViewContainerRect.sizeDelta.y);
+            UnityEngine.Debug.Log($"The content will update to a size of {newHeight}");
+
+            contentRect.sizeDelta = new Vector2(contentRect.sizeDelta.x, textMesh.preferredHeight);
+            scrollViewContainerRect.gameObject.GetComponent<ScrollRect>().normalizedPosition = new Vector2(0, 0);
+
+            if (textMesh.preferredHeight < scrollViewContainerRect.sizeDelta.y)
+            {
+                textMesh.alignment = TextAlignmentOptions.Bottom;
+
+                var rect = textMesh.GetComponent<RectTransform>();
+                rect.localPosition = new Vector3(rect.localPosition.x, -scrollViewContainerRect.sizeDelta.y, rect.localPosition.z);
+            }
+            else
+            {
+                textMesh.alignment = TextAlignmentOptions.Top;
+
+                var rect = textMesh.GetComponent<RectTransform>();
+                rect.localPosition = new Vector3(rect.localPosition.x, 0, rect.localPosition.z);
+            }
         }
 
         /// <summary>
