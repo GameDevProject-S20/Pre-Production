@@ -188,8 +188,10 @@ public class GameData
 
             // Return whether or not the request worked
             return response.Status != Google.Apis.Download.DownloadStatus.Failed;
-        } catch (Exception)
+        } catch (Exception e)
         {
+            // If the Drive API call fails, log it out, and return false - can't load the file
+            UnityEngine.Debug.Log($"Google Drive API call failed with exception {e.Message}");
             return false;
         }
     }
