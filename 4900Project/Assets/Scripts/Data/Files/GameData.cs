@@ -177,14 +177,20 @@ public class GameData
         result = new MemoryStream();
 
         // Download the file into our result stream
-        var export = googleDrive.Files.Get(fileId);
-        var response = export.DownloadWithStatus(result);
+        try
+        {
+            var export = googleDrive.Files.Get(fileId);
+            var response = export.DownloadWithStatus(result);
 
-        // Note: Once the data is written to the stream, the stream position will be set to the end
-        // We want to reset this to the start so that data can be read
-        result.Seek(0, SeekOrigin.Begin);
+            // Note: Once the data is written to the stream, the stream position will be set to the end
+            // We want to reset this to the start so that data can be read
+            result.Seek(0, SeekOrigin.Begin);
 
-        // Return whether or not the request worked
-        return response.Status != Google.Apis.Download.DownloadStatus.Failed;
+            // Return whether or not the request worked
+            return response.Status != Google.Apis.Download.DownloadStatus.Failed;
+        } catch (Exception)
+        {
+            return false;
+        }
     }
 }
