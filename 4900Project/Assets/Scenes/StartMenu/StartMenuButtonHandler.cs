@@ -53,4 +53,5 @@ public class StartMenuButtonHandler : MonoBehaviour
         // Application.Quit() will close the application
         ExitMenuControl.BringUpExitMenu();
     }
+
 }
