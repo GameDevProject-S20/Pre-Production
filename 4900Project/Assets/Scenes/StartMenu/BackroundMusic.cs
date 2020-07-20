@@ -13,16 +13,19 @@ public class BackroundMusic : MonoBehaviour
     private AudioSource AS;
     private List<int> Played = new List<int> { -1 }; 
 
+    private const float FADE_STEP_TIME = 0.25f;
+    private bool isFading = false;
+    private float fadeTimeLeft;
+    private float timeToNextFadeStep;
+    private float volumeFadeStep;
+
     // Start is called before the first frame update
     void Start()
     {
         AS = AudioGameObject.GetComponent<AudioSource>(); 
         DontDestroyOnLoad(AS);
         PlayASong(); 
-
-
     }
-
 
     // Update is called once per frame
     /// <summary>
@@ -32,7 +35,17 @@ public class BackroundMusic : MonoBehaviour
     void Update()
     {
         if (!AS.isPlaying) { PlayASong(); }
-        
+
+        if (isFading)
+        {
+            FadeVolume();
+        }
+        /*
+        else
+        {
+            InitVolumeFade(0f, 5f);
+        }
+        */
     }
 
 
@@ -60,7 +73,51 @@ public class BackroundMusic : MonoBehaviour
         Played.Add(random);
         AS.clip = Songs[random];
         AS.Play();
+
+        AS.volume = 1f;
     }
 
+    /// <summary>
+    /// This will fade a volume to a specified volume over a specified number of seconds.
+    /// Fading is up or down, relative to the current volume.
+    /// This method must be called to initiate the fade.
+    /// </summary>
+    void InitVolumeFade(float finalVolume, float time)
+    {
+        fadeTimeLeft = time;
+        timeToNextFadeStep = FADE_STEP_TIME;
+        float nSteps = time / timeToNextFadeStep;
+        volumeFadeStep = (finalVolume - AS.volume) / nSteps;
+        isFading = true;
+    }
+
+    /// <summary>
+    /// This will fade a volume to a specified volume over a specified number of seconds.
+    /// Fading is up or down, relative to the current volume.
+    ///
+    /// This method should only be called in the Update() method.
+    /// </summary>
+    void FadeVolume()
+    {
+        float dTime = Time.deltaTime;
+        timeToNextFadeStep -= dTime;
+        fadeTimeLeft -= dTime;
+        if (timeToNextFadeStep <= 0)
+        {
+            AS.volume += volumeFadeStep;
+            timeToNextFadeStep = FADE_STEP_TIME;
+        }
+
+        if (AS.volume < 0)
+        {
+            AS.volume = 0;
+        }
+        else if (AS.volume > 1.0f)
+        {
+            AS.volume = 1.0f;
+        }
+
+        if (fadeTimeLeft <= 0) isFading = false;
+    }
 
 }
