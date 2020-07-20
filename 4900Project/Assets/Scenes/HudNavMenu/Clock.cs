@@ -17,17 +17,10 @@ public class Clock : MonoBehaviour
 
     void Update()
     {
-        DateTime gameTime = new DateTime(2094, currTime.Month, currTime.Day + DataTracker.Current.dayCount);
-        //string year = LeadingZero(gameTime.Year);
-        //string month = LeadingZero(gameTime.Month);
-        //string day = LeadingZero(gameTime.Day);
+        DateTime gameTime = new DateTime(2094, currTime.Month, currTime.Day);
+        gameTime = gameTime.AddDays(DataTracker.Current.dayCount);
 
         clockText.text = "Date: " + gameTime.ToShortDateString() +
             "    Days Passed: " + DataTracker.Current.dayCount.ToString();
-    }
-
-        string LeadingZero(int n)
-    {
-        return n.ToString().PadLeft(2, '0');
     }
 }
