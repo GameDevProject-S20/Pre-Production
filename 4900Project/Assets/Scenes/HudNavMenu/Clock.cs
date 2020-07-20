@@ -6,29 +6,21 @@ using System;
 
 public class Clock : MonoBehaviour
 {
-    private Text textClock;
+    private Text clockText;
+    private DateTime currTime = DateTime.Now;
+    private DateTime gameTime;
 
     void Awake()
     {
-        textClock = GetComponent <Text>();
+        clockText = GetComponent <Text>();
     }
 
     void Update()
     {
-        DateTime time = DateTime.Now;
-        string year = LeadingZero(time.Year);
-        string month = LeadingZero(time.Month);
-        string day = LeadingZero(time.Day);
-        string hour = LeadingZero(time.Hour);
-        string minute = LeadingZero(time.Minute);
-        string second = LeadingZero(time.Second);
+        DateTime gameTime = new DateTime(2094, currTime.Month, currTime.Day);
+        gameTime = gameTime.AddDays(DataTracker.Current.dayCount);
 
-        textClock.text = year + "-" + month + "-" + day + "T"
-            + hour + ":" + minute + ":" + second;
-    }
-
-    string LeadingZero(int n)
-    {
-        return n.ToString().PadLeft(2, '0');
+        clockText.text = "Date: " + gameTime.ToShortDateString() +
+            "    Days Passed: " + DataTracker.Current.dayCount.ToString();
     }
 }
