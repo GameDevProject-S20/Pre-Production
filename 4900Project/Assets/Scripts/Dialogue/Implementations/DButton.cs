@@ -13,5 +13,8 @@ namespace Dialogue
     {
         public string Text { get; set; }
         public Action OnButtonClick { get; set; }
+        public IEnumerable<IPresentCondition> Conditions { get; set; }
+        public IEnumerable<IEffect> Effects { get; set; }
+        public IDPage NextPage { get; set; } 
     }
 }
