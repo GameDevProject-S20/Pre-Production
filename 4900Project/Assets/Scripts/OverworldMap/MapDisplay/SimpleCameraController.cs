@@ -14,7 +14,7 @@ public class SimpleCameraController : MonoBehaviour
     Vector3 min;
 
 
-    float panBorderSize = 6;
+    float panBorderSize = 12;
 
     private Vector3 lastMousePosition = Vector3.zero;
     private bool mouseJustClicked = false;
@@ -49,22 +49,22 @@ public class SimpleCameraController : MonoBehaviour
 
         if (Input.mousePosition.x > Screen.width - verticalBorder)
         {
-            velocity += new Vector3(1, 0, 0);
+            velocity += new Vector3(0.1f, 0, 0);
         }
 
         if (Input.mousePosition.x < verticalBorder)
         {
-            velocity += new Vector3(-1, 0, 0);
+            velocity += new Vector3(-0.1f, 0, 0);
         }
 
         if (Input.mousePosition.y > Screen.height - horizontalBorder)
         {
-            velocity += new Vector3(0, 0, 1);
+            velocity += new Vector3(0, 0, 0.1f);
         }
 
         if ( Input.mousePosition.y < horizontalBorder)
         {
-            velocity += new Vector3(0, 0, -1);
+            velocity += new Vector3(0, 0, -0.1f);
         }
         velocity = velocity * panSpeed;
 
