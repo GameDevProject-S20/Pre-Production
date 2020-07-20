@@ -2,9 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityUtility;
 
 public enum rarity {None, Abundant, Common, Uncommon, Rare, Unique}
 public enum typetag {Food,Luxury,Medicine,Building_Materials, Tools_And_Parts, Combat,Fuel}
+
+/// <summary>
+/// Intermediate class for handling loading items from a CSV file.
+/// This should be the class that gets generated, then each should be fed into the Item class.
+/// </summary>
+public struct ItemCsvData
+{
+    public string DisplayName;
+    public string Tooltip;
+    public string Description;
+    public float Value;
+    public float Weight;
+    public string Tier;
+    public string Tags;
+    public string IconName;
+}
 
 public struct Item 
 {
@@ -15,8 +32,17 @@ public struct Item
     public float Weight;
     public rarity tier;
     public List<typetag> tags;
-    
 
+    /// <summary>
+    /// Creates an item given the values to set.
+    /// This can be used for hardcoding items.
+    /// </summary>
+    /// <param name="name_"></param>
+    /// <param name="tooltip_"></param>
+    /// <param name="description_"></param>
+    /// <param name="value_"></param>
+    /// <param name="weight_"></param>
+    /// <param name="_tags"></param>
     public Item(string name_, string tooltip_, string description_, float value_, float weight_, List<typetag> _tags)
     {
         DisplayName = name_;
@@ -47,6 +73,23 @@ public struct Item
             tier = rarity.Abundant;
         }
     }
+
+    /// <summary>
+    /// Creates an Item out of an ItemCsvData class.
+    /// This can be used for generating items from CSV.
+    /// </summary>
+    /// <param name="itemData"></param>
+    public Item(ItemCsvData itemData)
+    {
+        DisplayName = itemData.DisplayName;
+        Tooltip = itemData.Tooltip;
+        Description = itemData.Description;
+        Value = itemData.Value;
+        Weight = itemData.Weight;
+        tier = UnityHelperMethods.ParseEnum<rarity>(itemData.Tier);
+        tags = UnityHelperMethods.ParseCommaSeparatedList<typetag>(itemData.Tags, UnityHelperMethods.ParseEnum<typetag>);
+    }
+
 }
 
 public class ItemManager : MonoBehaviour
