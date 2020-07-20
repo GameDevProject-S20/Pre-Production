@@ -5,7 +5,7 @@ using UnityEngine;
 public class SimpleCameraController : MonoBehaviour
 {
     [SerializeField]
-    float panSpeed = 1.0f;
+    float panSpeed = 0.1f;
     [SerializeField]
     float zoomSpeed = 4.0f;
     [SerializeField]
@@ -14,7 +14,7 @@ public class SimpleCameraController : MonoBehaviour
     Vector3 min;
 
 
-    float panBorderSize = 6;
+    float panBorderSize = 20;
 
     private Vector3 lastMousePosition = Vector3.zero;
     private bool mouseJustClicked = false;
@@ -22,6 +22,7 @@ public class SimpleCameraController : MonoBehaviour
 
     private void Update() 
     {
+        transform.position =  GeneralPurposeControl(transform.position);
         transform.position = MousePanControl(transform.position);
         transform.position = MouseScrollControl(transform.position);
     }
@@ -40,6 +41,7 @@ public class SimpleCameraController : MonoBehaviour
         }
             return nextPosition;
     }
+
     public Vector3 MousePanControl(Vector3 position)
     {
         float verticalBorder = Screen.width/panBorderSize;
