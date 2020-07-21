@@ -416,7 +416,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &190852229
 GameObject:
@@ -1095,7 +1095,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &998539237
 GameObject:
@@ -1253,7 +1253,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1004762753
 MonoBehaviour:
@@ -2119,7 +2119,7 @@ RectTransform:
   m_Children:
   - {fileID: 1574492605}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2155,7 +2155,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1429839188
 MonoBehaviour:
@@ -2169,6 +2169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 864248731cd056f4ab5895f0534c767a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tradeFairness: 4
   inventoryListItem: {fileID: 5392517251480429271, guid: 3c6143235d4e9a2428f6a86260d8d07f,
     type: 3}
   shopInventoryObject: {fileID: 1973835853}
@@ -2177,6 +2178,16 @@ MonoBehaviour:
   cartListObject: {fileID: 720345584}
   offerFeedback: {fileID: 1394134837}
   Name: {fileID: 653039044}
+  Scale: {fileID: 1360994125}
+  FairTrade: {fileID: 21300000, guid: a2867187d99f6450c9672ba1d7265c64, type: 3}
+  PlayerTrade: {fileID: 21300000, guid: 15ca88dc00c0c4e469ca1bb12ccea84a, type: 3}
+  ShopTrade: {fileID: 21300000, guid: 9aaf186e3e063d74eb9d190cc85d943e, type: 3}
+  ScaleChange: {fileID: 8300000, guid: 4fb5ca380d68f3d4999cc93f513c182d, type: 3}
+  AbundantImage: {fileID: 21300000, guid: 9361528b04aff184ea92a4cad83f4510, type: 3}
+  UncommonImage: {fileID: 21300000, guid: fc663acf26812e241b1bf4bc64dbf23a, type: 3}
+  CommonImage: {fileID: 21300000, guid: bb5e727859dad164085c28c3f4e54e05, type: 3}
+  RareImage: {fileID: 21300000, guid: 6356a4fd919c25d4689c7e96e59f9f89, type: 3}
+  LegendaryImage: {fileID: 21300000, guid: 0951ad93e6ddd8d4b9c2646f267cde4e, type: 3}
 --- !u!224 &1438724943 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1840571253241227794, guid: 73267574d9da8a94e9ee4d58fbda672a,
