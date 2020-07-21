@@ -30,6 +30,9 @@ public class OverworldMapUI : MonoBehaviour
     [SerializeField]
     public GameObject QuestJournalCanvas;
 
+    [SerializeField]
+    public GameObject Inventory;
+
     bool isActive = true;
     bool isTravelling = false;
     //Movement variables

@@ -67,7 +67,7 @@ public class TownWindow : MonoBehaviour
 
         townData = TownManager.Instance.GetCurrentTownData();
 
-        ActionMenu = transform.Find("TownBackground").Find("DataBorder").Find("DataBackground").Find("TownActionsBorder").Find("TownActionsBackground").Find("ActionList").Find("ActionGrid");
+        ActionMenu = transform.Find("TownBackground").Find("DataBackground").Find("TownActionsBorder").Find("TownActionsBackground").Find("ActionList").Find("ActionGrid");
 
         // We need to reset the action items for this town since it's changed. 
         foreach (Transform child in ActionMenu)
@@ -77,7 +77,7 @@ public class TownWindow : MonoBehaviour
 
 
         transform.Find("TownBackground").Find("TownName").GetComponent<Text>().text = townData.Name;
-        transform.Find("TownBackground").Find("DataBorder").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("Description").GetComponent<Text>().text = townData.Description;
+        transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("Description").GetComponent<Text>().text = townData.Description;
 
 
         //use rarity tier of town to determine proper icon
@@ -86,25 +86,25 @@ public class TownWindow : MonoBehaviour
             switch (townData.tier)
             {
                 case rarity.Abundant:
-                    transform.Find("TownBackground").Find("DataBorder").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("RarityIcon").GetComponent<Image>().sprite = AbundantIcon;
+                    transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("RarityIcon").GetComponent<Image>().sprite = AbundantIcon;
                     break;
                 case rarity.Common:
-                    transform.Find("TownBackground").Find("DataBorder").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("RarityIcon").GetComponent<Image>().sprite = CommonIcon;
+                    transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("RarityIcon").GetComponent<Image>().sprite = CommonIcon;
                     break;
                 case rarity.Uncommon:
-                    transform.Find("TownBackground").Find("DataBorder").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("RarityIcon").GetComponent<Image>().sprite = UncommonIcon;
+                    transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("RarityIcon").GetComponent<Image>().sprite = UncommonIcon;
                     break;
                 case rarity.Rare:
-                    transform.Find("TownBackground").Find("DataBorder").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("RarityIcon").GetComponent<Image>().sprite = RareIcon;
+                    transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("RarityIcon").GetComponent<Image>().sprite = RareIcon;
                     break;
                 case rarity.Unique:
-                    transform.Find("TownBackground").Find("DataBorder").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("RarityIcon").GetComponent<Image>().sprite = LegendaryIcon;
+                    transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("RarityIcon").GetComponent<Image>().sprite = LegendaryIcon;
                     break;
             }
         }
         else
         {
-            transform.Find("TownBackground").Find("DataBorder").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("RarityIcon").GetComponent<Image>().sprite = IconMissing;
+            transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("RarityIcon").GetComponent<Image>().sprite = IconMissing;
         }
 
         //Post tag images related to town
@@ -115,30 +115,30 @@ public class TownWindow : MonoBehaviour
                 switch (townData.tags[i - 1])
                 {
                     case typetag.Food:
-                        transform.Find("TownBackground").Find("DataBorder").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("ResourceIcon" + i.ToString()).GetComponent<Image>().sprite = FoodIcon;
+                        transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("ResourceIcon" + i.ToString()).GetComponent<Image>().sprite = FoodIcon;
                         break;
                     case typetag.Fuel:
-                        transform.Find("TownBackground").Find("DataBorder").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("ResourceIcon" + i.ToString()).GetComponent<Image>().sprite = FuelIcon;
+                        transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("ResourceIcon" + i.ToString()).GetComponent<Image>().sprite = FuelIcon;
                         break;
                     case typetag.Medicine:
-                        transform.Find("TownBackground").Find("DataBorder").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("ResourceIcon" + i.ToString()).GetComponent<Image>().sprite = MedicineIcon;
+                        transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("ResourceIcon" + i.ToString()).GetComponent<Image>().sprite = MedicineIcon;
                         break;
                 }
             }
             else
             {
-                transform.Find("TownBackground").Find("DataBorder").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("ResourceIcon" + i.ToString()).GetComponent<Image>().enabled = false;
+                transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("ResourceIcon" + i.ToString()).GetComponent<Image>().enabled = false;
             }
         }
 
         //find town image
         if (townData.Icon != null)
         {
-            transform.Find("TownBackground").Find("DataBorder").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").GetComponent<Image>().sprite = townData.Icon;
+            transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").GetComponent<Image>().sprite = townData.Icon;
         }
         else
         {
-            transform.Find("TownBackground").Find("DataBorder").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").GetComponent<Image>().sprite = IconMissing;
+            transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").GetComponent<Image>().sprite = IconMissing;
         }
 
         //time to create the action panels

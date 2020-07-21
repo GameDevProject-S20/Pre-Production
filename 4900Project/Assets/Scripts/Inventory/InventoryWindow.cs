@@ -24,6 +24,6 @@ public class InventoryWindow : MonoBehaviour
     }
 
     public void leave(){
-        SceneManager.UnloadSceneAsync("InventoryScene"); 
+        transform.parent.gameObject.SetActive(false);
     }
 }
