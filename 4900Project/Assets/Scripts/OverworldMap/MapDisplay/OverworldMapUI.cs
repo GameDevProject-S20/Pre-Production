@@ -227,7 +227,7 @@ public class OverworldMapUI : MonoBehaviour
             {
                 Vector3 dir = ((targetPos - playerMarker.transform.position).normalized);
                 float theta = Vector2.SignedAngle(new Vector2(dir.x, dir.z), Vector2.left);
-                TruckObject.transform.eulerAngles = new Vector3(-90, 0, theta);
+                if (TruckObject) TruckObject.transform.eulerAngles = new Vector3(-90, 0, theta);
             }
             // On Arrival
             else
