@@ -2183,6 +2183,9 @@ MonoBehaviour:
   PlayerTrade: {fileID: 21300000, guid: 15ca88dc00c0c4e469ca1bb12ccea84a, type: 3}
   ShopTrade: {fileID: 21300000, guid: 9aaf186e3e063d74eb9d190cc85d943e, type: 3}
   ScaleChange: {fileID: 8300000, guid: 4fb5ca380d68f3d4999cc93f513c182d, type: 3}
+  SuccessfulTrade: {fileID: 8300000, guid: 3b9f1f35cc0ee4c8b9126432742bf8c4, type: 3}
+  OverGenerous: {fileID: 8300000, guid: 7c81c29be256b4f0b9648027f769a6d7, type: 3}
+  RejectedOffer: {fileID: 8300000, guid: 6caf59c6766e44844b8ceb0cccee5e5c, type: 3}
   AbundantImage: {fileID: 21300000, guid: 9361528b04aff184ea92a4cad83f4510, type: 3}
   UncommonImage: {fileID: 21300000, guid: fc663acf26812e241b1bf4bc64dbf23a, type: 3}
   CommonImage: {fileID: 21300000, guid: bb5e727859dad164085c28c3f4e54e05, type: 3}
