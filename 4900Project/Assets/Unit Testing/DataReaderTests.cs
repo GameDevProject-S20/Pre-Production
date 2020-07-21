@@ -11,11 +11,28 @@ namespace Tests
     public class DataReaderTests : GameData
     {
         // Test Classes - These are used to store the data
-        [Serializable]
         protected class TestClass
         {
             public int Id;
             public string Name;
+        }
+        [Serializable]
+        protected class TestCsvClass : TestClass
+        {
+            public new int Id
+            {
+                get { return base.Id; }
+                set { base.Id = value; }
+            }
+            public new string Name
+            {
+                get { return base.Name; }
+                set { base.Name = value; }
+            }
+        }
+        [Serializable]
+        protected class TestJsonClass : TestClass
+        { 
         }
 
         [Serializable]
@@ -34,7 +51,7 @@ namespace Tests
         [Serializable]
         protected class JsonClassesList
         {
-            public List<TestClass> List;
+            public List<TestJsonClass> List;
         }
 
         /// <summary>
@@ -44,8 +61,8 @@ namespace Tests
         public void TestCsvReading()
         {
 
-            GameData.LoadCsv<TestClass>(Files.TestCsv, out IEnumerable<TestClass> results);
-            VerifyTestClassList(results);
+            GameData.LoadCsv<TestCsvClass>(Files.TestCsv, out IEnumerable<TestCsvClass> results);
+            VerifyTestClassList<TestCsvClass>(results);
         }
 
         /// <summary>
@@ -104,7 +121,7 @@ namespace Tests
         [Test]
         public void CanReadJsonFromGoogleDrive()
         {
-            var canRead = GameData.DownloadFileFromGoogleDrive(Files.TestBasicJson.GoogleDriveFileId, out _);
+            var canRead = GameData.DownloadFileFromGoogleDrive(Files.TestBasicJson.GoogleDriveFileId, Files.TestBasicJson.MimeType, out _);
             Assert.IsTrue(canRead, "Failed to read the JSON data.");
         }
 
@@ -114,7 +131,7 @@ namespace Tests
         [Test]
         public void CanReadCsvFromGoogleDrive()
         {
-            var canRead = GameData.DownloadFileFromGoogleDrive(Files.TestCsv.GoogleDriveFileId, out _);
+            var canRead = GameData.DownloadFileFromGoogleDrive(Files.TestCsv.GoogleDriveFileId, Files.TestCsv.MimeType, out _);
             Assert.IsTrue(canRead, "Failed to load CSV data from Google Drive.");
         }
 
@@ -123,7 +140,7 @@ namespace Tests
         /// with the values matching what's expected (first - Id 1, Name Google; second - Id 2, Name Drive)
         /// </summary>
         /// <param name="testClassList"></param>
-        protected void VerifyTestClassList(IEnumerable<TestClass> testClassList)
+        protected void VerifyTestClassList<T>(IEnumerable<T> testClassList) where T : TestClass
         {
             // Should have two results
             Assert.AreEqual(2, testClassList.Count(), $"The results count {testClassList.Count()} did not match the expected count of 2.");
@@ -139,7 +156,7 @@ namespace Tests
         /// <param name="csvData"></param>
         /// <param name="expectedId"></param>
         /// <param name="expectedName"></param>
-        protected void VerifyCsvContents(TestClass csvData, int expectedId, string expectedName)
+        protected void VerifyCsvContents<T>(T csvData, int expectedId, string expectedName) where T : TestClass
         {
             // Assert that the ID matches
             Assert.AreEqual(expectedId, csvData.Id, $"The data's ID {csvData.Id} did not match our expected ID of {expectedId}.");
