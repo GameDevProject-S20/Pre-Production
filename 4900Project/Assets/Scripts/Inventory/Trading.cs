@@ -44,6 +44,12 @@ public class Trading : MonoBehaviour
     [SerializeField]
     AudioClip ScaleChange;
     [SerializeField]
+    AudioClip SuccessfulTrade;
+    [SerializeField]
+    AudioClip OverGenerous;
+    [SerializeField]
+    AudioClip RejectedOffer;
+    [SerializeField]
     Sprite AbundantImage;
     [SerializeField]
     Sprite UncommonImage;
@@ -183,9 +189,9 @@ public class Trading : MonoBehaviour
 
     public void ScaleSwap()
     {
-        if (tradeFairness != validateTrade())
+        if (tradeFairness != validateTradeAfterModifiers())
         {
-            switch (validateTrade())
+            switch (validateTradeAfterModifiers())
             {
                 case 0:
                     break;
@@ -201,26 +207,30 @@ public class Trading : MonoBehaviour
             }
             AudioSource audioSource = GameObject.Find("Audio Source").GetComponent<AudioSource>();
             audioSource.PlayOneShot(ScaleChange, 1.0F);
-            tradeFairness = validateTrade();
+            tradeFairness = validateTradeAfterModifiers();
         }
 
     }
 
     public void onTradeButtonClick(){
-        switch (validateTrade())
+        AudioSource audioSource = GameObject.Find("Audio Source").GetComponent<AudioSource>();
+        switch (validateTradeAfterModifiers())
         {
             case 0:
                 break;
             case 1:
                 offerFeedback.GetComponent<TMPro.TextMeshProUGUI>().text = "My now, what a generous offer!";
                 makeTrade();
+                audioSource.PlayOneShot(OverGenerous, 1.0F);
                 break;
             case 2:
                 offerFeedback.GetComponent<TMPro.TextMeshProUGUI>().text = "A fair offer, you got yourself a deal";
                 makeTrade();
+                audioSource.PlayOneShot(SuccessfulTrade, 1.0F);
                 break;
             case 3:
                 offerFeedback.GetComponent<TMPro.TextMeshProUGUI>().text = "This ain't a charity, make a real offer would ya";
+                audioSource.PlayOneShot(RejectedOffer, 1.0F);
                 break;
         }
     }
@@ -241,8 +251,8 @@ public class Trading : MonoBehaviour
     /// </returns>
     int validateTrade(){
         if (copyOfPlayerInventory.CanFitItems(cart.TotalWeight())){
-            float totalCartValue = cart.TotalValue(shop.toPlayerModifiers);
-            float totalOfferValue = offer.TotalValue(shop.fromPlayerModifiers);
+            float totalCartValue = cart.TotalValue();
+            float totalOfferValue = offer.TotalValue();
             float difference =  totalOfferValue - totalCartValue;
             if(difference > totalCartValue * shop.acceptedPriceDifference) {
                 return 1;
@@ -255,6 +265,32 @@ public class Trading : MonoBehaviour
             }
         }
         else{
+            return 0;
+        }
+    }
+
+    int validateTradeAfterModifiers()
+    {
+        if (copyOfPlayerInventory.CanFitItems(cart.TotalWeight()))
+        {
+            float totalCartValue = cart.TotalValueAfterModifiers(shop.toPlayerModifiers);
+            float totalOfferValue = offer.TotalValueAfterModifiers(shop.fromPlayerModifiers);
+            float difference = totalOfferValue - totalCartValue;
+            if (difference > totalCartValue * shop.acceptedPriceDifference)
+            {
+                return 1;
+            }
+            else if (Mathf.Abs(difference) <= totalCartValue * shop.acceptedPriceDifference)
+            {
+                return 2;
+            }
+            else
+            {
+                return 3;
+            }
+        }
+        else
+        {
             return 0;
         }
     }

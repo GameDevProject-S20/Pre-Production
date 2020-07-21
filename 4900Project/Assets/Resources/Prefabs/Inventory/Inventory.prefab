@@ -74,6 +74,30 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5835942731400443890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1867645265448144765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 125, y: 125}
+  m_Spacing: {x: 5, y: 5}
+  m_Constraint: 1
+  m_ConstraintCount: 6
 --- !u!1 &2891855188787039049
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,6 +425,11 @@ MonoBehaviour:
   inventoryListItem: {fileID: 5392517251480429271, guid: 3c6143235d4e9a2428f6a86260d8d07f,
     type: 3}
   playerInventoryObject: {fileID: 1049958215717933374}
+  AbundantImage: {fileID: 21300000, guid: 9361528b04aff184ea92a4cad83f4510, type: 3}
+  UncommonImage: {fileID: 21300000, guid: bb5e727859dad164085c28c3f4e54e05, type: 3}
+  CommonImage: {fileID: 21300000, guid: fc663acf26812e241b1bf4bc64dbf23a, type: 3}
+  RareImage: {fileID: 21300000, guid: 6356a4fd919c25d4689c7e96e59f9f89, type: 3}
+  LegendaryImage: {fileID: 21300000, guid: 0951ad93e6ddd8d4b9c2646f267cde4e, type: 3}
 --- !u!1 &5835942729898509266
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,30 +530,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &5835942731400443890
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1867645265448144765}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 0
-  m_StartCorner: 0
-  m_StartAxis: 0
-  m_CellSize: {x: 125, y: 125}
-  m_Spacing: {x: 5, y: 5}
-  m_Constraint: 1
-  m_ConstraintCount: 6
 --- !u!1 &7534835445591569590
 GameObject:
   m_ObjectHideFlags: 0

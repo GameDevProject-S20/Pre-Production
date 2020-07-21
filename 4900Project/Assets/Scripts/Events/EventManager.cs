@@ -54,6 +54,9 @@ namespace SIEvents
 
         public Events.MapEvents.NodeEvent OnNodeEnter = new Events.MapEvents.NodeEvent();
         public UnityEvent RequestRedraw = new UnityEvent();
+        public Events.MapEvents.NodeMouseEnter OnNodeMouseEnter = new Events.MapEvents.NodeMouseEnter();
+        public Events.MapEvents.NodeMouseDown OnNodeMouseDown = new Events.MapEvents.NodeMouseDown();
+        public UnityEvent OnTravelStart = new UnityEvent();
 
 
         //=== Player =================================================//

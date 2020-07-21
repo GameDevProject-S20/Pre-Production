@@ -18,7 +18,7 @@ public class HudActions : MonoBehaviour
     }
     public void OnInventoryButtonClick()
     {
-        GameObject.Find("Map").GetComponent<OverworldMapUI>().Inventory.SetActive(true);
+        GameObject.Find("Map").GetComponent<OverworldMapUI>().InventoryCanvas.SetActive(true);
     }
 
     public void OnMenuButtonClick()

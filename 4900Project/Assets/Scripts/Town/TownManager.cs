@@ -54,6 +54,8 @@ public class TownManager
         towns[3].AddShop(7);
         towns[4].AddShop(8);
         towns[4].AddShop(9);
+
+        towns[1].valueModifiers.Add(typetag.Medicine, 0.25f);
     }
 
     public IEnumerable<Town> GetTownEnumerable()

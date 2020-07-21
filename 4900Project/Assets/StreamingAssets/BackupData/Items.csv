@@ -1,15 +1,15 @@
 DisplayName,Tooltip,Description,Value,Weight,IconName,Tags
 Rations,Unappetizing but cheap,The bare minimum to keep someone running for a day,1,1,Food.png,Food
-Fuel,A neccesity for travel between colonies,"Fuel is the lifeblood of traders, never leave port without first checking your tank. ",1,1,Fuel.png,Tools_And_Parts
-Fresh Fruit,"Tasty, but spoils without proper storage","A rarity in a good portion of the world, which makes is quite valuable to the right people.",5,1,Survival gear (1).png,"Food,Luxury"
-Wrench,An essential repair tool,Helps with maintaining machines. Wear and tear means you need a replacement once in a while.,2,1,Survival gear (1).png,Tools_And_Parts
-Repair Patch,One use smart repair patch,"Uncommon tech allows these patches to conduct repairs autonomously, but burn out performing the job",15,4,Survival gear (1).png,Tools_And_Parts
-2000's Painting,Collectors love this stuff,Art from before the world ended. Nostalgic.,19,3,Survival gear (1).png,Luxury
-Jewelry,"A valuable, if nonfunctional, accessory",Goes nice with a finely tailored outfit. Good luck finding one,12,1,Survival gear (1).png,Luxury
-Concrete,Basic building material,What most things are built out of these days,3,10,Survival gear (1).png,Building_Materials
-Scrap Metal,General purpose parts,Good for making something new or fixing something old,5,10,Survival gear (1).png,Building_Materials
-Generator,Creates electricity,Consumes fuel to generate power. Vital for survival.,40,25,Survival gear (1).png,Tools_And_Parts
+Fuel,A necessity for travel between colonies,"Fuel is the lifeblood of traders, never leave port without first checking your tank. ",1,1,Fuel.png,Tools_And_Parts
+Fresh Fruit,"Tasty, but spoils without proper storage","A rarity in a good portion of the world, which makes is quite valuable to the right people.",5,1,FreshFruit.png,"Food,Luxury"
+Wrench,An essential repair tool,Helps with maintaining machines. Wear and tear means you need a replacement once in a while.,2,1,Wrench.png,Tools_And_Parts
+Repair Patch,One use smart repair patch,"Uncommon tech allows these patches to conduct repairs autonomously, but burn out performing the job",15,4,RepairPatch.png,Tools_And_Parts
+2000's Painting,Collectors love this stuff,Art from before the world ended. Nostalgic.,19,3,Painting.png,Luxury
+Jewelry,"A valuable, if nonfunctional, accessory",Goes nice with a finely tailored outfit. Good luck finding one,12,1,Jewlery.png,Luxury
+Concrete,Basic building material,What most things are built out of these days,3,10,Concrete.png,Building_Materials
+Scrap Metal,General purpose parts,Good for making something new or fixing something old,5,10,ScrapMetal.png,Building_Materials
+Generator,Creates electricity,Consumes fuel to generate power. Vital for survival.,40,25,Generator.png,Tools_And_Parts
 Body Armor,Keeps you intact,Armor meant to protect from the typical bandit raid.,4,5,BodyArmor.png,Combat
-RPG,Sends a message,Let anyone who intends to raid you serverly regret their choices for a whole second.,20,2,Survival gear (1).png,Combat
-Medicine,Patches up wounds.,General pruopse bandages and medicine to treat injuries and illnesses,6,3,Medicine.png,Medicine
+RPG,Sends a message,Let anyone who intends to raid you severely regret their choices for a whole second.,20,2,RPG.png,Combat
+Medicine,Patches up wounds.,General purpose bandages and medicine to treat injuries and illnesses,6,3,Medicine.png,Medicine
 Medical Kit,High end First Aid Kit for dangerous work,"Not only stocked with the best medical supplies on hand, but even contain stimulants and boosters to avoid injury in the first place",20,2,MedicalKit.png,"Medicine,Luxury"
