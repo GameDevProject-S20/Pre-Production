@@ -10,9 +10,12 @@ public class OverworldMapUI : MonoBehaviour
 {
 
     // Display settings
+    [Header("Display Settings")]
+    [SerializeField]
     float MapDrawScale = 1;
 
     // Prefabs
+    [Header("Prefabs")]
     [SerializeField]
     GameObject LocationPrefab;
     [SerializeField]
@@ -21,22 +24,25 @@ public class OverworldMapUI : MonoBehaviour
     GameObject travelPanelPrefab;
 
     // Player Marker
+    [Header("Player Marker")]
     [SerializeField]
     GameObject playerMarker;
     [SerializeField]
     GameObject TruckObject;
 
     // Empty game objects to organize hierarchy
+    [Header("Containers")]
     [SerializeField]
     Transform NodesContainer;
     [SerializeField]
     Transform PathsContainer;
 
-
+    [Header("Button")]
     [SerializeField]
     Button enterNodeButton;
 
     // Canvases
+    [Header("Canvases")]
     [SerializeField]
     GameObject TownMenuGameObject;
     [SerializeField]
@@ -45,6 +51,9 @@ public class OverworldMapUI : MonoBehaviour
     public GameObject QuestJournalCanvas;
     [SerializeField]
     Canvas TravelPanelCanvas;
+    [SerializeField]
+    public GameObject InventoryCanvas;
+
 
     //Movement variables
     bool isActive = true;
@@ -61,6 +70,7 @@ public class OverworldMapUI : MonoBehaviour
     public List<GameObject> travelPanelPool;
 
     // Path Highlighting
+    [Header("Path Materials")]
     [SerializeField]
     Material pathDefaultMaterial;
     [SerializeField]
@@ -115,7 +125,7 @@ public class OverworldMapUI : MonoBehaviour
         foreach (var node in DataTracker.Current.WorldMap.GetNodeEnumerable())
         {
             GameObject nodeObj = Instantiate(LocationPrefab, transform.parent);
-            Vector3 pos = new Vector3(node.PosX, 0, node.PosY) * DataTracker.Current.mapScale * 2;
+            Vector3 pos = new Vector3(node.PosX, 0, node.PosY) * DataTracker.Current.MapSize * MapDrawScale;
             nodeObj.transform.position += pos;
             nodeObj.transform.SetParent(NodesContainer, true);
             nodeObj.name = node.Name;
@@ -140,8 +150,8 @@ public class OverworldMapUI : MonoBehaviour
             LineRenderer lr = line.GetComponent<LineRenderer>();
             Vector3[] lineEnds =
                 {
-                    new Vector3(edge.Item1.PosX, 0, edge.Item1.PosY)* DataTracker.Current.mapScale * 2,
-                    new Vector3(edge.Item2.PosX, 0, edge.Item2.PosY)* DataTracker.Current.mapScale * 2
+                    new Vector3(edge.Item1.PosX, 0, edge.Item1.PosY)* DataTracker.Current.MapSize * MapDrawScale,
+                    new Vector3(edge.Item2.PosX, 0, edge.Item2.PosY)* DataTracker.Current.MapSize * MapDrawScale
                 };
             Vector3 a = lineEnds[0] - 0.2f * (lineEnds[0] - lineEnds[1]);
             Vector3 b = lineEnds[1] - 0.2f * (lineEnds[1] - lineEnds[0]);

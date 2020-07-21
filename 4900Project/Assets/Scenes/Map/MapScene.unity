@@ -488,7 +488,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b3d1e9b9a2054649a759f352026d791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  panSpeed: 0.1
+  zoomSpeed: 4
   max: {x: 4.68, y: 8, z: 6.54}
   min: {x: -4.68, y: 4, z: -6.54}
 --- !u!1001 &442956046
@@ -516,7 +517,7 @@ PrefabInstance:
     - target: {fileID: 5835942729898509266, guid: fa3127270999e4ccea63dbd6bc9146cd,
         type: 3}
       propertyPath: m_Name
-      value: Inventory
+      value: InventoryCanvas
       objectReference: {fileID: 0}
     - target: {fileID: 5835942729898509266, guid: fa3127270999e4ccea63dbd6bc9146cd,
         type: 3}
@@ -645,6 +646,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa3127270999e4ccea63dbd6bc9146cd, type: 3}
+--- !u!1 &442956047 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5835942729898509266, guid: fa3127270999e4ccea63dbd6bc9146cd,
+    type: 3}
+  m_PrefabInstance: {fileID: 442956046}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &480821679
 GameObject:
   m_ObjectHideFlags: 0
@@ -1381,6 +1388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b8997cffe462f04fb2734c15df466f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MapDrawScale: 2
   LocationPrefab: {fileID: 1100032690771165020, guid: 2e8b7d4992e3a4c46907b3f7aac16f60,
     type: 3}
   PathPrefab: {fileID: 4415612377149101909, guid: 540495216011cd347b0d278306c32374,
@@ -1396,6 +1404,7 @@ MonoBehaviour:
   EnterNodeButtonCanvas: {fileID: 914171981}
   QuestJournalCanvas: {fileID: 858067759}
   TravelPanelCanvas: {fileID: 769002950}
+  InventoryCanvas: {fileID: 442956047}
   travelPanelPool: []
   pathDefaultMaterial: {fileID: 2100000, guid: 18dfd0d6a332ffb4e98f5ddf0df0f007, type: 2}
   pathHighlightMaterial: {fileID: 2100000, guid: 0314ad49ac172574b8b3ac46d8133344,

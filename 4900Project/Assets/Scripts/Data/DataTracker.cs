@@ -22,7 +22,7 @@ public class DataTracker : MonoBehaviour
     public TownManager TownManager = TownManager.Instance;
     public ShopManager ShopManager = ShopManager.Instance;
     [SerializeField]
-    public int mapScale = 5;
+    public float MapSize;
     [SerializeField]
     public int currentShopId = 0; // Needed if we want store to be their own scene. If we make the store window a prefab, we don't need this.
     public int currentLocationId = 14;
