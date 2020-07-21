@@ -44,7 +44,7 @@ public class Initializer : MonoBehaviour
     void InitializeTutorial()
     {
         // id = 0
-        Encounter tutorialStage1 = new Encounter(
+        /*Encounter tutorialStage1 = new Encounter(
              "Tutorial Part 1",
              "Tutorial",
              "You notice you are running low on gas.",
@@ -224,7 +224,7 @@ public class Initializer : MonoBehaviour
         EncounterManager.Instance.AddFixedEncounter(tutorialStage4);
         EncounterManager.Instance.AddFixedEncounter(tutorialStage5);
 
-        //enc1.AllowProgression();
+        //enc1.AllowProgression();*/
 
         
 
@@ -233,181 +233,84 @@ public class Initializer : MonoBehaviour
 
     }
 
-    private void InitializeEncounters(){
+    private void InitializeEncounters()
+    {
 
 
-RandomEncounter renc6 = new RandomEncounter(
-            "Crashed Ship",
-            "Loot",
-            "You encounter a desolate spacecraft, seemingly crashed here ages ago. "
-            + "There are scraps littering the outside of the shuttle, but the door is jammed closed.",
-            new string[]
-            {
-                    "Gather up as much scrap metal as you can carry (+2 Scrap Metal)",
-                    "(Requires an RPG) Blast open the door, and loot the ship (+1 Body Armor)"
-            },
-            new string[]
-            {
-                    "2 Scrap Metal added.",
-                    "1 Explosive removed, 1 Fusion Core added"
-            },
-            new Action[]  // successful action
-            {
-                    () => {
-                        var inventory = DataTracker.Current.Player.Inventory;
-                        inventory.AddItem("Scrap Metal", 2);  // Scrap Metal
-                        //SceneManager.UnloadSceneAsync("Encounter");
-                    },
-                    () => {
-                        var inventory = DataTracker.Current.Player.Inventory;
-                        inventory.AddItem("Body Armor", 1);
-                        //SceneManager.UnloadSceneAsync("Encounter");
-                    }
-            },
-            new Func<bool>[]  // condition (whether the player can take the action or not)
-            {
-                    () => {
-                        // Always available
-                        return true;
-                    },
-                    () => {
-                        // Only available if the player has 1 rpg
-                        return DataTracker.Current.Player.Inventory.Contains("RPG") > 0;
-                    }
-            },
-            new String[]  // Text to display on failure
-            {
-                    "",
-                    "You do not have an RPG!"
-            },
-            new Action[]  // Action to take on failure
-            {
-                    () => {},
-                    () => {}
-            }
-        );
-
-    RandomEncounter renc7 = new RandomEncounter(
-            "Farmer's Market",
-            "Loot",
-            "You encounter a quaint farmer's market, one stall selling rare exotic fruits."
-            + "Surely an amicable deal can be struck?",
-            new string[]
-            {
-                    "Offer 1 Medicine (+3 Fresh Fruit)",
-                    "You don't want any fruit"
-            },
-            new string[]
-            {
-                    "3 Fresh Fruit added.",
-                    "You never get tired of Rations..."
-            },
-            new Action[]  // successful action
-            {
-                    () => {
-                        var inventory = DataTracker.Current.Player.Inventory;
-                        inventory.AddItem("Fresh Fruit", 3);
-                        //SceneManager.UnloadSceneAsync("Encounter");
-                    },
-                    () => {
-                        //SceneManager.UnloadSceneAsync("Encounter");
-                    }
-            },
-            new Func<bool>[]  // condition (whether the player can take the action or not)
-            {
-                    () => {
-                        return DataTracker.Current.Player.Inventory.Contains("Medicine") > 0;
-                    },
-                    () => true
-            },
-            new String[]  // Text to display on failure
-            {
-                    "You don't have any medicine!",
-                    ""
-            },
-            new Action[]  // Action to take on failure
-            {
-                    () => {
-                        //SceneManager.UnloadSceneAsync("Encounter");
-                    },
-                    () => {}
-            }
-        );
-
-               RandomEncounter renc8 = new RandomEncounter(
-                    "Broken Gas Station",
+        /*RandomEncounter renc6 = new RandomEncounter(
+                    "Crashed Ship",
                     "Loot",
-                    "A lone gas station on the side of the road. The pump is broken."
-                    + "The owner says 'I could repair that with some supplies.'",
+                    "You encounter a desolate spacecraft, seemingly crashed here ages ago. "
+                    + "There are scraps littering the outside of the shuttle, but the door is jammed closed.",
                     new string[]
                     {
-                        "Offer supplies (Requires Wrench, 6 Scrap Metal)",
-                        "Leave."
+                            "Gather up as much scrap metal as you can carry (+2 Scrap Metal)",
+                            "(Requires an RPG) Blast open the door, and loot the ship (+1 Body Armor)"
                     },
                     new string[]
                     {
-                        "'Come back later and I'll have this fixed!'",
-                        "You leave the owner to his problems."
+                            "2 Scrap Metal added.",
+                            "1 Explosive removed, 1 Fusion Core added"
                     },
                     new Action[]  // successful action
                     {
-                        () => {
-                            var inventory = DataTracker.Current.Player.Inventory;
-                            inventory.RemoveItem("Scrap Metal", 6);  // Scrap Metal
-                            inventory.RemoveItem("Wrench", 1);  // Scrap Metal
-                            OverworldMap.LocationNode node;
-                            if (DataTracker.Current.WorldMap.GetNode(9, out node)){
-                                node.LocationId = 9;
+                            () => {
+                                var inventory = DataTracker.Current.Player.Inventory;
+                                inventory.AddItem("Scrap Metal", 2);  // Scrap Metal
+                                //SceneManager.UnloadSceneAsync("Encounter");
+                            },
+                            () => {
+                                var inventory = DataTracker.Current.Player.Inventory;
+                                inventory.AddItem("Body Armor", 1);
+                                //SceneManager.UnloadSceneAsync("Encounter");
                             }
-
-                            //SceneManager.UnloadSceneAsync("Encounter");
-                        },
-                        () => {
-
-                            //SceneManager.UnloadSceneAsync("Encounter");
-                        }
                     },
                     new Func<bool>[]  // condition (whether the player can take the action or not)
                     {
-                        () => {
-                            return DataTracker.Current.Player.Inventory.Contains("Wrench") > 0
-                            && DataTracker.Current.Player.Inventory.Contains("Scrap Metal") > 5;
-                        },
-                        () => {
-                            // Always available
-                            return true;
-                        }
+                            () => {
+                                // Always available
+                                return true;
+                            },
+                            () => {
+                                // Only available if the player has 1 rpg
+                                return DataTracker.Current.Player.Inventory.Contains("RPG") > 0;
+                            }
                     },
                     new String[]  // Text to display on failure
                     {
-                        "You do not have enough supplies.",
-                        ""
+                            "",
+                            "You do not have an RPG!"
                     },
                     new Action[]  // Action to take on failure
                     {
-                        () => {},
-                        () => {}
+                            () => {},
+                            () => {}
                     }
                 );
-    
 
-             RandomEncounter renc9 = new RandomEncounter(
-                    "Gas Station",
+            RandomEncounter renc7 = new RandomEncounter(
+                    "Farmer's Market",
                     "Loot",
-                    "A lone gas station on the side of the road."
-                    + "The owner calls to you. 'Hey there, friend! Good deal on gas, just for you!' ",
+                    "You encounter a quaint farmer's market, one stall selling rare exotic fruits."
+                    + "Surely an amicable deal can be struck?",
                     new string[]
                     {
+<<<<<<< HEAD
                         "Purchase 30 gas for 3 scrap metal.",
                         "Leave."
+=======
+                            "Offer 1 Medicine (+3 Fresh Fruit)",
+                            "You don't want any fruit"
+>>>>>>> 76bd48a... WIP model
                     },
                     new string[]
                     {
-                        "'Come back later!'",
-                        "You leave without buying."
+                            "3 Fresh Fruit added.",
+                            "You never get tired of Rations..."
                     },
                     new Action[]  // successful action
                     {
+<<<<<<< HEAD
                         () => {
                             
                             DataTracker.Current.Player.Inventory.AddItem("Fuel", 30);
@@ -416,136 +319,256 @@ RandomEncounter renc6 = new RandomEncounter(
 
                             //SceneManager.UnloadSceneAsync("Encounter");
                         }
+=======
+                            () => {
+                                var inventory = DataTracker.Current.Player.Inventory;
+                                inventory.AddItem("Fresh Fruit", 3);
+                                //SceneManager.UnloadSceneAsync("Encounter");
+                            },
+                            () => {
+                                //SceneManager.UnloadSceneAsync("Encounter");
+                            }
+>>>>>>> 76bd48a... WIP model
                     },
                     new Func<bool>[]  // condition (whether the player can take the action or not)
                     {
-                        () => {
-                            // Always available
-                            return DataTracker.Current.Player.Inventory.Contains("Scrap Metal") > 2;
-                        },
-                        () => {
-                            // Always available
-                            return true;
-                        }
+                            () => {
+                                return DataTracker.Current.Player.Inventory.Contains("Medicine") > 0;
+                            },
+                            () => true
                     },
                     new String[]  // Text to display on failure
                     {
-                        "You don't have enough scrap.",
-                        ""
+                            "You don't have any medicine!",
+                            ""
                     },
                     new Action[]  // Action to take on failure
                     {
-                        () => {},
-                        () => {}
-                    }
-                );
-            
-                RandomEncounter renc10 = new RandomEncounter(
-                    "Repair Store",
-                    "Shop",
-                    "The town mechanic is offering repairs.",
-                    new string[]
-                    {
-                        "Pay with 3 scrap",
-                        "Pay with 2 rations",
-                        "Leave"
-                    },
-                    new string[]
-                    {
-                        "The mechanic repaires your vehicle.",
-                        "The mechanic repaires your vehicle.",
-                        "You leave the garage."
-                    },
-                    new Action[]  // successful action
-                    {
-                        () => {
-                            var inventory = DataTracker.Current.Player.Inventory;
-                            inventory.RemoveItem("Scrap Metal", 3);  // Scrap Metal
-                            DataTracker.Current.Player.addHealth(75);
-                            //SceneManager.UnloadSceneAsync("Encounter");
-                        },
-                        () => {
-                            var inventory = DataTracker.Current.Player.Inventory;
-                            inventory.RemoveItem("Rations", 2);
-                            DataTracker.Current.Player.addHealth(75);
-                            //SceneManager.UnloadSceneAsync("Encounter");
-                        },
-                        () => {
-
-                        }
-
-                    },
-                    new Func<bool>[]  // condition (whether the player can take the action or not)
-                    {
-                        () => {
-                            // Always available
-                            return DataTracker.Current.Player.Inventory.Contains("Scrap Metal") > 2;
-                        },
-                        () => {
-                            // Only available if the player has 1 rpg
-                            return DataTracker.Current.Player.Inventory.Contains("Rations") > 1;
-                        },
-                        () => {
-                            // Always available
-                            return true;
-                        }
-                    },
-                    new String[]  // Text to display on failure
-                    {
-                        "You don't have enough scrap.",
-                        "You don't have enough rations.",
-                        ""
-                    },
-                    new Action[]  // Action to take on failure
-                    {
-                        () => {},
-                        () => {},
-                        () => {}
+                            () => {
+                                //SceneManager.UnloadSceneAsync("Encounter");
+                            },
+                            () => {}
                     }
                 );
 
-                  RandomEncounter renc11 = new RandomEncounter(
-                    "Town Leader",
-                    "Talk",
-                    "You attempt to contact the town leader, but they are not available right now.",
-                    new string[]
-                    {
-                        "Leave"
-                    },
-                    new string[]
-                    {
-                        "You leave."
-                    },
-                    new Action[]  // successful action
-                    {
-                        () => {
+                       RandomEncounter renc8 = new RandomEncounter(
+                            "Broken Gas Station",
+                            "Loot",
+                            "A lone gas station on the side of the road. The pump is broken."
+                            + "The owner says 'I could repair that with some supplies.'",
+                            new string[]
+                            {
+                                "Offer supplies (Requires Wrench, 6 Scrap Metal)",
+                                "Leave."
+                            },
+                            new string[]
+                            {
+                                "'Come back later and I'll have this fixed!'",
+                                "You leave the owner to his problems."
+                            },
+                            new Action[]  // successful action
+                            {
+                                () => {
+                                    var inventory = DataTracker.Current.Player.Inventory;
+                                    inventory.RemoveItem("Scrap Metal", 6);  // Scrap Metal
+                                    inventory.RemoveItem("Wrench", 1);  // Scrap Metal
+                                    OverworldMap.LocationNode node;
+                                    if (DataTracker.Current.WorldMap.GetNode(9, out node)){
+                                        node.LocationId = 9;
+                                    }
 
-                        }
+                                    //SceneManager.UnloadSceneAsync("Encounter");
+                                },
+                                () => {
 
-                    },
-                    new Func<bool>[]  // condition (whether the player can take the action or not)
-                    {
-                        () => {
-                            // Always available
-                            return true;
-                        }
-                    },
-                    new String[]  // Text to display on failure
-                    {
-                        ""
-                    },
-                    new Action[]  // Action to take on failure
-                    {
-                        () => {}
-                    }
-                );
+                                    //SceneManager.UnloadSceneAsync("Encounter");
+                                }
+                            },
+                            new Func<bool>[]  // condition (whether the player can take the action or not)
+                            {
+                                () => {
+                                    return DataTracker.Current.Player.Inventory.Contains("Wrench") > 0
+                                    && DataTracker.Current.Player.Inventory.Contains("Scrap Metal") > 5;
+                                },
+                                () => {
+                                    // Always available
+                                    return true;
+                                }
+                            },
+                            new String[]  // Text to display on failure
+                            {
+                                "You do not have enough supplies.",
+                                ""
+                            },
+                            new Action[]  // Action to take on failure
+                            {
+                                () => {},
+                                () => {}
+                            }
+                        );
 
-        EncounterManager.Instance.AddRandomEncounter(renc6);
-        EncounterManager.Instance.AddRandomEncounter(renc7);
-        EncounterManager.Instance.AddFixedEncounter(renc8);
-        EncounterManager.Instance.AddFixedEncounter(renc9);
-        EncounterManager.Instance.AddFixedEncounter(renc10);
-        EncounterManager.Instance.AddFixedEncounter(renc11);
+
+                     RandomEncounter renc9 = new RandomEncounter(
+                            "Gas Station",
+                            "Loot",
+                            "A lone gas station on the side of the road."
+                            + "The owner calls to you. 'Hey there, friend! Good deal on gas, just for you!' ",
+                            new string[]
+                            {
+                                "Purchase 9 gas for 3 scrap metal.",
+                                "Leave."
+                            },
+                            new string[]
+                            {
+                                "'Come back later!'",
+                                "You leave without buying."
+                            },
+                            new Action[]  // successful action
+                            {
+                                () => {
+
+                                    DataTracker.Current.Player.Inventory.AddItem("Fuel", 9);
+                                },
+                                () => {
+
+                                    //SceneManager.UnloadSceneAsync("Encounter");
+                                }
+                            },
+                            new Func<bool>[]  // condition (whether the player can take the action or not)
+                            {
+                                () => {
+                                    // Always available
+                                    return DataTracker.Current.Player.Inventory.Contains("Scrap Metal") > 2;
+                                },
+                                () => {
+                                    // Always available
+                                    return true;
+                                }
+                            },
+                            new String[]  // Text to display on failure
+                            {
+                                "You don't have enough scrap.",
+                                ""
+                            },
+                            new Action[]  // Action to take on failure
+                            {
+                                () => {},
+                                () => {}
+                            }
+                        );
+
+                        RandomEncounter renc10 = new RandomEncounter(
+                            "Repair Store",
+                            "Shop",
+                            "The town mechanic is offering repairs.",
+                            new string[]
+                            {
+                                "Pay with 3 scrap",
+                                "Pay with 2 rations",
+                                "Leave"
+                            },
+                            new string[]
+                            {
+                                "The mechanic repaires your vehicle.",
+                                "The mechanic repaires your vehicle.",
+                                "You leave the garage."
+                            },
+                            new Action[]  // successful action
+                            {
+                                () => {
+                                    var inventory = DataTracker.Current.Player.Inventory;
+                                    inventory.RemoveItem("Scrap Metal", 3);  // Scrap Metal
+                                    DataTracker.Current.Player.addHealth(75);
+                                    //SceneManager.UnloadSceneAsync("Encounter");
+                                },
+                                () => {
+                                    var inventory = DataTracker.Current.Player.Inventory;
+                                    inventory.RemoveItem("Rations", 2);
+                                    DataTracker.Current.Player.addHealth(75);
+                                    //SceneManager.UnloadSceneAsync("Encounter");
+                                },
+                                () => {
+
+                                }
+
+                            },
+                            new Func<bool>[]  // condition (whether the player can take the action or not)
+                            {
+                                () => {
+                                    // Always available
+                                    return DataTracker.Current.Player.Inventory.Contains("Scrap Metal") > 2;
+                                },
+                                () => {
+                                    // Only available if the player has 1 rpg
+                                    return DataTracker.Current.Player.Inventory.Contains("Rations") > 1;
+                                },
+                                () => {
+                                    // Always available
+                                    return true;
+                                }
+                            },
+                            new String[]  // Text to display on failure
+                            {
+                                "You don't have enough scrap.",
+                                "You don't have enough rations.",
+                                ""
+                            },
+                            new Action[]  // Action to take on failure
+                            {
+                                () => {},
+                                () => {},
+                                () => {}
+                            }
+                        );
+
+                          RandomEncounter renc11 = new RandomEncounter(
+                            "Town Leader",
+                            "Talk",
+                            "You attempt to contact the town leader, but they are not available right now.",
+                            new string[]
+                            {
+                                "Leave"
+                            },
+                            new string[]
+                            {
+                                "You leave."
+                            },
+                            new Action[]  // successful action
+                            {
+                                () => {
+
+                                }
+
+                            },
+                            new Func<bool>[]  // condition (whether the player can take the action or not)
+                            {
+                                () => {
+                                    // Always available
+                                    return true;
+                                }
+                            },
+                            new String[]  // Text to display on failure
+                            {
+                                ""
+                            },
+                            new Action[]  // Action to take on failure
+                            {
+                                () => {}
+                            }
+                        );
+
+                EncounterManager.Instance.AddRandomEncounter(renc6);
+                EncounterManager.Instance.AddRandomEncounter(renc7);
+                EncounterManager.Instance.AddFixedEncounter(renc8);
+                EncounterManager.Instance.AddFixedEncounter(renc9);
+                EncounterManager.Instance.AddFixedEncounter(renc10);
+                EncounterManager.Instance.AddFixedEncounter(renc11);*/
+
+        // ARL -- testing
+        foreach (var e in new JsonEncounterDataSource().GetEncounterEnumerator())
+        {
+            EncounterManager.Instance.AddFixedEncounter(e);
+        }
     }
 
     private void BeginQuest()

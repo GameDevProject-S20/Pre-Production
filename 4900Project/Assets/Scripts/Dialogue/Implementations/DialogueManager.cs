@@ -47,13 +47,12 @@ namespace Dialogue
         /// Creates a new dialog box with the given pages. 
         /// </summary>
         /// <param name="dialoguePages"></param>
-        public IDialogue CreateDialogue(IEnumerable<IDPage> dialoguePages)
+        public IDialogue CreateDialogue(IDPage root)
         {
             // The ID of the dialog will be the next index into our dialogs list.
             // Create the dialog for that ID, and add it to the list
-            IDialogue dialog = new Dialogue(dialogs.Count, dialoguePages);
+            IDialogue dialog = new Dialogue(dialogs.Count, root);
             dialogs.Add(dialog);
-            activeDialogs.Add(dialog);
 
             // Hook into the events for updating the active dialog / firing dialog changes
             // When a dialog is opened, set it as the active dialog
@@ -85,11 +84,21 @@ namespace Dialogue
                 UpdateActiveDialogue();
             });
 
-            // Update with the new active dialog
-            UpdateActiveDialogue();
-
             // Return the new dialog
             return dialog;
+        }
+
+        public void SetActive(IDialogue dialog)
+        {
+            if (!dialogs.Contains(dialog))
+            {
+                throw new ArgumentException("Dialogue must be created using DialogueManager.Create()");
+            }
+
+            activeDialogs.Add(dialog);
+
+            // Update with the new active dialog
+            UpdateActiveDialogue();
         }
 
         /// <summary>

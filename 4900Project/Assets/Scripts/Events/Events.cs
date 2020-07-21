@@ -1,5 +1,4 @@
 ﻿using UnityEngine.Events;
-using Quests;
 
 namespace SIEvents
 {
@@ -58,11 +57,10 @@ namespace SIEvents
 
         public class EncounterEvents
         {
-            //[System.Serializable]
-            //public class EncounterEvent : UnityEvent<EncounterLocation> { };
             [System.Serializable]
             public class TriggerEncounterEvent : UnityEvent<int> { };
-            
+            [System.Serializable]
+            public class EncounterComplete : UnityEvent<Encounters.Encounter> { };
         }
 
         public class DialogueEvents

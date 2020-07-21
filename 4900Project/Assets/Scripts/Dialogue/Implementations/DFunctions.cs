@@ -14,14 +14,6 @@ namespace Dialogue
     public static class DFunctions
     {
         /// <summary>
-        /// Advances the Dialogue system to the next page.
-        /// </summary>
-        public static readonly Action GoToNextPage = () =>
-        {
-            DialogueManager.Instance.GetActiveDialogue().GoToNextPage();
-        };
-
-        /// <summary>
         /// Closes the Dialogue.
         /// </summary>
         public static readonly Action CloseDialogue = () =>
@@ -39,7 +31,7 @@ namespace Dialogue
         {
             return () =>
             {
-                EventManager.Instance.onDialogueSelected.Invoke(argument);
+                EventManager.Instance.OnDialogueSelected.Invoke(argument);
             };
         }
     }

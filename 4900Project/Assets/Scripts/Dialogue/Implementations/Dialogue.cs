@@ -16,8 +16,8 @@ namespace Dialogue
         // Properties
         public int Id { get; protected set; }
         public bool IsVisible { get; protected set; }
-        protected IEnumerable<IDPage> Pages { get; set; }
-        protected IEnumerator<IDPage> PageEnumerator;
+
+        public IDPage CurrentPage { get; private set; }
 
         /// <summary>
         /// History of the Dialogue. 
@@ -44,21 +44,17 @@ namespace Dialogue
 
 
         // Constructor
-        public Dialogue(int id, IEnumerable<IDPage> pages)
+        public Dialogue(int id, IDPage root)
         {
             this.Id = id;
             this.IsVisible = true;
-            this.Pages = pages;
-            this.PageEnumerator = pages.GetEnumerator();
+            this.CurrentPage = root;
             this.History = new List<IDHistory>();
 
             // initialize the events
             PageUpdated = new DialogueUpdatedEvent();
             DialogueClosed = new DialogueUpdatedEvent();
             DialogueOpened = new DialogueUpdatedEvent();
-
-            // Start off on the first page
-            PageEnumerator.MoveNext();
         }
 
         // Public Getters
@@ -68,17 +64,17 @@ namespace Dialogue
         /// <returns></returns>
         public IDPage GetPage()
         {
-            return PageEnumerator.Current;
+            return CurrentPage;
         }
 
         /// <summary>
         /// Checks if the enumerator has reached the last page.
         /// </summary>
         /// <returns></returns>
-        public bool HasMorePages()
+        public bool HasNextPage(int buttonId)
         {
             // We're on the last page if our enumerator's current page is the last in the list
-            return PageEnumerator.Current != Pages.LastOrDefault();
+            return CurrentPage.GetButton(buttonId).NextPage != null;
         }
 
 
@@ -86,17 +82,16 @@ namespace Dialogue
         /// <summary>
         /// Advances the dialog to the next page.
         /// </summary>
-        public void GoToNextPage()
+        public void GoToNextPage(int buttonId)
         {
             // Verify that we can move forward
-            if (!HasMorePages())
+            if (!HasNextPage(buttonId))
             {
                 // TODO: Does this throw an error? Or do we just silently fail?
                 throw new Exception("Attempted to move to the next page, but there are no more pages.");
             }
 
-            // Push forward to the next page
-            PageEnumerator.MoveNext();
+            
             Update();
         }
 

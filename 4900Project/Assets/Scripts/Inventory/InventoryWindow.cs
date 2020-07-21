@@ -55,7 +55,7 @@ public class InventoryWindow : MonoBehaviour
     // Add item sprites
     void Populate()
     {
-        foreach(var item in DataTracker.Current.Player.Inventory.getContents()){
+        foreach(var item in DataTracker.Current.Player.Inventory.Contents){
             var listItem = GameObject.Instantiate(inventoryListItem, Vector3.zero, Quaternion.identity);
             listItem.GetComponentInChildren<TextMeshProUGUI>().text = ItemManager.Current.itemsMaster[item.Key].DisplayName + " (" + item.Value + ") ";
             listItem.transform.Find("Text").Find("Rarity").GetComponent<Image>().sprite = getValueString(ItemManager.Current.itemsMaster[item.Key].Value);

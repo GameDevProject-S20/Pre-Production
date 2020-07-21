@@ -41,6 +41,7 @@ namespace SIEvents
 
         //public Events.EncounterLocation.EncounterEvent OnEncounterEnter = new Events.EncounterLocation.EncounterEvent();
         public Events.EncounterEvents.TriggerEncounterEvent TriggerEncounter = new Events.EncounterEvents.TriggerEncounterEvent();
+        public Events.EncounterEvents.EncounterComplete OnEncounterComplete = new Events.EncounterEvents.EncounterComplete();
 
         //=== Quest ==================================================//
 
@@ -52,7 +53,7 @@ namespace SIEvents
 
         //=== Dialogue ===============================================//
 
-        public Events.DialogueEvents.SelectionEvent onDialogueSelected = new Events.DialogueEvents.SelectionEvent();
+        public Events.DialogueEvents.SelectionEvent OnDialogueSelected = new Events.DialogueEvents.SelectionEvent();
 
         //=== Map ====================================================//
 
