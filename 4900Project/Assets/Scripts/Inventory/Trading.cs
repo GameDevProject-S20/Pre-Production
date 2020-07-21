@@ -189,9 +189,9 @@ public class Trading : MonoBehaviour
 
     public void ScaleSwap()
     {
-        if (tradeFairness != validateTrade())
+        if (tradeFairness != validateTradeAfterModifiers())
         {
-            switch (validateTrade())
+            switch (validateTradeAfterModifiers())
             {
                 case 0:
                     break;
@@ -207,14 +207,14 @@ public class Trading : MonoBehaviour
             }
             AudioSource audioSource = GameObject.Find("Audio Source").GetComponent<AudioSource>();
             audioSource.PlayOneShot(ScaleChange, 1.0F);
-            tradeFairness = validateTrade();
+            tradeFairness = validateTradeAfterModifiers();
         }
 
     }
 
     public void onTradeButtonClick(){
         AudioSource audioSource = GameObject.Find("Audio Source").GetComponent<AudioSource>();
-        switch (validateTrade())
+        switch (validateTradeAfterModifiers())
         {
             case 0:
                 break;
@@ -251,8 +251,8 @@ public class Trading : MonoBehaviour
     /// </returns>
     int validateTrade(){
         if (copyOfPlayerInventory.CanFitItems(cart.TotalWeight())){
-            float totalCartValue = cart.TotalValue(shop.toPlayerModifiers);
-            float totalOfferValue = offer.TotalValue(shop.fromPlayerModifiers);
+            float totalCartValue = cart.TotalValue();
+            float totalOfferValue = offer.TotalValue();
             float difference =  totalOfferValue - totalCartValue;
             if(difference > totalCartValue * shop.acceptedPriceDifference) {
                 return 1;
@@ -265,6 +265,32 @@ public class Trading : MonoBehaviour
             }
         }
         else{
+            return 0;
+        }
+    }
+
+    int validateTradeAfterModifiers()
+    {
+        if (copyOfPlayerInventory.CanFitItems(cart.TotalWeight()))
+        {
+            float totalCartValue = cart.TotalValueAfterModifiers(shop.toPlayerModifiers);
+            float totalOfferValue = offer.TotalValueAfterModifiers(shop.fromPlayerModifiers);
+            float difference = totalOfferValue - totalCartValue;
+            if (difference > totalCartValue * shop.acceptedPriceDifference)
+            {
+                return 1;
+            }
+            else if (Mathf.Abs(difference) <= totalCartValue * shop.acceptedPriceDifference)
+            {
+                return 2;
+            }
+            else
+            {
+                return 3;
+            }
+        }
+        else
+        {
             return 0;
         }
     }

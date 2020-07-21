@@ -37,6 +37,7 @@ public class ShopManager
         Shop testShop8 = new Shop(7, "Martha's Medicine", "Medical Supplier", "", Shop.ShopTypes.Pharmacy);
         Shop testShop9 = new Shop(8, "Mike's Marketplace", "General Store", "", Shop.ShopTypes.GeneralStore);
         Shop testShop10 = new Shop(9, "Harry's Healing", "Medical Supplier", "", Shop.ShopTypes.Pharmacy);
+        testShop3.fromPlayerModifiers.Add(typetag.Medicine, 0.25f);
         shops.Add(0, testShop1);
         shops.Add(1, testShop2);
         shops.Add(2, testShop3);

@@ -16,8 +16,8 @@ public class Shop
 
     int townID;
 
-    public Dictionary<string, float> fromPlayerModifiers = new Dictionary<string, float>();
-    public Dictionary<string, float> toPlayerModifiers = new Dictionary<string, float>();
+    public Dictionary<typetag, float> fromPlayerModifiers = new Dictionary<typetag, float>();
+    public Dictionary<typetag, float> toPlayerModifiers = new Dictionary<typetag, float>();
     public float acceptedPriceDifference = 0.2f;
 
     public Inventory inventory = new Inventory();

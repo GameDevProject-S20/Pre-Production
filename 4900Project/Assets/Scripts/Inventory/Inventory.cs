@@ -91,6 +91,34 @@ public class Inventory
         return totalValue;
     }
 
+    public float TotalValueAfterModifiers(Dictionary<typetag,float> shopVals)
+    {
+        float totalValue = 0;
+        foreach (KeyValuePair<string, int> item in contents)
+        {
+            float valueModifier = 1;
+            foreach (typetag itemTag in ItemManager.Current.itemsMaster[item.Key].tags)
+            {
+                foreach (KeyValuePair<typetag, float> modify in TownManager.Instance.GetCurrentTownData().valueModifiers)
+                {
+                    if (itemTag == modify.Key)
+                    {
+                        valueModifier += modify.Value;
+                    }
+                }
+                foreach (KeyValuePair<typetag, float> shopMod in shopVals)
+                {
+                    if (itemTag == shopMod.Key)
+                    {
+                        valueModifier += shopMod.Value;
+                    }
+                }
+            }
+            totalValue += item.Value * ItemManager.Current.itemsMaster[item.Key].Value * valueModifier;
+        }
+        return totalValue;
+    }
+
     /// <summary>
     /// Calculate the total value of all items in the inventory, after some modifiers have been applied
     /// </summary>
