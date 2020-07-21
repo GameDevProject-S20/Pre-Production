@@ -19,13 +19,13 @@ namespace SIEvents
         //Todo
         public override void AllowProgression()
         {
-            EventManager.Instance.onDialogueSelected.AddListener(Handler);
+            EventManager.Instance.OnDialogueSelected.AddListener(Handler);
         }
 
         //Todo
         public override void DisallowProgression()
         {
-            EventManager.Instance.onDialogueSelected.RemoveListener(Handler);
+            EventManager.Instance.OnDialogueSelected.RemoveListener(Handler);
         }
 
         public void Handler(string dialogueButtonId)

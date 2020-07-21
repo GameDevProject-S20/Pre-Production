@@ -4,6 +4,6 @@ namespace Encounters
 {
     public interface IEncounterDataSource
     {
-        IEnumerator<Encounter> GetEncounterEnumerator();
+        IEnumerable<Encounter> GetEncounterEnumerator();
     }
 }

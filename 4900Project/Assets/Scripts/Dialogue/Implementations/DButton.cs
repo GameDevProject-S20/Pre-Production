@@ -15,6 +15,18 @@ namespace Dialogue
         public Action OnButtonClick { get; set; }
         public IEnumerable<IPresentCondition> Conditions { get; set; }
         public IEnumerable<IEffect> Effects { get; set; }
-        public IDPage NextPage { get; set; } 
+        public IDPage NextPage { get; set; }
+
+        public static DButton Exit
+        {
+            get => new DButton()
+            {
+                Text = "Done.",
+                OnButtonClick = DFunctions.CloseDialogue,
+                Conditions = Enumerable.Empty<IPresentCondition>(),
+                Effects = Enumerable.Empty<IEffect>(),
+                NextPage = null
+            };
+        }
     }
 }

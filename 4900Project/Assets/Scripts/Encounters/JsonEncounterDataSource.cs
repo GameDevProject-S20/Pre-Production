@@ -5,19 +5,49 @@ using System.Linq;
 using SIEvents;
 using Dialogue;
 using System;
+using FileConstants;
 
-public class CSVEncounterDataSource : IEncounterDataSource
+public class JsonEncounterDataSource : IEncounterDataSource
 {
+    private class RawJSON
+    {
+        public List<RawEncounter> encounters;
+    }
+
+    private class RawEncounter
+    {
+        public int id;
+        public List<string> conditions;
+        public string town_name;
+        public List<RawPage> dialogue_tree;
+    }
+
+    private class RawPage
+    {
+        public int id;
+        public string text;
+        public string avatar_name;
+        public List<RawButton> buttons;
+    }
+
+    private class RawButton
+    {
+        public string text;
+        public List<string> conditions;
+        public List<string> effects;
+        public int nextPageID;
+    }
+
+
     private readonly static char CONDITION_CHAR = '@';
     private readonly static char EFFECT_CHAR = '!';
-    private readonly static char COMMAND_SPLIT_CHAR = ';';
 
     // PUBLIC //
 
-    public IEnumerator<Encounter> GetEncounterEnumerator()
+    public IEnumerable<Encounter> GetEncounterEnumerator()
     {
-        // Load External file
-        return enumerable.Select(raw => parseEncounter(raw));
+        GameData.LoadJson<RawJSON>(Files.Encounter, out RawJSON result);
+        return result.encounters.Select(raw => parseEncounter(raw));
     }
 
 
@@ -31,24 +61,26 @@ public class CSVEncounterDataSource : IEncounterDataSource
     /// - parseEncounterCondition
     /// </summary>
     /// <returns>Encounter</returns>
-    private Encounter parseEncounter(/**/)
+    private Encounter parseEncounter(RawEncounter rawEncounter)
     {
         //### These are the properties we need to load in from file ###// 
-        var rawDialogue;
-        var rawConditions;
-        var rawEncounterTownId;
+        var rawDialogue = rawEncounter.dialogue_tree;
+        var rawConditions = rawEncounter.conditions;
+        var rawEncounterTownId = rawEncounter.town_name;
         //###                                                       ###//
 
         var dialogue = parseDialogue(rawDialogue);
-        var conditions = rawConditions.Select(rc => parseEncounterCondition(rc));
+        var conditions = rawConditions.Select(rc => parseEncounterCondition(rc)).ToList();
+        var townId = TownManager.Instance.GetTownByName(rawEncounterTownId).Id;
 
         Encounter encounter = new Encounter()
         {
             Dialogue = dialogue,
             Conditions = conditions,
-            FixedEncounterTownId = rawEncounterTownId
+            FixedEncounterTownId = townId
         };
 
+        return encounter;
     }
 
     /// <summary>
@@ -58,36 +90,50 @@ public class CSVEncounterDataSource : IEncounterDataSource
     /// - parsePage
     /// </summary>
     /// <returns>Dialogue</returns>
-    private IDialogue parseDialogue(/**/)
+    private IDialogue parseDialogue(List<RawPage> rawPages)
     {
-        //#############################################################//
-        //### These are the properties we need to load in from file ###// 
-        var rawAvatarName; // Don't store in memory -- just look up the file when it's time to render it
-        var rawPages;
-        //###                                                       ###//
-        //#############################################################//
 
         // Because we don't have all the IDPages by the time we go to create most all of the buttons,
         // we create them "disconnected", by keeping reference to the page id and buttons' next page ids
         // and then connecting them in the following step
-        var disconnectedPages = new Dictionary<int, Tuple<IDPage, Dictionary<IDButton, int?>>>();
-        rawPages.Select(rp => disconnectedPages.Add(parsePage(rp)));
+        var disconnectedPages =
+            rawPages
+                .Select(rp => parsePage(rp))
+                .ToDictionary(p => p.Item1, p => p.Item2);
+       
 
         // This should be the first page (id 0)
-        var rootPage = disconnectedPages[0];
+        var rootPage = disconnectedPages[0].Item1;
+        var avatar = rootPage.Avatar;
 
         // Connect pages
-        disconnectedPages.Select(kvp => kvp.Value.Item1.Buttons = kvp.Value.Item2.Select(kvp2 =>
+        disconnectedPages.Select(kvp =>
         {
-            var nextPage = kvp2.Value;
-            if (nextPage.HasValue)
+            IDPage page = kvp.Value.Item1;
+            IEnumerable<KeyValuePair<IDButton, int?>> buttons = kvp.Value.Item2.AsEnumerable();
+
+            // If no avatar specified, default to using the root page's avatar
+            if (page.Avatar == null)
             {
-                kvp2.Key.NextPage = disconnectedPages[nextPage.Value].Item1;
+                page.Avatar = avatar;
             }
-        }));
+
+            page.Buttons = buttons.Select(kvp2 =>
+            {
+                IDButton button = kvp2.Key;
+                int? nextPage = kvp2.Value;
+                if (nextPage.HasValue)
+                {
+                    kvp2.Key.NextPage = disconnectedPages[nextPage.Value].Item1;
+                }
+                return button;
+            });
+
+            return page;
+        });
 
         // Create page
-        DialogueManager.Instance.CreateDialogue(rootPage);
+        return DialogueManager.Instance.CreateDialogue(rootPage);
     }
 
     /// <summary>
@@ -120,13 +166,13 @@ public class CSVEncounterDataSource : IEncounterDataSource
     /// - parseButton
     /// </summary>
     /// <returns>A dictionary entry containing pages mapped to buttons and the button nextpage ids</returns>
-    private KeyValuePair<int, Tuple<IDPage, Dictionary<IDButton, int?>>> parsePage(/**/)
+    private Tuple<int, Tuple<IDPage, Dictionary<IDButton, int?>>> parsePage(RawPage rawPage)
     {
         //#############################################################//
         //### These are the properties we need to load in from file ###// 
-        var rawId;
-        var rawText;
-        var rawButtons; // Nested object
+        var id = rawPage.id;
+        var rawText = rawPage.text;
+        var rawButtons = rawPage.buttons; // Nested object
         //###                                                       ###//
         //#############################################################//
 
@@ -135,12 +181,20 @@ public class CSVEncounterDataSource : IEncounterDataSource
             Text = rawText
         };
 
-        var id = Int16.Parse(rawId);
-
         // This is messy, but it just parses the buttons and returns the relevent information, pages not currently
         // linked together
-        var buttons = rawButtons.Select(rb => parseButton(rb)).ToDictionary(b => b.Key, b => b.Value);
-        return new KeyValuePair<int, Tuple<IDPage, Dictionary<IDButton, int?>>>(id, new Tuple<IDPage, Dictionary<IDButton, int?>>(page, buttons));
+        Dictionary<IDButton, int?> buttons;
+        if (rawButtons.Count > 0)
+        {
+            buttons = rawButtons.Select(rb => parseButton(rb)).ToDictionary(b => b.Key, b => b.Value);
+        }
+        else
+        {
+            buttons = new Dictionary<IDButton, int?>();
+            buttons.Add(DButton.Exit, null);
+        }
+        
+        return new Tuple<int, Tuple<IDPage, Dictionary<IDButton, int?>>>(id, new Tuple<IDPage, Dictionary<IDButton, int?>>(page, buttons));
     }
 
     /// <summary>
@@ -151,44 +205,28 @@ public class CSVEncounterDataSource : IEncounterDataSource
     /// - parsePageOptionEffect
     /// </summary>
     /// <returns>Button and the id for the next page</returns>
-    private KeyValuePair<IDButton, int?> parseButton(/**/)
+    private KeyValuePair<IDButton, int?> parseButton(RawButton rawButton)
     {
         //#############################################################//
         //### These are the properties we need to load in from file ###// 
-        var rawText;
-        var rawStatements; // These are the sciptable commands (see Issue #135) that can be given as a single string of text
-        var rawNextPageId;
+        var rawText = rawButton.text;
+        var rawConditions = rawButton.conditions;
+        var rawEffects = rawButton.effects;
+        var nextPageId = rawButton.nextPageID;
         //###                                                       ###//
         //#############################################################//
 
-        var condition_statements = new List<string[]>();
-        var effects_statements = new List<string[]>();
+        var conditions =
+            rawConditions
+                .Select(e => e.Trim())
+                .Select(e => e.Split(' '))
+                .Select(e => parsePageOptionCondition(e));
 
-        // Split script commands into individual statements and separate
-        // conditions from effects
-        var command_dict = rawStatements.Split(COMMAND_SPLIT_CHAR)
-            .Select(c => c.Trim())
-            .Select(sc => sc.Split(' '))
-            .GroupBy(sc => sc.First().FirstOrDefault())
-            .ToDictionary(sc => sc.Key, sc => sc.ToList())
-            .ToList().ForEach(kvp =>
-            {
-                if (kvp.Key == CONDITION_CHAR)
-                {
-                    condition_statements.AddRange(kvp.Value);
-                }
-                else if (kvp.Key == EFFECT_CHAR)
-                {
-                    effects_statements.AddRange(kvp.Value);
-                }
-                else
-                {
-                    Debug.WriteLine(string.Format("Command identifier {0} not recognized", kvp.Key));
-                }
-            });
-
-        var conditions = condition_statements.Select(args => parsePageOptionCondition(args));
-        var effects = effects_statements.Select(args => parseEffect(args));
+        var effects =
+            rawEffects
+                .Select(e => e.Trim())
+                .Select(e => e.Split(' '))
+                .Select(e => parseEffect(e));
 
         var button = new DButton()
         {
@@ -196,8 +234,6 @@ public class CSVEncounterDataSource : IEncounterDataSource
             Conditions = conditions,
             Effects = effects
         };
-
-        var nextPageId = Int16.Parse(rawText);
 
         return new KeyValuePair<IDButton, int?>(button, nextPageId);
     }

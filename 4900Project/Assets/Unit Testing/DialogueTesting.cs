@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Dialogue;
 using NUnit.Framework;
-using UnityEngine;
-using UnityEngine.TestTools;
 
 namespace Tests
 {
@@ -16,16 +14,15 @@ namespace Tests
         public void DialogueCanBeCreatedTest()
         {
             // Create a new page template
-            var pages = new List<IDPage>() {
-                new DPage()
-                {
-                    Text = "Hello World!",
-                    Buttons = new List<IDButton>()
-                }
+            var page = new DPage()
+            {
+                Text = "Hello World!",
+                Buttons = new List<IDButton>()
             };
+            
 
             // Create the dialog & verify that it exists
-            var dialog = DialogueManager.Instance.CreateDialogue(pages);
+            var dialog = DialogueManager.Instance.CreateDialogue(page);
             Assert.IsNotNull(dialog, "The dialog creation failed: Received a null result");
 
             // Verify that the dialog can be found by ID
@@ -42,24 +39,10 @@ namespace Tests
         public void DialogHelperFunctionsTest()
         {
             // Set up a pages object that uses the DFunctions actions for advancing 
-            var pages = new List<IDPage>()
+            var p2 = new DPage()
             {
-                new DPage()
-                {
-                    Text = "Page 1",
-                    Buttons = new List<IDButton>()
-                    {
-                        new DButton()
-                        {
-                            Text = "Next",
-                            OnButtonClick = DFunctions.GoToNextPage
-                        }
-                    }
-                },
-                new DPage()
-                {
-                    Text = "Page 2",
-                    Buttons = new List<IDButton>()
+                Text = "Page 2",
+                Buttons = new List<IDButton>()
                     {
                         new DButton()
                         {
@@ -67,11 +50,28 @@ namespace Tests
                             OnButtonClick = DFunctions.CloseDialogue
                         }
                     }
-                }
+            };
+
+            var p1 = new DPage()
+            {
+                Text = "Page 1",
+                Buttons = new List<IDButton>()
+                    {
+                        new DButton()
+                        {
+                            Text = "Next",
+                            NextPage = p2
+                        }
+                    }
+            };
+
+            var pages = new List<IDPage>()
+            {
+                p1, p2
             };
 
             // Create the dialog
-            var dialog = DialogueManager.Instance.CreateDialogue(pages);
+            var dialog = DialogueManager.Instance.CreateDialogue(p1);
 
             // Verify that it starts on the first page
             Assert.AreEqual("Page 1", dialog.GetPage().Text, $"The actual page text did not match what was expected. Received {dialog.GetPage().Text}");
@@ -94,17 +94,15 @@ namespace Tests
         [Test]
         public void MultipleActiveDialogsTest()
         {
-            var pageObject = new List<IDPage>(){
-                new DPage()
+            var pageObject = new DPage()
+            {
+                Text = "Page",
+                Buttons = new List<IDButton>()
                 {
-                    Text = "Page",
-                    Buttons = new List<IDButton>()
+                    new DButton()
                     {
-                        new DButton()
-                        {
-                            Text = "Hello World",
-                            OnButtonClick = DFunctions.CloseDialogue
-                        }
+                        Text = "Hello World",
+                        OnButtonClick = DFunctions.CloseDialogue
                     }
                 }
             };
