@@ -31,6 +31,22 @@ public class Shop
         type = type_;
         inventory.weightLimit = 10000;
         InitializeInventory();
+        // Randomly Select an Icon
+        // Do not select the ugly ones
+        int iconId = -1;
+        bool valid = false;
+        while (!valid)
+        {
+            iconId = Mathf.FloorToInt(Random.Range(0, 31));
+            if (iconId != 10
+            && iconId != 12
+            && iconId != 15
+            && iconId != 18
+            && iconId != 20)
+                valid = true;
+        }
+        string path = "Icons/CyberPunk Avatars/" + iconId.ToString("D3");
+        Portrait = Resources.Load<Sprite>(path);
     }
 
     void InitializeInventory(){

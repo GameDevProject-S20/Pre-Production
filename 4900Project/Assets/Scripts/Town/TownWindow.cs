@@ -79,33 +79,33 @@ public class TownWindow : MonoBehaviour
         transform.Find("TownBackground").Find("TownName").GetComponent<Text>().text = townData.Name;
         transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("Description").GetComponent<Text>().text = townData.Description;
 
-
+        // TODO: disabled for build, and because it isn't working - replace with accepted mockup style 
         //use rarity tier of town to determine proper icon
-        if (townData.tier != rarity.None)
-        {
-            switch (townData.tier)
-            {
-                case rarity.Abundant:
-                    transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("RarityIcon").GetComponent<Image>().sprite = AbundantIcon;
-                    break;
-                case rarity.Common:
-                    transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("RarityIcon").GetComponent<Image>().sprite = CommonIcon;
-                    break;
-                case rarity.Uncommon:
-                    transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("RarityIcon").GetComponent<Image>().sprite = UncommonIcon;
-                    break;
-                case rarity.Rare:
-                    transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("RarityIcon").GetComponent<Image>().sprite = RareIcon;
-                    break;
-                case rarity.Unique:
-                    transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("RarityIcon").GetComponent<Image>().sprite = LegendaryIcon;
-                    break;
-            }
-        }
-        else
-        {
-            transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("RarityIcon").GetComponent<Image>().sprite = IconMissing;
-        }
+        //if (townData.tier != rarity.None)
+        //{
+        //    switch (townData.tier)
+        //    {
+        //        case rarity.Abundant:
+        //            transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("RarityIcon").GetComponent<Image>().sprite = AbundantIcon;
+        //            break;
+        //        case rarity.Common:
+        //            transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("RarityIcon").GetComponent<Image>().sprite = CommonIcon;
+        //            break;
+        //        case rarity.Uncommon:
+        //            transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("RarityIcon").GetComponent<Image>().sprite = UncommonIcon;
+        //            break;
+        //        case rarity.Rare:
+        //            transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("RarityIcon").GetComponent<Image>().sprite = RareIcon;
+        //            break;
+        //        case rarity.Unique:
+        //            transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("RarityIcon").GetComponent<Image>().sprite = LegendaryIcon;
+        //            break;
+        //    }
+        //}
+        //else
+        //{
+        //    transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("RarityIcon").GetComponent<Image>().sprite = IconMissing;
+        //}
 
         //Post tag images related to town
         for (int i = 1; i < 5; i++)

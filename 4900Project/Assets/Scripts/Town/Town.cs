@@ -44,7 +44,28 @@ public class Town
         }
         string path = "Icons/CyberPunk Avatars/" + iconId.ToString("D3");
         LeaderPortrait = Resources.Load<Sprite>(path);
-
+        // select a random image for town
+        // TODO: Replace with setting based on town size
+        iconId = Mathf.FloorToInt(Random.Range(0, 4));
+        string iconName;
+        switch (iconId)
+        {
+            case 1:
+                iconName = "Hut";
+                break;
+            case 2:
+                iconName = "Town";
+                break;
+            case 3:
+                iconName = "SmallCity";
+                break;
+            default:
+                iconName = "LargeCity";
+                break;
+        }
+        path = "Icons/Town/" + iconName;
+        Icon = Resources.Load<Sprite>(path);
+        
     }
 
     public void AddShop(int i)
