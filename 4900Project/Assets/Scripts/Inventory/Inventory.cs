@@ -42,21 +42,10 @@ public class Inventory
 
 
     /// <summary>
-    /// Returns the weight class of the inventory
+    /// Returns the weight fill percentage
     /// </summary>
-    /// <returns>weight class, 3 for heavy, 2 for normal, 1 for light.</returns>
-    public int WeightClass() {
-        float howFull = TotalWeight()/weightLimit;
-        Debug.Log("howfull=" + howFull);
-        if (howFull > 0.7f) 
-        {
-            return 3;
-        }
-        else if(howFull > 0.3f) 
-        {
-            return 2;
-        }
-        return 1;
+    public float GetWeightRatio() {
+        return TotalWeight()/weightLimit;
     }
 
     /// <summary>

@@ -73,7 +73,7 @@ public class Initializer : MonoBehaviour
              new Action[]
              {
                                      () => {
-                                        DataTracker.Current.Player.Inventory.AddItem("Fuel", 12);
+                                        DataTracker.Current.Player.Inventory.AddItem("Fuel", 60);
                                          DataTracker.Current.Player.Inventory.AddItem("Medicine", 8);
                                          BeginQuest();
                                          EncounterManager.Instance.GetFixedEncounter(3).AllowProgression();
@@ -170,7 +170,7 @@ public class Initializer : MonoBehaviour
                         () => {
                             var inventory = DataTracker.Current.Player.Inventory;
                             inventory.RemoveItem("Generator", 1);  // Scrap Metal
-                            DataTracker.Current.Player.Inventory.AddItem("Fuel", 16);
+                            DataTracker.Current.Player.Inventory.AddItem("Fuel", 80);
                             TownManager.Instance.GetTownByName("Smithsville").leaderDialogueEncounterId = 11;
                             EventManager.Instance.onDialogueSelected.Invoke("TutorialPart5GiveGenerator");
                             DataTracker.Current.WorldMap.AddEdge(3, 15);
@@ -385,7 +385,7 @@ RandomEncounter renc6 = new RandomEncounter(
                     + "The owner calls to you. 'Hey there, friend! Good deal on gas, just for you!' ",
                     new string[]
                     {
-                        "Purchase 9 gas for 3 scrap metal.",
+                        "Purchase 30 gas for 3 scrap metal.",
                         "Leave."
                     },
                     new string[]
@@ -397,7 +397,7 @@ RandomEncounter renc6 = new RandomEncounter(
                     {
                         () => {
                             
-                            DataTracker.Current.Player.Inventory.AddItem("Fuel", 9);
+                            DataTracker.Current.Player.Inventory.AddItem("Fuel", 30);
                         },
                         () => {
 

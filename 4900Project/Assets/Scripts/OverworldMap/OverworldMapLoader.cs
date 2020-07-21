@@ -31,7 +31,7 @@ public class OverworldMapLoader
         resultString.AppendLine("Loading in from file:");
         foreach (Node data in resultN)
         {
-            graph.AddNode(new OverworldMap.LocationNode(data.LocationId, data.Id, data.Name, (OverworldMap.LocationType)System.Enum.Parse(typeof(OverworldMap.LocationType), data.Type), data.PosX / DataTracker.Current.mapScale, data.PosY / DataTracker.Current.mapScale));
+            graph.AddNode(new OverworldMap.LocationNode(data.LocationId, data.Id, data.Name, (OverworldMap.LocationType)System.Enum.Parse(typeof(OverworldMap.LocationType), data.Type), data.PosX / DataTracker.Current.MapSize, data.PosY / DataTracker.Current.MapSize));
             resultString.AppendLine("Added Node #" + data.Id + ": " + data.Name);
         }
         UnityEngine.Debug.Log(resultString);
