@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
+using System.IO;
 
 namespace UnityUtility
 {
@@ -57,9 +59,52 @@ namespace UnityUtility
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        static string DefaultStringParser(string value)
+        public static string DefaultStringParser(string value)
         {
             return value;
+        }
+
+        /// <summary>
+        /// Given a path to an image file, generates a Sprite that we can use of the image.
+        /// This allows us to pop some images in through CSVs / through their path / etc., rather than doing it in the Unity editor.
+        /// </summary>
+        /// <param name="iconPath"></param>
+        /// <returns></returns>
+        public static Sprite BuildSpriteFromPath(string imagePath)
+        {
+            var texture = LoadTexture(imagePath);
+            return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, 0), 100.0f);
+        }
+
+        /// <summary>
+        /// Builds a texture out of an image. Note that this is protected because it's mainly just used for the Sprites right now,
+        /// but we can make it public later on if it fills a need.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        protected static Texture2D LoadTexture(string path)
+        {
+            // Load a PNG or JPG file from disk to a Texture2D
+            // Returns null if load fails
+            Texture2D Tex2d;
+            byte[] FileData;
+
+            // Verify that the file exists
+            if (File.Exists(path))
+            {
+                FileData = File.ReadAllBytes(path);
+                Tex2d = new Texture2D(2, 2);
+
+                // Try to load it into the Texture object
+                // Note that if this returns false, it means there was an error
+                //  and the texture couldn't be loaded
+                if (Tex2d.LoadImage(FileData))
+                {
+                    return Tex2d;
+                }
+            }
+
+            throw new Exception($"Could not read the file specified at {path}");
         }
     }
 }

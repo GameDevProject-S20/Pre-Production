@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityUtility;
@@ -34,6 +35,7 @@ public class Item
     public float Weight;
     public rarity tier;
     public List<typetag> tags;
+    public Sprite Icon;
 
     protected static rarity CalculateTier(float Value)
     {
@@ -59,6 +61,7 @@ public class Item
             return rarity.Abundant;
         }
     }
+
     /// <summary>
     /// Creates an item given the values to set.
     /// This can be used for hardcoding items.
@@ -94,6 +97,7 @@ public class Item
         Weight = itemData.Weight;
         tags = UnityHelperMethods.ParseCommaSeparatedList<typetag>(itemData.Tags, UnityHelperMethods.ParseEnum<typetag>);
         tier = CalculateTier(Value);
+        Icon = UnityHelperMethods.BuildSpriteFromPath($"{Application.dataPath}/Resources/Icons/Survival Gear Icons/{itemData.IconName}");
     }
 
 }
