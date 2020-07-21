@@ -9,33 +9,37 @@ using FileConstants;
 
 public class JsonEncounterDataSource : IEncounterDataSource
 {
-    private class RawJSON
+    [System.Serializable]
+    public class RawJSON
     {
-        public List<RawEncounter> encounters;
+        public RawEncounter[] encounters;
     }
 
-    private class RawEncounter
+    [System.Serializable]
+    public class RawEncounter
     {
-        public int id;
-        public List<string> conditions;
+        public int encounter_id;
+        public string[] conditions;
         public string town_name;
-        public List<RawPage> dialogue_tree;
+        public RawPage[] dialogue_tree;
     }
 
-    private class RawPage
+    [System.Serializable]
+    public class RawPage
     {
         public int id;
         public string text;
         public string avatar_name;
-        public List<RawButton> buttons;
+        public RawButton[] buttons;
     }
 
-    private class RawButton
+    [System.Serializable]
+    public class RawButton
     {
         public string text;
-        public List<string> conditions;
-        public List<string> effects;
-        public int nextPageID;
+        public string[] conditions;
+        public string[] effects;
+        public int next_page_id;
     }
 
 
@@ -90,7 +94,7 @@ public class JsonEncounterDataSource : IEncounterDataSource
     /// - parsePage
     /// </summary>
     /// <returns>Dialogue</returns>
-    private IDialogue parseDialogue(List<RawPage> rawPages)
+    private IDialogue parseDialogue(RawPage[] rawPages)
     {
 
         // Because we don't have all the IDPages by the time we go to create most all of the buttons,
@@ -184,7 +188,7 @@ public class JsonEncounterDataSource : IEncounterDataSource
         // This is messy, but it just parses the buttons and returns the relevent information, pages not currently
         // linked together
         Dictionary<IDButton, int?> buttons;
-        if (rawButtons.Count > 0)
+        if (rawButtons.Length > 0)
         {
             buttons = rawButtons.Select(rb => parseButton(rb)).ToDictionary(b => b.Key, b => b.Value);
         }
@@ -212,7 +216,7 @@ public class JsonEncounterDataSource : IEncounterDataSource
         var rawText = rawButton.text;
         var rawConditions = rawButton.conditions;
         var rawEffects = rawButton.effects;
-        var nextPageId = rawButton.nextPageID;
+        var nextPageId = rawButton.next_page_id;
         //###                                                       ###//
         //#############################################################//
 
