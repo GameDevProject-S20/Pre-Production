@@ -20,8 +20,8 @@ public class BackroundMusic : MonoBehaviour
     private float finalVolume;
     private float volumeFadeStep;
 
-    private float playTime;
-    private float silenceTime;
+    private float playTime = 0;
+    private float silenceTime = 0;
 
     // Start is called before the first frame update
     void Start()
