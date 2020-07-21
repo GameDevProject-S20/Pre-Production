@@ -32,7 +32,7 @@ namespace FileConstants
         // Items CSV
         public static readonly FileStorageData Items = new FileStorageData()
         {
-            GoogleDriveFileId = "1FfBoXktnMt-L44RBr4YOiQFztfTFeJVKOX56EC_FxjE",
+            GoogleDriveFileId = "1zT5RKm-cFOMkGjg3OQwewlrfC3SuKmbwk1d7Ei1juuA",
             LocalBackupFile = $"{Application.streamingAssetsPath}/BackupData/Items.csv"
         };
 
