@@ -18,6 +18,7 @@ public class InventoryWindow : MonoBehaviour
         foreach(var item in DataTracker.Current.Player.Inventory.getContents()){
             var listItem = GameObject.Instantiate(inventoryListItem, Vector3.zero, Quaternion.identity);
             listItem.GetComponentInChildren<TextMeshProUGUI>().text = ItemManager.Current.itemsMaster[item.Key].DisplayName + " (" + item.Value + ") ";
+            listItem.transform.Find("Icon").GetComponent<Image>().sprite = ItemManager.Current.itemsMaster[item.Key].Icon;
             listItem.transform.SetParent(playerInventoryObject, false);
             listItem.name = ItemManager.Current.itemsMaster[item.Key].DisplayName + "_button";
         }
