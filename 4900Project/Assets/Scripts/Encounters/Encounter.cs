@@ -21,19 +21,19 @@ namespace Encounters
         /// </summary>
         public int Id;
 
-        public IDialogue Dialogue;
+        public IDialogue Dialogue = null;
 
         /// <summary>
         /// Conditions that must be satisfied before the encounter will occur
         /// Intended for Fixed Encounters only
         /// </summary>
-        public List<Condition> Conditions;
+        public List<Condition> Conditions = null;
 
         /// <summary>
         /// The town to be entered in order to trigger the encounter
         /// Intended for Fixed Encounters only
         /// </summary>
-        public int? FixedEncounterTownId;
+        public int? FixedEncounterTownId = null;
 
         private UnityAction<Condition> onConditionCompleteListener;
         private UnityAction<Town> onTownEnterListener;
@@ -137,6 +137,11 @@ namespace Encounters
 
             // ARL -- should this be elsewhere? Look how Quest handles this
             EventManager.Instance.OnEncounterComplete.Invoke(this);
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Encounter {0}\n\nTown: {1}\nConditions: [\n{2}\n]\nDialogue: {{\n{3}}}", Id, FixedEncounterTownId.Value, string.Join(",\n", Conditions.Select(c => string.Format("{{\n{0}\n}}", c))), Dialogue);
         }
     }
 }

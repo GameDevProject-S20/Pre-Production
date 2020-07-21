@@ -46,7 +46,7 @@ namespace FileConstants
         public static readonly FileStorageData Encounter = new FileStorageData()
         {
             GoogleDriveFileId = "1TnbTKRPdJhM8y8aJjfOHjc8hkNp0ou11",
-            LocalBackupFile = $"{Application.dataPath}/BackupData/Encounter.json"
+            LocalBackupFile = $"{Application.streamingAssetsPath}/BackupData/Encounter.json"
         };
 
         // Tutorial CSV

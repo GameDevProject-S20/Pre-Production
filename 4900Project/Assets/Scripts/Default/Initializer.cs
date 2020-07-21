@@ -554,7 +554,9 @@ public class Initializer : MonoBehaviour
         // ARL -- testing
         foreach (var e in new JsonEncounterDataSource().GetEncounterEnumerator())
         {
+            Debug.Log(e.ToString());    
             EncounterManager.Instance.AddFixedEncounter(e);
+            e.AllowProgression();
         }
     }
 
