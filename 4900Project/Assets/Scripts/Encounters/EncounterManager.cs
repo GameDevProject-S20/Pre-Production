@@ -49,10 +49,6 @@ namespace Encounters
         public void AddFixedEncounter(Encounter enc)
         {
             fixedEncounters.Add(enc.Id, enc);
-
-            foreach(var e in fixedEncounters){
-                Debug.Log(e.Key + " - " + e.Value.Name);
-            }
         }
 
         public void RemoveFixedEncounter(Encounter encounter)
