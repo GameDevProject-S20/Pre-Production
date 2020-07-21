@@ -189,13 +189,13 @@ public class Trading : MonoBehaviour
                 case 0:
                     break;
                 case 1:
-                    Scale.GetComponent<Image>().sprite = ShopTrade;
+                    Scale.GetComponent<Image>().sprite = PlayerTrade;
                     break;
                 case 2:
                     Scale.GetComponent<Image>().sprite = FairTrade;
                     break;
                 case 3:
-                    Scale.GetComponent<Image>().sprite = PlayerTrade;
+                    Scale.GetComponent<Image>().sprite = ShopTrade;
                     break;
             }
             AudioSource audioSource = GameObject.Find("Audio Source").GetComponent<AudioSource>();
