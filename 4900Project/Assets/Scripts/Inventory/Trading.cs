@@ -182,9 +182,9 @@ public class Trading : MonoBehaviour
 
     public void ScaleSwap()
     {
-        if (tradeFairness != validateTrade())
+        if (tradeFairness != validateTradeAfterModifiers())
         {
-            switch (validateTrade())
+            switch (validateTradeAfterModifiers())
             {
                 case 0:
                     break;
@@ -200,7 +200,7 @@ public class Trading : MonoBehaviour
             }
             AudioSource audioSource = GameObject.Find("Audio Source").GetComponent<AudioSource>();
             audioSource.PlayOneShot(ScaleChange, 1.0F);
-            tradeFairness = validateTrade();
+            tradeFairness = validateTradeAfterModifiers();
         }
 
     }
