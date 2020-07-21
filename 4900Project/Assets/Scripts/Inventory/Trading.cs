@@ -44,6 +44,12 @@ public class Trading : MonoBehaviour
     [SerializeField]
     AudioClip ScaleChange;
     [SerializeField]
+    AudioClip SuccessfulTrade;
+    [SerializeField]
+    AudioClip OverGenerous;
+    [SerializeField]
+    AudioClip RejectedOffer;
+    [SerializeField]
     Sprite AbundantImage;
     [SerializeField]
     Sprite UncommonImage;
@@ -207,6 +213,7 @@ public class Trading : MonoBehaviour
     }
 
     public void onTradeButtonClick(){
+        AudioSource audioSource = GameObject.Find("Audio Source").GetComponent<AudioSource>();
         switch (validateTrade())
         {
             case 0:
@@ -214,13 +221,16 @@ public class Trading : MonoBehaviour
             case 1:
                 offerFeedback.GetComponent<TMPro.TextMeshProUGUI>().text = "My now, what a generous offer!";
                 makeTrade();
+                audioSource.PlayOneShot(OverGenerous, 1.0F);
                 break;
             case 2:
                 offerFeedback.GetComponent<TMPro.TextMeshProUGUI>().text = "A fair offer, you got yourself a deal";
                 makeTrade();
+                audioSource.PlayOneShot(SuccessfulTrade, 1.0F);
                 break;
             case 3:
                 offerFeedback.GetComponent<TMPro.TextMeshProUGUI>().text = "This ain't a charity, make a real offer would ya";
+                audioSource.PlayOneShot(RejectedOffer, 1.0F);
                 break;
         }
     }
