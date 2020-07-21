@@ -6,6 +6,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 //using UnityEngine.XR.WSA.Input;
 using SIEvents;
+using System;
+using UnityEngine.Events;
 
 public class Trading : MonoBehaviour
 {
@@ -65,6 +67,25 @@ public class Trading : MonoBehaviour
     //                           UI Functions                               //
     //======================================================================//
 
+    /// <summary>
+    /// Generates the list item for a single Item, pushing it into the given parent with the given button handler.
+    /// Fetches item details from the ItemManager.
+    /// </summary>
+    /// <param name="itemName"></param>
+    /// <param name="quantity"></param>
+    /// <param name="parent"></param>
+    /// <param name="onClick"></param>
+    void buildListItem(string itemName, int quantity, Transform parent, UnityAction onClick)
+    {
+        var listItem = GameObject.Instantiate(inventoryListItem, Vector3.zero, Quaternion.identity);
+        listItem.GetComponentInChildren<TextMeshProUGUI>().text = ItemManager.Current.itemsMaster[itemName].DisplayName + " (" + quantity + ") ";
+        listItem.transform.Find("Text").Find("Rarity").GetComponent<Image>().sprite = getValueString(ItemManager.Current.itemsMaster[itemName].Value);
+        listItem.transform.Find("Icon").GetComponent<Image>().sprite = ItemManager.Current.itemsMaster[itemName].Icon;
+        listItem.transform.SetParent(parent, false);
+        listItem.GetComponent<Button>().onClick.AddListener(onClick);
+        listItem.name = ItemManager.Current.itemsMaster[itemName].DisplayName + "_button";
+    }
+
     void buildShopList(){
 
         foreach(Transform child in shopInventoryObject.transform){
@@ -72,12 +93,7 @@ public class Trading : MonoBehaviour
         }
 
         foreach(var item in copyOfShopInventory.getContents()){
-            var listItem = GameObject.Instantiate(inventoryListItem, Vector3.zero, Quaternion.identity);
-            listItem.GetComponentInChildren<TextMeshProUGUI>().text = ItemManager.Current.itemsMaster[item.Key].DisplayName + " (" + item.Value + ") ";
-            listItem.transform.Find("Text").Find("Rarity").GetComponent<Image>().sprite = getValueString(ItemManager.Current.itemsMaster[item.Key].Value);
-            listItem.transform.SetParent(shopInventoryObject, false);
-            listItem.GetComponent<Button>().onClick.AddListener(() => {addToCart(item.Key);});
-            listItem.name = ItemManager.Current.itemsMaster[item.Key].DisplayName + "_button";
+            buildListItem(item.Key, item.Value, shopInventoryObject, () => { addToCart(item.Key); });
         }
 
     }
@@ -89,12 +105,7 @@ public class Trading : MonoBehaviour
         }
 
         foreach(var item in copyOfPlayerInventory.getContents()){
-            var listItem = GameObject.Instantiate(inventoryListItem, Vector3.zero, Quaternion.identity);
-            listItem.GetComponentInChildren<TextMeshProUGUI>().text = ItemManager.Current.itemsMaster[item.Key].DisplayName + " (" + item.Value + ") ";
-            listItem.transform.Find("Text").Find("Rarity").GetComponent<Image>().sprite = getValueString(ItemManager.Current.itemsMaster[item.Key].Value);
-            listItem.transform.SetParent(playerInventoryObject, false);
-            listItem.GetComponent<Button>().onClick.AddListener(() => {addToOffer(item.Key);});
-            listItem.name = ItemManager.Current.itemsMaster[item.Key].DisplayName + "_button";
+            buildListItem(item.Key, item.Value, playerInventoryObject, () => { addToOffer(item.Key); });
         }
     }
 
@@ -105,12 +116,7 @@ public class Trading : MonoBehaviour
             Destroy(child.gameObject);
         }
         foreach (var item in offer.getContents()){
-            var listItem = GameObject.Instantiate(inventoryListItem, Vector3.zero, Quaternion.identity);
-            listItem.GetComponentInChildren<TextMeshProUGUI>().text = ItemManager.Current.itemsMaster[item.Key].DisplayName + " (" + item.Value + ") ";
-            listItem.transform.Find("Text").Find("Rarity").GetComponent<Image>().sprite = getValueString(ItemManager.Current.itemsMaster[item.Key].Value);
-            listItem.transform.SetParent(offerListObject, false);
-            listItem.GetComponent<Button>().onClick.AddListener(() => {removeFromOffer(item.Key);});
-            listItem.name = ItemManager.Current.itemsMaster[item.Key].DisplayName + "_button";
+            buildListItem(item.Key, item.Value, offerListObject, () => { removeFromOffer(item.Key); });
         }
     }
 
@@ -120,12 +126,7 @@ public class Trading : MonoBehaviour
             Destroy(child.gameObject);
         }
         foreach(var item in cart.getContents()){
-            var listItem = GameObject.Instantiate(inventoryListItem, Vector3.zero, Quaternion.identity);
-            listItem.GetComponentInChildren<TextMeshProUGUI>().text = ItemManager.Current.itemsMaster[item.Key].DisplayName + " (" + item.Value + ") ";
-            listItem.transform.Find("Text").Find("Rarity").GetComponent<Image>().sprite = getValueString(ItemManager.Current.itemsMaster[item.Key].Value);
-            listItem.transform.SetParent(cartListObject, false);
-            listItem.GetComponent<Button>().onClick.AddListener(() => {removeFromCart(item.Key);});
-            listItem.name = ItemManager.Current.itemsMaster[item.Key].DisplayName + "_button";
+            buildListItem(item.Key, item.Value, cartListObject, () => { removeFromCart(item.Key); });
         }
     }
 

@@ -1,13 +1,15 @@
-Name,Encountered,_value,Asset,Weight,Description
-Coin,TRUE,1,"<some way to 
-reference the 
-art asset here>",0,"The currency people began to use after the Shattering once the chaos began to settle. Since most governments collapsed, most people just started using all the old denominations of coin interchangably. 
-Old paper money is hardly seen anymore, but some people will still accept it."
-Food,TRUE,10,,1,"Being able to eat it is one thing, making it taste good is another challenge entirely."
-Fuel,TRUE,15.25,,2,"Nothing special, just the fuel used to power most vessels nowadays."
-Medicine,FALSE,50,,1,"After the Shattering medicine went fast. nowadays people mostly rely on natural medicines. The old stuff is still pretty rare, but people are beginning to learn how to recreate some of it, herbs can only do so much after all."
-Vegetable Seeds ,FALSE,5,,0.5,A lot of people grow some of their own food. Before things calmed down people didn't have much choice. Even now with things being a bit more normal it's still a good idea to have veggies growing. Helps people stay fed.
-Scrap Iron,FALSE,20,,5,"Salvage parts are a lot more valuable nowadays. They can be used in repairs, fashioning upgrades, or even just to sell if you need a quick buck. "
-Jewlery,FALSE,100,,0.5,Luxery Item. Not good for much but since it's hard to find in good condition it sells for a respectable amount.
-Blacksmiths Hammer,FALSE,10,,5,An old smith's hammer that looks like its seen a great deal of use. The name Andre is etched into the handle.
-Lead,FALSE,30,,10,"Frequently used for radiation shielding, which became much more of a problem after the Shattering. Used in repairs and upgrades."
+DisplayName,Tooltip,Description,Value,Weight,IconName,Tags
+Rations,Unappetizing but cheap,The bare minimum to keep someone running for a day,1,1,Food.png,Food
+Fuel,A neccesity for travel between colonies,"Fuel is the lifeblood of traders, never leave port without first checking your tank. ",1,1,Fuel.png,Tools_And_Parts
+Fresh Fruit,"Tasty, but spoils without proper storage","A rarity in a good portion of the world, which makes is quite valuable to the right people.",5,1,Survival gear (1).png,"Food,Luxury"
+Wrench,An essential repair tool,Helps with maintaining machines. Wear and tear means you need a replacement once in a while.,2,1,Survival gear (1).png,Tools_And_Parts
+Repair Patch,One use smart repair patch,"Uncommon tech allows these patches to conduct repairs autonomously, but burn out performing the job",15,4,Survival gear (1).png,Tools_And_Parts
+2000's Painting,Collectors love this stuff,Art from before the world ended. Nostalgic.,19,3,Survival gear (1).png,Luxury
+Jewelry,"A valuable, if nonfunctional, accessory",Goes nice with a finely tailored outfit. Good luck finding one,12,1,Survival gear (1).png,Luxury
+Concrete,Basic building material,What most things are built out of these days,3,10,Survival gear (1).png,Building_Materials
+Scrap Metal,General purpose parts,Good for making something new or fixing something old,5,10,Survival gear (1).png,Building_Materials
+Generator,Creates electricity,Consumes fuel to generate power. Vital for survival.,40,25,Survival gear (1).png,Tools_And_Parts
+Body Armor,Keeps you intact,Armor meant to protect from the typical bandit raid.,4,5,BodyArmor.png,Combat
+RPG,Sends a message,Let anyone who intends to raid you serverly regret their choices for a whole second.,20,2,Survival gear (1).png,Combat
+Medicine,Patches up wounds.,General pruopse bandages and medicine to treat injuries and illnesses,6,3,Medicine.png,Medicine
+Medical Kit,High end First Aid Kit for dangerous work,"Not only stocked with the best medical supplies on hand, but even contain stimulants and boosters to avoid injury in the first place",20,2,MedicalKit.png,"Medicine,Luxury"
