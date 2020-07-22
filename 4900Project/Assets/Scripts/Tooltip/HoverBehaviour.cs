@@ -16,16 +16,23 @@ public class HoverBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnter
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        string name = gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text;
-        int index = name.IndexOf("(");
-        if (index > 0)
+        if (eventData.button == PointerEventData.InputButton.Right)
         {
-            name = name.Substring(0, index - 1);
+            string name = gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text;
+            int index = name.IndexOf("(");
+            if (index > 0)
+            {
+                name = name.Substring(0, index - 1);
+            }
+            Debug.Log(name);
+            Item temp;
+            ItemManager.Current.itemsMaster.TryGetValue(name, out temp);
+            tooltip.GenerateDetailedTooltip(temp);
         }
-        Debug.Log(name);
-        Item temp;
-        ItemManager.Current.itemsMaster.TryGetValue(name, out temp);
-        tooltip.GenerateDetailedTooltip(temp);
+        else
+        {
+            tooltip.gameObject.SetActive(false);
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)

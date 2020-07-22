@@ -28,7 +28,7 @@ public class Tooltip : MonoBehaviour
         }
 
         gameObject.transform.GetChild(0).GetComponent<Text>().text = item.DisplayName;
-        gameObject.transform.GetChild(1).GetComponent<Text>().text = item.Tooltip + "\n Click for Details";
+        gameObject.transform.GetChild(1).GetComponent<Text>().text = item.Tooltip + "\n \n Right Click for Details";
     }
 
     public void GenerateDetailedTooltip(Item item)
