@@ -24,6 +24,7 @@ public class TownManager
     }
 
     private Dictionary<int, Town> towns = new Dictionary<int, Town>();
+    private List<Region> regions = new List<Region>();
 
     private TownManager()
     {
@@ -55,7 +56,10 @@ public class TownManager
         towns[4].AddShop(8);
         towns[4].AddShop(9);
 
-        towns[1].valueModifiers.Add(typetag.Medicine, 0.25f);
+        Region tempy = new Region();
+        tempy.valueModifiers.Add(typetag.Medicine, 0.25f);
+        regions.Add(tempy);
+        towns[1].reg = regions[0];
     }
 
     public IEnumerable<Town> GetTownEnumerable()
