@@ -10,6 +10,7 @@ using UnityEngine.SocialPlatforms;
 using System.CodeDom;
 using FileConstants;
 using UnityEngine;
+using Google.Apis.Download;
 
 public class GameData
 {
@@ -51,7 +52,7 @@ public class GameData
         // Go through the list one-by-one to create the backup
         foreach (var file in Files.FilesList)
         {
-            CreateBackupFile(file.GoogleDriveFileId, file.LocalBackupFile);
+            CreateBackupFile(file.GoogleDriveFileId, file.MimeType, file.LocalBackupFile);
         }
     }
     
@@ -61,10 +62,10 @@ public class GameData
     /// <param name="googleDriveFileId">The file ID to create the backup from</param>
     /// <param name="localFilePath">The location on disk to store the backup</param>
     /// <param name="mimeType">The mime type of the file content. Defaults to text/csv.</param>
-    protected static bool CreateBackupFile(string googleDriveFileId, string localFilePath)
+    protected static bool CreateBackupFile(string googleDriveFileId, string mimeType, string localFilePath)
     {
         // Attempt to download the file from Google Drive
-        var canAccessGoogleDrive = DownloadFileFromGoogleDrive(googleDriveFileId, out Stream dataStream);
+        var canAccessGoogleDrive = DownloadFileFromGoogleDrive(googleDriveFileId, mimeType, out Stream dataStream);
         if (!canAccessGoogleDrive)
         {
             return false;
@@ -93,7 +94,7 @@ public class GameData
         T result;
 
         // Retrieve the stream for fetching our data
-        GetFileStream(fileData.GoogleDriveFileId, fileData.LocalBackupFile, out Stream dataStream);
+        GetFileStream(fileData.GoogleDriveFileId, fileData.MimeType, fileData.LocalBackupFile, out Stream dataStream);
 
         // Read the contents of the stream into our StreamReader
         using (var reader = new StreamReader(dataStream))
@@ -153,10 +154,10 @@ public class GameData
     /// <param name="localFilePath">The path to the same file, stored locally</param>
     /// <param name="mimeType">The mime type of the file to download</param>
     /// <param name="dataStream">The resultant data stream</param>
-    protected static void GetFileStream(string googleDriveFileId, string localFilePath, out Stream dataStream)
+    protected static void GetFileStream(string googleDriveFileId, string mimeType, string localFilePath, out Stream dataStream)
     {
         // Attempt to download the file from Google Drive first, to get our most recent copy
-        var canDownloadDrive = DownloadFileFromGoogleDrive(googleDriveFileId, out dataStream);
+        var canDownloadDrive = DownloadFileFromGoogleDrive(googleDriveFileId, mimeType, out dataStream);
         if (canDownloadDrive)
         {
             return;
@@ -172,15 +173,31 @@ public class GameData
     /// <param name="fileId">The ID of the file to download</param>
     /// <param name="mimeType">The mime type to expect for the file</param>
     /// <param name="result">The result stream where data will be saved to</param>
-    protected static bool DownloadFileFromGoogleDrive(string fileId, out Stream result)
+    protected static bool DownloadFileFromGoogleDrive(string fileId, string mimeType, out Stream result)
     {
+        // Download the file into our result stream
         result = new MemoryStream();
 
-        // Download the file into our result stream
         try
         {
-            var export = googleDrive.Files.Get(fileId);
-            var response = export.DownloadWithStatus(result);
+            IDownloadProgress response;
+            switch (mimeType)
+            {
+                case "text/csv":
+                    // CSV Files need to be loaded by the Export method
+                    {
+                        var export = googleDrive.Files.Export(fileId, mimeType);
+                        response = export.DownloadWithStatus(result);
+                    }
+                    break;
+                default:
+                    // Otherwise, we can use Files.Get() to load the file
+                    {
+                        var export = googleDrive.Files.Get(fileId);
+                        response = export.DownloadWithStatus(result);
+                    }
+                    break;
+            }
 
             // Note: Once the data is written to the stream, the stream position will be set to the end
             // We want to reset this to the start so that data can be read
