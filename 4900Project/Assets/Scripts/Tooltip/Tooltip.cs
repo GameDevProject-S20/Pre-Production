@@ -28,6 +28,29 @@ public class Tooltip : MonoBehaviour
         }
 
         gameObject.transform.GetChild(0).GetComponent<Text>().text = item.DisplayName;
-        gameObject.transform.GetChild(1).GetComponent<Text>().text = item.Tooltip;
+        gameObject.transform.GetChild(1).GetComponent<Text>().text = item.Tooltip + "\n Click for Details";
+    }
+
+    public void GenerateDetailedTooltip(Item item)
+    {
+        gameObject.GetComponent<Image>().enabled = true;
+        gameObject.SetActive(true);
+        texts = GetComponentsInChildren<Text>(true);
+        foreach (Text tex in texts)
+        {
+            tex.gameObject.SetActive(true);
+        }
+
+        gameObject.transform.GetChild(0).GetComponent<Text>().text = item.DisplayName;
+        string descriptor = item.Description + "\n \n";
+        string tagList = "";
+        foreach (typetag tag in item.tags)
+        {
+            tagList += tag.ToString() + ", ";
+        }
+        tagList = tagList.Substring(0, tagList.Length - 2);
+        tagList = tagList.Replace("_"," ");
+
+        gameObject.transform.GetChild(1).GetComponent<Text>().text = descriptor + tagList;
     }
 }
