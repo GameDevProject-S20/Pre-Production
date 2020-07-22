@@ -110,11 +110,11 @@ public class OverworldMapUI : MonoBehaviour
     {
         foreach (Transform child in NodesContainer.transform)
         {
-            GameObject.Destroy(child.transform);
+            GameObject.Destroy(child.gameObject);
         }
         foreach (Transform child in PathsContainer.transform)
         {
-            GameObject.Destroy(child.transform);
+            GameObject.Destroy(child.gameObject);
         }
     }
 
