@@ -97,7 +97,7 @@ public class Item
         Weight = itemData.Weight;
         tags = UnityHelperMethods.ParseCommaSeparatedList<typetag>(itemData.Tags, UnityHelperMethods.ParseEnum<typetag>);
         tier = CalculateTier(Value);
-        Icon = UnityHelperMethods.BuildSpriteFromPath($"{Application.streamingAssetsPath}/ItemIcons/{itemData.IconName}");
+        Icon = Resources.Load<Sprite>($"Icons/ItemIcons/{itemData.IconName}".Replace(".png", ""));
     }
 
 }
