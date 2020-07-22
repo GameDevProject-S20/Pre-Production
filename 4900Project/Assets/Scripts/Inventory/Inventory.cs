@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SIEvents;
 
 public class Inventory
 {
@@ -36,6 +37,8 @@ public class Inventory
             else {
                 contents.Add(name, Mathf.Min(capacity, amount));
             } 
+
+            EventManager.Instance.OnInventoryChange.Invoke();
         }
         return Mathf.Min(capacity, amount);
     }
@@ -60,8 +63,10 @@ public class Inventory
             contents[name] = currentCount - amount;
             if (amount >= currentCount){
                 contents.Remove(name);
-                return currentCount;
+                amount = currentCount;
             }
+
+            EventManager.Instance.OnInventoryChange.Invoke();
             return amount;
         }
         return 0;
