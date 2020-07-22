@@ -13,8 +13,8 @@ public class SimpleCameraController : MonoBehaviour
     [SerializeField]
     Vector3 min;
 
-
-    float panBorderSize = 20;
+    float panBorderSizeInMenu = 15;
+    float panBorderSize = 80;
 
     private Vector3 lastMousePosition = Vector3.zero;
     private bool mouseJustClicked = false;
@@ -22,7 +22,7 @@ public class SimpleCameraController : MonoBehaviour
 
     private void Update() 
     {
-        transform.position =  GeneralPurposeControl(transform.position);
+        transform.position = GeneralPurposeControl(transform.position);
         transform.position = MousePanControl(transform.position);
         transform.position = MouseScrollControl(transform.position);
     }
@@ -39,36 +39,48 @@ public class SimpleCameraController : MonoBehaviour
             nextPosition.z = Mathf.Clamp(nextPosition.z, min.z, max.z);
 
         }
-            return nextPosition;
+        return nextPosition;
     }
 
     public Vector3 MousePanControl(Vector3 position)
     {
-        float verticalBorder = Screen.width/panBorderSize;
-        float horizontalBorder = Screen.height/panBorderSize;
-
         Vector3 velocity = Vector3.zero;
 
-        if (Input.mousePosition.x > Screen.width - verticalBorder)
+        var xPos = Input.mousePosition.x;
+        var yPos = Input.mousePosition.y;
+
+        var xBorder = panBorderSize;
+        var yBorder = panBorderSize;
+        bool inMenuRegion = (Screen.height - yPos <= panBorderSize);
+        if (inMenuRegion)
         {
-            velocity += new Vector3(1, 0, 0);
+            xBorder = panBorderSizeInMenu;
+            yBorder = panBorderSizeInMenu;
         }
 
-        if (Input.mousePosition.x < verticalBorder)
+        if (xPos > Screen.width - xBorder)
         {
+            // Camera right
+            velocity += new Vector3(1, 0, 0);
+        }
+        else if (xPos < xBorder)
+        {
+            // Camera left
             velocity += new Vector3(-1, 0, 0);
         }
 
-        if (Input.mousePosition.y > Screen.height - horizontalBorder)
+        if (yPos > Screen.height - yBorder)
         {
+            // Camera up
             velocity += new Vector3(0, 0, 1);
         }
-
-        if ( Input.mousePosition.y < horizontalBorder)
+        else if (yPos < yBorder)
         {
+            // Camera down
             velocity += new Vector3(0, 0, -1);
         }
-        velocity = velocity * panSpeed;
+
+        velocity *= panSpeed;
 
         Vector3 nextPosition = position + velocity;
         nextPosition.x = Mathf.Clamp(nextPosition.x, min.x, max.x);
@@ -108,6 +120,5 @@ public class SimpleCameraController : MonoBehaviour
             mouseJustClicked = false;
         }
         return nextPosition;
-
     }
 }
