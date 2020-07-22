@@ -93,7 +93,7 @@ public class SimpleCameraController : MonoBehaviour
     {
         Vector3 nextPosition = position;
 
-        nextPosition.y += Input.mouseScrollDelta.y * zoomSpeed;
+        nextPosition.y -= Input.mouseScrollDelta.y * zoomSpeed;
         nextPosition.y = Mathf.Clamp(nextPosition.y, min.y, max.y);
 
         return nextPosition;
