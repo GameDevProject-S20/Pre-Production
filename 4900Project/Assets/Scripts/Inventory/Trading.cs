@@ -59,6 +59,10 @@ public class Trading : MonoBehaviour
     Sprite RareImage;
     [SerializeField]
     Sprite LegendaryImage;
+    [SerializeField]
+    GameObject Portrait;
+    [SerializeField]
+    Sprite IconMissing;
 
     public void Start() {
         shop = ShopManager.Instance.GetShopById(DataTracker.Current.currentShopId);
@@ -67,6 +71,8 @@ public class Trading : MonoBehaviour
         buildShopList();
         buildPlayerList();
         Name.text = shop.name;
+        Portrait.GetComponent<Image>().sprite = shop.Portrait ?? IconMissing;
+
     }
 
     //======================================================================//
@@ -213,6 +219,11 @@ public class Trading : MonoBehaviour
     }
 
     public void onTradeButtonClick(){
+        if (cart.TotalValueAfterModifiers(shop.toPlayerModifiers) == 0 && offer.TotalValueAfterModifiers(shop.fromPlayerModifiers) == 0)
+        {
+            offerFeedback.GetComponent<TMPro.TextMeshProUGUI>().text = "";
+            return;
+        }
         AudioSource audioSource = GameObject.Find("Audio Source").GetComponent<AudioSource>();
         switch (validateTradeAfterModifiers())
         {
@@ -221,16 +232,16 @@ public class Trading : MonoBehaviour
             case 1:
                 offerFeedback.GetComponent<TMPro.TextMeshProUGUI>().text = "My now, what a generous offer!";
                 makeTrade();
-                audioSource.PlayOneShot(OverGenerous, 1.0F);
+                audioSource.PlayOneShot(OverGenerous, 2.0F);
                 break;
             case 2:
                 offerFeedback.GetComponent<TMPro.TextMeshProUGUI>().text = "A fair offer, you got yourself a deal";
                 makeTrade();
-                audioSource.PlayOneShot(SuccessfulTrade, 1.0F);
+                audioSource.PlayOneShot(SuccessfulTrade, 2.0F);
                 break;
             case 3:
                 offerFeedback.GetComponent<TMPro.TextMeshProUGUI>().text = "This ain't a charity, make a real offer would ya";
-                audioSource.PlayOneShot(RejectedOffer, 1.0F);
+                audioSource.PlayOneShot(RejectedOffer, 2.0F);
                 break;
         }
     }
