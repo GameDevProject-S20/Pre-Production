@@ -20,6 +20,7 @@ public class Town
 
     public List<int> shops;
     public Dictionary<typetag, float> valueModifiers;
+    public Region reg;
 
     public Town(int Id, string Name, string Leader, string Colour="#FFFF5E0")
     {
@@ -29,7 +30,7 @@ public class Town
         this.Colour = Colour;
         shops = new List<int>();
         tags = new List<typetag>();
-        valueModifiers = new Dictionary<typetag, float>();
+        reg = new Region();
 
         // Randomly Select an Icon
         // Do not select the ugly ones
@@ -85,5 +86,15 @@ public class Town
                 break;
             }
         }
+    }
+}
+
+public class Region
+{
+    public Dictionary<typetag, float> valueModifiers;
+
+    public Region()
+    {
+        valueModifiers = new Dictionary<typetag, float>(); ;
     }
 }

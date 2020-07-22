@@ -99,7 +99,7 @@ public class Inventory
             float valueModifier = 1;
             foreach (typetag itemTag in ItemManager.Current.itemsMaster[item.Key].tags)
             {
-                foreach (KeyValuePair<typetag, float> modify in TownManager.Instance.GetCurrentTownData().valueModifiers)
+                foreach (KeyValuePair<typetag, float> modify in TownManager.Instance.GetCurrentTownData().reg.valueModifiers)
                 {
                     if (itemTag == modify.Key)
                     {
