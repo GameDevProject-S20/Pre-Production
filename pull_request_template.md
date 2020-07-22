@@ -1,14 +1,16 @@
 ## What am I addressing?
-closes {tag the issue number here with a #}
+Closes #
 
 ## How/Why did I address it?
 {what's the implementation like}
 
 ## Reviewers
 @GameDevProject-S20/bestteam
+
 ### What should reviewers focus on?
-{help guide the reviewers for what to look for -- what do you need their opinion on?}
-- [x] reviewed
-- [ ] not reviewed
+- [ ] Check out scene 
+- [ ] Make sure that __ works 
+- [ ] 
 
 ## Comments & Concerns 
+
