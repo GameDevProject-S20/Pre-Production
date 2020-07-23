@@ -2,6 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Used for reading town data from a CSV
+/// </summary>
+public class TownData
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Leader { get; set; }
+    public string Colour { get; set; } //hex code
+}
 
 //Town class 
 public class Town
@@ -20,7 +30,23 @@ public class Town
     public List<int> shops;
     public Dictionary<typetag, float> valueModifiers;
     public Region reg;
+    
+    /// <summary>
+    /// Constructor for loading in from a TownData class
+    /// </summary>
+    /// <param name="data"></param>
+    public Town(TownData data) : this(data.Id, data.Name, data.Leader, data.Colour)
+    {
 
+    }
+
+    /// <summary>
+    /// Main constructor. Populates from provided data values
+    /// </summary>
+    /// <param name="Id"></param>
+    /// <param name="Name"></param>
+    /// <param name="Leader"></param>
+    /// <param name="Colour"></param>
     public Town(int Id, string Name, string Leader, string Colour="#FFFF5E0")
     {
         this.Id = Id;
@@ -32,42 +58,36 @@ public class Town
         reg = new Region();
         SetDescription();
         SetLeaderBlurb();
-        // Randomly Select an Icon
-        // Do not select the ugly ones
-        int iconId = -1;
-        bool valid = false;
-        while(!valid){
-            iconId = Mathf.FloorToInt(Random.Range(0, 31));
-            if (iconId != 10
-            && iconId != 12
-            && iconId != 15
-            && iconId != 18
-            && iconId != 20) 
-            valid = true;
+
+        // Fetch town leader avatar
+        {
+            string path = $"Icons/CyberPunk Avatars/TownLeaders/{Leader}";
+            LeaderPortrait = Resources.Load<Sprite>(path);
         }
-        string path = "Icons/CyberPunk Avatars/" + iconId.ToString("D3");
-        LeaderPortrait = Resources.Load<Sprite>(path);
+
         // select a random image for town
         // TODO: Replace with setting based on town size
-        iconId = Mathf.FloorToInt(Random.Range(0, 4));
-        string iconName;
-        switch (iconId)
         {
-            case 1:
-                iconName = "Hut";
-                break;
-            case 2:
-                iconName = "Town";
-                break;
-            case 3:
-                iconName = "SmallCity";
-                break;
-            default:
-                iconName = "LargeCity";
-                break;
+            int iconId = Mathf.FloorToInt(Random.Range(0, 4));
+            string iconName;
+            switch (iconId)
+            {
+                case 1:
+                    iconName = "Hut";
+                    break;
+                case 2:
+                    iconName = "Town";
+                    break;
+                case 3:
+                    iconName = "SmallCity";
+                    break;
+                default:
+                    iconName = "LargeCity";
+                    break;
+            }
+            string path = "Icons/Town/" + iconName;
+            Icon = Resources.Load<Sprite>(path);
         }
-        path = "Icons/Town/" + iconName;
-        Icon = Resources.Load<Sprite>(path);
         
     }
 
