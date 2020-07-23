@@ -40,6 +40,7 @@ public class TownManager
         foreach (Town data in result)
         {
             towns.Add(data.Id, data);
+            Debug.Log("DATA:" + data.Description);
             resultString.AppendLine("\tCreated town #" + data.Id + ": " + data.Name);
         }
         UnityEngine.Debug.Log(resultString);
