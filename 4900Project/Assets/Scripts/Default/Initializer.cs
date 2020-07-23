@@ -17,7 +17,7 @@ public class Initializer : MonoBehaviour
     }
 
     IEnumerator loader(){
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(5);
         SceneManager.LoadScene("MapScene", LoadSceneMode.Single);
     }
 
