@@ -2,18 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// TownData - Uses to map in CSV data.
+/// </summary>
+public struct TownData
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Leader { get; set; }
+    public string Colour { get; set; } //hex code
+}
 
 //Town class 
 public class Town
 {
-    public int Id { get; }
+    public int Id { get; set; }
     public string Name { get; set; }
     public string Leader { get; set; }
-    public string Colour {get; set;} //hex code
+    public string Colour { get; set; }
+
     public rarity tier;
     public List<typetag> tags;
     public Sprite Icon;
     public Sprite LeaderPortrait;
+
     public string Description = "No Description Set";
     public string LeaderBlurb = "No Blurb Set";
     public int leaderDialogueEncounterId = 11;
@@ -21,6 +33,22 @@ public class Town
     public Dictionary<typetag, float> valueModifiers;
     public Region reg;
 
+    /// <summary>
+    /// Instantiates a new Town, given a TownData class to populate our data from.
+    /// </summary>
+    /// <param name="data"></param>
+    public Town(TownData data) : this(data.Id, data.Name, data.Leader, data.Colour)
+    {
+
+    }
+
+    /// <summary>
+    /// Instantiates a new Town from the specified data.
+    /// </summary>
+    /// <param name="Id"></param>
+    /// <param name="Name"></param>
+    /// <param name="Leader"></param>
+    /// <param name="Colour"></param>
     public Town(int Id, string Name, string Leader, string Colour="#FFFF5E0")
     {
         this.Id = Id;
@@ -32,43 +60,36 @@ public class Town
         reg = new Region();
         SetDescription();
         SetLeaderBlurb();
-        // Randomly Select an Icon
-        // Do not select the ugly ones
-        int iconId = -1;
-        bool valid = false;
-        while(!valid){
-            iconId = Mathf.FloorToInt(Random.Range(0, 31));
-            if (iconId != 10
-            && iconId != 12
-            && iconId != 15
-            && iconId != 18
-            && iconId != 20) 
-            valid = true;
+
+        // Set up the avatar - this is the CyberPunk Avatar with the same name as our leader
+        {
+            string path = $"Icons/CyberPunk Avatars/TownLeaders/{Leader}";
+            LeaderPortrait = Resources.Load<Sprite>(path);
         }
-        string path = "Icons/CyberPunk Avatars/" + iconId.ToString("D3");
-        LeaderPortrait = Resources.Load<Sprite>(path);
+
         // select a random image for town
         // TODO: Replace with setting based on town size
-        iconId = Mathf.FloorToInt(Random.Range(0, 4));
-        string iconName;
-        switch (iconId)
         {
-            case 1:
-                iconName = "Hut";
-                break;
-            case 2:
-                iconName = "Town";
-                break;
-            case 3:
-                iconName = "SmallCity";
-                break;
-            default:
-                iconName = "LargeCity";
-                break;
+            int iconId = Mathf.FloorToInt(Random.Range(0, 4));
+            string iconName;
+            switch (iconId)
+            {
+                case 1:
+                    iconName = "Hut";
+                    break;
+                case 2:
+                    iconName = "Town";
+                    break;
+                case 3:
+                    iconName = "SmallCity";
+                    break;
+                default:
+                    iconName = "LargeCity";
+                    break;
+            }
+            string path = "Icons/Town/" + iconName;
+            Icon = Resources.Load<Sprite>(path);
         }
-        path = "Icons/Town/" + iconName;
-        Icon = Resources.Load<Sprite>(path);
-        
     }
 
     public void AddShop(int i)
