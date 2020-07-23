@@ -8,12 +8,18 @@ using SIEvents;
 
 public class InventoryWindow : MonoBehaviour
 {
+    public static InventoryWindow Instance { get => instance; }
+
+    private static InventoryWindow instance;
 
     [SerializeField]
     GameObject inventoryListItem;
 
     [SerializeField]
     Transform playerInventoryObject;
+
+    [SerializeField]
+    public Tooltip tooltip;
 
     [SerializeField]
     Sprite AbundantImage;
@@ -30,6 +36,9 @@ public class InventoryWindow : MonoBehaviour
     int count = 50;
     void Start()
     {
+        if (instance != null) Destroy(instance);
+        instance = this;
+        tooltip = GameObject.Find("Tooltip").GetComponent<Tooltip>();
         itemObjects = new List<GameObject>();
         Populate();
 

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Tooltip : MonoBehaviour
 {
     private Component[] texts;
-    // Start is called before the first frame update
+
     void Awake()
     {
         gameObject.GetComponent<Image>().enabled = false;

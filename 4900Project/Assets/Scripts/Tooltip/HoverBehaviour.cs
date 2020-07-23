@@ -8,10 +8,10 @@ using TMPro;
 public class HoverBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     private Tooltip tooltip;
-    // Start is called before the first frame update
+
     void Awake()
     {
-        tooltip = GameObject.Find("Tooltip").GetComponent<Tooltip>();
+        tooltip = InventoryWindow.Instance.tooltip;
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -24,7 +24,6 @@ public class HoverBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnter
             {
                 name = name.Substring(0, index - 1);
             }
-            Debug.Log(name);
             Item temp;
             ItemManager.Current.itemsMaster.TryGetValue(name, out temp);
             tooltip.GenerateDetailedTooltip(temp);
@@ -43,7 +42,7 @@ public class HoverBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnter
         {
             name = name.Substring(0, index-1);
         }
-        Debug.Log(name);
+
         Item temp;
         ItemManager.Current.itemsMaster.TryGetValue(name, out temp);
         tooltip.GenerateTooltip(temp);
