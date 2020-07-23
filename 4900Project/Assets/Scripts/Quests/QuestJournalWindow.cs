@@ -23,7 +23,7 @@ public class QuestJournalWindow : MonoBehaviour
         NameField = GameObject.Find("Quest Name").GetComponent<UnityEngine.UI.Text>();
         DescriptionField = GameObject.Find("Description").GetComponent<UnityEngine.UI.Text>();
         TaskField = GameObject.Find("Task Text").GetComponent<UnityEngine.UI.Text>();
-        QuestCollection = GameObject.Find("Content");
+        QuestCollection = GameObject.Find("Quest List Content");
 
         // Load QuestItem resource
         QuestItem = Resources.Load<GameObject>("Prefabs/Quest/Item");
