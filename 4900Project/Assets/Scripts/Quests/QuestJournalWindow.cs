@@ -19,7 +19,7 @@ public class QuestJournalWindow : MonoBehaviour
     void OnEnable()
     {
         
-        // Grab text fields from SceneGraph
+        // Grab text fields from SceneGraph (THESE ARE Erroneous. too ambigious)
         NameField = GameObject.Find("Quest Name").GetComponent<UnityEngine.UI.Text>();
         DescriptionField = GameObject.Find("Description").GetComponent<UnityEngine.UI.Text>();
         TaskField = GameObject.Find("Task Text").GetComponent<UnityEngine.UI.Text>();
@@ -92,6 +92,16 @@ public class QuestJournalWindow : MonoBehaviour
     {
         selectedQuest = DataTracker.Current.QuestManager.GetQuest(questName);
         updateFields();
+    }
+
+    public void toggleActive(bool displayed)
+    {
+
+    }
+
+    public void toggleCompleted(bool displayed)
+    {
+
     }
 
     public void disableUI()
