@@ -90,22 +90,22 @@ public class Town
 
     private void SetDescription()
     {
-        this.Description = $@"{this.Name} is a {getWord("size")} situated in the {getWord("region")} by a {getWord("adj")} {getWord("noun")}.
+        this.Description = $@"{this.Name} is a {getWord("size")} situated in {getWord("region")} by a {getWord("adj")} {getWord("noun")}.
 
-            They are lead by {this.Leader} and known for having lots of {getWord("resource")}. They will pay handsomely for {getWord("resource")}.
+They are lead by {this.Leader} and known for having lots of {getWord("resource")}. They will pay handsomely for {getWord("resource")}.
 
-            The inhabitants are often found {getWord("verb")} and are {getWord("verb2")} to new people.";  
+The inhabitants are often found {getWord("verb")} and are {getWord("verb2")} when it comes to meeting new people.";  
     }
 
     private void SetLeaderBlurb()
     {
-        this.LeaderBlurb = $@"A {getWord("adj")} looking individual who looks like they know a thing or two about {getWord("verb")}";
+        this.LeaderBlurb = $@"A {getWord("adj")} individual who looks like they know a thing or two about {getWord("verb")}";
     }
 
     private string getWord(string type)
     {
         int randNum = Mathf.FloorToInt(Random.Range(0, 7));
-        string[] region = new string[] {"Moorswood", "Gothic Gourge", "New Asia", "Tempest Region", "Maroon Territory", "Broken Vale", "Cinder Country" }
+        string[] region = new string[] { "Moorswood", "Gothic Gourge", "New Asia", "Tempest Region", "Maroon Territory", "Broken Vale", "Cinder Country" };
         string[] adj = new string[] { "bright", "dark", "gloomy", "desolate", "tough", "unusual", "hostile" };
         string[] verb = new string[] { "fighting", "vanishing", "crafting", "story telling", "cooking", "coding", "hunting"};
         string[] verb2 = new string[] { "wary", "welcoming", "aggresive", "curious", "stand offish", "dismissive", "enthusatic" };
