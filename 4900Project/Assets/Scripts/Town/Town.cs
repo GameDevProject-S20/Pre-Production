@@ -11,16 +11,20 @@ public struct TownData
     public string Name { get; set; }
     public string Leader { get; set; }
     public string Colour { get; set; } //hex code
+    public string Size { get; set; } //hex code
+
 }
 
 //Town class 
 public class Town
 {
+    public enum Sizes {Tiny, Small, Medium, Large}
+
     public int Id { get; set; }
     public string Name { get; set; }
     public string Leader { get; set; }
     public string Colour { get; set; }
-
+    public Sizes Size { get; set; }
     public rarity tier;
     public List<typetag> tags;
     public Sprite Icon;
@@ -37,7 +41,7 @@ public class Town
     /// Instantiates a new Town, given a TownData class to populate our data from.
     /// </summary>
     /// <param name="data"></param>
-    public Town(TownData data) : this(data.Id, data.Name, data.Leader, data.Colour)
+    public Town(TownData data) : this(data.Id, data.Name, data.Leader, data.Colour, data.Size)
     {
 
     }
@@ -49,15 +53,18 @@ public class Town
     /// <param name="Name"></param>
     /// <param name="Leader"></param>
     /// <param name="Colour"></param>
-    public Town(int Id, string Name, string Leader, string Colour="#FFFF5E0")
+    public Town(int Id, string Name, string Leader, string Colour="#FFFF5E0", string Size="Medium")
     {
         this.Id = Id;
         this.Name = Name;
         this.Leader = Leader;
         this.Colour = Colour;
+        this.Size = (Sizes)System.Enum.Parse(typeof(Sizes), Size);
+
         shops = new List<int>();
         tags = new List<typetag>();
         reg = new Region();
+
         SetDescription();
         SetLeaderBlurb();
 

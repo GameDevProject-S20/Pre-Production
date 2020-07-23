@@ -10,28 +10,45 @@ public class MapNode : MonoBehaviour
 
     public int NodeId { get; set; }
     public OverworldMap.LocationType Type { get; set; }
+    public int LocationId { get; set; }
 
     TravelPanel panel;
-    Camera camera;
+    Camera cam;
     Vector3 offset = new Vector3(0, 60, 0);
 
 
     private void Start()
     {
-        camera = Camera.main;
+        cam = Camera.main;
         EventManager.Instance.OnNodeMouseDown.AddListener(OtherNodeSelected);
 
         // Appearance is determined by node type
         if (Type == OverworldMap.LocationType.TOWN)
         {
-            transform.Find("Icon").gameObject.SetActive(false);
-            transform.Find("TownMesh").gameObject.SetActive(true);
             transform.Rotate(new Vector3(0, Random.Range(0, 360), 0), Space.Self);
+
+            Town.Sizes size = DataTracker.Current.TownManager.GetTownById(LocationId).Size;
+            if (size == Town.Sizes.Tiny){
+                    transform.Find("tinyTown").gameObject.SetActive(true);
+            }
+            else if (size == Town.Sizes.Small){
+                    transform.Find("smallTown").gameObject.SetActive(true);
+
+            }
+            else if (size == Town.Sizes.Medium){
+                    transform.Find("town").gameObject.SetActive(true);
+
+            }
+            else if (size == Town.Sizes.Large){
+                    transform.Find("largeTown").gameObject.SetActive(true);
+            }
         }
         else if (Type == OverworldMap.LocationType.EVENT)
         {
-            transform.Find("Icon").gameObject.SetActive(false);
             transform.Find("EncounterMark").gameObject.SetActive(true);
+        }
+        else {
+            transform.Find("Icon").gameObject.SetActive(true);
         }
     }
 
@@ -44,7 +61,7 @@ public class MapNode : MonoBehaviour
         {
             if (panel.gameObject.activeInHierarchy)
             {
-                panel.transform.position = camera.WorldToScreenPoint(gameObject.transform.position) + offset;
+                panel.transform.position = cam.WorldToScreenPoint(gameObject.transform.position) + offset;
             }
         }
     }
@@ -60,7 +77,7 @@ public class MapNode : MonoBehaviour
         panel.SetNode(this);
         obj.SetActive(true);
         panel.SetInfo(MapTravel.GetFuelCost(this), MapTravel.dayRate);
-        obj.transform.position = camera.WorldToScreenPoint(gameObject.transform.position) + offset;
+        obj.transform.position = cam.WorldToScreenPoint(gameObject.transform.position) + offset;
         panel.onNodeHover();
 
     }

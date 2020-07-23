@@ -28,7 +28,7 @@ namespace SIEvents
             EventManager.Instance.OnStageComplete.RemoveListener(listener);
         }
 
-        public void Handler(int qusetId, int stageNum)
+        public void Handler(int questId, int stageNum)
         {
             if (questId == this.questId && stageNum == this.stageNum)
             {
