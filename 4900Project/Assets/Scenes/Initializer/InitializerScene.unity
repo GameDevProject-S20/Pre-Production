@@ -798,7 +798,7 @@ MonoBehaviour:
     already vulnerable after being overwhelmed by a global pandemic, the unthinkable
     happened. Some kind of large cosmic event led to the shattering of the earth''s
     surface. All infrastructure and order was lost, but now 74 years later there
-    is a new normal, and  there maybe a way to restore what was lost.
+    is a new normal, and  there may just be a way to restore what was lost.
 
 '
   m_isRightToLeft: 0
@@ -870,10 +870,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: -0.61987305, w: 0}
   m_textInfo:
     textComponent: {fileID: 2129433840}
-    characterCount: 370
+    characterCount: 376
     spriteCount: 0
-    spaceCount: 66
-    wordCount: 64
+    spaceCount: 68
+    wordCount: 66
     linkCount: 0
     lineCount: 9
     pageCount: 1
