@@ -268,6 +268,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -0.000697955
       objectReference: {fileID: 0}
+    - target: {fileID: 8124421194925567599, guid: 0c786e4fb3f4640e2b0cc9b1cd57a3b8,
+        type: 3}
+      propertyPath: m_Name
+      value: Quest List Content
+      objectReference: {fileID: 0}
     - target: {fileID: 8124421195123670588, guid: 0c786e4fb3f4640e2b0cc9b1cd57a3b8,
         type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1510,6 +1515,7 @@ MonoBehaviour:
   QuestJournalCanvas: {fileID: 105134821}
   TravelPanelCanvas: {fileID: 769002950}
   InventoryCanvas: {fileID: 442956047}
+  Vroom: {fileID: 8300000, guid: 5fb67b7d975cc4bd089203f03802ab86, type: 3}
   travelPanelPool: []
   pathDefaultMaterial: {fileID: 2100000, guid: 18dfd0d6a332ffb4e98f5ddf0df0f007, type: 2}
   pathHighlightMaterial: {fileID: 2100000, guid: 0314ad49ac172574b8b3ac46d8133344,

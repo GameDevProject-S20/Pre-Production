@@ -54,6 +54,10 @@ public class OverworldMapUI : MonoBehaviour
     [SerializeField]
     public GameObject InventoryCanvas;
 
+    //sounds
+    [SerializeField]
+    AudioClip Vroom;
+
 
     //Movement variables
     bool isActive = true;
@@ -213,6 +217,8 @@ public class OverworldMapUI : MonoBehaviour
     /// </summary>
     void onTravelStart()
     {
+        AudioSource audioSource = GameObject.Find("Audio Source").GetComponent<AudioSource>();
+        audioSource.PlayOneShot(Vroom, 2.0F);
         targetPos = selectedNode.gameObject.transform.position;
         isTravelling = true;
         MapTravel.Travel(selectedNode);

@@ -7,11 +7,11 @@ using TMPro;
 
 public class HoverBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    private Tooltip tooltip;
+    public Tooltip tooltip;
 
     void Awake()
     {
-        tooltip = InventoryWindow.Instance.tooltip;
+        //tooltip = InventoryWindow.Instance.tooltip;
     }
 
     public void OnPointerClick(PointerEventData eventData)

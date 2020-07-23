@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// TownData - Uses to map in CSV data.
+/// Used for reading town data from a CSV
 /// </summary>
-public struct TownData
+public class TownData
 {
     public int Id { get; set; }
     public string Name { get; set; }
     public string Leader { get; set; }
     public string Colour { get; set; } //hex code
     public string Size { get; set; } //hex code
-
 }
 
 //Town class 
@@ -36,9 +35,9 @@ public class Town
     public List<int> shops;
     public Dictionary<typetag, float> valueModifiers;
     public Region reg;
-
+    
     /// <summary>
-    /// Instantiates a new Town, given a TownData class to populate our data from.
+    /// Constructor for loading in from a TownData class
     /// </summary>
     /// <param name="data"></param>
     public Town(TownData data) : this(data.Id, data.Name, data.Leader, data.Colour, data.Size)
@@ -47,12 +46,13 @@ public class Town
     }
 
     /// <summary>
-    /// Instantiates a new Town from the specified data.
+    /// Main constructor. Populates from provided data values
     /// </summary>
     /// <param name="Id"></param>
     /// <param name="Name"></param>
     /// <param name="Leader"></param>
     /// <param name="Colour"></param>
+
     public Town(int Id, string Name, string Leader, string Colour="#FFFF5E0", string Size="Medium")
     {
         this.Id = Id;
@@ -68,7 +68,7 @@ public class Town
         SetDescription();
         SetLeaderBlurb();
 
-        // Set up the avatar - this is the CyberPunk Avatar with the same name as our leader
+        // Fetch town leader avatar
         {
             string path = $"Icons/CyberPunk Avatars/TownLeaders/{Leader}";
             LeaderPortrait = Resources.Load<Sprite>(path);
@@ -97,6 +97,7 @@ public class Town
             string path = "Icons/Town/" + iconName;
             Icon = Resources.Load<Sprite>(path);
         }
+
     }
 
     public void AddShop(int i)
@@ -118,7 +119,7 @@ public class Town
 
     private void SetDescription()
     {
-        this.Description = $@"{this.Name} is a {getWord("size")} situated in {getWord("region")} by a {getWord("adj")} {getWord("noun")}.
+        this.Description = $@"{this.Name} is a {getWord("size")} situated in {getWord("region")} nearby a {getWord("adj")} {getWord("noun")}.
 
 They are lead by {this.Leader} and known for having lots of {getWord("resource")}. They will pay handsomely for {getWord("resource")}.
 

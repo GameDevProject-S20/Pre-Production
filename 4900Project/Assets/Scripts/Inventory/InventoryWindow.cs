@@ -62,6 +62,7 @@ public class InventoryWindow : MonoBehaviour
             listItem.transform.Find("Icon").GetComponent<Image>().sprite = ItemManager.Current.itemsMaster[item.Key].Icon;
             listItem.transform.SetParent(playerInventoryObject, false);
             listItem.name = ItemManager.Current.itemsMaster[item.Key].DisplayName + "_button";
+            listItem.GetComponent<HoverBehaviour>().tooltip = tooltip;
             itemObjects.Add(listItem);
         }
     }

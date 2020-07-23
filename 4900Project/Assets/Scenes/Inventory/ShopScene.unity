@@ -2585,6 +2585,7 @@ MonoBehaviour:
   LegendaryImage: {fileID: 21300000, guid: 0951ad93e6ddd8d4b9c2646f267cde4e, type: 3}
   Portrait: {fileID: 952109235}
   IconMissing: {fileID: 21300000, guid: 48a2031da6891144d8449a2bc8034e9a, type: 3}
+  tooltip: {fileID: 1798132577}
 --- !u!224 &1438724943 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1840571253241227794, guid: 73267574d9da8a94e9ee4d58fbda672a,
@@ -3271,6 +3272,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7494ceec3b7d4df4b8392a3d3d3a12dc, type: 3}
+--- !u!114 &1798132577 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2396775854986234161, guid: 7494ceec3b7d4df4b8392a3d3d3a12dc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1798132576}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67e462b1cd2e2364290dd242dc62484c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1803618799
 GameObject:
   m_ObjectHideFlags: 0
