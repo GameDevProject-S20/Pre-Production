@@ -34,13 +34,14 @@ public class TownManager
     public void LoadData()
     {
         // Load in town data from CSV
-        GameData.LoadCsv<Town>(FileConstants.Files.Town, out IEnumerable<Town> result);
+        GameData.LoadCsv<TownData>(FileConstants.Files.Town, out IEnumerable<TownData> result);
         var resultString = new System.Text.StringBuilder();
         resultString.AppendLine("Loading in from file:");
-        foreach (Town data in result)
+        foreach (TownData data in result)
         {
-            towns.Add(data.Id, data);
-            Debug.Log("DATA:" + data.Description);
+            var town = new Town(data);
+            towns.Add(data.Id, town);
+            Debug.Log("DATA:" + town.Description);
             resultString.AppendLine("\tCreated town #" + data.Id + ": " + data.Name);
         }
         UnityEngine.Debug.Log(resultString);
