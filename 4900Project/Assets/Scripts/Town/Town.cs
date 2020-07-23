@@ -90,11 +90,11 @@ public class Town
 
     private void SetDescription()
     {
-        this.Description = $@"{this.Name} is a {getWord("size")} situated in the {this.reg} by a {getWord("adj")} {getWord("noun")}.
+        this.Description = $@"{this.Name} is a {getWord("size")} situated in the {getWord("region")} by a {getWord("adj")} {getWord("noun")}.
 
             They are lead by {this.Leader} and known for having lots of {getWord("resource")}. They will pay handsomely for {getWord("resource")}.
 
-            The inhabitants are often found {getWord("verb")} and are {getWord("verb2")} of new people.";  
+            The inhabitants are often found {getWord("verb")} and are {getWord("verb2")} to new people.";  
     }
 
     private void SetLeaderBlurb()
@@ -105,6 +105,7 @@ public class Town
     private string getWord(string type)
     {
         int randNum = Mathf.FloorToInt(Random.Range(0, 7));
+        string[] region = new string[] {"Moorswood", "Gothic Gourge", "New Asia", "Tempest Region", "Maroon Territory", "Broken Vale", "Cinder Country" }
         string[] adj = new string[] { "bright", "dark", "gloomy", "desolate", "tough", "unusual", "hostile" };
         string[] verb = new string[] { "fighting", "vanishing", "crafting", "story telling", "cooking", "coding", "hunting"};
         string[] verb2 = new string[] { "wary", "welcoming", "aggresive", "curious", "stand offish", "dismissive", "enthusatic" };
@@ -124,6 +125,8 @@ public class Town
                 return resource[randNum];
             case "size":
                 return size[randNum];
+            case "region":
+                return region[randNum];
             default:
                 return "word";
         }
