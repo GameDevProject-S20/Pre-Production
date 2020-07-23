@@ -110,7 +110,7 @@ public class Town
 
     private void SetDescription()
     {
-        this.Description = $@"{this.Name} is a {getWord("size")} situated in {getWord("region")} by a {getWord("adj")} {getWord("noun")}.
+        this.Description = $@"{this.Name} is a {getWord("size")} situated in {getWord("region")} nearby a {getWord("adj")} {getWord("noun")}.
 
 They are lead by {this.Leader} and known for having lots of {getWord("resource")}. They will pay handsomely for {getWord("resource")}.
 

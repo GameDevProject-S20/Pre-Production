@@ -1510,6 +1510,7 @@ MonoBehaviour:
   QuestJournalCanvas: {fileID: 105134821}
   TravelPanelCanvas: {fileID: 769002950}
   InventoryCanvas: {fileID: 442956047}
+  Vroom: {fileID: 8300000, guid: 5fb67b7d975cc4bd089203f03802ab86, type: 3}
   travelPanelPool: []
   pathDefaultMaterial: {fileID: 2100000, guid: 18dfd0d6a332ffb4e98f5ddf0df0f007, type: 2}
   pathHighlightMaterial: {fileID: 2100000, guid: 0314ad49ac172574b8b3ac46d8133344,
@@ -2125,26 +2126,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7107254858817221932, guid: ae75890649c1d4cfdaddce00cf03f31d,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7107254858817221932, guid: ae75890649c1d4cfdaddce00cf03f31d,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7107254858817221932, guid: ae75890649c1d4cfdaddce00cf03f31d,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7107254858817221932, guid: ae75890649c1d4cfdaddce00cf03f31d,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7199653088097753765, guid: e8e0713c01c44684db4ab4c34a0a47e2,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -2643,6 +2624,26 @@ PrefabInstance:
     - target: {fileID: 7864621162552622781, guid: e8e0713c01c44684db4ab4c34a0a47e2,
         type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7107254858817221932, guid: ae75890649c1d4cfdaddce00cf03f31d,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7107254858817221932, guid: ae75890649c1d4cfdaddce00cf03f31d,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7107254858817221932, guid: ae75890649c1d4cfdaddce00cf03f31d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7107254858817221932, guid: ae75890649c1d4cfdaddce00cf03f31d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
