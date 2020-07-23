@@ -63,6 +63,8 @@ public class Trading : MonoBehaviour
     GameObject Portrait;
     [SerializeField]
     Sprite IconMissing;
+    [SerializeField]
+    public Tooltip tooltip;
 
     public void Start() {
         shop = ShopManager.Instance.GetShopById(DataTracker.Current.currentShopId);
@@ -96,6 +98,7 @@ public class Trading : MonoBehaviour
         listItem.transform.SetParent(parent, false);
         listItem.GetComponent<Button>().onClick.AddListener(onClick);
         listItem.name = ItemManager.Current.itemsMaster[itemName].DisplayName + "_button";
+        listItem.GetComponent<HoverBehaviour>().tooltip = tooltip;
     }
 
     void buildShopList(){
