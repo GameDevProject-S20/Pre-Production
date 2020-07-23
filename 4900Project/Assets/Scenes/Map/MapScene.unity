@@ -559,12 +559,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 198410444}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &198410446 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2676941748365927813, guid: 49355b590cbe93047b993c169b9d7021,
-    type: 3}
-  m_PrefabInstance: {fileID: 198410444}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &290414421
 GameObject:
   m_ObjectHideFlags: 0
@@ -693,10 +687,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b3d1e9b9a2054649a759f352026d791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panSpeed: 0.05
   zoomSpeed: 4
-  max: {x: 4.68, y: 8, z: 6.54}
-  min: {x: -4.68, y: 4, z: -6.54}
+  scrollMax: 10
+  scrollMin: 4
+  dragSpeed: -0.25
+  outerLeft: -10
+  outerRight: 10
+  outerUp: 12
+  outerDown: -12
 --- !u!1001 &442956046
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1105,7 +1103,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Enter Node
+  m_text: Enter Town
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4ec0308ae3de2464b8136c0ed64e3255, type: 2}
   m_sharedMaterial: {fileID: 790893843913795537, guid: 4ec0308ae3de2464b8136c0ed64e3255,
@@ -1503,7 +1501,7 @@ MonoBehaviour:
   travelPanelPrefab: {fileID: 7647009343425266578, guid: 6c168c501c0336644874e32b0b794b6a,
     type: 3}
   playerMarker: {fileID: 198410445}
-  TruckObject: {fileID: 198410446}
+  TruckObject: {fileID: 0}
   NodesContainer: {fileID: 1057473041}
   PathsContainer: {fileID: 2092142779}
   enterNodeButton: {fileID: 901572006}
@@ -1864,6 +1862,49 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5072702294929622889, guid: ae75890649c1d4cfdaddce00cf03f31d,
+        type: 3}
+      propertyPath: m_text
+      value: 'Hold left-click and drag to move the map
+
+        Use the scroll wheel
+        to zoom'
+      objectReference: {fileID: 0}
+    - target: {fileID: 5072702294929622889, guid: ae75890649c1d4cfdaddce00cf03f31d,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 69
+      objectReference: {fileID: 0}
+    - target: {fileID: 5072702294929622889, guid: ae75890649c1d4cfdaddce00cf03f31d,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 5072702294929622889, guid: ae75890649c1d4cfdaddce00cf03f31d,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 5072702294929622889, guid: ae75890649c1d4cfdaddce00cf03f31d,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5072702294929622889, guid: ae75890649c1d4cfdaddce00cf03f31d,
+        type: 3}
+      propertyPath: m_firstOverflowCharacterIndex
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5072702294929622889, guid: ae75890649c1d4cfdaddce00cf03f31d,
+        type: 3}
+      propertyPath: m_margin.z
+      value: -0.5442505
+      objectReference: {fileID: 0}
+    - target: {fileID: 5072702294929622889, guid: ae75890649c1d4cfdaddce00cf03f31d,
+        type: 3}
+      propertyPath: m_margin.w
+      value: -3.7200928
+      objectReference: {fileID: 0}
     - target: {fileID: 5971513799554118296, guid: ae75890649c1d4cfdaddce00cf03f31d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2034,6 +2075,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6537586055249293458, guid: ae75890649c1d4cfdaddce00cf03f31d,
+        type: 3}
+      propertyPath: m_Name
+      value: Map Instructions
+      objectReference: {fileID: 0}
     - target: {fileID: 7107254858817221932, guid: ae75890649c1d4cfdaddce00cf03f31d,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -2053,6 +2099,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7107254858817221932, guid: ae75890649c1d4cfdaddce00cf03f31d,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 406.09515
+      objectReference: {fileID: 0}
+    - target: {fileID: 7107254858817221932, guid: ae75890649c1d4cfdaddce00cf03f31d,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 73.246765
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae75890649c1d4cfdaddce00cf03f31d, type: 3}
