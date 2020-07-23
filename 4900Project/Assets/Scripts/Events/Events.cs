@@ -44,6 +44,12 @@ namespace SIEvents
             }
         }
 
+        public class InventoryEvents
+        {
+            [System.Serializable]
+            public class ChangeEvent : UnityEvent { };
+        }
+
         public class TownEvents
         {
             [System.Serializable]

@@ -29,6 +29,10 @@ namespace SIEvents
 
         public Events.TransactionEvents.Event OnTransaction = new Events.TransactionEvents.Event();
 
+        //=== Inventory Change =======================================//
+        public Events.InventoryEvents.ChangeEvent OnInventoryChange = new Events.InventoryEvents.ChangeEvent();
+
+
         //=== Town ===================================================//
 
         public Events.TownEvents.EnterEvent OnTownEnter = new Events.TownEvents.EnterEvent();

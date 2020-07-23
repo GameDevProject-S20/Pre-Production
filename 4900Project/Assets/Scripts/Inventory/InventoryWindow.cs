@@ -4,15 +4,22 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using SIEvents;
 
 public class InventoryWindow : MonoBehaviour
 {
+    public static InventoryWindow Instance { get => instance; }
+
+    private static InventoryWindow instance;
 
     [SerializeField]
     GameObject inventoryListItem;
 
     [SerializeField]
     Transform playerInventoryObject;
+
+    [SerializeField]
+    public Tooltip tooltip;
 
     [SerializeField]
     Sprite AbundantImage;
@@ -25,7 +32,29 @@ public class InventoryWindow : MonoBehaviour
     [SerializeField]
     Sprite LegendaryImage;
 
-    private void Start() {
+    List<GameObject> itemObjects;
+    int count = 50;
+    void Start()
+    {
+        if (instance != null) Destroy(instance);
+        instance = this;
+        tooltip = GameObject.Find("Tooltip").GetComponent<Tooltip>();
+        itemObjects = new List<GameObject>();
+        Populate();
+
+        EventManager.Instance.OnInventoryChange.AddListener(() => {
+            Clear();
+            Populate();
+        });
+    }
+
+    public void leave(){
+        transform.parent.gameObject.SetActive(false);
+    }
+
+    // Add item sprites
+    void Populate()
+    {
         foreach(var item in DataTracker.Current.Player.Inventory.getContents()){
             var listItem = GameObject.Instantiate(inventoryListItem, Vector3.zero, Quaternion.identity);
             listItem.GetComponentInChildren<TextMeshProUGUI>().text = ItemManager.Current.itemsMaster[item.Key].DisplayName + " (" + item.Value + ") ";
@@ -33,11 +62,18 @@ public class InventoryWindow : MonoBehaviour
             listItem.transform.Find("Icon").GetComponent<Image>().sprite = ItemManager.Current.itemsMaster[item.Key].Icon;
             listItem.transform.SetParent(playerInventoryObject, false);
             listItem.name = ItemManager.Current.itemsMaster[item.Key].DisplayName + "_button";
+            itemObjects.Add(listItem);
         }
     }
 
-    public void leave(){
-        transform.parent.gameObject.SetActive(false);
+    // Clear item sprites
+    void Clear()
+    {
+        foreach (var item in itemObjects)
+        {
+            Destroy(item);
+        }
+        itemObjects.Clear();
     }
 
     Sprite getValueString(float value)
