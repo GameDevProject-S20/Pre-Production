@@ -10,6 +10,14 @@ using SIEvents;
 
 public class Initializer : MonoBehaviour
 {
+    
+    [Header("GameObjects from Canvas")]
+    [SerializeField]
+    GameObject startButton;
+    [SerializeField]
+    GameObject loadingText; 
+
+
     void Start()
     {
         EventManager.Instance.onDataTrackerLoad.AddListener(finishLoading);
@@ -17,7 +25,13 @@ public class Initializer : MonoBehaviour
     }
 
     IEnumerator loader(){
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(3);
+        startButton.SetActive(true);
+        loadingText.SetActive(false); 
+    }
+
+    public void OnEnterGameClick()
+    {
         SceneManager.LoadScene("MapScene", LoadSceneMode.Single);
     }
 
