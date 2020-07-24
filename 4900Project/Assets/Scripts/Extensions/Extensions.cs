@@ -24,10 +24,5 @@
 
             return enumerable;
         }
-
-        public static IEnumerable<T> CreateEnumerable<T>(params T[] pars)
-        {
-            return pars.AsEnumerable();
-        }
     }
 }

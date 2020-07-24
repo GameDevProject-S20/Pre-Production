@@ -48,22 +48,6 @@ namespace Encounters
 
         public Encounter() { }
 
-        /*public Encounter(IEnumerable<Condition> encounterRunConditions = default, int? fixedEncounterTownId = null)
-        {
-            Effects = new ReadOnlyCollection<Action>(new List<Action>(effects));
-
-            if (encounterRunConditions != null)
-            {
-                Conditions = new ReadOnlyCollection<Condition>(new List<Condition>(encounterRunConditions));
-            }
-
-            if (fixedEncounterTownId.HasValue)
-            {
-                this.fixedEncounterTownId = fixedEncounterTownId;
-            }
-        }*/
-
-
         public void RunEncounter()
         {
             DialogueManager.Instance.SetActive(Dialogue);
