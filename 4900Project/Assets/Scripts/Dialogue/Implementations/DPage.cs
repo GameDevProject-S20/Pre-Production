@@ -29,7 +29,10 @@ namespace Dialogue
         {
             return Buttons.ElementAtOrDefault(buttonIndex);
         }
-
+        /// <summary>
+        /// Recursively build a tree of all pages from this page forward, including each option branch
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<IDPage> GetPageTree()
         {
             var toRecurse = Buttons.Where(b => b.NextPage != null);

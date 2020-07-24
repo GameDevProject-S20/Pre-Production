@@ -29,6 +29,9 @@ namespace Dialogue
             OnButtonClick = () => Effects.ForEach(e => e.Apply());
         }
 
+        /// <summary>
+        /// Default Exit button
+        /// </summary>
         public static DButton Exit
         {
             get => new DButton()

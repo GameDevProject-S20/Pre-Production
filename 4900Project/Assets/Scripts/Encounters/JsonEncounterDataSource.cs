@@ -137,57 +137,6 @@ public class JsonEncounterDataSource : IEncounterDataSource
             });
         }
 
-        UnityEngine.Debug.Log(string.Format("Pages:\n\n#############################\n\n{0}", string.Join("\n\n#############################\n\n", disconnectedPages.Select(kvp => kvp.Value.Item1))));
-
-
-        /*disconnectedPages.Select(kvp =>
-        {
-            IDPage page = kvp.Value.Item1;
-            IEnumerable<KeyValuePair<IDButton, int?>> buttons = kvp.Value.Item2.AsEnumerable();
-
-            // If no avatar specified, default to using the root page's avatar
-            if (page.Avatar == null)
-            {
-                page.Avatar = avatar;
-            }
-
-            page.Buttons = buttons.Select(kvp2 =>
-            {
-                IDButton button = kvp2.Key;
-                int? nextPage = kvp2.Value;
-                if (nextPage.HasValue)
-                {
-                    kvp2.Key.NextPage = disconnectedPages[nextPage.Value].Item1;
-                }
-                return button;
-            });
-
-            UnityEngine.Debug.Log(page);
-
-            return page;
-        });*/
-
-        /*List<IDPage> dc_tree = disconnectedPages.Values.Select(v => v.Item1).ToList();
-        List<IDPage> root_tree = rootPage.GetPageTree().ToList();
-
-        var not_in_dc = root_tree.Where(p => !dc_tree.Contains(p)).ToList();
-        var not_in_root = dc_tree.Where(p => !root_tree.Contains(p)).ToList();
-
-        if (not_in_dc.Count > 0 || not_in_root.Count > 0)
-        {
-            //UnityEngine.Debug.Log(string.Format("{0}\n{1}", string.Join(",", not_in_dc), string.Join(",", not_in_root)));
-            throw new Exception(string.Format("Trees not equal! [{0}:{1}]\n\n{2}\n{3}", not_in_dc.Count, not_in_root.Count, string.Join(",", not_in_dc), string.Join(",", not_in_root)));
-
-        }*/
-
-        /*root_tree.Where(v => dc_tree.ToList());
-
-        if ( || dc_tree.Where(v => root_tree.ToList().Contains(v)).Any())
-        {
-            //UnityEngine.Debug.Log();
-            throw new Exception(string.Format("Trees not equal\n\n{0}\n{1}", string.Join(",", root_tree.ToList()), string.Join(",", dc_tree.ToList())));
-        }*/
-
         // Create page
         return DialogueManager.Instance.CreateDialogue(rootPage);
     }
@@ -205,9 +154,6 @@ public class JsonEncounterDataSource : IEncounterDataSource
         var statement_arr = string.Concat(statement.Skip(1)).Split(); 
         command = statement_arr.FirstOrDefault();
         args = statement_arr.Skip(1).ToArray();
-
-        /*UnityEngine.Debug.Log(string.Format("Statement     | {0}\nStatement_arr | {1}\nIdentifier    | {2}\nCommand       | {3}\nArgs          | {4}", statement, string.Join(",", statement_arr), identifier, command, string.Join(",", args)));*/
-
     }
 
     private List<Condition> parseEncounterConditions(string[] rawConditions)

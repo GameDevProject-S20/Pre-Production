@@ -28,6 +28,10 @@ namespace Dialogue
 
         IDButton GetButton(int buttonIndex);
 
+        /// <summary>
+        /// Get a list of all pages from this page forward, including each option branch
+        /// </summary>
+        /// <returns></returns>
         IEnumerable<IDPage> GetPageTree();
     }
 }
