@@ -47,7 +47,7 @@ namespace Tests
                         new DButton()
                         {
                             Text = "Next",
-                            OnButtonClick = DFunctions.CloseDialogue
+                            Effects = GenericEffect.CreateEnumerable(DFunctions.CloseDialogue)
                         }
                     }
             };
@@ -102,7 +102,7 @@ namespace Tests
                     new DButton()
                     {
                         Text = "Hello World",
-                        OnButtonClick = DFunctions.CloseDialogue
+                        Effects = GenericEffect.CreateEnumerable(DFunctions.CloseDialogue)
                     }
                 }
             };

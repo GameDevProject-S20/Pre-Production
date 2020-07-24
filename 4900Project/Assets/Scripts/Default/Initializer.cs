@@ -36,6 +36,9 @@ public class Initializer : MonoBehaviour
     }
 
     void finishLoading(){
+        // ARL -- cleanup
+        // This is just so I can get something....
+        DataTracker.Current.currentLocationId = 0;
         InitializeTutorial();
         InitializeEncounters();
         StartCoroutine(loader());
@@ -575,7 +578,7 @@ public class Initializer : MonoBehaviour
 
     private void BeginQuest()
     {
-        Quest quest = new Quest.Builder("Tutorial Quest")
+       /* Quest quest = new Quest.Builder("Tutorial Quest")
             .SetDescription("Bring Smithsville a new generator.")
 
             .AddStage(new Stage.Builder("Purchase generator in York.")
@@ -588,7 +591,7 @@ public class Initializer : MonoBehaviour
                 )
             )
 
-            .Build();
+            .Build();*/
     }
 
 

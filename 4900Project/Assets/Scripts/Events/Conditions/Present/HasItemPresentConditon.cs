@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class HasItemPresentConditon : IPresentCondition
 {
@@ -8,6 +9,10 @@ public class HasItemPresentConditon : IPresentCondition
 
     public HasItemPresentConditon(string itemName, int itemAmount)
     {
+        if (!string.IsNullOrEmpty(itemName))
+        {
+            itemName = itemName.First().ToString().ToUpper() + itemName.Substring(1).ToLower();
+        }
         this.itemName = itemName;
         this.itemAmount = itemAmount;
     }

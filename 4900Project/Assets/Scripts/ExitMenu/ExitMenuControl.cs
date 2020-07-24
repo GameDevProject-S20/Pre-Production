@@ -1,11 +1,5 @@
 ﻿using Dialogue;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-using System.Linq;
 
 namespace Assets.Scripts.ExitMenu
 {
@@ -72,21 +66,18 @@ namespace Assets.Scripts.ExitMenu
                         new DButton()
                         {
                             Text = "Yes.",
-                            OnButtonClick = () => {
-                                ConfirmQuit();
-                                DFunctions.CloseDialogue();
-                            }
+                            Effects = GenericEffect.CreateEnumerable(
+                                () => ConfirmQuit()
+                            )
                         },
 
                         // Cancel button
                         new DButton()
                         {
                             Text = "No.",
-                            OnButtonClick = () =>
-                            {
-                                CancelQuit();
-                                DFunctions.CloseDialogue();
-                            }
+                            Effects = GenericEffect.CreateEnumerable(
+                                () => CancelQuit()
+                            )
                         }
                     },
 

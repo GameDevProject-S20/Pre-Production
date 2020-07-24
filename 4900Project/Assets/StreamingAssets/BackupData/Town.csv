@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Id,Name,Leader,Colour,Size,Tags
 0,Smithsville,Sheriff Smith,#3492eb,Medium,
 1,York,the Northern Trade Coalition,#d43e15,Medium,
@@ -6,3 +7,13 @@ Id,Name,Leader,Colour,Size,Tags
 4,Lombard Canyon,Mayor Li,#ba27b3,Large,Hospital
 5,Ares,Overseer Ahmed,#dbc13d,Small,Mining
 6,Fields,the Green Pact,#10a381,Medium,Foundry
+=======
+Id,Name,Leader,Colour
+0,Smithsville,Sheriff Smith,#3492eb
+1,York,the Northern Trade Coalition,#d43e15
+2,Big Rock,Mayor Brown,#79a10b
+3,Riverbed,Old Man Jeb,#30b394
+4,Lombard Canyon,Mayor Li,#ba27b3
+5,Ares,Overseer Ahmed,#dbc13d
+6,Fields,the Green Pact,#10a381
+>>>>>>> b97ca89... Working w few minor bugs

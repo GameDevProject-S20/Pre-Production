@@ -14,13 +14,16 @@ namespace Encounters
     /// Encounter data structure
     /// Takes in data and builds a dialogue structure, that can be presented to the player.
     /// </summary>
+    [System.Serializable]
     public class Encounter : IProgressor
     {
         /// <summary>
         /// Static id counter
         /// </summary>
+        [SerializeField]
         public int Id;
 
+        [SerializeField]
         public IDialogue Dialogue = null;
 
         /// <summary>
@@ -63,7 +66,6 @@ namespace Encounters
 
         public void RunEncounter()
         {
-            DisallowProgression();
             DialogueManager.Instance.SetActive(Dialogue);
         }
 

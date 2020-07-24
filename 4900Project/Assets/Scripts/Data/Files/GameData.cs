@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿// Uncomment this preprocessor define to only use local copies
+#define FORCE_LOCAL
+
+using System.Collections.Generic;
 using CsvHelper;
 using System.IO;
 using System.Globalization;
@@ -11,6 +14,8 @@ using System.CodeDom;
 using FileConstants;
 using UnityEngine;
 using Google.Apis.Download;
+
+
 
 public class GameData
 {
@@ -49,11 +54,13 @@ public class GameData
     /// </summary>
     public static void CreateBackups()
     {
+#if !FORCE_LOCAL
         // Go through the list one-by-one to create the backup
         foreach (var file in Files.FilesList)
         {
             CreateBackupFile(file.GoogleDriveFileId, file.MimeType, file.LocalBackupFile);
         }
+#endif
     }
     
     /// <summary>
@@ -64,6 +71,9 @@ public class GameData
     /// <param name="mimeType">The mime type of the file content. Defaults to text/csv.</param>
     protected static bool CreateBackupFile(string googleDriveFileId, string mimeType, string localFilePath)
     {
+#if FORCE_LOCAL
+        return false;
+#else
         // Attempt to download the file from Google Drive
         var canAccessGoogleDrive = DownloadFileFromGoogleDrive(googleDriveFileId, mimeType, out Stream dataStream);
         if (!canAccessGoogleDrive)
@@ -80,7 +90,8 @@ public class GameData
         // Clean up the data stream
         dataStream.Dispose();
         return true;
-    }
+#endif
+        }
 
     /// <summary>
     /// Helper function for processing files. Takes in the FileStorageData for a file and a processor function to run,
@@ -156,12 +167,14 @@ public class GameData
     /// <param name="dataStream">The resultant data stream</param>
     protected static void GetFileStream(string googleDriveFileId, string mimeType, string localFilePath, out Stream dataStream)
     {
+#if !FORCE_LOCAL
         // Attempt to download the file from Google Drive first, to get our most recent copy
-        /*var canDownloadDrive = DownloadFileFromGoogleDrive(googleDriveFileId, mimeType, out dataStream);
+        var canDownloadDrive = DownloadFileFromGoogleDrive(googleDriveFileId, mimeType, out dataStream);
         if (canDownloadDrive)
         {
             return;
-        }*/
+        }
+#endif
 
         // If that fails, default to our local file
         dataStream = File.OpenRead(localFilePath);
@@ -178,6 +191,10 @@ public class GameData
         // Download the file into our result stream
         result = new MemoryStream();
 
+#if FORCE_LOCAL
+        return false;
+#else
+        // Download the file into our result stream
         try
         {
             IDownloadProgress response;
@@ -211,5 +228,6 @@ public class GameData
             UnityEngine.Debug.Log($"Google Drive API call failed with exception {e.Message}");
             return false;
         }
+#endif
     }
 }
