@@ -2,63 +2,66 @@
 	"encounters":	[
 		{
 			"enounter_id": 0,
-			"conditions" : [
-					"!enounter_complete 0"
-			],
-			"town_name": "Smithsville",
+			"conditions" : [],
+			"town_name": "York",
 			"dialogue_tree": [
 				{ 
-						"id": 0,
-						"text": "Welcome to these here parts",
-						"avatar_name": "Sheriff",
-						"buttons": [
-								{
-										"text": "Howdy, Sheriff.",
-										"conditions": [],
-										"effects": [],
-										"next_page_id": 1
-								},
-								{
-										"text": "Can we trade?",
-										"conditions": [
-												"!has food 20"
-										],
-										"effects": [
-												"@give scrap 30" 
-										],
-										"next_page_id": 2
-								}
-						]
+					"id": 1,
+					"text": "Welcome to these here parts",
+					"avatar_name": "Sheriff",
+					"buttons": [
+							{
+									"text": "Howdy, Sheriff.",
+									"next_page_id": 2
+							},
+							{
+									"text": "Can we trade?",								
+									"next_page_id": 3
+							}
+					]
 				},
 				{ 
-						"id": 1,
-						"text": "You should check out the store later.",
-						"buttons": [
-								{
-										"text": "Will do!",
-										"conditions": [],
-										"effects": [],
-										"next_page_id": 3
-								}
-						] 
+					"id": 2,
+					"text": "You should check out the store later.",
+					"buttons": [
+							{
+									"text": "Will do!",
+									"next_page_id": 6
+							}
+					] 
+				},
+				{
+					"id": 3,
+					"text": "I can offer fuel if you got food.",
+					"buttons": [
+						{
+							"text": "[Trade 5 rations for 1 fuel.]",
+							"conditions": [
+								"!has rations 5"
+							],
+							"effects": [
+									"@give fuel 1" 
+							],
+							"next_page_id": 5
+						},
+						{
+							"text": "Never mind.",
+							"next_page_id": 6
+						}
+					]
 				},
 				{ 
-						"id": 2,
-						"text": "That seems mighty fair to me!",
-						"avatar_name": "Sheriff",
-						"buttons": [
-								{
-										"text": "See ya later.",
-										"conditions": [],
-										"effects": [],
-										"next_page_id": 3
-								}
-						] 
+					"id": 5,
+					"text": "That seems mighty fair to me!",
+					"buttons": [
+							{
+									"text": "See ya later."
+							}
+					] 
 				},
 				{ 
-						"id": 3,
-						"text": "Well it's been nice talking to you.",
-						"buttons": []
+					"id": 6,
+					"text": "Well it's been nice talking to you."
 				}
 			]
 		}

@@ -36,7 +36,7 @@ namespace SIEvents
 
         public override string ToString()
         {
-            throw new NotImplementedException();
+            return string.Format("Encounter {0}", encounterId);
         }
     }
 }

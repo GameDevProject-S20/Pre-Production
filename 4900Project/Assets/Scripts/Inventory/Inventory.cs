@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Inventory
@@ -131,7 +133,13 @@ public class Inventory
     /// <param name="name">Name of item</param>
     /// <returns>Amount of given item that can fit</returns>
     public int CanFitHowMany(string name){
-        return Mathf.FloorToInt((WeightLimit * weightOverflowModifier - TotalWeight()) / ItemManager.Current.itemsMaster[name].Weight);
+        ItemManager.Current.itemsMaster.TryGetValue(name, out Item item);
+        if (item == null)
+        {
+            throw new ArgumentException(string.Format("Item {0} not found.\n\nAvailable:\n{1}", name, string.Join("\n", ItemManager.Current.itemsMaster.Keys)));
+        }
+
+        return Mathf.FloorToInt((WeightLimit * weightOverflowModifier - TotalWeight()) / item.Weight);
     }
 
     /// <summary>

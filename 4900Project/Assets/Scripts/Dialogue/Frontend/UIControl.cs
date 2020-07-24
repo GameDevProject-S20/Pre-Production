@@ -120,6 +120,8 @@ namespace Assets.Scripts.Dialogue.Frontend
                 // Show the display
                 Show();
 
+                Debug.Log(string.Format("Active Page\n\n{0}", activePage));
+
                 // Update all the data
                 UpdateButtons(activePage.Buttons);
                 UpdateAvatarDisplay(activePage.Avatar);

@@ -6,6 +6,8 @@ using SIEvents;
 using Dialogue;
 using System;
 using FileConstants;
+using UnityEngine;
+using Extentions;
 
 public class JsonEncounterDataSource : IEncounterDataSource
 {
@@ -43,8 +45,8 @@ public class JsonEncounterDataSource : IEncounterDataSource
     }
 
 
-    private readonly static char CONDITION_CHAR = '@';
-    private readonly static char EFFECT_CHAR = '!';
+    private readonly static char CONDITION_CHAR = '!';
+    private readonly static char EFFECT_CHAR = '@';
 
     // PUBLIC //
 
@@ -68,13 +70,14 @@ public class JsonEncounterDataSource : IEncounterDataSource
     private Encounter parseEncounter(RawEncounter rawEncounter)
     {
         //### These are the properties we need to load in from file ###// 
+        var id = rawEncounter.encounter_id;
         var rawDialogue = rawEncounter.dialogue_tree;
         var rawConditions = rawEncounter.conditions;
         var rawEncounterTownId = rawEncounter.town_name;
         //###                                                       ###//
 
-        var dialogue = parseDialogue(rawDialogue);
-        var conditions = rawConditions.Select(rc => parseEncounterCondition(rc)).ToList();
+        var dialogue = parseDialogue(rawDialogue, id);
+        var conditions = parseEncounterConditions(rawConditions);
         var townId = TownManager.Instance.GetTownByName(rawEncounterTownId).Id;
 
         Encounter encounter = new Encounter()
@@ -94,7 +97,7 @@ public class JsonEncounterDataSource : IEncounterDataSource
     /// - parsePage
     /// </summary>
     /// <returns>Dialogue</returns>
-    private IDialogue parseDialogue(RawPage[] rawPages)
+    private IDialogue parseDialogue(RawPage[] rawPages, int encounterId)
     {
 
         // Because we don't have all the IDPages by the time we go to create most all of the buttons,
@@ -102,16 +105,42 @@ public class JsonEncounterDataSource : IEncounterDataSource
         // and then connecting them in the following step
         var disconnectedPages =
             rawPages
-                .Select(rp => parsePage(rp))
+                .Select(rp => parsePage(rp, encounterId))
                 .ToDictionary(p => p.Item1, p => p.Item2);
        
 
         // This should be the first page (id 0)
-        var rootPage = disconnectedPages[0].Item1;
+        var rootPage = disconnectedPages[1].Item1;
         var avatar = rootPage.Avatar;
 
         // Connect pages
-        disconnectedPages.Select(kvp =>
+        foreach (var kvp in disconnectedPages)
+        {
+            IDPage page = kvp.Value.Item1;
+            IEnumerable<KeyValuePair<IDButton, int?>> buttons = kvp.Value.Item2.AsEnumerable();
+
+            // If no avatar specified, default to using the root page's avatar
+            if (page.Avatar == null)
+            {
+                page.Avatar = avatar;
+            }
+
+            page.Buttons = buttons.Select(kvp2 =>
+            {
+                IDButton button = kvp2.Key;
+                int? nextPage = kvp2.Value;
+                if (nextPage.HasValue)
+                {
+                    button.NextPage = disconnectedPages[nextPage.Value].Item1;
+                }
+                return button;
+            });
+        }
+
+        UnityEngine.Debug.Log(string.Format("Pages:\n\n#############################\n\n{0}", string.Join("\n\n#############################\n\n", disconnectedPages.Select(kvp => kvp.Value.Item1))));
+
+
+        /*disconnectedPages.Select(kvp =>
         {
             IDPage page = kvp.Value.Item1;
             IEnumerable<KeyValuePair<IDButton, int?>> buttons = kvp.Value.Item2.AsEnumerable();
@@ -133,22 +162,80 @@ public class JsonEncounterDataSource : IEncounterDataSource
                 return button;
             });
 
+            UnityEngine.Debug.Log(page);
+
             return page;
-        });
+        });*/
+
+        /*List<IDPage> dc_tree = disconnectedPages.Values.Select(v => v.Item1).ToList();
+        List<IDPage> root_tree = rootPage.GetPageTree().ToList();
+
+        var not_in_dc = root_tree.Where(p => !dc_tree.Contains(p)).ToList();
+        var not_in_root = dc_tree.Where(p => !root_tree.Contains(p)).ToList();
+
+        if (not_in_dc.Count > 0 || not_in_root.Count > 0)
+        {
+            //UnityEngine.Debug.Log(string.Format("{0}\n{1}", string.Join(",", not_in_dc), string.Join(",", not_in_root)));
+            throw new Exception(string.Format("Trees not equal! [{0}:{1}]\n\n{2}\n{3}", not_in_dc.Count, not_in_root.Count, string.Join(",", not_in_dc), string.Join(",", not_in_root)));
+
+        }*/
+
+        /*root_tree.Where(v => dc_tree.ToList());
+
+        if ( || dc_tree.Where(v => root_tree.ToList().Contains(v)).Any())
+        {
+            //UnityEngine.Debug.Log();
+            throw new Exception(string.Format("Trees not equal\n\n{0}\n{1}", string.Join(",", root_tree.ToList()), string.Join(",", dc_tree.ToList())));
+        }*/
 
         // Create page
         return DialogueManager.Instance.CreateDialogue(rootPage);
+    }
+
+    private void SplitCommand(string statement, out char identifier, out string command, out string[] args)
+    {
+        if (statement.Length == 0)
+        {
+            throw new ArgumentException("Command Empty");
+        }
+
+        statement = statement.Trim().ToLower();
+        identifier = statement.FirstOrDefault();
+
+        var statement_arr = string.Concat(statement.Skip(1)).Split(); 
+        command = statement_arr.FirstOrDefault();
+        args = statement_arr.Skip(1).ToArray();
+
+        /*UnityEngine.Debug.Log(string.Format("Statement     | {0}\nStatement_arr | {1}\nIdentifier    | {2}\nCommand       | {3}\nArgs          | {4}", statement, string.Join(",", statement_arr), identifier, command, string.Join(",", args)));*/
+
+    }
+
+    private List<Condition> parseEncounterConditions(string[] rawConditions)
+    {
+        if (rawConditions == null)
+        {
+            return new List<Condition>();
+        }
+        else
+        {
+            return rawConditions.Select(rc => parseEncounterCondition(rc)).ToList();
+        }
     }
 
     /// <summary>
     /// Handles creation of conditions that must be satisfied before the encounter can run
     /// </summary>
     /// <returns>Condition</returns>
-    private Condition parseEncounterCondition(params string[] statement)
+    private Condition parseEncounterCondition(string statement)
     {
         Condition c = null;
-        var command = statement[0].TrimStart(CONDITION_CHAR).ToUpper();
-        var args = statement.Skip(1).ToArray();
+
+        SplitCommand(statement, out char identifier, out string command, out string[] args);
+
+        if (identifier != '!')
+        {
+            throw new ArgumentException("Incorrect Identifier");
+        }
 
         if (command == "encounter_complete")
         {
@@ -160,6 +247,10 @@ public class JsonEncounterDataSource : IEncounterDataSource
             var quest_id = Int16.Parse(args[0]);
             c = new QuestCompleteCondition("", quest_id);
         }
+        else
+        {
+            throw new ArgumentException(string.Format("Command {0} not recognized.", command));
+        }
         return c;
     }
 
@@ -170,7 +261,7 @@ public class JsonEncounterDataSource : IEncounterDataSource
     /// - parseButton
     /// </summary>
     /// <returns>A dictionary entry containing pages mapped to buttons and the button nextpage ids</returns>
-    private Tuple<int, Tuple<IDPage, Dictionary<IDButton, int?>>> parsePage(RawPage rawPage)
+    private Tuple<int, Tuple<IDPage, Dictionary<IDButton, int?>>> parsePage(RawPage rawPage, int encounterId)
     {
         //#############################################################//
         //### These are the properties we need to load in from file ###// 
@@ -180,6 +271,11 @@ public class JsonEncounterDataSource : IEncounterDataSource
         //###                                                       ###//
         //#############################################################//
 
+        if (id == 0)
+        {
+            throw new ArgumentException("Page cannot have ID 0!");
+        }
+
         var page = new DPage()
         {
             Text = rawText
@@ -188,16 +284,16 @@ public class JsonEncounterDataSource : IEncounterDataSource
         // This is messy, but it just parses the buttons and returns the relevent information, pages not currently
         // linked together
         Dictionary<IDButton, int?> buttons;
-        if (rawButtons.Length > 0)
-        {
-            buttons = rawButtons.Select(rb => parseButton(rb)).ToDictionary(b => b.Key, b => b.Value);
-        }
-        else
+        if (rawButtons == null)
         {
             buttons = new Dictionary<IDButton, int?>();
             buttons.Add(DButton.Exit, null);
         }
-        
+        else
+        {
+            buttons = rawButtons.Select(rb => parseButton(rb, encounterId)).ToDictionary(b => b.Key, b => b.Value);
+        }
+
         return new Tuple<int, Tuple<IDPage, Dictionary<IDButton, int?>>>(id, new Tuple<IDPage, Dictionary<IDButton, int?>>(page, buttons));
     }
 
@@ -209,28 +305,20 @@ public class JsonEncounterDataSource : IEncounterDataSource
     /// - parsePageOptionEffect
     /// </summary>
     /// <returns>Button and the id for the next page</returns>
-    private KeyValuePair<IDButton, int?> parseButton(RawButton rawButton)
+    private KeyValuePair<IDButton, int?> parseButton(RawButton rawButton, int encounterId)
     {
         //#############################################################//
         //### These are the properties we need to load in from file ###// 
         var rawText = rawButton.text;
         var rawConditions = rawButton.conditions;
         var rawEffects = rawButton.effects;
-        var nextPageId = rawButton.next_page_id;
+        var rawNextPageId = rawButton.next_page_id;
         //###                                                       ###//
         //#############################################################//
 
-        var conditions =
-            rawConditions
-                .Select(e => e.Trim())
-                .Select(e => e.Split(' '))
-                .Select(e => parsePageOptionCondition(e));
+        var conditions = parsePageOptionConditions(rawConditions);
 
-        var effects =
-            rawEffects
-                .Select(e => e.Trim())
-                .Select(e => e.Split(' '))
-                .Select(e => parseEffect(e));
+        var effects = parseEffects(rawEffects, encounterId);
 
         var button = new DButton()
         {
@@ -239,7 +327,30 @@ public class JsonEncounterDataSource : IEncounterDataSource
             Effects = effects
         };
 
+        // Ignore if next id not set
+        int? nextPageId;
+        if (rawNextPageId != 0)
+        {
+            nextPageId = rawNextPageId;
+        }
+        else
+        {
+            nextPageId = null;
+        }
+
         return new KeyValuePair<IDButton, int?>(button, nextPageId);
+    }
+
+    private IEnumerable<IPresentCondition> parsePageOptionConditions(string[] rawConditions)
+    {
+        if (rawConditions == null)
+        {
+            return Enumerable.Empty<IPresentCondition>();
+        }
+        else
+        {
+            return rawConditions.Select(e => parsePageOptionCondition(e));
+        }
     }
 
     /// <summary>
@@ -247,11 +358,16 @@ public class JsonEncounterDataSource : IEncounterDataSource
     /// 
     /// </summary>
     /// <returns>Condition</returns>
-    private IPresentCondition parsePageOptionCondition(params string[] statement)
+    private IPresentCondition parsePageOptionCondition(string statement)
     {
         IPresentCondition c = null;
-        var command = statement[0].TrimStart(CONDITION_CHAR).ToUpper();
-        var args = statement.Skip(1).ToArray();
+
+        SplitCommand(statement, out char identifier, out string command, out string[] args);
+
+        if (identifier != '!')
+        {
+            throw new ArgumentException("Incorrect identifier");
+        }
 
         if (command == "has")
         {
@@ -263,30 +379,51 @@ public class JsonEncounterDataSource : IEncounterDataSource
         return c;
     }
 
+    private IEnumerable<IEffect> parseEffects(string[] rawEffects, int encounterId)
+    {
+        if (rawEffects == null)
+        {
+            return Enumerable.Empty<IEffect>();
+        }
+        else
+        {
+            return rawEffects.Select(e => parseEffect(e, encounterId));
+        }
+    }
+
     /// <summary>
     /// Handles creation of effects that are invoked after pressing the button
     /// 
     /// </summary>
     /// <returns>Effect</returns>
-    private IEffect parseEffect(params string[] statement)
+    private IEffect parseEffect(string statement, int encounterId)
     {
         IEffect e = null;
-        var command = statement[0].TrimStart(EFFECT_CHAR).ToUpper();
-        var args = statement.Skip(1).ToArray();
 
-        if (command == "GIVE")
+        SplitCommand(statement, out char identifier, out string command, out string[] args);
+
+        if (identifier != '@')
+        {
+            throw new ArgumentException("Incorrect identifier");
+        }
+
+        if (command == "give")
         {
             var iname = args[0];
             var iamount = Int16.Parse(args[1]);
             e = new GiveItem(iname, iamount);
         }
-        else if (command == "TAKE")
+        else if (command == "take")
         {
             var iname = args[0];
             var iamount = Int16.Parse(args[1]);
             e = new TakeItem(iname, iamount);
         }
-        // Resolve?
+        else if (command == "resolve")
+        {
+            e = new ResolveEncounterEffect(encounterId);
+        }
+
         return e;
     }
 }

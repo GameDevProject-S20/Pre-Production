@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public abstract class ItemEffect : IEffect
 {
@@ -11,6 +12,10 @@ public abstract class ItemEffect : IEffect
 
     public ItemEffect(string itemName, int amount)
     {
+        if (!string.IsNullOrEmpty(itemName))
+        {
+            itemName = itemName.First().ToString().ToUpper() + itemName.Substring(1).ToLower();
+        }
         this.itemName = itemName;
         this.amount = amount;
     }

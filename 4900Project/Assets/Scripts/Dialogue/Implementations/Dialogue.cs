@@ -5,18 +5,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine.Events;
+using UnityEngine;
 
 namespace Dialogue
 {
     /// <summary>
     /// The actual implementation for a Dialogue.
     /// </summary>
+    [Serializable]
     class Dialogue : IDialogue
     {
         // Properties
         public int Id { get; protected set; }
         public bool IsVisible { get; protected set; }
 
+        private IDPage FirstPage;
+        [SerializeField]
         public IDPage CurrentPage { get; private set; }
 
         /// <summary>
@@ -31,7 +35,7 @@ namespace Dialogue
         /// Called when the page is updated.
         /// </summary>
         public DialogueUpdatedEvent PageUpdated { get; private set; }
-
+        
         /// <summary>
         /// Fires when the dialog should be closed.
         /// </summary>
@@ -48,7 +52,8 @@ namespace Dialogue
         {
             this.Id = id;
             this.IsVisible = true;
-            this.CurrentPage = root;
+            this.FirstPage = root;
+            this.CurrentPage = FirstPage;
             this.History = new List<IDHistory>();
 
             // initialize the events
@@ -91,6 +96,7 @@ namespace Dialogue
                 throw new Exception("Attempted to move to the next page, but there are no more pages.");
             }
 
+            CurrentPage = CurrentPage.GetButton(buttonId).NextPage;
             
             Update();
         }
@@ -119,19 +125,18 @@ namespace Dialogue
                 return;
             }
 
-            PressButton(button);
-        }
-        /// <summary>
-        /// Activates a button given the IDButton to activate.
-        /// </summary>
-        /// <param name="button"></param>
-        public void PressButton(IDButton button)
-        {
             AddToHistory(GetPage(), button.Text);
+
             button.OnButtonClick();
 
-            // Because the history would have updated, fire our changed event
-            PageUpdated.Invoke();
+            if (button.NextPage != null)
+            {
+                GoToNextPage(buttonIndex);
+            }
+            else
+            {
+                DFunctions.CloseDialogue();
+            }
         }
 
         /// <summary>
@@ -139,6 +144,7 @@ namespace Dialogue
         /// </summary>
         public void Show()
         {
+            CurrentPage = FirstPage; // ARL -- here??
             IsVisible = true;
             DialogueOpened.Invoke();
         }

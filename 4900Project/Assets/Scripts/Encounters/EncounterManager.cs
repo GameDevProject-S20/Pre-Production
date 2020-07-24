@@ -1,3 +1,4 @@
+using SIEvents;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,8 +15,10 @@ namespace Encounters
     /// Manager class to randomly spawn encounters
     /// Uses the singleton pattern - get from RandomEncounterManager.Instance
     /// </summary>
+    [System.Serializable]
     public class EncounterManager
     {
+        [SerializeField]
         public static EncounterManager Instance
         {
             get
@@ -28,11 +31,13 @@ namespace Encounters
         private static EncounterManager instance;
         private Random random;
 
+        [SerializeField]
         private Dictionary<int, Encounter> fixedEncounters
         {
             get => EncounterCollection.Instance.FixedEncounters;
         }
 
+        [SerializeField]
         private Dictionary<int, Encounter> randomEncounters
         {
             get => EncounterCollection.Instance.RandomEncounters;
@@ -44,6 +49,13 @@ namespace Encounters
         {
             random = new Random();
             randomEncounterQueue = reloadRandomEncounters();
+            EventManager.Instance.OnNodeEnter.AddListener((OverworldMap.LocationNode node) =>
+            {
+                if (node.Type == OverworldMap.LocationType.EVENT)
+                {
+                    RunRandomEncounter();
+                }
+            });
         }
 
         public void AddFixedEncounter(Encounter enc)
@@ -116,20 +128,6 @@ namespace Encounters
         public override string ToString()
         {
             return string.Format("Fixed Encounters: {0}\nRandomEncounters: {1}", string.Join(", ", fixedEncounters.Keys), string.Join(", ", randomEncounters.Keys));
-        }
-
-        // Listen for TriggerEncounter events and trigger an encounter
-        // Allows encounters to be triggered by systems without needing a reference to the EncounterManager
-        // Also allows other systems (such as quests) to know when an encounter has been triggered
-        public void encounterTriggerListener(int id=-1){
-            if (id == -1)
-            {
-                RunRandomEncounter();
-            }
-            else
-            {
-                RunFixedEncounter(id);
-            }
         }
     }
 }

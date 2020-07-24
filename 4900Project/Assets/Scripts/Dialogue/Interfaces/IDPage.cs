@@ -27,5 +27,7 @@ namespace Dialogue
         IDAvatar Avatar { get; set; }
 
         IDButton GetButton(int buttonIndex);
+
+        IEnumerable<IDPage> GetPageTree();
     }
 }

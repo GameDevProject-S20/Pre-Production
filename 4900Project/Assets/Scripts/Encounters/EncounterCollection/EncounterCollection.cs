@@ -21,6 +21,7 @@ namespace Encounters
 
         public static EncounterCollection instance = null;
 
+        [SerializeField]
         public Dictionary<int, Encounter> FixedEncounters = new Dictionary<int, Encounter>()
         {
       

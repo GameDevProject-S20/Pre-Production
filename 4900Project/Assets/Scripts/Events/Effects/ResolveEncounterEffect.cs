@@ -13,7 +13,15 @@ public class ResolveEncounterEffect : IEffect
 
     public bool Apply()
     {
-        //EncounterManager.Instance.
-        throw new System.NotImplementedException();
+        Encounter enc = EncounterManager.Instance.GetFixedEncounter(encID);
+        if (enc == null)
+        {
+            return false;
+        }
+        else
+        {
+            enc.DisallowProgression();
+            return true;
+        }
     }
 }

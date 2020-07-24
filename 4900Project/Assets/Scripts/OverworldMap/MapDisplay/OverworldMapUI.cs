@@ -120,6 +120,7 @@ public class OverworldMapUI : MonoBehaviour
 
     private void DrawGraph()
     {
+        int currentId = DataTracker.Current.currentLocationId;
 
         // Draw nodes
         foreach (var node in DataTracker.Current.WorldMap.GetNodeEnumerable())
@@ -134,7 +135,7 @@ public class OverworldMapUI : MonoBehaviour
             mn.Type = node.Type;
 
             // Move the player to the starting node
-            if (node.Id == DataTracker.Current.currentLocationId)
+            if (node.Id == currentId)
             {
                 playerMarker.transform.position = nodeObj.transform.position;
                 targetPos = playerMarker.transform.position;
@@ -262,21 +263,17 @@ public class OverworldMapUI : MonoBehaviour
                 }
             }
 
-
-            DataTracker.Current.EventManager.OnNodeEnter.Invoke(node);
-            DataTracker.Current.currentLocationId = node.Id;
             if (node.Type == OverworldMap.LocationType.TOWN)
             {
                 enterNodeButton.gameObject.SetActive(true);
             }
             else
             {
-                if (node.Type == OverworldMap.LocationType.EVENT || node.LocationId != -1)
-                {
-                    DataTracker.Current.EventManager.TriggerEncounter.Invoke(node.LocationId);
-                }
                 enterNodeButton.gameObject.SetActive(false);
             }
+
+            DataTracker.Current.currentLocationId = node.Id;
+            DataTracker.Current.EventManager.OnNodeEnter.Invoke(node);
         }
     }
 
