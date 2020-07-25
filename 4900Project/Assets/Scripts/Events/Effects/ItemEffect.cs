@@ -32,6 +32,11 @@ public class GiveItem : ItemEffect
         Player.Instance.Inventory.AddItem(itemName, amount);
         return true;
     }
+
+    public override string ToString()
+    {
+        return string.Format("Give {0}x {1}", amount, itemName);
+    }
 }
 
 public class TakeItem : ItemEffect
@@ -48,6 +53,11 @@ public class TakeItem : ItemEffect
         }
 
         return success;
+    }
+
+    public override string ToString()
+    {
+        return string.Format("Take {0}x {1}", amount, itemName);
     }
 }
 

@@ -369,6 +369,24 @@ public class JsonEncounterDataSource : IEncounterDataSource
         {
             e = new ResolveEncounterEffect(encounterId);
         }
+        else if (command == "random")
+        {
+            var firstEffectBegin = statement.SkipWhile(c => c != '(').Skip(1);
+            var e1 = firstEffectBegin.TakeWhile(c => c != ')');
+            var e2 = firstEffectBegin.SkipWhile(c => c != '(').Skip(1).TakeWhile(c => c != ')');
+
+            string s1 = new string(e1.ToArray());
+            string s2 = new string(e2.ToArray());
+
+            UnityEngine.Debug.Log(string.Format("Random commands:\n{0}\n{1}", s1, s2));
+
+            var effect1 = parseEffect(s1, encounterId);
+            var effect2 = parseEffect(s2, encounterId);
+
+            var percentFirst = Convert.ToDouble(args[0]);
+
+            e = new RandomEffect(effect1, effect2, percentFirst);
+        }
 
         return e;
     }

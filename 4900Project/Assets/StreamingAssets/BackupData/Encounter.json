@@ -32,15 +32,15 @@
 				},
 				{
 					"id": 3,
-					"text": "I can offer fuel if you got food.",
+					"text": "I can offer randomly offer fuel or a wrench if you got food.",
 					"buttons": [
 						{
-							"text": "[Trade 5 rations for 1 fuel.]",
+							"text": "[Trade 5 rations for 1 fuel/wrench.]",
 							"conditions": [
 								"!has rations 5"
 							],
 							"effects": [
-									"@give fuel 1" 
+									"@random 0.5 (@give fuel 1) (@give wrench 1)" 
 							],
 							"next_page_id": 5
 						},
