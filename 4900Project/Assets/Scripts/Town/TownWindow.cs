@@ -130,7 +130,12 @@ public class TownWindow : MonoBehaviour
                 transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("ResourceIcon" + i.ToString()).GetComponent<Image>().enabled = false;
             }
         }*/
-
+        
+        TextMeshProUGUI t = transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("Tags").GetComponent<TextMeshProUGUI>();
+        t.text = "";
+        foreach(var tag in townData.Tags){
+            t.text += "<color="+ tag.Colour +">" + tag.Name +"</color>; ";
+        }
         //find town image
         if (townData.Icon != null)
         {

@@ -71,12 +71,16 @@ public class Shop
         }
     }
 
+    int GetAmount(int i){
+        return Mathf.Max(1, Mathf.FloorToInt(i * Random.Range(0.75f, 1.25f)));
+    }
+
     public void InitializeInventory(Town town){
 
         // The BASELINE probablity of seeing items of a certain rarity
         List<float> RarityProbability = new List<float>(){ 1.0f, 0.75f, 0.4f, 0.1f, 0.5f};
 
-        // The BASELINE amount of items of a certain rarity
+        // The BASELINE amount of items of a certain rari`ty
         List<int> RarityAmount = new List<int>(){ 15, 6, 3, 1, 1};
 
         // The probablity of seeing items of a certain rarity PER ITEM TYPE
@@ -132,7 +136,11 @@ public class Shop
         // A medium town will stock a small variety of goods
         // A large town will stock a large amount of goods
         foreach (var tag in town.Tags){
+            if (tag.Specialization == ItemTag.None) continue;
             List<Item> items = ItemManager.Current.GetAllItemsOfType(tag.Specialization);
+            if(town.Id== 0){
+                Debug.Log(items.Count);
+            }
             List<float> probMod;
             if (!categoryProb.TryGetValue(tag.Specialization, out probMod)){
                 probMod = new List<float>(){1.0f, 1.0f, 1.0f, 1.0f, 1.0f};
@@ -161,7 +169,7 @@ public class Shop
                 }
 
                 if (Random.value < RarityProbability[tier] * probMod[tier]){
-                    inventory.AddItem(item.DisplayName, Mathf.FloorToInt(RarityAmount[tier] * amountMod[tier]));
+                    inventory.AddItem(item.DisplayName, GetAmount(Mathf.FloorToInt(RarityAmount[tier] * amountMod[tier])));
                 }
             }
         }
@@ -187,7 +195,7 @@ public class Shop
                     tier = 4;
                 }
                 if (Random.value < RarityProbability[tier]){
-                    inventory.AddItem(item.DisplayName, Mathf.FloorToInt(RarityAmount[tier]));
+                    inventory.AddItem(item.DisplayName, GetAmount(Mathf.FloorToInt(RarityAmount[tier])));
                 }
             }
         }

@@ -1,9 +1,9 @@
 DisplayName,Tooltip,Description,Value,Weight,IconName,Tags
 Fuel,A neccesity for travel between colonies,"Fuel is the lifeblood of traders, never leave port without first checking your tank. ",1,1,Fuel.png,"Fuel,General"
-Rations,Unappetizing but cheap,The bare minimum to keep someone running for a day,1,1,Food.png,"Food,General"
+Rations,Unappetizing but cheap,The bare minimum to keep someone running for a day,3,1,Food.png,"Food,General"
 Fresh Fruit,"Tasty, but spoils without proper storage","A rarity in a good portion of the world, which makes is quite valuable to the right people.",7,1,FreshFruit.png,"Food, Luxury"
 Fresh Meat,A valuable delicacy.,Raising livestock is an expensive process. Meat is highly valued.,13,1,FreshMeat.png,"Food, Luxury"
-Wrench,An essential repair tool,Helps with maintaining machines. Wear and tear means you need a replacement once in a while.,2,1,Wrench.png,"Tools_And_Parts,General"
+Wrench,An essential repair tool,Helps with maintaining machines. Wear and tear means you need a replacement once in a while.,5,1,Wrench.png,"Tools_And_Parts,General"
 Repair Patch,One use smart repair patch,"Uncommon tech allows these patches to conduct repairs autonomously, but burn out performing the job",15,4,RepairPatch.png,"Tools_And_Parts,General"
 Generator,Creates electricity,Consumes fuel to generate power. Vital for survival.,40,25,Generator.png,"Tools_And_Parts, Advanced"
 2000's Painting,Collectors love this stuff,Art from before the world ended. Nostalgic.,19,3,Painting.png,"Luxury,Antique"

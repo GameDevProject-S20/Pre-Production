@@ -77,11 +77,11 @@ public class Town
             switch (this.Size)
             {
                 case Sizes.Small:
-                    iconName = "SmallCity";
+                    iconName = "Town";
                     Tags.Add(TownManager.Instance.GetTag("Small"));
                     break;
                 case Sizes.Medium:
-                    iconName = "Town";
+                    iconName = "SmallCity";
                     Tags.Add(TownManager.Instance.GetTag("Medium"));
                     break;
                 case Sizes.Large:
