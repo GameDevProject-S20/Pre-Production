@@ -175,8 +175,6 @@ public class Initializer : MonoBehaviour
                             EventManager.Instance.onDialogueSelected.Invoke("TutorialPart5GiveGenerator");
                             DataTracker.Current.WorldMap.AddEdge(3, 15);
                             EventManager.Instance.RequestRedraw.Invoke();
-                            TownManager.Instance.GetTownByName("Smithsville").AddShop(0);
-                            TownManager.Instance.GetTownByName("Smithsville").AddShop(1);
                         },
                         () => {
 

@@ -96,22 +96,15 @@ public class Inventory
         return totalValue;
     }
 
-    public float TotalValueAfterModifiers(Dictionary<typetag,float> shopVals)
+    public float TotalValueAfterModifiers(Dictionary<ItemTag,float> shopVals)
     {
         float totalValue = 0;
         foreach (KeyValuePair<string, int> item in contents)
         {
             float valueModifier = 1;
-            foreach (typetag itemTag in ItemManager.Current.itemsMaster[item.Key].tags)
+            foreach (ItemTag itemTag in ItemManager.Current.itemsMaster[item.Key].tags)
             {
-                foreach (KeyValuePair<typetag, float> modify in TownManager.Instance.GetCurrentTownData().reg.valueModifiers)
-                {
-                    if (itemTag == modify.Key)
-                    {
-                        valueModifier += modify.Value;
-                    }
-                }
-                foreach (KeyValuePair<typetag, float> shopMod in shopVals)
+                foreach (KeyValuePair<ItemTag, float> shopMod in shopVals)
                 {
                     if (itemTag == shopMod.Key)
                     {

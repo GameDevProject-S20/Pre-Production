@@ -28,10 +28,7 @@ public class MapNode : MonoBehaviour
             transform.Rotate(new Vector3(0, Random.Range(0, 360), 0), Space.Self);
 
             Town.Sizes size = DataTracker.Current.TownManager.GetTownById(LocationId).Size;
-            if (size == Town.Sizes.Tiny){
-                    transform.Find("tinyTown").gameObject.SetActive(true);
-            }
-            else if (size == Town.Sizes.Small){
+            if (size == Town.Sizes.Small){
                     transform.Find("smallTown").gameObject.SetActive(true);
 
             }

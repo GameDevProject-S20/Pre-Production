@@ -24,7 +24,7 @@ public class TownManager
     }
 
     private Dictionary<int, Town> towns = new Dictionary<int, Town>();
-    private List<Region> regions = new List<Region>();
+    private Dictionary<string, TownTag> Tags = new Dictionary<string, TownTag>();
 
     private TownManager()
     {
@@ -33,6 +33,9 @@ public class TownManager
 
     public void LoadData()
     {
+
+        CreateTownTags();
+
         // Load in town data from CSV
         GameData.LoadCsv<TownData>(FileConstants.Files.Town, out IEnumerable<TownData> result);
         var resultString = new System.Text.StringBuilder();
@@ -47,21 +50,11 @@ public class TownManager
         UnityEngine.Debug.Log(resultString);
 
 
-        //towns[0].AddShop(0);
-        //towns[0].AddShop(1);
-        towns[1].AddShop(2);
-        //towns[1].AddShop(3);
-        towns[2].AddShop(4);
-        towns[2].AddShop(5);
-        towns[3].AddShop(6);
-        towns[3].AddShop(7);
-        towns[4].AddShop(8);
-        towns[4].AddShop(9);
-
-        Region tempy = new Region();
-        tempy.valueModifiers.Add(typetag.Medicine, 0.25f);
-        regions.Add(tempy);
-        towns[1].reg = regions[0];
+        towns[1].AddTag(Tags["Farm"]);
+        towns[1].InitializeShop();
+        towns[0].InitializeShop();
+        towns[2].InitializeShop();
+        towns[3].InitializeShop();
     }
 
     public IEnumerable<Town> GetTownEnumerable()
@@ -106,8 +99,98 @@ public class TownManager
         return null;
     }
 
-    //! Test Function
-    //! Add shops to towns
 
+    void CreateTownTags(){
+        
+        TownTag tag = new TownTag();
+        tag.Name = "Farm";
+        tag.Colour = "#336633";
+        tag.Specialization = ItemTag.Food;
 
+        tag.shopSellModifiers.Add(ItemTag.Food, 0.6f);
+        tag.shopSellModifiers.Add(ItemTag.Advanced, 0.3f);
+        tag.shopSellModifiers.Add(ItemTag.Fuel, 1.2f);
+        tag.shopSellModifiers.Add(ItemTag.Building_Materials, 1.5f);
+        tag.shopSellModifiers.Add(ItemTag.Tools_And_Parts, 1.5f);
+    
+        tag.playerSellModifiers.Add(ItemTag.Food, 0.4f);
+        tag.playerSellModifiers.Add(ItemTag.Advanced, 0.3f);
+        tag.playerSellModifiers.Add(ItemTag.Luxury, 0.25f);
+        tag.playerSellModifiers.Add(ItemTag.Building_Materials, 1.5f);
+        tag.playerSellModifiers.Add(ItemTag.Tools_And_Parts, 1.5f);
+    
+        tag.AbundancyModifiers.Add(ItemTag.Food, new List<float>(){1.5f, 1.2f, 1.1f, 1.0f, 1.0f});
+        tag.RarityModifers.Add(ItemTag.Food, new List<float>(){1.0f, 1.5f, 1.5f, 2.0f, 3.0f});
+        Tags.Add(tag.Name, tag);
+        
+
+//=============================================================
+        
+        tag = new TownTag();
+        tag.Name = "Small";
+        tag.Colour = "#888888";
+   
+        tag.playerSellModifiers.Add(ItemTag.Advanced, 0.3f);
+        tag.playerSellModifiers.Add(ItemTag.Luxury, 0.25f);
+    
+        tag.BaseAbundancyModifier = new List<float>(){1.0f, 1.0f, 1.0f, 1.0f, 1.0f};
+        tag.BaseRarityModifier = new List<float>(){1.0f, 1.2f, 1.2f, 2.0f, 3.0f};
+
+        Tags.Add(tag.Name, tag);
+        
+//=============================================================
+        tag = new TownTag();
+        tag.Name = "Medium";
+        tag.Colour = "#AAAAAA";
+        
+        tag.BaseAbundancyModifier = new List<float>(){0.7f, 0.8f, 1.0f, 0.8f, 1.0f};
+        tag.BaseRarityModifier = new List<float>(){1.0f, 1.3f, 1.2f, 0.75f, 0.0f};
+
+        Tags.Add(tag.Name, tag);
+        
+//=============================================================
+        
+        tag = new TownTag();
+        tag.Name = "Large";
+        tag.Colour = "#DDDDDD";
+        tag.Specialization = ItemTag.Advanced;
+
+        tag.shopSellModifiers.Add(ItemTag.Food, 1.5f);
+        tag.shopSellModifiers.Add(ItemTag.Luxury, 1.3f);
+        tag.shopSellModifiers.Add(ItemTag.Building_Materials, 1.2f);
+
+        tag.playerSellModifiers.Add(ItemTag.Food, 1.5f);
+        tag.playerSellModifiers.Add(ItemTag.Luxury, 1.3f);
+        tag.playerSellModifiers.Add(ItemTag.Building_Materials, 1.2f);
+
+        tag.BaseAbundancyModifier = new List<float>(){1.5f, 1.2f, 1.0f, 0.6f, 1.0f};
+        tag.BaseRarityModifier = new List<float>(){1.0f, 1.3f, 1.0f, 0.5f, 0.5f};
+
+        Tags.Add(tag.Name, tag);
+    
+    }
+
+    public TownTag GetTag(string name){
+        TownTag tag;
+        if (Tags.TryGetValue(name, out tag)){
+            return tag;
+        }
+        return null;
+    }
+
+}
+
+public class TownTag
+{
+    public string Name;
+    public string Colour;
+    public ItemTag Specialization; // Specialized in these item type
+    public Dictionary<ItemTag, float> playerSellModifiers = new Dictionary<ItemTag, float>();
+    public Dictionary<ItemTag, float> shopSellModifiers = new Dictionary<ItemTag, float>();
+    public List<float> BaseAbundancyModifier = new List<float>(){1.0f, 1.0f, 1.0f, 1.0f, 1.0f};
+    public List<float> BaseRarityModifier = new List<float>(){1.0f, 1.0f, 1.0f, 1.0f, 1.0f};
+    public Dictionary<ItemTag, List<float>> AbundancyModifiers = new Dictionary<ItemTag, List<float>>();
+    public Dictionary<ItemTag, List<float>> RarityModifers = new Dictionary<ItemTag, List<float>>();
+
+    public TownTag(){}
 }
