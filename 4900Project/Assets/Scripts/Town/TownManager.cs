@@ -46,16 +46,11 @@ public class TownManager
             towns.Add(data.Id, town);
             Debug.Log("DATA:" + town.Description);
             resultString.AppendLine("\tCreated town #" + data.Id + ": " + data.Name);
+            town.InitializeShop();
         }
         UnityEngine.Debug.Log(resultString);
 
-
-        towns[0].AddTag(Tags["Farm"]);
     
-        towns[0].InitializeShop();
-        towns[1].InitializeShop();
-        towns[2].InitializeShop();
-        towns[3].InitializeShop();
     }
 
     public IEnumerable<Town> GetTownEnumerable()
@@ -211,7 +206,7 @@ public class TownManager
         tag.shopSellModifiers.Add(ItemTag.Food, 1.2f);
         tag.shopSellModifiers.Add(ItemTag.Advanced, 1.5f);
 
-        tag.shopSellModifiers.Add(ItemTag.Advanced, 1.5f);
+        tag.playerSellModifiers.Add(ItemTag.Advanced, 1.5f);
         tag.playerSellModifiers.Add(ItemTag.Food, 1.2f);
         tag.playerSellModifiers.Add(ItemTag.Luxury, 0.5f);
         tag.playerSellModifiers.Add(ItemTag.Building_Materials, 0.7f);

@@ -81,13 +81,15 @@ public class TravelPanel : MonoBehaviour
     /// </summary>
     public void onNodeClick()
     {
+        EventManager.Instance.OnTravelStart.Invoke();
+        /*
         if (state != States.Hidden){
             state = States.Selected;
             acceptButton.SetActive(true);
             cancelButton.SetActive(true);
             acceptButton.gameObject.GetComponent<RectTransform>().DOLocalMoveY(-30, 0.1f);
             cancelButton.gameObject.GetComponent<RectTransform>().DOLocalMoveY(-30, 0.1f);
-        }
+        }*/
     }
 
     public void onNodeHover()

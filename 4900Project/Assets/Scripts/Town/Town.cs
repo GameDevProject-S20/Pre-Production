@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityUtility;
 
 /// <summary>
 /// Used for reading town data from a CSV
@@ -12,6 +13,8 @@ public class TownData
     public string Leader { get; set; }
     public string Colour { get; set; } //hex code
     public string Size { get; set; } //hex code
+    public string Tags { get; set; }
+
 }
 
 
@@ -39,7 +42,7 @@ public class Town
     /// Constructor for loading in from a TownData class
     /// </summary>
     /// <param name="data"></param>
-    public Town(TownData data) : this(data.Id, data.Name, data.Leader, data.Colour, data.Size)
+    public Town(TownData data) : this(data.Id, data.Name, data.Leader, data.Colour, data.Size, data.Tags)
     {
 
     }
@@ -52,7 +55,7 @@ public class Town
     /// <param name="Leader"></param>
     /// <param name="Colour"></param>
 
-    public Town(int Id, string Name, string Leader, string Colour="#FFFF5E0", string Size="Medium")
+    public Town(int Id, string Name, string Leader, string Colour="#FFFF5E0", string Size="Medium", string Tags="")
     {
         this.Id = Id;
         this.Name = Name;
@@ -61,7 +64,14 @@ public class Town
         this.Size = (Sizes)System.Enum.Parse(typeof(Sizes), Size);
 
         shops = new List<int>();
-        Tags = new List<TownTag>();
+        this.Tags = new List<TownTag>();
+    
+        string[] ts = Tags.Replace("\"", string.Empty).Split(',');
+        foreach(string t in ts){
+            if (t.Length >0){
+                this.Tags.Add(TownManager.Instance.GetTag(t));
+            }
+        }
 
         SetDescription();
         SetLeaderBlurb();
@@ -78,15 +88,15 @@ public class Town
             {
                 case Sizes.Small:
                     iconName = "Town";
-                    Tags.Add(TownManager.Instance.GetTag("Small"));
+                    this.Tags.Add(TownManager.Instance.GetTag("Small"));
                     break;
                 case Sizes.Medium:
                     iconName = "SmallCity";
-                    Tags.Add(TownManager.Instance.GetTag("Medium"));
+                    this.Tags.Add(TownManager.Instance.GetTag("Medium"));
                     break;
                 case Sizes.Large:
                     iconName = "LargeCity";
-                    Tags.Add(TownManager.Instance.GetTag("Large"));
+                    this.Tags.Add(TownManager.Instance.GetTag("Large"));
                     break;
                 default:
                     iconName = "Town";
@@ -105,6 +115,8 @@ public class Town
         ShopManager.Instance.addShop(shop);
         shops.Add(shop.id);
     }
+
+
 
    /* public void AddShop(int i)
     {
@@ -125,6 +137,15 @@ public class Town
 
     public void AddTag(TownTag tag){
         Tags.Add(tag);
+    }
+
+    public bool HasTag(string tag){
+        foreach(var t in Tags){
+            if (t.Name == tag){
+                return true;
+            }
+        }
+        return false;
     }
 
     private void SetDescription()

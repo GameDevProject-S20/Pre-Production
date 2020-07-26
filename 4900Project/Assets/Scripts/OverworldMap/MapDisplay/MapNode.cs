@@ -27,18 +27,23 @@ public class MapNode : MonoBehaviour
         {
             transform.Rotate(new Vector3(0, Random.Range(0, 360), 0), Space.Self);
 
-            Town.Sizes size = DataTracker.Current.TownManager.GetTownById(LocationId).Size;
-            if (size == Town.Sizes.Small){
+            Town t = DataTracker.Current.TownManager.GetTownById(LocationId);
+
+            if (t.HasTag("Farm")){
+                transform.Find("farm").gameObject.SetActive(true);
+            }
+            else if (t.Size == Town.Sizes.Small){
                     transform.Find("smallTown").gameObject.SetActive(true);
 
             }
-            else if (size == Town.Sizes.Medium){
+            else if (t.Size == Town.Sizes.Medium){
                     transform.Find("town").gameObject.SetActive(true);
 
             }
-            else if (size == Town.Sizes.Large){
+            else if (t.Size == Town.Sizes.Large){
                     transform.Find("largeTown").gameObject.SetActive(true);
             }
+
         }
         else if (Type == OverworldMap.LocationType.EVENT)
         {
