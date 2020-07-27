@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +9,10 @@ public class HealthEffect : IEffect
 
     public HealthEffect(double percent)
     {
-        this.percent = percent;
+        if (percent < 0.0f || percent > 1.0f)
+        {
+            throw new ArgumentException("percent must be between 0 and 1, inclusive");
+        }
     }
 
     public bool Apply()
