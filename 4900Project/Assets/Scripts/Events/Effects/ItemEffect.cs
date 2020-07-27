@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System;
-using System.Dynamic;
+using SIEvents;
 
 public abstract class ItemEffect : IEffect
 {
@@ -32,6 +30,7 @@ public class GiveItem : ItemEffect
     public override bool Apply()
     {
         Player.Instance.Inventory.AddItem(itemName, amount);
+        EventManager.Instance.OnGivenToPlayer.Invoke(itemName, amount);
         return true;
     }
 
@@ -49,7 +48,11 @@ public class TakeItem : ItemEffect
     {
         int numRemoved = Player.Instance.Inventory.RemoveItem(itemName, amount);
         bool success = (numRemoved == amount);
-        if (!success)
+        if (success)
+        {
+            EventManager.Instance.OnTakenFromPlayer.Invoke(itemName, amount);
+        }
+        else
         {
             Player.Instance.Inventory.AddItem(itemName, numRemoved);
         }
@@ -94,6 +97,7 @@ public class GiveItemWithTag : TaggedItemEffect
         List<string> itemNames = GetOfType().ToList();
         string itemName = itemNames.ElementAt(rand.Next(itemNames.Count));
         Player.Instance.Inventory.AddItem(itemName, amount);
+        EventManager.Instance.OnGivenToPlayer.Invoke(itemName, amount);
         return true;
     }
 
@@ -116,7 +120,11 @@ public class TakeItemWithTag : TaggedItemEffect
 
         int numRemoved = Player.Instance.Inventory.RemoveItem(itemName, amount);
         bool success = (numRemoved == amount);
-        if (!success)
+        if (success)
+        {
+            EventManager.Instance.OnTakenFromPlayer.Invoke(itemName, amount);
+        }
+        else
         {
             Player.Instance.Inventory.AddItem(itemName, numRemoved);
         }

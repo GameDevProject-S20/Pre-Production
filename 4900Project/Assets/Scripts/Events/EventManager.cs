@@ -41,6 +41,11 @@ namespace SIEvents
 
         public Events.EncounterEvents.EncounterComplete OnEncounterComplete = new Events.EncounterEvents.EncounterComplete();
 
+        //=== Effects ===============================================//
+
+        public Events.EffectEvents.GivenToPlayer OnGivenToPlayer = new Events.EffectEvents.GivenToPlayer();
+        public Events.EffectEvents.TakenFromPlayer OnTakenFromPlayer = new Events.EffectEvents.TakenFromPlayer();
+
         //=== Quest ==================================================//
 
         public Events.QuestEvents.QuestAdded OnQuestAdded = new Events.QuestEvents.QuestAdded();
