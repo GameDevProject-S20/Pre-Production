@@ -118,6 +118,7 @@ namespace FileConstants
         {
             Files.Dialog,
             Files.Items,
+            Files.Shops,
             Files.Town,
             Files.Tutorial,
             Files.TestCsv,
