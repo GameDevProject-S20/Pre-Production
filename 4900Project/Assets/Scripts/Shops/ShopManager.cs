@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using FileConstants;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,7 +27,20 @@ public class ShopManager
 
     public void LoadData()
     {
-        Shop testShop1 = new Shop(0, "George's General Store", "General Store", "", Shop.ShopTypes.GeneralStore);
+        GameData.LoadCsv<ShopData>(Files.Shops, out IEnumerable<ShopData> data);
+        foreach (var shopData in data)
+        {
+            var shop = new Shop(shopData);
+            if (shopData.Id == 3)
+            {
+                shop.inventory.AddItem("Generator", 1);
+                shop.fromPlayerModifiers.Add(typetag.Medicine, 0.25f);
+            }
+
+            shops.Add(shopData.Id, shop);
+        }
+
+        /*Shop testShop1 = new Shop(0, "George's General Store", "General Store", "", Shop.ShopTypes.GeneralStore);
         Shop testShop2 = new Shop(1, "Phil's Pharmacy", "Medical Supplier", "", Shop.ShopTypes.Pharmacy);
         Shop testShop3 = new Shop(2, "Bill's Bulk Goods", "General Store", "", Shop.ShopTypes.GeneralStore);
         testShop3.inventory.AddItem("Generator", 1);
@@ -47,7 +61,9 @@ public class ShopManager
         shops.Add(6, testShop7);
         shops.Add(7, testShop8);
         shops.Add(8, testShop9);
-        shops.Add(9, testShop10);
+        shops.Add(9, testShop10);*/
+
+
     }
 
     //town retrieval

@@ -2,6 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityUtility;
+
+/// <summary>
+/// Houses the CSV Data for the shop.
+/// </summary>
+public struct ShopData
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string ShortDescription { get; set; }
+    public string Description { get; set; }
+    public string ShopType { get; set; }
+    public string Owner { get; set; }
+}
 
 public class Shop
 {
@@ -9,6 +23,7 @@ public class Shop
 
     int id;
     public string name;
+    string owner;
     public string shortDescription;
     string description;
     public ShopTypes type;
@@ -21,32 +36,36 @@ public class Shop
     public float acceptedPriceDifference = 0.2f;
 
     public Inventory inventory = new Inventory();
+    
+    /// <summary>
+    /// Constructs a Shop given the CSV data. Used for dynamically fetching from our data files.
+    /// </summary>
+    /// <param name="data"></param>
+    public Shop(ShopData data) : this(data.Id, data.Name, data.Owner, data.ShortDescription, data.Description, UnityHelperMethods.ParseEnum<ShopTypes>(data.ShopType))
+    {
+    }
 
-    public Shop(int id_, string name_, string shortDescription_, string description_, ShopTypes type_)
+    /// <summary>
+    /// Constructs a shop given the values for each field. Can be used for hardcoding.
+    /// </summary>
+    /// <param name="id_"></param>
+    /// <param name="name_"></param>
+    /// <param name="owner_"></param>
+    /// <param name="shortDescription_"></param>
+    /// <param name="description_"></param>
+    /// <param name="type_"></param>
+    public Shop(int id_, string name_, string owner_, string shortDescription_, string description_, ShopTypes type_)
     {
         id = id_;
         name = name_;
+        owner = owner_;
         shortDescription = shortDescription_;
         description = description_;
         type = type_;
         inventory.weightLimit = 10000;
         InitializeInventory();
-        // Randomly Select an Icon
-        // Do not select the ugly ones
-        int iconId = -1;
-        bool valid = false;
-        while (!valid)
-        {
-            iconId = Mathf.FloorToInt(Random.Range(0, 31));
-            if (iconId != 10
-            && iconId != 12
-            && iconId != 15
-            && iconId != 18
-            && iconId != 20)
-                valid = true;
-        }
-        string path = "Icons/CyberPunk Avatars/" + iconId.ToString("D3");
-        Portrait = Resources.Load<Sprite>(path);
+
+        Portrait = Resources.Load<Sprite>($"Icons/CyberPunk Avatars/ShopOwners/{owner_}");
     }
 
     void InitializeInventory(){
