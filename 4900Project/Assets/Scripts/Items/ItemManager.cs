@@ -141,7 +141,7 @@ public class ItemManager : MonoBehaviour
         }
     }
 
-    Dictionary<string, Item> GetItemsByType(List<ItemTag> types)
+    public Dictionary<string, Item> GetItemsByType(List<ItemTag> types)
     {
         Dictionary<string, Item> values = new Dictionary<string, Item>();
         foreach (ItemTag targettype in types)
