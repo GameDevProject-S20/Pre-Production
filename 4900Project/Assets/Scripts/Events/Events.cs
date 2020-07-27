@@ -55,6 +55,14 @@ namespace SIEvents
             public class EncounterComplete : UnityEvent<Encounters.Encounter> { };
         }
 
+        public class EffectEvents
+        {
+            [System.Serializable]
+            public class GivenToPlayer : UnityEvent<string, int> { };
+            [System.Serializable]
+            public class TakenFromPlayer : UnityEvent<string, int> { };
+        }
+
         public class DialogueEvents
         {
             [System.Serializable]
