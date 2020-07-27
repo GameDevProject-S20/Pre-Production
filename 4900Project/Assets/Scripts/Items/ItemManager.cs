@@ -128,7 +128,7 @@ public class ItemManager : MonoBehaviour
         }
     }
 
-    Dictionary<string, Item> GetListofType(List<typetag> types)
+    public Dictionary<string, Item> GetListofType(List<typetag> types)
     {
         Dictionary<string, Item> values = new Dictionary<string, Item>();
         foreach (typetag targettype in types)

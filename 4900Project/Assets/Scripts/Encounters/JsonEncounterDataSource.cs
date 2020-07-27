@@ -8,6 +8,7 @@ using System;
 using FileConstants;
 using UnityEngine;
 using Extentions;
+using TMPro;
 
 public class JsonEncounterDataSource : IEncounterDataSource
 {
@@ -359,15 +360,32 @@ public class JsonEncounterDataSource : IEncounterDataSource
             var iamount = Int16.Parse(args[1]);
             e = new GiveItem(iname, iamount);
         }
+        else if (command == "give_tag")
+        {
+            var itag = args[0];
+            var iamount = Int16.Parse(args[1]);
+            e = new GiveItemWithTag(itag, iamount);
+        }
         else if (command == "take")
         {
             var iname = args[0];
             var iamount = Int16.Parse(args[1]);
             e = new TakeItem(iname, iamount);
         }
+        else if (command == "take_tag")
+        {
+            var itag = args[0];
+            var iamount = Int16.Parse(args[1]);
+            e = new TakeItemWithTag(itag, iamount);
+        }
         else if (command == "resolve")
         {
             e = new ResolveEncounterEffect(encounterId);
+        }
+        else if (command == "health")
+        {
+            var perc = double.Parse(args[1]);
+            e = new HealthEffect(perc);
         }
         else if (command == "random")
         {
