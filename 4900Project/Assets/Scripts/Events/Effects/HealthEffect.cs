@@ -9,7 +9,7 @@ public class HealthEffect : IEffect
 
     public HealthEffect(double percent)
     {
-        if (percent < 0.0f || percent > 1.0f)
+        if (percent < -1.0f || percent > 1.0f)
         {
             throw new ArgumentException("percent must be between 0 and 1, inclusive");
         }
@@ -17,9 +17,9 @@ public class HealthEffect : IEffect
 
     public bool Apply()
     {
-        int currHealth = Player.Instance.health;
-        float toAdd = currHealth * (float)percent;
-        Player.Instance.addHealth(Mathf.RoundToInt(toAdd));
+        int maxHealth = Player.Instance.healthCap;
+        float delta = maxHealth * (float)percent;
+        Player.Instance.addHealth(Mathf.RoundToInt(delta));
         return true;
     }
 }
