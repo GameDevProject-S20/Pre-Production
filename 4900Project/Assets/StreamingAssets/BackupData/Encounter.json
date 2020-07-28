@@ -1,79 +1,152 @@
 {
-	"encounters":	[
+	"fixed_encounters":	[
 		{
-			"enounter_id": 0,
-			"conditions" : [],
+			"encounter_id": 1,
+			"town_name": "Smithsville",
+			"NOTE": "need a way to start quests",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Welcome to Smithsville! Our <color=#2675AD>generator</color> is out and we can't repair it. I will give you fuel if you help us.",
+					"buttons": [
+						{
+							"text": "Yeah, for sure.",
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Great! Take this medicine and fuel and trade for a new <color=#2675AD>generator</color> in York.",
+					"buttons": [
+						{
+							"effects": [
+								"@give fuel 60",
+								"@give medicine 8",
+								"@resolve"					
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"encounter_id": 2,
+			"conditions": [
+				"!encounter_complete 1"
+			],
+			"NOTE": "need a way to add edges to the map",
+			"valid": true,
+			"town_name": "Smithsville",
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Do you have that new <color=#2675AD>generator</color>?",
+					"buttons": [
+						{
+							"text": "[Give generator]",
+							"conditions" : [
+								"!has generator 1"
+							],
+							"effects" : [
+								"@take generator 1"
+							],
+							"next_page_id": 2
+						},
+						{
+							"text": "Not yet.",
+							"next_page_id": 3
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Thanks! Smithsville should be up and running again. Have some fuel.",
+					"effects": [
+						"@give fuel 80",
+						"@resolve"
+					]
+				},
+				{
+					"id": 3,
+					"text": "Very well. Please bring a <color=#2675AD>generator</color> soon."
+				}
+			]
+		},
+		{
+			"encounter_id": 3,
+			"conditions": [
+				"!encounter_complete 1"
+			],
+			"NOTE": "need a way to specify automatic resolve conditions",
+			"valid": true,
 			"town_name": "York",
 			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "You  have arrived in York.",
+					"buttons": [
+						{
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Exchange the medicine for a new <color=#2675AD>generator</color> at the local store.",
+					"effects": [
+						"@resolve"
+					]
+				}
+			]
+		},
+		{
+			"encounter_id": 4,
+			"conditions": [
+				"!stage_complete 0 0"
+			],
+			"valid": true,
+			"town_name": "York",
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Thanks for selling that medicine!",
+					"buttons": [
+						{
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Return to the sheriff in Smithsville."
+				}
+			]
+		}
+	],
+	"random_encounters":
+	[
+		{
+			"encounter_id": 1000,
+			"tags": [
+				"tutorial"
+			],
+			"valid": true,
+			"dialogue_tree":[
 				{ 
 					"id": 1,
-					"text": "Welcome to these here parts",
-					"avatar_name": "Sheriff",
+					"text": "You notice you are running low on gas.",
 					"buttons": [
 							{
-									"text": "Howdy, Sheriff.",
 									"next_page_id": 2
-							},
-							{
-									"text": "Can we trade?",								
-									"next_page_id": 3
 							}
 					]
 				},
 				{ 
 					"id": 2,
-					"text": "You should check out the store later.",
-					"buttons": [
-							{
-									"text": "Will do!",
-									"next_page_id": 6
-							}
-					] 
-				},
-				{
-					"id": 3,
-					"text": "I can offer randomly offer fuel or a wrench if you got food.",
-					"buttons": [
-						{
-							"text": "[Trade 10 rations for 1 fuel/wrenches.]",
-							"conditions": [
-								"!has rations 10"
-							],
-							"effects": [
-									"@take rations 10",
-									"@random 0.5 (@give fuel 1) (@give wrench 1)" 
-							],
-							"next_page_id": 5
-						},
-						{
-							"text": "[Trade 30 rations for 5 fuel/wrenches.]",
-							"conditions": [
-								"!has rations 30"
-							],
-							"effects": [
-									"@take rations 30",
-									"@random 0.5 (@give fuel 5) (@give wrench 5)" 
-							],
-							"next_page_id": 5
-						},
-						{
-							"text": "Never mind.",
-							"next_page_id": 6
-						}
-					]
-				},
-				{ 
-					"id": 5,
-					"text": "That seems mighty fair to me!",
-					"buttons": [
-							{
-									"text": "See ya later."
-							}
-					] 
-				},
-				{ 
-					"id": 6,
-					"text": "Well it's been nice talking to you."
+					"text": "Looks like there is a town up ahead. Maybe you can get fuel there.",
+					"effects": "@resolve"
 				}
 			]
 		}

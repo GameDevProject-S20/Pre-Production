@@ -38,7 +38,7 @@ namespace SIEvents
 
         public override string ToString()
         {
-            throw new NotImplementedException();
+            return string.Format("StageCompleteCondition -> Quest {0}, Stage {1}", questId, stageNum);
         }
     }
 }

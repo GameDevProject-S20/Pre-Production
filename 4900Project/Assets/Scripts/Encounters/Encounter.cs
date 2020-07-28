@@ -15,7 +15,7 @@ namespace Encounters
     /// Takes in data and builds a dialogue structure, that can be presented to the player.
     /// </summary>
     [System.Serializable]
-    public class Encounter : IProgressor
+    public abstract class Encounter 
     {
         /// <summary>
         /// Static id counter
@@ -26,6 +26,11 @@ namespace Encounters
         [SerializeField]
         public IDialogue Dialogue = null;
 
+        public abstract void RunEncounter();
+    }
+
+    public class FixedEncounter : Encounter, IProgressor
+    {
         /// <summary>
         /// Conditions that must be satisfied before the encounter will occur
         /// Intended for Fixed Encounters only
@@ -36,7 +41,7 @@ namespace Encounters
         /// The town to be entered in order to trigger the encounter
         /// Intended for Fixed Encounters only
         /// </summary>
-        public int? FixedEncounterTownId = null;
+        public int FixedEncounterTownId;
 
         private UnityAction<Condition> onConditionCompleteListener;
         private UnityAction<Town> onTownEnterListener;
@@ -46,36 +51,30 @@ namespace Encounters
         /// </summary>
         private bool ready;
 
-        public Encounter() { }
-
-        public void RunEncounter()
+        public override void RunEncounter()
         {
-            if (!ready) throw new Exception("Encounter not ready.");
+            if (!ready) throw new Exception(string.Format("Encounter {0} not ready.", Id));
             Dialogue.Show();
         }
 
         public void AllowProgression()
         {
-            bool isTownSpecificEncounter = FixedEncounterTownId.HasValue;
             bool hasConditions = Conditions != null && Conditions.Count > 0;
 
             // Add town enter listener
-            if (isTownSpecificEncounter)
+            if (onTownEnterListener == null)
             {
-                if (onTownEnterListener == null)
+                onTownEnterListener = (Town t) =>
                 {
-                    onTownEnterListener = (Town t) =>
+                    Debug.Log(string.Format("On Town Enter: {0} caught by encounter {1}", t.Name, Id));
+                    if (t.Id == FixedEncounterTownId && ready)
                     {
-                        Debug.Log(string.Format("On Town Enter: {0} caught by encounter {1}", t.Name, Id));
-                        if (t.Id == FixedEncounterTownId.Value)
-                        {
-                            RunEncounter();
-                        }
-                    };
+                        RunEncounter();
+                    }
+                };
 
-                    EventManager.Instance.OnTownEnter.AddListener(onTownEnterListener);
-                }
-            }
+                EventManager.Instance.OnTownEnter.AddListener(onTownEnterListener);
+            }       
 
             // Add condition listener
             if (hasConditions)
@@ -102,21 +101,16 @@ namespace Encounters
                     }
                 }
             }
-            
-            if (!hasConditions)
+            else
             {
                 ready = true;
-
-                // IF there are no conditions nor towns required, this will run as soon as AllowProgression is called
-                if (!isTownSpecificEncounter)
-                {
-                    RunEncounter();
-                }
             }
         }
 
         public void DisallowProgression()
         {
+            ready = false;
+
             if (onConditionCompleteListener != null)
             {
                 EventManager.Instance.OnConditionComplete.RemoveListener(onConditionCompleteListener);
@@ -133,7 +127,17 @@ namespace Encounters
 
         public override string ToString()
         {
-            return string.Format("Encounter {0}\n\nTown: {1}\nConditions: [\n{2}\n]\nDialogue: {{\n{3}}}", Id, FixedEncounterTownId.Value, string.Join(",\n", Conditions.Select(c => string.Format("{{\n{0}\n}}", c))), Dialogue);
+            return string.Format("Encounter {0}\n\nTown: {1}\nConditions: [\n{2}\n]\nDialogue: {{\n{3}}}", Id, FixedEncounterTownId, string.Join(",\n", Conditions.Select(c => string.Format("{{\n{0}\n}}", c))), Dialogue);
+        }
+    }
+
+    public class RandomEncounter : Encounter
+    {
+        public string[] Tags;
+
+        public override void RunEncounter()
+        {
+            Dialogue.Show();
         }
     }
 }

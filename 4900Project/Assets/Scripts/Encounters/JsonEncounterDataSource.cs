@@ -15,15 +15,26 @@ public class JsonEncounterDataSource : IEncounterDataSource
     [System.Serializable]
     public class RawJSON
     {
-        public RawEncounter[] encounters;
+        public RawFixedEncounter[] fixed_encounters;
+        public RawRandomEncounter[] random_encounters;
     }
 
     [System.Serializable]
-    public class RawEncounter
+    public class RawFixedEncounter
     {
         public int encounter_id;
+        public bool valid;
         public string[] conditions;
         public string town_name;
+        public RawPage[] dialogue_tree;
+    }
+
+    [System.Serializable]
+    public class RawRandomEncounter
+    {
+        public int encounter_id;
+        public bool valid;
+        public string[] tags;
         public RawPage[] dialogue_tree;
     }
 
@@ -54,11 +65,20 @@ public class JsonEncounterDataSource : IEncounterDataSource
     public IEnumerable<Encounter> GetEncounterEnumerator()
     {
         GameData.LoadJson<RawJSON>(Files.Encounter, out RawJSON result);
-        return result.encounters.Select(raw => parseEncounter(raw));
+        return parseFixedEncounters(result.fixed_encounters).Union(parseRandomEncounters(result.random_encounters));
     }
 
-
     // PRIVATE //
+
+    private IEnumerable<Encounter> parseFixedEncounters(RawFixedEncounter[] encounters)
+    {
+        return encounters.Select(raw => parseFixedEncounter(raw)).Where(e => e != null);
+    }
+
+    private IEnumerable<Encounter> parseRandomEncounters(RawRandomEncounter[] encounters)
+    {
+        return encounters.Select(raw => parseRandomEncounter(raw)).Where(e => e != null);
+    }
 
     /// <summary>
     /// Handles creation of encounter by passing work off to relevent parsers
@@ -68,24 +88,52 @@ public class JsonEncounterDataSource : IEncounterDataSource
     /// - parseEncounterCondition
     /// </summary>
     /// <returns>Encounter</returns>
-    private Encounter parseEncounter(RawEncounter rawEncounter)
+    private Encounter parseFixedEncounter(RawFixedEncounter rawEncounter)
     {
-        //### These are the properties we need to load in from file ###// 
+        //### These are the properties we need to load in from file ###//
         var id = rawEncounter.encounter_id;
+        var valid = rawEncounter.valid;
         var rawDialogue = rawEncounter.dialogue_tree;
         var rawConditions = rawEncounter.conditions;
         var rawEncounterTownId = rawEncounter.town_name;
         //###                                                       ###//
 
+        if (!valid) return null;
+
         var dialogue = parseDialogue(rawDialogue, id);
         var conditions = parseEncounterConditions(rawConditions);
         var townId = TownManager.Instance.GetTownByName(rawEncounterTownId).Id;
 
-        Encounter encounter = new Encounter()
+        Encounter encounter = new FixedEncounter()
         {
+            Id = id,
             Dialogue = dialogue,
             Conditions = conditions,
             FixedEncounterTownId = townId
+        };
+
+        return encounter;
+    }
+
+    private Encounter parseRandomEncounter(RawRandomEncounter rawEncounter)
+    {
+        //### These are the properties we need to load in from file ###//
+        var id = rawEncounter.encounter_id;
+        var valid = rawEncounter.valid;
+        var tags = rawEncounter.tags;
+        var rawDialogue = rawEncounter.dialogue_tree;
+        //###                                                       ###//
+
+        if (!valid) return null;
+        if (id == 0) throw new ArgumentException("Encounter id must not be 0!");
+
+        var dialogue = parseDialogue(rawDialogue, id);
+
+        Encounter encounter = new RandomEncounter()
+        {
+            Id = id,
+            Tags = tags,
+            Dialogue = dialogue
         };
 
         return encounter;
@@ -184,9 +232,9 @@ public class JsonEncounterDataSource : IEncounterDataSource
 
         SplitCommand(statement, out char identifier, out string command, out string[] args);
 
-        if (identifier != '!')
+        if (identifier != CONDITION_CHAR)
         {
-            throw new ArgumentException("Incorrect Identifier");
+            throw new ArgumentException(string.Format("Incorrect Identifier for condition {0}. Expected {1}", statement, CONDITION_CHAR));
         }
 
         if (command == "encounter_complete")
@@ -198,6 +246,12 @@ public class JsonEncounterDataSource : IEncounterDataSource
         {
             var quest_id = Int16.Parse(args[0]);
             c = new QuestCompleteCondition("", quest_id);
+        }
+        else if (command == "stage_complete")
+        {
+            var quest_id = Int16.Parse(args[0]);
+            var stage_num = Int16.Parse(args[1]);
+            c = new StageCompleteCondition("", quest_id, stage_num);
         }
         else
         {
@@ -272,9 +326,11 @@ public class JsonEncounterDataSource : IEncounterDataSource
 
         var effects = parseEffects(rawEffects, encounterId);
 
+        var text = (rawText != null) ? rawText : DButton.DefaultText;
+
         var button = new DButton()
         {
-            Text = rawText,
+            Text = text,
             Conditions = conditions,
             Effects = effects
         };
@@ -316,9 +372,9 @@ public class JsonEncounterDataSource : IEncounterDataSource
 
         SplitCommand(statement, out char identifier, out string command, out string[] args);
 
-        if (identifier != '!')
+        if (identifier != CONDITION_CHAR)
         {
-            throw new ArgumentException("Incorrect identifier");
+            throw new ArgumentException(string.Format("Incorrect identifier for condition {0}. Expected {1}", statement, CONDITION_CHAR));
         }
 
         if (command == "has")
@@ -354,9 +410,9 @@ public class JsonEncounterDataSource : IEncounterDataSource
 
         SplitCommand(statement, out char identifier, out string command, out string[] args);
 
-        if (identifier != '@')
+        if (identifier != EFFECT_CHAR)
         {
-            throw new ArgumentException("Incorrect identifier");
+            throw new ArgumentException(string.Format("Incorrect identifier for effect {0}. Expected '{1}'.", statement, EFFECT_CHAR));
         }
 
         if (command == "give")

@@ -13,14 +13,20 @@ public class ResolveEncounterEffect : IEffect
 
     public bool Apply()
     {
-        Encounter enc = EncounterManager.Instance.GetFixedEncounter(encID);
+        Encounter enc = EncounterManager.Instance.GetEncounter(encID);
         if (enc == null)
         {
             return false;
         }
         else
         {
-            enc.DisallowProgression();
+            // How will this work for RandomEncounters?
+            //enc.DisallowProgression();
+            FixedEncounter fenc = enc as FixedEncounter;
+            if (fenc != null)
+            {
+                fenc.DisallowProgression();
+            }
             return true;
         }
     }
