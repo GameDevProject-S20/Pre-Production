@@ -101,6 +101,7 @@ public class OverworldMapUI : MonoBehaviour
         EventManager.Instance.OnNodeMouseEnter.AddListener(onNodeMouseEnter);
         EventManager.Instance.OnNodeMouseDown.AddListener(onNodeMouseDown);
         EventManager.Instance.OnTravelStart.AddListener(onTravelStart);
+        EventManager.Instance.OnEnterTownButtonClick.AddListener(OnButtonClick);
 
     }
 
@@ -194,9 +195,9 @@ public class OverworldMapUI : MonoBehaviour
     /// <param name="node"></param>
     void onNodeMouseEnter(MapNode node)
     {
-        if (!isTravelling)
+        if (!isTravelling && isActive)
         {
-            node.setPanel(GetTravelPanel());
+            node.setPanel(GetTravelPanel(), false);
         }
     }
 
@@ -206,7 +207,7 @@ public class OverworldMapUI : MonoBehaviour
     /// <param name="node"></param>
     void onNodeMouseDown(MapNode node)
     {
-        if (!isTravelling)
+        if (!isTravelling && isActive)
         {
             selectedNode = node;
         }
@@ -270,24 +271,23 @@ public class OverworldMapUI : MonoBehaviour
             }
 
 
-            DataTracker.Current.EventManager.OnNodeEnter.Invoke(node);
+            DataTracker.Current.EventManager.OnNodeArrive.Invoke(node);
             DataTracker.Current.currentLocationId = node.Id;
-            if (node.Type == OverworldMap.LocationType.TOWN)
+            if (node.Type == OverworldMap.LocationType.TOWN || node.Type == OverworldMap.LocationType.POI)
             {
-                enterNodeButton.gameObject.SetActive(true);
+                selectedNode.setPanel(GetTravelPanel(), true);
             }
             else
             {
-                if (node.Type == OverworldMap.LocationType.EVENT || node.LocationId != -1)
+                if (node.Type == OverworldMap.LocationType.EVENT)
                 {
                     DataTracker.Current.EventManager.TriggerEncounter.Invoke(node.LocationId);
                 }
-                enterNodeButton.gameObject.SetActive(false);
             }
         }
     }
 
-    public void OnButtonClick()
+    public void OnButtonClick(int i)
     {
         TownMenuGameObject.GetComponent<TownWindow>().UpdatePrefab();
         TownMenuGameObject.SetActive(true);

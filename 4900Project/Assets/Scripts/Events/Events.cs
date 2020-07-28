@@ -89,13 +89,16 @@ namespace SIEvents
         {
             // OverworldMap.LocationNode refers to a node in the data structure
             [System.Serializable]
-            public class NodeEvent : UnityEvent<OverworldMap.LocationNode> { };
+            public class LocationNodeEvent : UnityEvent<OverworldMap.LocationNode> { };
 
             // MapNode refers to an object in the Map Scene corresponding to a LocationNode
             [System.Serializable]
-            public class NodeMouseEnter : UnityEvent<MapNode> { };
-            [System.Serializable]
-            public class NodeMouseDown : UnityEvent<MapNode> { };
+            public class MapNodeEvent : UnityEvent<MapNode> { };
+
+            public class LocationIdEvent : UnityEvent<int> { };
+
+            //[System.Serializable]
+            //public class NodeMouseDown : UnityEvent<MapNode> { };
         }
 
         public partial class PlayerEvents
