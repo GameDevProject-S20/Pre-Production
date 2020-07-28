@@ -22,13 +22,13 @@ namespace Encounters
         public static EncounterCollection instance = null;
 
         [SerializeField]
-        public Dictionary<int, Encounter> FixedEncounters = new Dictionary<int, Encounter>()
+        public Dictionary<int, FixedEncounter> FixedEncounters = new Dictionary<int, FixedEncounter>()
         {
       
                 
         };
 
-        public Dictionary<int, Encounter> RandomEncounters = new Dictionary<int, Encounter>()
+        public Dictionary<int, RandomEncounter> RandomEncounters = new Dictionary<int, RandomEncounter>()
         {
             
         };
