@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using CsvHelper.Configuration.Attributes;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityUtility;
@@ -13,6 +14,7 @@ public class TownData
     public string Leader { get; set; }
     public string Colour { get; set; } //hex code
     public string Size { get; set; } //hex code
+    [NullValues("")]
     public string Tags { get; set; }
 
 }
@@ -42,7 +44,7 @@ public class Town
     /// Constructor for loading in from a TownData class
     /// </summary>
     /// <param name="data"></param>
-    public Town(TownData data) : this(data.Id, data.Name, data.Leader, data.Colour, data.Size, data.Tags)
+    public Town(TownData data) : this(data.Id, data.Name, data.Leader, data.Colour, data.Size, data.Tags != null ? data.Tags : "")
     {
 
     }
@@ -108,17 +110,17 @@ public class Town
 
     }
 
-    public void InitializeShop(){
+    /*public void InitializeShop(){
         // Create a store and populate it based on the town's tags
         Shop shop = new Shop(ShopManager.Instance.GetId(), "Marketplace", "Trade Goods", "", Shop.ShopTypes.None);
         shop.InitializeInventory(this);
         ShopManager.Instance.addShop(shop);
         shops.Add(shop.id);
-    }
+    }*/
 
 
 
-   /* public void AddShop(int i)
+    public void AddShop(int i)
     {
         shops.Add(i);
     }
@@ -133,7 +135,7 @@ public class Town
                 break;
             }
         }
-    }*/
+    }
 
     public void AddTag(TownTag tag){
         Tags.Add(tag);

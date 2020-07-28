@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using FileConstants;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,6 +29,13 @@ public class ShopManager
 
     public void LoadData()
     {
+        GameData.LoadCsv<ShopData>(Files.Shops, out IEnumerable<ShopData> data);
+        foreach (var shopData in data)
+        {
+            var shop = new Shop(shopData);
+            shops.Add(shopData.ShopId, shop);
+        }
+
         //Shop testShop1 = new Shop(0, "George's General Store", "General Store", "", Shop.ShopTypes.GeneralStore);
         /*Shop testShop2 = new Shop(1, "Phil's Pharmacy", "Medical Supplier", "", Shop.ShopTypes.Pharmacy);
         Shop testShop3 = new Shop(2, "Bill's Bulk Goods", "General Store", "", Shop.ShopTypes.GeneralStore);
