@@ -56,11 +56,13 @@ namespace SIEvents
 
         //=== Map ====================================================//
 
-        public Events.MapEvents.NodeEvent OnNodeEnter = new Events.MapEvents.NodeEvent();
+        public Events.MapEvents.LocationNodeEvent OnNodeArrive = new Events.MapEvents.LocationNodeEvent();
         public UnityEvent RequestRedraw = new UnityEvent();
-        public Events.MapEvents.NodeMouseEnter OnNodeMouseEnter = new Events.MapEvents.NodeMouseEnter();
-        public Events.MapEvents.NodeMouseDown OnNodeMouseDown = new Events.MapEvents.NodeMouseDown();
+        public Events.MapEvents.MapNodeEvent OnNodeMouseEnter = new Events.MapEvents.MapNodeEvent();
+        public Events.MapEvents.MapNodeEvent OnNodeMouseDown = new Events.MapEvents.MapNodeEvent();
         public UnityEvent OnTravelStart = new UnityEvent();
+        public Events.MapEvents.LocationIdEvent OnEnterTownButtonClick = new Events.MapEvents.LocationIdEvent();
+        public Events.MapEvents.LocationIdEvent OnEnterPOIButtonClick = new Events.MapEvents.LocationIdEvent();
 
 
         //=== Player =================================================//
