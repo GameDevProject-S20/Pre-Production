@@ -107,6 +107,7 @@ namespace Dialogue
         public void Hide()
         {
             IsVisible = false;
+            History.Clear();
             DialogueClosed.Invoke();
         }
 
