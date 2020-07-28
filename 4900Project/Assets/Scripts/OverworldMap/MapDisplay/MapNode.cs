@@ -80,6 +80,9 @@ public class MapNode : MonoBehaviour
     public void setPanel(GameObject obj, bool showEnterButton)
     {
         if (panel) return;
+        bool adjacent = DataTracker.Current.WorldMap.HasEdge(NodeId, DataTracker.Current.currentLocationId);
+        if (Type == OverworldMap.LocationType.NONE && ! adjacent) return;
+
         panel = obj.GetComponent<TravelPanel>();
         panel.SetNode(this);
         obj.SetActive(true);
@@ -88,7 +91,7 @@ public class MapNode : MonoBehaviour
             panel.EnableButton();
             panel.Select();
         }
-        else{
+        if (DataTracker.Current.WorldMap.HasEdge(NodeId, DataTracker.Current.currentLocationId)){
             panel.SetTravelInfo(MapTravel.GetFuelCost(this), MapTravel.dayRate);
         }
 
@@ -115,8 +118,7 @@ public class MapNode : MonoBehaviour
     private void OnMouseEnter()
     {
         if (panel) return;
-        if (DataTracker.Current.WorldMap.HasEdge(NodeId, DataTracker.Current.currentLocationId))
-            EventManager.Instance.OnNodeMouseEnter.Invoke(this);
+        EventManager.Instance.OnNodeMouseEnter.Invoke(this);
     }
 
     /// <summary>
