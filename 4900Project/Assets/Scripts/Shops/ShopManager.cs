@@ -31,7 +31,7 @@ public class ShopManager
         foreach (var shopData in data)
         {
             var shop = new Shop(shopData);
-            if (shopData.Id == 3)
+            if (shopData.Id == 2)
             {
                 shop.inventory.AddItem("Generator", 1);
                 shop.fromPlayerModifiers.Add(typetag.Medicine, 0.25f);
