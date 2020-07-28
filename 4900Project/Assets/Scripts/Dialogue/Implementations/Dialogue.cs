@@ -163,7 +163,7 @@ namespace Dialogue
         /// </summary>
         /// <param name="page"></param>
         /// <param name="response"></param>
-        protected void AddToHistory(IDPage page, string response)
+        public void AddToHistory(IDPage page, string response)
         {
             // There's two situations here:
             // If the last page of our history is also our current page, then we just want to update that history.

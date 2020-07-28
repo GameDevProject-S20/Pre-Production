@@ -50,20 +50,24 @@ namespace Encounters
 
         public void RunEncounter()
         {
-            DialogueManager.Instance.SetActive(Dialogue);
+            if (!ready) throw new Exception("Encounter not ready.");
+            Dialogue.Show();
         }
 
         public void AllowProgression()
         {
+            bool isTownSpecificEncounter = FixedEncounterTownId.HasValue;
+            bool hasConditions = Conditions != null && Conditions.Count > 0;
+
             // Add town enter listener
-            if (FixedEncounterTownId.HasValue)
+            if (isTownSpecificEncounter)
             {
                 if (onTownEnterListener == null)
                 {
                     onTownEnterListener = (Town t) =>
                     {
                         Debug.Log(string.Format("On Town Enter: {0} caught by encounter {1}", t.Name, Id));
-                        if (t.Id == FixedEncounterTownId.Value && ready)
+                        if (t.Id == FixedEncounterTownId.Value)
                         {
                             RunEncounter();
                         }
@@ -74,7 +78,7 @@ namespace Encounters
             }
 
             // Add condition listener
-            if (Conditions != null && Conditions.Count > 0)
+            if (hasConditions)
             {
                 if (onConditionCompleteListener == null)
                 {
@@ -98,11 +102,13 @@ namespace Encounters
                     }
                 }
             }
-            else
+            
+            if (!hasConditions)
             {
-                // IF there are no conditions nor towns required, this will run as soon as AllowProgression is called
                 ready = true;
-                if (!FixedEncounterTownId.HasValue)
+
+                // IF there are no conditions nor towns required, this will run as soon as AllowProgression is called
+                if (!isTownSpecificEncounter)
                 {
                     RunEncounter();
                 }

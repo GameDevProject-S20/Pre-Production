@@ -136,6 +136,11 @@ public class JsonEncounterDataSource : IEncounterDataSource
                 }
                 return button;
             });
+
+            if (page.Buttons.Any(b => b.Text == "Done."))
+            {
+                UnityEngine.Debug.Log(string.Format("Exit button exists on page {0}\n{1}", kvp.Key, page.Text));
+            }
         }
 
         // Create page
