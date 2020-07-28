@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityUtility;
 
 /// <summary>
 /// Used for reading town data from a CSV
@@ -12,20 +13,23 @@ public class TownData
     public string Leader { get; set; }
     public string Colour { get; set; } //hex code
     public string Size { get; set; } //hex code
+    public string Tags { get; set; }
+
 }
+
+
 
 //Town class 
 public class Town
 {
-    public enum Sizes {Tiny, Small, Medium, Large}
+    public enum Sizes {Small, Medium, Large}
 
     public int Id { get; set; }
     public string Name { get; set; }
     public string Leader { get; set; }
     public string Colour { get; set; }
     public Sizes Size { get; set; }
-    public rarity tier;
-    public List<typetag> tags;
+    public List<TownTag> Tags;
     public Sprite Icon;
     public Sprite LeaderPortrait;
 
@@ -33,14 +37,12 @@ public class Town
     public string LeaderBlurb = "No Blurb Set";
     public int leaderDialogueEncounterId = 11;
     public List<int> shops;
-    public Dictionary<typetag, float> valueModifiers;
-    public Region reg;
-    
+        
     /// <summary>
     /// Constructor for loading in from a TownData class
     /// </summary>
     /// <param name="data"></param>
-    public Town(TownData data) : this(data.Id, data.Name, data.Leader, data.Colour, data.Size)
+    public Town(TownData data) : this(data.Id, data.Name, data.Leader, data.Colour, data.Size, data.Tags)
     {
 
     }
@@ -53,7 +55,7 @@ public class Town
     /// <param name="Leader"></param>
     /// <param name="Colour"></param>
 
-    public Town(int Id, string Name, string Leader, string Colour="#FFFF5E0", string Size="Medium")
+    public Town(int Id, string Name, string Leader, string Colour="#FFFF5E0", string Size="Medium", string Tags="")
     {
         this.Id = Id;
         this.Name = Name;
@@ -62,8 +64,14 @@ public class Town
         this.Size = (Sizes)System.Enum.Parse(typeof(Sizes), Size);
 
         shops = new List<int>();
-        tags = new List<typetag>();
-        reg = new Region();
+        this.Tags = new List<TownTag>();
+    
+        string[] ts = Tags.Replace("\"", string.Empty).Split(',');
+        foreach(string t in ts){
+            if (t.Length >0){
+                this.Tags.Add(TownManager.Instance.GetTag(t));
+            }
+        }
 
         SetDescription();
         SetLeaderBlurb();
@@ -74,24 +82,24 @@ public class Town
             LeaderPortrait = Resources.Load<Sprite>(path);
         }
 
-        // select a random image for town
-        // TODO: Replace with setting based on town size
         {
-            int iconId = Mathf.FloorToInt(Random.Range(0, 4));
             string iconName;
-            switch (iconId)
+            switch (this.Size)
             {
-                case 1:
-                    iconName = "Hut";
-                    break;
-                case 2:
+                case Sizes.Small:
                     iconName = "Town";
+                    this.Tags.Add(TownManager.Instance.GetTag("Small"));
                     break;
-                case 3:
+                case Sizes.Medium:
                     iconName = "SmallCity";
+                    this.Tags.Add(TownManager.Instance.GetTag("Medium"));
+                    break;
+                case Sizes.Large:
+                    iconName = "LargeCity";
+                    this.Tags.Add(TownManager.Instance.GetTag("Large"));
                     break;
                 default:
-                    iconName = "LargeCity";
+                    iconName = "Town";
                     break;
             }
             string path = "Icons/Town/" + iconName;
@@ -100,7 +108,17 @@ public class Town
 
     }
 
-    public void AddShop(int i)
+    public void InitializeShop(){
+        // Create a store and populate it based on the town's tags
+        Shop shop = new Shop(ShopManager.Instance.GetId(), "Marketplace", "Trade Goods", "", Shop.ShopTypes.None);
+        shop.InitializeInventory(this);
+        ShopManager.Instance.addShop(shop);
+        shops.Add(shop.id);
+    }
+
+
+
+   /* public void AddShop(int i)
     {
         shops.Add(i);
     }
@@ -115,6 +133,19 @@ public class Town
                 break;
             }
         }
+    }*/
+
+    public void AddTag(TownTag tag){
+        Tags.Add(tag);
+    }
+
+    public bool HasTag(string tag){
+        foreach(var t in Tags){
+            if (t.Name == tag){
+                return true;
+            }
+        }
+        return false;
     }
 
     private void SetDescription()
@@ -162,12 +193,3 @@ The inhabitants are often found {getWord("verb")} and are {getWord("verb2")} whe
     }
 }
 
-public class Region
-{
-    public Dictionary<typetag, float> valueModifiers;
-
-    public Region()
-    {
-        valueModifiers = new Dictionary<typetag, float>(); ;
-    }
-}

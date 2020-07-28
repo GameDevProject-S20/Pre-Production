@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1511,7 +1511,7 @@ MonoBehaviour:
   travelPanelPrefab: {fileID: 7647009343425266578, guid: 6c168c501c0336644874e32b0b794b6a,
     type: 3}
   playerMarker: {fileID: 198410445}
-  TruckObject: {fileID: 0}
+  TruckObject: {fileID: 1287829675}
   NodesContainer: {fileID: 1057473041}
   PathsContainer: {fileID: 2092142779}
   enterNodeButton: {fileID: 901572006}
@@ -1585,6 +1585,12 @@ Transform:
   m_Father: {fileID: 1158540467}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1287829675 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7511449822644299217, guid: 49355b590cbe93047b993c169b9d7021,
+    type: 3}
+  m_PrefabInstance: {fileID: 198410444}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1316328937
 PrefabInstance:
   m_ObjectHideFlags: 0

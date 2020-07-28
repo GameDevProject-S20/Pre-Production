@@ -80,24 +80,24 @@ public class TownWindow : MonoBehaviour
         transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("Description").GetComponent<Text>().text = townData.Description;
 
         // TODO: disabled for build, and because it isn't working - replace with accepted mockup style 
-        //use rarity tier of town to determine proper icon
-        //if (townData.tier != rarity.None)
+        //use Rarity tier of town to determine proper icon
+        //if (townData.tier != Rarity.None)
         //{
         //    switch (townData.tier)
         //    {
-        //        case rarity.Abundant:
+        //        case Rarity.Abundant:
         //            transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("RarityIcon").GetComponent<Image>().sprite = AbundantIcon;
         //            break;
-        //        case rarity.Common:
+        //        case Rarity.Common:
         //            transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("RarityIcon").GetComponent<Image>().sprite = CommonIcon;
         //            break;
-        //        case rarity.Uncommon:
+        //        case Rarity.Uncommon:
         //            transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("RarityIcon").GetComponent<Image>().sprite = UncommonIcon;
         //            break;
-        //        case rarity.Rare:
+        //        case Rarity.Rare:
         //            transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("RarityIcon").GetComponent<Image>().sprite = RareIcon;
         //            break;
-        //        case rarity.Unique:
+        //        case Rarity.Unique:
         //            transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("RarityIcon").GetComponent<Image>().sprite = LegendaryIcon;
         //            break;
         //    }
@@ -108,19 +108,19 @@ public class TownWindow : MonoBehaviour
         //}
 
         //Post tag images related to town
-        for (int i = 1; i < 5; i++)
+       /* for (int i = 1; i < 5; i++)
         {
             if (townData.tags.Count >= i)
             {
                 switch (townData.tags[i - 1])
                 {
-                    case typetag.Food:
+                    case ItemTag.Food:
                         transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("ResourceIcon" + i.ToString()).GetComponent<Image>().sprite = FoodIcon;
                         break;
-                    case typetag.Fuel:
+                    case ItemTag.Fuel:
                         transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("ResourceIcon" + i.ToString()).GetComponent<Image>().sprite = FuelIcon;
                         break;
-                    case typetag.Medicine:
+                    case ItemTag.Medical:
                         transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("ResourceIcon" + i.ToString()).GetComponent<Image>().sprite = MedicineIcon;
                         break;
                 }
@@ -129,8 +129,13 @@ public class TownWindow : MonoBehaviour
             {
                 transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("ResourceIcon" + i.ToString()).GetComponent<Image>().enabled = false;
             }
+        }*/
+        
+        TextMeshProUGUI t = transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("Tags").GetComponent<TextMeshProUGUI>();
+        t.text = "";
+        foreach(var tag in townData.Tags){
+            t.text += "<color="+ tag.Colour +">" + tag.Name +"</color>; ";
         }
-
         //find town image
         if (townData.Icon != null)
         {

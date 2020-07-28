@@ -96,7 +96,7 @@ namespace Encounters
                 resetEncounter();
             };
 
-            Debug.Log("Dialogue init'd");
+            //Debug.Log("Dialogue init'd");
             // Generic button to end dialogue
             IDButton endBtn = new DButton()
             {

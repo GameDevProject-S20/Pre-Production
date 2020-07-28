@@ -222,7 +222,7 @@ public class Trading : MonoBehaviour
     }
 
     public void onTradeButtonClick(){
-        if (cart.TotalValueAfterModifiers(shop.toPlayerModifiers) == 0 && offer.TotalValueAfterModifiers(shop.fromPlayerModifiers) == 0)
+        if (cart.TotalValueAfterModifiers(shop.shopSellModifiers) == 0 && offer.TotalValueAfterModifiers(shop.playerSellModifiers) == 0)
         {
             offerFeedback.GetComponent<TMPro.TextMeshProUGUI>().text = "";
             return;
@@ -287,8 +287,8 @@ public class Trading : MonoBehaviour
     {
         if (copyOfPlayerInventory.CanFitItems(cart.TotalWeight()))
         {
-            float totalCartValue = cart.TotalValueAfterModifiers(shop.toPlayerModifiers);
-            float totalOfferValue = offer.TotalValueAfterModifiers(shop.fromPlayerModifiers);
+            float totalCartValue = cart.TotalValueAfterModifiers(shop.shopSellModifiers);
+            float totalOfferValue = offer.TotalValueAfterModifiers(shop.playerSellModifiers);
             float difference = totalOfferValue - totalCartValue;
             if (difference > totalCartValue * shop.acceptedPriceDifference)
             {

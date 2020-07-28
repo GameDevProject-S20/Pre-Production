@@ -48,6 +48,7 @@ public class Initializer : MonoBehaviour
                                  //Debug.Log(EncounterManager.Instance);
                                 //EncounterManager.Instance.GetFixedEncounter(1).AllowProgression();
                                 TownManager.Instance.GetTownByName("Smithsville").leaderDialogueEncounterId = 1;
+                                ShopManager.Instance.GetShopById(TownManager.Instance.GetTownByName("York").shops[0]).inventory.AddItem("Generator",1);
                                 OverworldMap.LocationNode node;
                                 if (DataTracker.Current.WorldMap.GetNode(12, out node)){
                                     node.LocationId = -1;
@@ -175,8 +176,6 @@ public class Initializer : MonoBehaviour
                             EventManager.Instance.onDialogueSelected.Invoke("TutorialPart5GiveGenerator");
                             DataTracker.Current.WorldMap.AddEdge(3, 15);
                             EventManager.Instance.RequestRedraw.Invoke();
-                            TownManager.Instance.GetTownByName("Smithsville").AddShop(0);
-                            TownManager.Instance.GetTownByName("Smithsville").AddShop(1);
                         },
                         () => {
 

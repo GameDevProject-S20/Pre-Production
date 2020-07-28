@@ -7,8 +7,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityUtility;
 
-public enum rarity {None, Abundant, Common, Uncommon, Rare, Unique}
-public enum typetag {Food,Luxury,Medicine,Building_Materials, Tools_And_Parts, Combat,Fuel}
+public enum Rarity {None, Abundant, Common, Uncommon, Rare, Unique}
+public enum ItemTag {None,General,Fuel,Useable,Food,Luxury,Medical,Building_Materials,Tools_And_Parts,Combat,Scientific,Mineral,Antique,Advanced}
 
 /// <summary>
 /// Intermediate class for handling loading items from a CSV file.
@@ -33,33 +33,34 @@ public class Item
     public string Description;
     public float Value;
     public float Weight;
-    public rarity tier;
-    public List<typetag> tags;
+    public Rarity tier;
+    public List<ItemTag> tags;
     public Sprite Icon;
 
-    protected static rarity CalculateTier(float Value)
+    protected static Rarity CalculateTier(float Value)
     {
-        //create rarity based on value
-        if (Value >= 20)
+        //create Rarity based on value
+        if (Value <= 2)
         {
-            return rarity.Unique;
+            return Rarity.Abundant;
         }
-        else if (Value < 20 && Value >= 10)
+        else if (Value <= 10)
         {
-            return rarity.Rare;
+            return Rarity.Common;
         }
-        else if (Value < 10 && Value >= 5)
+        else if (Value <= 30)
         {
-            return rarity.Uncommon;
+            return Rarity.Uncommon;
         }
-        else if (Value < 5 && Value >= 2)
+        else if (Value <= 60)
         {
-            return rarity.Common;
+            return Rarity.Rare;
         }
-        else
+        else if (Value > 60)
         {
-            return rarity.Abundant;
+            return Rarity.Unique;
         }
+        return Rarity.None;
     }
 
     /// <summary>
@@ -72,7 +73,7 @@ public class Item
     /// <param name="value_"></param>
     /// <param name="weight_"></param>
     /// <param name="_tags"></param>
-    public Item(string name_, string tooltip_, string description_, float value_, float weight_, List<typetag> _tags)
+    public Item(string name_, string tooltip_, string description_, float value_, float weight_, List<ItemTag> _tags)
     {
         DisplayName = name_;
         Tooltip = tooltip_;
@@ -95,7 +96,7 @@ public class Item
         Description = itemData.Description;
         Value = itemData.Value;
         Weight = itemData.Weight;
-        tags = UnityHelperMethods.ParseCommaSeparatedList<typetag>(itemData.Tags, UnityHelperMethods.ParseEnum<typetag>);
+        tags = UnityHelperMethods.ParseCommaSeparatedList<ItemTag>(itemData.Tags, UnityHelperMethods.ParseEnum<ItemTag>);
         tier = CalculateTier(Value);
         Icon = Resources.Load<Sprite>($"Icons/ItemIcons/{itemData.IconName}".Replace(".png", ""));
     }
@@ -107,6 +108,8 @@ public class ItemManager : MonoBehaviour
     private static ItemManager _current;
     public static ItemManager Current { get { return _current; } }
     public  Dictionary<string, Item> itemsMaster = new Dictionary<string, Item>();
+    public  Dictionary<ItemTag, List<Item>> itemsByCategory = new Dictionary<ItemTag, List<Item>>();
+
 
     void Awake()
     {
@@ -125,13 +128,23 @@ public class ItemManager : MonoBehaviour
         {
             var item = new Item(itemData);
             itemsMaster.Add(item.DisplayName, item);
+            foreach (var tag in item.tags){
+                List<Item> category;
+                if (itemsByCategory.TryGetValue(tag, out category)){
+                    category.Add(item);
+                }
+                else{
+                    itemsByCategory.Add(tag, new List<Item>(){item});
+                }
+            }
+
         }
     }
 
-    Dictionary<string, Item> GetListofType(List<typetag> types)
+    Dictionary<string, Item> GetItemsByType(List<ItemTag> types)
     {
         Dictionary<string, Item> values = new Dictionary<string, Item>();
-        foreach (typetag targettype in types)
+        foreach (ItemTag targettype in types)
         {
             foreach(KeyValuePair<string,Item> viewed in itemsMaster)
             {
@@ -143,5 +156,15 @@ public class ItemManager : MonoBehaviour
         }
         return values;
     }
+
+    public List<Item> GetAllItemsOfType(ItemTag type){
+        List<Item> l;
+        if (itemsByCategory.TryGetValue(type, out l)){
+            return l;
+        }
+        return null;
+    }
+
+
 
 }
