@@ -108,6 +108,9 @@ public class MapNode : MonoBehaviour
 
         obj.transform.position = cam.WorldToScreenPoint(gameObject.transform.position) + offset;
         panel.onNodeHover();
+        if (showEnterButton){
+            panel.Select();
+        }
 
     }
 

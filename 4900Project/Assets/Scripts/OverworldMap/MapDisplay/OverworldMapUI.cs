@@ -279,7 +279,7 @@ public class OverworldMapUI : MonoBehaviour
             }
             else
             {
-                if (node.Type == OverworldMap.LocationType.EVENT)
+                if (node.Type == OverworldMap.LocationType.EVENT || node.LocationId != -1)
                 {
                     DataTracker.Current.EventManager.TriggerEncounter.Invoke(node.LocationId);
                 }
