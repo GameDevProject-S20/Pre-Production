@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityUtility;
@@ -14,7 +15,9 @@ public class TownData
     public string Colour { get; set; } //hex code
     public string Size { get; set; } //hex code
     public string Tags { get; set; }
-
+    public string LeaderBlurb { get; set; }
+    public string Description { get; set; }
+    public string LeaderEncounterId { get; set; }
 }
 
 
@@ -42,7 +45,7 @@ public class Town
     /// Constructor for loading in from a TownData class
     /// </summary>
     /// <param name="data"></param>
-    public Town(TownData data) : this(data.Id, data.Name, data.Leader, data.Colour, data.Size, data.Tags)
+    public Town(TownData data) : this(data.Id, data.Name, data.Leader, data.Colour, data.Size, data.Tags, data.Description, data.LeaderBlurb, data.LeaderEncounterId)
     {
 
     }
@@ -55,7 +58,7 @@ public class Town
     /// <param name="Leader"></param>
     /// <param name="Colour"></param>
 
-    public Town(int Id, string Name, string Leader, string Colour="#FFFF5E0", string Size="Medium", string Tags="")
+    public Town(int Id, string Name, string Leader, string Colour="#FFFF5E0", string Size="Medium", string Tags="", string Description = "", string LeaderBlurb="", string LeaderEncounterId = "")
     {
         this.Id = Id;
         this.Name = Name;
@@ -73,8 +76,9 @@ public class Town
             }
         }
 
-        SetDescription();
-        SetLeaderBlurb();
+        SetDescription(Description);
+        SetLeaderBlurb(LeaderBlurb);
+        SetLeaderEncounterId(LeaderEncounterId);
 
         // Fetch town leader avatar
         {
@@ -148,23 +152,60 @@ public class Town
         return false;
     }
 
-    private void SetDescription()
+    private void SetLeaderEncounterId(string encounterId)
     {
-        this.Description = $@"{this.Name} is a {getWord("size")} situated in {getWord("region")} nearby a {getWord("adj")} {getWord("noun")}.
+        var resultVal = CheckGenerateValue(encounterId, () => "11");
+
+        // Try to get it to a number, logging an error if it fails
+        var canParse = Int32.TryParse(resultVal, out int result);
+        if (!canParse)
+        {
+            UnityEngine.Debug.LogError($"Could not parse the Leader Dialogue Encounter Id value {encounterId} into an integer");
+
+            // If we fail, use the default Leader encounter - #11
+            result = 11;
+        }
+
+        this.leaderDialogueEncounterId = result;
+    }
+    private void SetDescription(string prespecifiedDescription)
+    {
+        this.Description = CheckGenerateValue(prespecifiedDescription, () =>
+        {
+            return $@"{this.Name} is a {getWord("size")} situated in {getWord("region")} nearby a {getWord("adj")} {getWord("noun")}.
 
 They are lead by {this.Leader} and known for having lots of {getWord("resource")}. They will pay handsomely for {getWord("resource")}.
 
-The inhabitants are often found {getWord("verb")} and are {getWord("verb2")} when it comes to meeting new people.";  
+The inhabitants are often found {getWord("verb")} and are {getWord("verb2")} when it comes to meeting new people.";
+        });
     }
 
-    private void SetLeaderBlurb()
+    private void SetLeaderBlurb(string prespecifiedBlurb)
     {
-        this.LeaderBlurb = $@"A {getWord("adj")} individual who looks like they know a thing or two about {getWord("verb")}";
+        this.LeaderBlurb = CheckGenerateValue(prespecifiedBlurb, () => $@"A {getWord("adj")} individual who looks like they know a thing or two about {getWord("verb")}");
     }
+
+    /// <summary>
+    /// Returns the given value if it exists, otherwise returning the value created by the generatorFunc.
+    /// </summary>
+    /// <param name="givenValue">A pre-determined value that can be null or empty</param>
+    /// <param name="generatorFunc">Function for creating a new, non-null, non-empty value</param>
+    /// <returns>A non-empty string</returns>
+    private string CheckGenerateValue(string givenValue, Func<string> generatorFunc)
+    {
+        if (!String.IsNullOrEmpty(givenValue))
+        {
+            return givenValue;
+        } else
+        {
+            return generatorFunc();
+        }
+    }
+
 
     private string getWord(string type)
     {
-        int randNum = Mathf.FloorToInt(Random.Range(0, 7));
+        int randNum = Mathf.FloorToInt(UnityEngine.Random.Range(0, 7));
         string[] region = new string[] { "Moorswood", "Gothic Gourge", "New Asia", "Tempest Region", "Maroon Territory", "Broken Vale", "Cinder Country" };
         string[] adj = new string[] { "bright", "dark", "gloomy", "desolate", "tough", "unusual", "hostile" };
         string[] verb = new string[] { "fighting", "vanishing", "crafting", "story telling", "cooking", "coding", "hunting"};
