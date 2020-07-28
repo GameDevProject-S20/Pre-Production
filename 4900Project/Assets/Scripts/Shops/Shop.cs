@@ -2,7 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityUtility;
 
+public class ShopData
+{
+    public int ShopId { get; set; }
+    public int TownId { get; set; }
+    public string Name { get; set; }
+    public string ShortDescription { get; set; }
+    public string Description { get; set; }
+    public string ShopType { get; set; }
+    public string OwnerName { get; set; }
+}
 public class Shop
 {
     public enum ShopTypes {GeneralStore, Mechanic, Pharmacy, None}
@@ -29,7 +40,12 @@ public class Shop
 
     public Inventory inventory = new Inventory();
 
-    public Shop(int id_, string name_, string shortDescription_, string description_, ShopTypes type_)
+    public Shop(ShopData shopData) : this(shopData.ShopId, shopData.TownId, shopData.Name, shopData.OwnerName, shopData.ShortDescription, shopData.Description, UnityHelperMethods.ParseEnum<ShopTypes>(shopData.ShopType))
+    {
+
+    }
+
+    public Shop(int id_, int associatedTownId_, string name_, string ownerName_, string shortDescription_, string description_, ShopTypes type_)
     {
         id = id_;
         name = name_;
@@ -37,23 +53,23 @@ public class Shop
         description = description_;
         type = type_;
         inventory.weightLimit = 10000;
-        //InitializeInventory();
-        // Randomly Select an Icon
-        // Do not select the ugly ones
-        int iconId = -1;
-        bool valid = false;
-        while (!valid)
-        {
-            iconId = Mathf.FloorToInt(Random.Range(0, 31));
-            if (iconId != 10
-            && iconId != 12
-            && iconId != 15
-            && iconId != 18
-            && iconId != 20)
-                valid = true;
-        }
-        string path = "Icons/CyberPunk Avatars/" + iconId.ToString("D3");
+        townID = associatedTownId_;
+
+        // Load shop owner avatar
+        string path = $"Icons/CyberPunk Avatars/ShopOwners/{ownerName_}";
         Portrait = Resources.Load<Sprite>(path);
+
+        // Load the town data
+        var town = TownManager.Instance.GetTownById(townID);
+        if (town != null)
+        {
+            InitializeInventory(town);
+        }
+        else
+        {
+            UnityEngine.Debug.LogError($"The town {townID} could not be found");
+            // TODO
+        }
     }
 
     /// <summary>
@@ -200,5 +216,7 @@ public class Shop
             }
         }
 
+        // Add this shop into the town
+        town.AddShop(this.id);
     }
 }

@@ -39,6 +39,14 @@ namespace FileConstants
             MimeType = "text/csv"
         };
 
+        // Shops CSV
+        public static readonly FileStorageData Shops = new FileStorageData()
+        {
+            GoogleDriveFileId = "1mKTfUI2aR6ihpYpN-9QE1dGP1293P4Wch3oADbjEiOk",
+            LocalBackupFile = $"{Application.streamingAssetsPath}/BackupData/Shops.csv",
+            MimeType = "text/csv"
+        };
+
         // Town CSV
         public static readonly FileStorageData Town = new FileStorageData()
         {
@@ -110,6 +118,7 @@ namespace FileConstants
         {
             Files.Dialog,
             Files.Items,
+            Files.Shops,
             Files.Town,
             Files.Tutorial,
             Files.TestCsv,

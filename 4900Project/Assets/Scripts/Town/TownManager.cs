@@ -46,7 +46,6 @@ public class TownManager
             towns.Add(data.Id, town);
             Debug.Log("DATA:" + town.Description);
             resultString.AppendLine("\tCreated town #" + data.Id + ": " + data.Name);
-            town.InitializeShop();
         }
         UnityEngine.Debug.Log(resultString);
 

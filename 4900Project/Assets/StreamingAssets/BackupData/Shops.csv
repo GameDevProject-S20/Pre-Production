@@ -1,0 +1,11 @@
+ShopId,TownId,Name,ShortDescription,Description,ShopType,OwnerName
+0,0,George's General Store,General Store,,GeneralStore,George
+1,1,Phil's Pharmacy,Medical Supplier,,Pharmacy,Phil
+2,1,Bill's Bulk Goods,General Store,,GeneralStore,Bill
+3,2,Hal's Hospital,Medical Supplier,,Pharmacy,Hal
+4,2,Dan's Depot,General Store,,GeneralStore,Dan
+5,3,Carl's Clinic,Medical Supplier,,Pharmacy,Carl
+6,3,Sam's Supplies,General Store,,GeneralStore,Sam
+7,4,Martha's Medicine,Medical Supplier,,Pharmacy,Martha
+8,4,Mike's Marketplace,General Store,,GeneralStore,Mike
+9,5,Harry's Healing,Medical Supplier,,Pharmacy,Harry
