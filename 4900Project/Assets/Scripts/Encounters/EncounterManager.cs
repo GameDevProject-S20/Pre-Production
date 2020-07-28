@@ -83,15 +83,6 @@ namespace Encounters
             next.RunEncounter();
         }
 
-        public void RunFixedEncounter(int id)
-        {
-            fixedEncounters.TryGetValue(id, out Encounter encounter);
-            if (encounter != null)
-            {
-                encounter.RunEncounter();
-            }
-        }
-
         // Load from csv or wherever in the future...
         // For now this demonstrates how to create an encounter object.
         private Queue<Encounter> reloadRandomEncounters()

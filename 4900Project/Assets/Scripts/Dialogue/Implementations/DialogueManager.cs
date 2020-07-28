@@ -1,8 +1,10 @@
-﻿using System;
+﻿using SIEvents;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine.UI;
 
 namespace Dialogue
 {
@@ -40,7 +42,11 @@ namespace Dialogue
         /// </summary>
         private List<IDialogue> activeDialogs = new List<IDialogue>();
 
-        private DialogueManager() { }
+        private DialogueManager() 
+        {
+            EventManager.Instance.OnGivenToPlayer.AddListener((string iname, int iamount) => OnGiveTakeItemHandler(iname, iamount, "Received"));
+            EventManager.Instance.OnTakenFromPlayer.AddListener((string iname, int iamount) => OnGiveTakeItemHandler(iname, iamount, "Removed"));
+        }
 
         // Public Methods
         /// <summary>
@@ -88,19 +94,6 @@ namespace Dialogue
             return dialog;
         }
 
-        public void SetActive(IDialogue dialog)
-        {
-            if (!dialogs.Contains(dialog))
-            {
-                throw new ArgumentException("Dialogue must be created using DialogueManager.Create()");
-            }
-
-            activeDialogs.Add(dialog);
-
-            // Update with the new active dialog
-            UpdateActiveDialogue();
-        }
-
         /// <summary>
         /// Retrieves the active dialog. This is the last one to be opened, or null if no dialogs are currently active.
         /// </summary>
@@ -144,6 +137,18 @@ namespace Dialogue
         private void UpdateActiveDialogue()
         {
             ActiveDialogueChanged.Invoke();
+        }
+
+        private void OnGiveTakeItemHandler(string itemName, int amount, string giveTake)
+        {
+            Dialogue dialogue = (Dialogue) GetActiveDialogue();
+
+            if (dialogue != null)
+            {
+                IDPage proxyPage = new DPage();
+                string notification = string.Format("({0} {1}x {2}!)", giveTake, amount, itemName);
+                dialogue.AddToHistory(proxyPage, notification);
+            }
         }
     }
 }
