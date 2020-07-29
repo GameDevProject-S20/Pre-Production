@@ -1,9 +1,37 @@
 {
 	"fixed_encounters": [
 		{
+			"encounter_id": 0,
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "You notice you are running low on gas.",
+					"buttons": [
+						{
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Looks like there is a town up ahead. Maybe you can get fuel there.",
+					"buttons": [
+						{
+						"effects": [ 
+							"@set_node_encounter 12 -1",
+							"@set_dialogue_encounter 0 1",
+							"@resolve"
+						]
+					}
+					]
+				}
+			]
+		},
+		{
+			
 			"encounter_id": 1,
-			"town_name": "Smithsville",
-			"NOTE": "need a way to start quests",
+			"NOTE": "Smithsville sheriff should say this",
 			"valid": true,
 			"dialogue_tree": [
 				{
@@ -24,6 +52,8 @@
 							"effects": [
 								"@give fuel 60",
 								"@give medicine 8",
+								"@start_quest TutorialQuest",
+								"@set_dialogue_encounter 0 2",
 								"@resolve"
 							]
 						}
@@ -33,12 +63,8 @@
 		},
 		{
 			"encounter_id": 2,
-			"conditions": [
-				"!encounter_complete 1"
-			],
-			"NOTE": "need a way to add edges to the map",
+			"NOTE": "Smithsville Sheriff says this after (1)",
 			"valid": true,
-			"town_name": "Smithsville",
 			"dialogue_tree": [
 				{
 					"id": 1,
@@ -63,10 +89,15 @@
 				{
 					"id": 2,
 					"text": "Thanks! Smithsville should be up and running again. Have some fuel.",
-					"effects": [
+					"buttons":[
+						{
+							"effects": [
 						"@give fuel 80",
+						"@set_dialogue_encounter 0 11",
 						"@resolve"
 					]
+				}
+				]
 				},
 				{
 					"id": 3,
@@ -95,9 +126,13 @@
 				{
 					"id": 2,
 					"text": "Exchange the medicine for a new <color=#2675AD>generator</color> at the local store.",
+					"buttons": [
+						{
 					"effects": [
 						"@resolve"
 					]
+				}
+				]
 				}
 			]
 		},
@@ -120,35 +155,119 @@
 				},
 				{
 					"id": 2,
-					"text": "Return to the sheriff in Smithsville."
+					"text": "Return to the sheriff in Smithsville.",
+					"buttons": [
+						{
+							"effects": [
+								"@resolve"
+							]
+						}
+					]
 				}
 			]
-		}
-	],
-	"random_encounters": [
+		},
 		{
-			"encounter_id": 999,
-			"tags": [
-				"tutorial"
-			],
+			"encounter_id": 8,
+			"NOTE": "",
+			"encounter_name": "Broken Gas Station",
 			"valid": true,
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "You notice you are running low on gas.",
+					"text": "A lone gas station on the side of the road. The pump is broken.",
 					"buttons": [
 						{
 							"next_page_id": 2
+						},
+						{
+							"text": "[Leave]"
 						}
 					]
 				},
 				{
 					"id": 2,
-					"text": "Looks like there is a town up ahead. Maybe you can get fuel there.",
-					"effects": [ "@resolve" ]
+					"text": "The owner sees you and says 'I could repair that, but I don't have enough supplies'",
+					"buttons": [
+						{
+							"text": "[Give 1 Wrench] Offer supplies.",
+							"conditions": [
+								"!has wrench 1"
+							],
+							"effects": [
+								"@take wrench 1",
+								"@set_node_encounter 9 9"
+							],
+							"next_page_id": 3
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Come back later and I'll have this fixed!"
 				}
 			]
 		},
+		{
+			"encounter_id": 9,
+			"NOTE": "",
+			"encounter_name": "Gas Station",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "A lone gas station on the side of the road. The owner calls to you: 'Hey Friend! Good price on fuel, just for you!'",
+					"buttons": [
+						{
+						"text": "Buy 7 Fuel.",
+							"effects": [
+								"@give fuel 7"
+							],
+							"next_page_id": 2
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "'Thanks! Want to buy some more?'",
+					"buttons": [
+						{
+						"text": "Buy 7 Fuel.",
+							"effects": [
+								"@give fuel 7"
+							],
+							"next_page_id": 2
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				}
+			]
+		},
+		{
+			"encounter_id": 11,
+			"NOTE": "",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "The town leader isn't available right now.",
+					"buttons": [
+						{
+							"text": "[Leave]"
+						}
+					]
+				}
+			]
+		}
+	],
+	"random_encounters": [
 		{
 			"valid": true,
 			"COMMENT": "",

@@ -68,7 +68,7 @@ namespace Encounters
             bool hasConditions = Conditions != null && Conditions.Count > 0;
 
             // Add town enter listener
-            if (onTownEnterListener == null)
+            if (onTownEnterListener == null && FixedEncounterTownId != -1)
             {
                 onTownEnterListener = (Town t) =>
                 {

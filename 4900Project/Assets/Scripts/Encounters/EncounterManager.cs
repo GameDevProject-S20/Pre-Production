@@ -55,7 +55,13 @@ namespace Encounters
                 {
                     RunRandomEncounter();
                 }
+                if (node.Type == OverworldMap.LocationType.NONE && node.LocationId != -1){
+                    RunEncounterById(node.LocationId);
+                }
             });
+            EventManager.Instance.OnEnterPOIButtonClick.AddListener(RunEncounterById);
+            EventManager.Instance.OnOpenDialogueClick.AddListener(RunEncounterById);
+
         }
 
         public void AddEncounter(Encounter enc)
@@ -87,6 +93,12 @@ namespace Encounters
             Encounter next = randomEncounter(tag);
             Debug.Log(next);
             next.RunEncounter();
+        }
+
+        public void RunEncounterById(int id){
+            Encounter next = GetEncounter(id);
+            Debug.Log(next);
+            next.RunEncounter();  
         }
 
         // Load from csv or wherever in the future...
