@@ -227,12 +227,12 @@ public class JsonEncounterDataSource : IEncounterDataSource
             throw new ArgumentException("Command Empty");
         }
 
-        statement = statement.Trim().ToLower();
+        statement = statement.Trim();
         identifier = statement.FirstOrDefault();
 
         var statement_arr = string.Concat(statement.Skip(1)).Split(); 
-        command = statement_arr.FirstOrDefault();
-        args = statement_arr.Skip(1).ToArray();
+        command = statement_arr.FirstOrDefault().ToLower();
+        args = statement_arr.Skip(1).Select(a => a.Replace('_', ' ')).ToArray();
     }
 
     /// <summary>

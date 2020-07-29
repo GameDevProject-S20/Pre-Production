@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public static class Extension
+    public static class LinqExtensions
     {
         /// <summary>
         /// Enable ForEach to be used on non-list IEnumerables
@@ -23,6 +23,19 @@
             }
 
             return enumerable;
+        }
+    }
+
+    public static class StringExtentions
+    {
+        public static string Capitalize(this string s)
+        {
+            return s.First().ToString().ToUpper() + s.Substring(1).ToLower();
+        }
+
+        public static string ToTitleCase(this string s)
+        {
+            return string.Join(" ", s.Split(' ').Select(ss => ss.Capitalize()));
         }
     }
 }
