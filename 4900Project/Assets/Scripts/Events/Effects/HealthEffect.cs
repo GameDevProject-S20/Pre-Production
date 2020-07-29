@@ -7,11 +7,14 @@ public class HealthEffect : IEffect
 {
     private readonly double percent;
 
-    public HealthEffect(double percent)
+    public HealthEffect(double perc)
     {
-        if (percent < -1.0f || percent > 1.0f)
+        if (perc < -1.0f || perc > 1.0f)
         {
-            throw new ArgumentException("percent must be between 0 and 1, inclusive");
+            throw new ArgumentException("perc must be between -1.0 and 1.0, inclusive");
+        }else
+        {
+            percent = perc;
         }
     }
 
