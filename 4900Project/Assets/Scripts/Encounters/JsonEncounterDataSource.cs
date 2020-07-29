@@ -485,6 +485,34 @@ public class JsonEncounterDataSource : IEncounterDataSource
             var perc = double.Parse(args[0]);
             e = new HealthEffect(perc);
         }
+        else if (command == "start_quest")
+        {
+            var name = args[0];
+            e = new StartQuestEffect(name);
+        }
+        else if (command == "set_node_encounter")
+        {
+            var nodeId = Int16.Parse(args[0]);
+            var encId = Int16.Parse(args[1]);
+            e = new SetNodeEncounterEffect(nodeId, encId);
+        }
+        else if (command == "set_dialogue_encounter")
+        {
+            var townId = Int16.Parse(args[0]);
+            var encId = Int16.Parse(args[1]);
+            e = new SetDialogueEncounterEffect(townId, encId);
+        }
+        else if (command == "add_edge")
+        {
+            var node1 = Int16.Parse(args[0]);
+            var node2 = Int16.Parse(args[1]);
+            e = new AddEdgeEffect(node1, node2);
+        }
+        else if (command == "trigger")
+        {
+            var name = args[0];
+            e = new TriggerEventEffect(name);
+        }
         else if (command == "random")
         {
             var firstEffectBegin = statement.SkipWhile(c => c != '(').Skip(1);
