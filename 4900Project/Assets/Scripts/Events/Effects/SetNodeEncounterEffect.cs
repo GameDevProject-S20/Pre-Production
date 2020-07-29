@@ -14,6 +14,7 @@ public class SetNodeEncounterEffect : IEffect
     {
         this.nodeId = nodeId;
         this.encounterId = encounterId;
+
     }
 
     public bool Apply()

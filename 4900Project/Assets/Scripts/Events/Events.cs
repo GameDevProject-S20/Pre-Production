@@ -53,6 +53,8 @@ namespace SIEvents
         {
             [System.Serializable]
             public class EnterEvent : UnityEvent<Town> { };
+            [System.Serializable]
+            public class ClickDialogueEvent : UnityEvent<int> { };
         }
 
         public class EncounterEvents

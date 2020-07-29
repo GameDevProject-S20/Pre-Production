@@ -112,7 +112,12 @@ public class JsonEncounterDataSource : IEncounterDataSource
 
         var dialogue = parseDialogue(rawDialogue, id);
         var conditions = parseEncounterConditions(rawConditions);
-        var townId = TownManager.Instance.GetTownByName(rawEncounterTownId).Id;
+        var townId = -1;
+        if (rawEncounterTownId != null){
+            if (rawEncounterTownId.Count() > 0){
+                townId = TownManager.Instance.GetTownByName(rawEncounterTownId).Id;
+            }
+        }
 
         Encounter encounter = new FixedEncounter()
         {
@@ -451,7 +456,6 @@ public class JsonEncounterDataSource : IEncounterDataSource
         {
             throw new ArgumentException(string.Format("Incorrect identifier for effect {0}. Expected '{1}'.", statement, EFFECT_CHAR));
         }
-
         if (command == "give")
         {
             var iname = args[0];

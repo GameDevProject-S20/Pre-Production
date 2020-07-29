@@ -162,6 +162,10 @@ public class TownWindow : MonoBehaviour
         NewAction.transform.Find("Name").GetComponent<Text>().text = townData.Leader;
         NewAction.transform.Find("Description").GetComponent<Text>().text = townData.LeaderBlurb;
         NewAction.transform.Find("Interaction").GetComponent<Image>().sprite = TalkIcon;
+        NewAction.transform.Find("Interaction").GetComponent<Button>().onClick.AddListener(() => 
+        {
+            DataTracker.Current.EventManager.OnOpenDialogueClick.Invoke(townData.leaderDialogueEncounterId);
+        });
         //need to set talking interaction on button
 
         //And now every shop

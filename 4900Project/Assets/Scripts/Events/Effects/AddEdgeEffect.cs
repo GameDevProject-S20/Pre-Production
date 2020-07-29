@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 using System.Linq;
+using SIEvents;
 
 /// <summary>
 /// Does not give a lot of information, as Apply always returns true
@@ -23,6 +24,7 @@ public class AddEdgeEffect : IEffect
         DataTracker.Current.WorldMap.GetNode(node1, out nodeA);
         DataTracker.Current.WorldMap.GetNode(node2, out nodeB);
         DataTracker.Current.WorldMap.AddEdge(nodeA, nodeB);
+        EventManager.Instance.RequestRedraw.Invoke();
         return true;
     }
 }
