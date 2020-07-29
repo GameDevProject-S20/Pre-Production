@@ -29,6 +29,9 @@ namespace Encounters
         public abstract void RunEncounter();
     }
 
+    /// <summary>
+    /// Encounters to be activated outside of Event nodes.
+    /// </summary>
     public class FixedEncounter : Encounter, IProgressor
     {
         /// <summary>
@@ -51,6 +54,9 @@ namespace Encounters
         /// </summary>
         private bool ready;
 
+        /// <summary>
+        /// Set this as the active dialogue.
+        /// </summary>
         public override void RunEncounter()
         {
             if (!ready) throw new Exception(string.Format("Encounter {0} not ready.", Id));
@@ -131,6 +137,9 @@ namespace Encounters
         }
     }
 
+    /// <summary>
+    /// Encounters that belong in a bag, to be selected from using some randomness.
+    /// </summary>
     public class RandomEncounter : Encounter
     {
         public string[] Tags;

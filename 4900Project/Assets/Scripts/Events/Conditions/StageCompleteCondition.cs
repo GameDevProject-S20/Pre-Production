@@ -4,6 +4,9 @@ using Quests;
 
 namespace SIEvents
 {
+    /// <summary>
+    /// Satisfied when a specified stage is completed in a specified quest
+    /// </summary>
     public class StageCompleteCondition : Condition
     {
         private readonly int questId;
@@ -28,7 +31,7 @@ namespace SIEvents
             EventManager.Instance.OnStageComplete.RemoveListener(listener);
         }
 
-        public void Handler(int qusetId, int stageNum)
+        public void Handler(int questId, int stageNum)
         {
             if (questId == this.questId && stageNum == this.stageNum)
             {

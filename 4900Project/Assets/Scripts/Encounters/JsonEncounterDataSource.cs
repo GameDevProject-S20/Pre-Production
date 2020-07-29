@@ -70,18 +70,28 @@ public class JsonEncounterDataSource : IEncounterDataSource
 
     // PRIVATE //
 
+    /// <summary>
+    /// Helper function for handling iterable raw fixed encounters
+    /// </summary>
+    /// <param name="encounters"></param>
+    /// <returns></returns>
     private IEnumerable<Encounter> parseFixedEncounters(RawFixedEncounter[] encounters)
     {
         return encounters.Select(raw => parseFixedEncounter(raw)).Where(e => e != null);
     }
 
+    /// <summary>
+    /// Helper function for handling iterable raw random encounters
+    /// </summary>
+    /// <param name="encounters"></param>
+    /// <returns></returns>
     private IEnumerable<Encounter> parseRandomEncounters(RawRandomEncounter[] encounters)
     {
         return encounters.Select(raw => parseRandomEncounter(raw)).Where(e => e != null);
     }
 
     /// <summary>
-    /// Handles creation of encounter by passing work off to relevent parsers
+    /// Handles creation of fixed encounters by passing work off to relevent parsers
     /// 
     /// Relevant parsers:
     /// - parseDialogue
@@ -115,6 +125,14 @@ public class JsonEncounterDataSource : IEncounterDataSource
         return encounter;
     }
 
+    /// <summary>
+    /// Handles creation of random encounters by passing work off to relevent parsers
+    /// 
+    /// Relevant parsers:
+    /// - parseDialogue
+    /// - parseEncounterCondition
+    /// </summary>
+    /// <returns>Encounter</returns>
     private Encounter parseRandomEncounter(RawRandomEncounter rawEncounter)
     {
         //### These are the properties we need to load in from file ###//
@@ -195,6 +213,13 @@ public class JsonEncounterDataSource : IEncounterDataSource
         return DialogueManager.Instance.CreateDialogue(rootPage);
     }
 
+    /// <summary>
+    /// Splits effects and conditions into the relevant information.
+    /// </summary>
+    /// <param name="statement">The full, unparsed string</param>
+    /// <param name="identifier">The non-alphanumeric symbol representing the type of command </param>
+    /// <param name="command">The script command</param>
+    /// <param name="args">The script arguments</param>
     private void SplitCommand(string statement, out char identifier, out string command, out string[] args)
     {
         if (statement.Length == 0)
@@ -210,6 +235,10 @@ public class JsonEncounterDataSource : IEncounterDataSource
         args = statement_arr.Skip(1).ToArray();
     }
 
+    /// <summary>
+    /// Helper function for parsing a series of Encounter Conditions
+    /// </summary>
+    /// <returns>Condition</returns>
     private List<Condition> parseEncounterConditions(string[] rawConditions)
     {
         if (rawConditions == null)
@@ -349,6 +378,10 @@ public class JsonEncounterDataSource : IEncounterDataSource
         return new KeyValuePair<IDButton, int?>(button, nextPageId);
     }
 
+    /// <summary>
+    /// Helper function for parsing a series of Page Option (Button) Condiitons
+    /// </summary>
+    /// <returns>Condition</returns>
     private IEnumerable<IPresentCondition> parsePageOptionConditions(string[] rawConditions)
     {
         if (rawConditions == null)
@@ -387,6 +420,10 @@ public class JsonEncounterDataSource : IEncounterDataSource
         return c;
     }
 
+    /// <summary>
+    /// Helper function for parsing a series of Page Option (Button) effects
+    /// </summary>
+    /// <returns>Condition</returns>
     private IEnumerable<IEffect> parseEffects(string[] rawEffects, int encounterId)
     {
         if (rawEffects == null)

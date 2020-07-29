@@ -4,6 +4,9 @@ using Encounters;
 
 namespace SIEvents
 {
+    /// <summary>
+    /// Satified when an encounter with the specified id is completed.
+    /// </summary>
     public class EncounterCompleteCondition : Condition
     {
         private readonly int encounterId;

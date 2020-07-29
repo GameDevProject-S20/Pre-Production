@@ -40,6 +40,9 @@ namespace Dialogue
             };
         }
 
+        /// <summary>
+        /// To be used if text is not specified.
+        /// </summary>
         public static string DefaultText
         {
             get => "OK.";
