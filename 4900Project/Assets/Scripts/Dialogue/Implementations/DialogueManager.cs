@@ -50,9 +50,9 @@ namespace Dialogue
 
         // Public Methods
         /// <summary>
-        /// Creates a new dialog box with the given pages. 
+        /// Creates a new dialog box using the given page as the root of the dialogue tree.
         /// </summary>
-        /// <param name="dialoguePages"></param>
+        /// <param name="root"></param>
         public IDialogue CreateDialogue(IDPage root)
         {
             // The ID of the dialog will be the next index into our dialogs list.
@@ -139,6 +139,12 @@ namespace Dialogue
             ActiveDialogueChanged.Invoke();
         }
 
+        /// <summary>
+        /// Notify the dialogue when a dialogue effect that give/takes and item from the player.
+        /// </summary>
+        /// <param name="itemName">The item string</param>
+        /// <param name="amount">How much of the item</param>
+        /// <param name="giveTake"> The string to represent the action performed.</param>
         private void OnGiveTakeItemHandler(string itemName, int amount, string giveTake)
         {
             Dialogue dialogue = (Dialogue) GetActiveDialogue();

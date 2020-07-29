@@ -2,6 +2,9 @@
 
 namespace Encounters
 {
+    /// <summary>
+    /// Serves encounters
+    /// </summary>
     public interface IEncounterDataSource
     {
         IEnumerable<Encounter> GetEncounterEnumerator();

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
+/// <summary>
+/// Satisfied if the player has a specified item on them
+/// </summary>
 public class HasItemPresentConditon : IPresentCondition
 {
     private readonly string itemName;

@@ -74,7 +74,11 @@ namespace Dialogue
 
         /// <summary>
         /// Checks if the enumerator has reached the last page.
+        /// 
+        /// Reuqires a button index in order to determine whether there is more dialogue down 
+        /// *that* particular branch.
         /// </summary>
+        /// <param name="buttonId">The index of the button to check</param>
         /// <returns></returns>
         public bool HasNextPage(int buttonId)
         {
@@ -85,8 +89,9 @@ namespace Dialogue
 
         // Public Methods
         /// <summary>
-        /// Advances the dialog to the next page.
+        /// Checks if a particular branch has any more dialogue.
         /// </summary>
+        /// <param name="buttonId">The index of the button representing the branch of dialogue to check</param>
         public void GoToNextPage(int buttonId)
         {
             // Verify that we can move forward

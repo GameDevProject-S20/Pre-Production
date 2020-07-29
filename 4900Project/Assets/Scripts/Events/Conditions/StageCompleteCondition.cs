@@ -4,6 +4,9 @@ using Quests;
 
 namespace SIEvents
 {
+    /// <summary>
+    /// Satisfied when a specified stage is completed in a specified quest
+    /// </summary>
     public class StageCompleteCondition : Condition
     {
         private readonly int questId;

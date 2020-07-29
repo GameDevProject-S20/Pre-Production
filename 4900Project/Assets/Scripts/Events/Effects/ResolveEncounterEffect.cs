@@ -1,5 +1,8 @@
 ﻿using Encounters;
 
+/// <summary>
+/// Resolves an encounter
+/// </summary>
 public class ResolveEncounterEffect : IEffect
 {
     private readonly int encID;
