@@ -308,12 +308,12 @@
 							"text": "[Trade] Upgrade your ship for 15 Scrap Metal and 6 Fuel",
 							"conditions": [
 								"!has Fuel 6",
-								"!has Scrap Metal 15"
+								"!has Scrap_Metal 15"
 							],
 							"effects": [
 								"<<@give upgrade>>",
 								"@take Fuel 6",
-								"@take Scrap Metal 15"
+								"@take Scrap_Metal 15"
 							],
 							"next_page_id": 3
 						},
@@ -738,12 +738,12 @@
 			]
 		},
 		{
-			"valid": false,
-			"COMMENT": "system does not support two word items, would like more item variety, flat hp not %",
+			"valid": true,
+			"COMMENT": "would like more item variety, flat hp not %",
 			"encounter_id": 1016,
 			"tags": [],
 			"encounter_name": "Turbulence",
-			"conditions": [ "!has Scrap Metal 5" ],
+			"conditions": [ "!has Scrap_Metal 5" ],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -753,7 +753,7 @@
 						{
 							"text": "[Collect] Gain 30 Scrap Metal, lose 10% health",
 							"effects": [
-								"@give Scrap Metal 30",
+								"@give Scrap_Metal 30",
 								"@health -0.1"
 							],
 							"next_page_id": 2
@@ -761,7 +761,7 @@
 						{
 							"text": "[Flee] Lose 5 Scrap Metal",
 							"effects": [
-								"@take Scrap Metal 5"
+								"@take Scrap_Metal 5"
 							],
 							"next_page_id": 3
 						}
