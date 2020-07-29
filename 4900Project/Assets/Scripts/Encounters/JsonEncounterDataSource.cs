@@ -92,7 +92,7 @@ public class JsonEncounterDataSource : IEncounterDataSource
 
     /// <summary>
     /// Handles creation of fixed encounters by passing work off to relevent parsers
-    /// 
+    ///
     /// Relevant parsers:
     /// - parseDialogue
     /// - parseEncounterCondition
@@ -112,7 +112,12 @@ public class JsonEncounterDataSource : IEncounterDataSource
 
         var dialogue = parseDialogue(rawDialogue, id);
         var conditions = parseEncounterConditions(rawConditions);
-        var townId = TownManager.Instance.GetTownByName(rawEncounterTownId).Id;
+        var townId = -1;
+        if (rawEncounterTownId != null){
+            if (rawEncounterTownId.Count() > 0){
+                townId = TownManager.Instance.GetTownByName(rawEncounterTownId).Id;
+            }
+        }
 
         Encounter encounter = new FixedEncounter()
         {
@@ -127,7 +132,7 @@ public class JsonEncounterDataSource : IEncounterDataSource
 
     /// <summary>
     /// Handles creation of random encounters by passing work off to relevent parsers
-    /// 
+    ///
     /// Relevant parsers:
     /// - parseDialogue
     /// - parseEncounterCondition
@@ -159,7 +164,7 @@ public class JsonEncounterDataSource : IEncounterDataSource
 
     /// <summary>
     /// Handles creation of dialogue by passing work off to relevent parsers
-    /// 
+    ///
     /// Relevant parsers:
     /// - parsePage
     /// </summary>
@@ -174,7 +179,7 @@ public class JsonEncounterDataSource : IEncounterDataSource
             rawPages
                 .Select(rp => parsePage(rp, encounterId))
                 .ToDictionary(p => p.Item1, p => p.Item2);
-       
+
 
         // This should be the first page (id 0)
         var rootPage = disconnectedPages[1].Item1;
@@ -291,7 +296,7 @@ public class JsonEncounterDataSource : IEncounterDataSource
 
     /// <summary>
     /// Handles creation of page by passing work off to relevent parsers
-    /// 
+    ///
     /// Relevant parsers:
     /// - parseButton
     /// </summary>
@@ -299,7 +304,7 @@ public class JsonEncounterDataSource : IEncounterDataSource
     private Tuple<int, Tuple<IDPage, Dictionary<IDButton, int?>>> parsePage(RawPage rawPage, int encounterId)
     {
         //#############################################################//
-        //### These are the properties we need to load in from file ###// 
+        //### These are the properties we need to load in from file ###//
         var id = rawPage.id;
         var rawText = rawPage.text;
         var rawButtons = rawPage.buttons; // Nested object
@@ -334,7 +339,7 @@ public class JsonEncounterDataSource : IEncounterDataSource
 
     /// <summary>
     /// Handles creation of button by passing work off to relevent parsers
-    /// 
+    ///
     /// Relevant parsers:
     /// - parsePageOptionCondition
     /// - parsePageOptionEffect
@@ -343,7 +348,7 @@ public class JsonEncounterDataSource : IEncounterDataSource
     private KeyValuePair<IDButton, int?> parseButton(RawButton rawButton, int encounterId)
     {
         //#############################################################//
-        //### These are the properties we need to load in from file ###// 
+        //### These are the properties we need to load in from file ###//
         var rawText = rawButton.text;
         var rawConditions = rawButton.conditions;
         var rawEffects = rawButton.effects;
@@ -396,7 +401,7 @@ public class JsonEncounterDataSource : IEncounterDataSource
 
     /// <summary>
     /// Handles creation of conditions that must be satisfied in order to press the button
-    /// 
+    ///
     /// </summary>
     /// <returns>Condition</returns>
     private IPresentCondition parsePageOptionCondition(string statement)
@@ -438,7 +443,7 @@ public class JsonEncounterDataSource : IEncounterDataSource
 
     /// <summary>
     /// Handles creation of effects that are invoked after pressing the button
-    /// 
+    ///
     /// </summary>
     /// <returns>Effect</returns>
     private IEffect parseEffect(string statement, int encounterId)
@@ -451,7 +456,6 @@ public class JsonEncounterDataSource : IEncounterDataSource
         {
             throw new ArgumentException(string.Format("Incorrect identifier for effect {0}. Expected '{1}'.", statement, EFFECT_CHAR));
         }
-
         if (command == "give")
         {
             var iname = args[0];
@@ -482,8 +486,36 @@ public class JsonEncounterDataSource : IEncounterDataSource
         }
         else if (command == "health")
         {
-            var perc = double.Parse(args[1]);
+            var perc = double.Parse(args[0]);
             e = new HealthEffect(perc);
+        }
+        else if (command == "start_quest")
+        {
+            var name = args[0];
+            e = new StartQuestEffect(name);
+        }
+        else if (command == "set_node_encounter")
+        {
+            var nodeId = Int16.Parse(args[0]);
+            var encId = Int16.Parse(args[1]);
+            e = new SetNodeEncounterEffect(nodeId, encId);
+        }
+        else if (command == "set_dialogue_encounter")
+        {
+            var townId = Int16.Parse(args[0]);
+            var encId = Int16.Parse(args[1]);
+            e = new SetDialogueEncounterEffect(townId, encId);
+        }
+        else if (command == "add_edge")
+        {
+            var node1 = Int16.Parse(args[0]);
+            var node2 = Int16.Parse(args[1]);
+            e = new AddEdgeEffect(node1, node2);
+        }
+        else if (command == "trigger")
+        {
+            var name = args[0];
+            e = new TriggerEventEffect(name);
         }
         else if (command == "random")
         {
