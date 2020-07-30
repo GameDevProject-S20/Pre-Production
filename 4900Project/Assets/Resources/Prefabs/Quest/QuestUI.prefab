@@ -50,6 +50,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71abd50ec7f2ae4739029fa6c6f290d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ActiveCategoryButton: {fileID: 3807130750471726532, guid: ac37e9f4e9353741986a4f2ff44c91cd,
+    type: 3}
+  CompletedCategoryButton: {fileID: 7448894977637547834, guid: c8959a7035a723fe5914d841e7b1401c,
+    type: 3}
 --- !u!1 &3071225594632480235
 GameObject:
   m_ObjectHideFlags: 0
