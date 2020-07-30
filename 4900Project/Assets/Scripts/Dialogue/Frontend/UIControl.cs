@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using SIEvents;
 
 namespace Assets.Scripts.Dialogue.Frontend
 {
@@ -124,7 +125,8 @@ namespace Assets.Scripts.Dialogue.Frontend
             if (dialogue == null)
             {
                 Hide();
-            } else
+            }
+            else
             {
                 var activePage = dialogue.GetPage();
                 var history = dialogue.History;
@@ -137,7 +139,7 @@ namespace Assets.Scripts.Dialogue.Frontend
                 // Update all the data
                 UpdateAvatarDisplay(activePage.Avatar);
                 UpdatePageTextDisplay(history, activePage);
-                 
+
             }
         }
 
@@ -148,7 +150,7 @@ namespace Assets.Scripts.Dialogue.Frontend
         protected void UpdateButtons(IEnumerable<IDButton> pageButtons)
         {
             var buttonsCount = pageButtons.Count();
-            
+
             // If the page has more buttons than we have support for, log out a warning.
             // We'll continue past this point, but the Dialogue should be updated with more buttons if this becomes a problem.
             if (buttonsCount > buttons.Count)
@@ -161,7 +163,7 @@ namespace Assets.Scripts.Dialogue.Frontend
             {
                 var physicalButton = buttons.ElementAt(i);
                 var buttonData = pageButtons.ElementAtOrDefault(i);
- 
+
                 // Update the text
                 Text text = physicalButton.GetComponentInChildren<Text>();
                 text.text = buttonData != null ? buttonData.Text : "";
@@ -294,6 +296,8 @@ namespace Assets.Scripts.Dialogue.Frontend
         protected void Hide()
         {
             SetVisible(false);
+            EventManager.Instance.UnfreezeMap.Invoke();
+
         }
         /// <summary>
         /// Shows the Dialog UI.
@@ -301,6 +305,8 @@ namespace Assets.Scripts.Dialogue.Frontend
         protected void Show()
         {
             SetVisible(true);
+            EventManager.Instance.FreezeMap.Invoke();
+
         }
         /// <summary>
         /// Helper for Hiding & Showing. Makes it easy to adjust if need be.
@@ -309,6 +315,15 @@ namespace Assets.Scripts.Dialogue.Frontend
         protected void SetVisible(bool isVis)
         {
             gameObject.GetComponent<Canvas>().enabled = isVis;
+            if (isVis)
+            {
+                EventManager.Instance.FreezeMap.Invoke();
+            }
+            else
+            {
+
+                EventManager.Instance.UnfreezeMap.Invoke();
+            }
         }
 
         // Misc
@@ -324,7 +339,7 @@ namespace Assets.Scripts.Dialogue.Frontend
             //   3. It's possible for someone to press a button and stay on the same page. In this case ...
 
             var builder = new StringBuilder();
-            
+
             // Add in all the history
             builder.Append(TextTags.StartTags.GrayColorTag);
             foreach (var page in history)
