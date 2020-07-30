@@ -23,13 +23,13 @@ public class SimpleCameraController : MonoBehaviour
     [SerializeField]
     public float dragSpeed; // -0.25
     [SerializeField]
-    public float outerLeft; // -10
+    public float outerLeft; // -55
     [SerializeField]
-    public float outerRight; // 10
+    public float outerRight; // 30
     [SerializeField]
-    public float outerUp; // 12
+    public float outerUp; // 41
     [SerializeField]
-    public float outerDown; // -12 
+    public float outerDown; // -45
 
     private Vector3 dragOrigin;
 
@@ -39,31 +39,56 @@ public class SimpleCameraController : MonoBehaviour
 
     bool active = true;
 
-    private void Awake() {
-        EventManager.Instance.FreezeMap.AddListener(() => {active = false;});
-        EventManager.Instance.UnfreezeMap.AddListener(() => {active = true;});
+    private void Awake()
+    {
+        EventManager.Instance.FreezeMap.AddListener(() => { active = false; });
+        EventManager.Instance.UnfreezeMap.AddListener(() => { active = true; });
     }
 
-    private void Update() 
+    private void Update()
     {
-        if (active){
-            transform.position = GeneralPurposeControl(transform.position); //WSAD! 
+
+        if (active)
+        {
+            GeneralPurposeControl(); //WSAD! 
             transform.position = MouseScrollControl(transform.position);
             MouseDragControl();
         }
-        
+
     }
 
-
-    public Vector3 GeneralPurposeControl(Vector3 position)
+    // WSAD controls
+    public void GeneralPurposeControl()
     {
+        Vector3 position = transform.position;
+
         Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+
         Vector3 nextPosition = position;
-        if (input != Vector3.zero){
+
+
+        if (input != Vector3.zero)
+        {
             Vector3 velocity = input * panSpeed / 2.0f;
             nextPosition = position + velocity;
+
+            // Calculate the expect translation to make sure it does not exceed max/min 
+            Vector3 expectedTranslation = nextPosition;
+
+
+            //Check t0 make sure not outside of the bounds 
+            if (outerRight > expectedTranslation.x && expectedTranslation.x > outerLeft)
+            {
+                transform.Translate(new Vector3(velocity.x, 0, 0), Space.World);
+            }
+
+            if (outerUp > expectedTranslation.z && expectedTranslation.z > outerDown)
+            {
+                transform.Translate(new Vector3(0, 0, velocity.z), Space.World);
+            }
         }
-        return nextPosition;
+
+
     }
 
     public Vector3 MousePanControl(Vector3 position)
@@ -125,7 +150,6 @@ public class SimpleCameraController : MonoBehaviour
 
     public void MouseDragControl()
     {
-
         if (Input.GetMouseButtonDown(0))
         {
             dragOrigin = Input.mousePosition;
@@ -143,7 +167,7 @@ public class SimpleCameraController : MonoBehaviour
         Vector3 expectedTranslation = transform.position + move;
 
 
-        /* Check t0 make sure not outside of the bounds */ 
+        //Check to make sure not outside of the bounds 
         if (outerRight > expectedTranslation.x && expectedTranslation.x > outerLeft)
         {
             transform.Translate(new Vector3(move.x, 0, 0), Space.World);

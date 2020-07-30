@@ -1,8 +1,25 @@
 Id,Name,Leader,Colour,Size,Tags
-0,Smithsville,Sheriff Smith,#3492eb,Medium,
-1,York,the Northern Trade Coalition,#d43e15,Medium,
-2,Big Rock,Mayor Brown,#79a10b,Large,
-3,Riverbed,Old Man Jeb,#30b394,Small,Farm
-4,Lombard Canyon,Mayor Li,#ba27b3,Large,Hospital
-5,Ares,Overseer Ahmed,#dbc13d,Small,Mining
-6,Fields,the Green Pact,#10a381,Medium,Foundry
+0,Smithsville,Sheriff Smith,#3492eb,Small,
+1,York,Mayor Li,#08b806,Medium,
+2,Frakton,Mayor Brown,#de8212,Large,
+3,Alabaster,Sheriff Cailyn,#fc1e1e,Large,
+4,New Ottawa,Dr David,#94d914,Large,Hospital
+5,Rocket City,Overseer Zachary,#0c28c7,Large,
+6,Steelton,the Northern Trade Coalition,#38c29f,Medium,Foundry
+7,Big Rock,Mayor Aaron,#fcba03,Medium,
+8,Lombard,the New Democratic Council,#6a0cc7,Medium,
+9,Skull,Chief Alex,#3492eb,Medium,Bandit
+10,Fields,Wilson Agriculture Corp,#27c6db,Small,Farm
+11,Carrot Farm,the Green Pact,#d62474,Small,Farm
+12,Sherbrooke,Farmer Sean,##cc2c00,Small,Farm
+13,Riverbed,Mayor Tali,#c99863,Small,Farm
+14,Bordevide,Sheriff Jean-Guy,#ae3bdb,Small,Farm
+15,Respite,Farmer Kyle,#08b806,Small,Farm
+16,Farm-By-The-Island,Dr Pavarti,#0c28c7,Small,Farm
+17,Green Greens,Kevin & Do-yun,#fc1e1e,Small,Farm
+18,Dustbowl,Mayor X,#27c6db,Small,Farm
+19,Jeb's Town,Old Man Jeb,##6a0cc7,Small,Farm
+20,Lanark Mine,Mine Chief Keegan,#d1ad4b,Small,Mining
+21,Irony,Overseer Ahmed,#fcba03,Small,Mining
+22,Fin,Mayor Connor,#d62474,Large,
+

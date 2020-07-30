@@ -181,7 +181,7 @@ public class TownManager
         tag.playerSellModifiers.Add(ItemTag.Tools_And_Parts, 1.2f);
 
         tag.AbundancyModifiers.Add(ItemTag.Mineral, new List<float>(){1.5f, 1.2f, 1.1f, 1.0f, 1.0f});
-        tag.RarityModifers.Add(ItemTag.Mineral, new List<float>(){1.0f, 1.5f, 1.5f, 2.0f, 3.0f});
+        tag.RarityModifers.Add(ItemTag.Mineral, new List<float>(){1.0f, 3.0f, 3.0f, 4.0f, 3.0f});
 
         Tags.Add(tag.Name, tag); 
 
@@ -214,7 +214,27 @@ public class TownManager
         tag.AbundancyModifiers.Add(ItemTag.Medical, new List<float>(){1.5f, 1.2f, 1.1f, 1.0f, 1.0f});
         tag.RarityModifers.Add(ItemTag.Medical, new List<float>(){1.0f, 1.5f, 2.0f, 4.0f, 5.0f});
 
-        Tags.Add(tag.Name, tag);   
+        Tags.Add(tag.Name, tag);  
+
+//=============================================================
+        
+        tag = new TownTag();
+        tag.Name = "Bandit";
+        tag.Colour = "#800808";
+        tag.Specialization = ItemTag.Combat;
+
+        tag.shopSellModifiers.Add(ItemTag.Food, 1.2f);
+        tag.shopSellModifiers.Add(ItemTag.Building_Materials, 1.2f);
+        tag.shopSellModifiers.Add(ItemTag.Tools_And_Parts, 1.2f);
+        tag.shopSellModifiers.Add(ItemTag.Bandit, 10.0f);
+
+        tag.playerSellModifiers.Add(ItemTag.Food, 1.2f);
+        tag.playerSellModifiers.Add(ItemTag.Building_Materials, 1.2f);
+        tag.playerSellModifiers.Add(ItemTag.Tools_And_Parts, 1.2f);
+
+        tag.BaseRarityModifier = new List<float>(){1.0f, 1.5f, 2.0f, 4.0f, 5.0f};
+
+        Tags.Add(tag.Name, tag);  
     }
 
     public TownTag GetTag(string name){

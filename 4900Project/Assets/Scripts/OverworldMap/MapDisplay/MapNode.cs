@@ -43,6 +43,8 @@ public class MapNode : MonoBehaviour
             else if (t.Size == Town.Sizes.Large){
                     transform.Find("largeTown").gameObject.SetActive(true);
             }
+            transform.Find("Indicator").gameObject.SetActive(true);
+
 
         }
         else if (Type == OverworldMap.LocationType.EVENT)
@@ -53,10 +55,17 @@ public class MapNode : MonoBehaviour
         {
             transform.Rotate(new Vector3(0, Random.Range(0, 360), 0), Space.Self);
             transform.Find("tinyTown").gameObject.SetActive(true);
+            transform.Find("Indicator").gameObject.SetActive(true);
         }
         else {
             transform.Find("Icon").gameObject.SetActive(true);
         }
+
+        /*foreach(Transform child in transform) {
+            if (!child.gameObject.activeInHierarchy && child.gameObject.name != "Icon"){
+                GameObject.Destroy(child.gameObject);
+            }
+        }*/
     }
 
     /// <summary>
@@ -99,7 +108,16 @@ public class MapNode : MonoBehaviour
         DataTracker.Current.WorldMap.GetNode(NodeId, out node);
 
         if (Type == OverworldMap.LocationType.TOWN) {
-            panel.SetDetails(DataTracker.Current.TownManager.GetTownById(node.LocationId).Name);
+            Town t = DataTracker.Current.TownManager.GetTownById(node.LocationId);
+            var details = t.Name;
+            if (t.Tags.Count > 0){
+                 details += "\n";
+                 foreach(var tag in t.Tags){
+                details += tag.Name +" ";
+            }
+            }
+            
+            panel.SetDetails(details);
         }
         else if (Type == OverworldMap.LocationType.EVENT) {
             panel.SetDetails("Unknown Event");

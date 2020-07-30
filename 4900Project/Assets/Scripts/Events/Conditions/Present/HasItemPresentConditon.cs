@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Extentions;
 
 /// <summary>
 /// Satisfied if the player has a specified item on them
@@ -14,7 +15,7 @@ public class HasItemPresentConditon : IPresentCondition
     {
         if (!string.IsNullOrEmpty(itemName))
         {
-            itemName = itemName.First().ToString().ToUpper() + itemName.Substring(1).ToLower();
+            itemName = itemName.ToTitleCase();
         }
         this.itemName = itemName;
         this.itemAmount = itemAmount;
