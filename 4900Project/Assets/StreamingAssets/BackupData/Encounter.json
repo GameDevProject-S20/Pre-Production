@@ -231,7 +231,7 @@
 		},
 		{
 			"valid": false,
-			"COMMENT": "needs random or tag resource selection",
+			"COMMENT": "needs ability to give resources by a factor (eg remove 100%, give 100% more, take 50%, etc)",
 			"encounter_id": 1001,
 			"tags": [],
 			"encounter_name": "Duplication Glitch",
@@ -421,8 +421,8 @@
 			]
 		},
 		{
-			"valid": false,
-			"COMMENT": "random does not currently work recursively, avatar name something like 'unwell merchant'",
+			"valid": true,
+			"COMMENT": "avatar name something like 'unwell merchant'",
 			"encounter_id": 1006,
 			"tags": [],
 			"encounter_name": "Loot Crate",
@@ -440,7 +440,7 @@
 							],
 							"effects": [
 								"@take Medicine 4",
-								"@random 0.5 (@random 0.5 (@give Jewelry 1) (@give Jewelry 2)) (@random 0.5 (@give Jewelry 3) (@give Jewelry 4))"
+								"@random 0.5 (@random 0.5 (@give Jewelry 1) (@give Jewelry 2)) (@random 0.5 (@random 0.5 (@give Jewelry 3) (@give Jewelry 4)) (@give Jewelry 5))"
 							],
 							"next_page_id": 3
 						},
@@ -484,8 +484,8 @@
 			]
 		},
 		{
-			"valid": false,
-			"COMMENT": "change to be different resources, random does not work recursively",
+			"valid": true,
+			"COMMENT": "",
 			"encounter_id": 1009,
 			"tags": [],
 			"encounter_name": "Geocache",
@@ -494,12 +494,12 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "While travelling you find some stones that look out of place, being curious you move them and find a cache of medicine!",
+					"text": "While travelling you find some stones that look out of place, being curious you move them and find a cache of medical supplies!",
 					"buttons": [
 						{
-							"text": "[Steal] take medicine",
+							"text": "[Steal] take medical supplies",
 							"effects": [
-								"@random 0.67 (@random 0.5 (@give Medicine 1) (@give Medicine 2)) (@give Medicine 3)"
+								"@random 0.8 (@random 0.25 (@give Surgical_Equipment 1) (@give Medicine 3)) (@give Medical_Kit 2)"
 							],
 							"next_page_id": 3
 						},
@@ -515,7 +515,7 @@
 				},
 				{
 					"id": 3,
-					"text": "You don't even know if the person who left it is still alive, and you'll certainly have use for extra medicine. Having convinced yourself; you take the medicine."
+					"text": "You don't even know if the person who left it is still alive, and you'll certainly have use for extra medicine. Having convinced yourself; you take the medical supplies."
 				}
 			]
 		},
