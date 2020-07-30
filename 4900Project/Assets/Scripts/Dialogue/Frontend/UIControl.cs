@@ -184,13 +184,17 @@ namespace Assets.Scripts.Dialogue.Frontend
         {
 
             var textMeshPro = textDisplay.GetComponent<TextMeshProUGUI>();
-            textMeshPro.text = BuildPageString(history, currentPage);
+            var nextPageText = BuildPageString(history, currentPage);
             if (history.Count() == 0)
             {
                 textMeshPro.maxVisibleCharacters = 0;
+                textMeshPro.text = "";
             }
 
+            // Resize the content based on what's already in the text
             UpdatePageScrolling();
+
+            textMeshPro.text = nextPageText;
             StartCoroutine(UpdatePage(currentPage.Buttons));
         }
 
@@ -199,6 +203,7 @@ namespace Assets.Scripts.Dialogue.Frontend
             UpdateButtons(new List<IDButton>());
             yield return StartCoroutine(PlayTextTypingAnimation());
             UpdateButtons(buttons);
+            UpdatePageScrolling();
         }
 
         /// <summary>
