@@ -23,6 +23,7 @@ public class Player
 
     public int Health {get; private set;} = 100;
     public int HealthCap {get; private set;} = 100;
+    public int FuelCap { get; private set; } = 100;
 
     private Player() { }
 
