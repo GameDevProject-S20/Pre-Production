@@ -1,5 +1,6 @@
 ﻿using Dialogue;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using SIEvents;
 
 namespace Assets.Scripts.Dialogue.Frontend
 {
@@ -102,6 +104,11 @@ namespace Assets.Scripts.Dialogue.Frontend
         {
             button.onClick.AddListener(() =>
             {
+                if (button.GetComponentInChildren<Text>().text == "")
+                {
+                    return;
+                }
+
                 DialogueManager.Instance.GetActiveDialogue().PressButton(index);
             });
         }
@@ -118,7 +125,8 @@ namespace Assets.Scripts.Dialogue.Frontend
             if (dialogue == null)
             {
                 Hide();
-            } else
+            }
+            else
             {
                 var activePage = dialogue.GetPage();
                 var history = dialogue.History;
@@ -129,7 +137,6 @@ namespace Assets.Scripts.Dialogue.Frontend
                 Debug.Log(string.Format("Active Page\n\n{0}", activePage));
 
                 // Update all the data
-                UpdateButtons(activePage.Buttons);
                 UpdateAvatarDisplay(activePage.Avatar);
                 UpdatePageTextDisplay(history, activePage);
 
@@ -143,7 +150,7 @@ namespace Assets.Scripts.Dialogue.Frontend
         protected void UpdateButtons(IEnumerable<IDButton> pageButtons)
         {
             var buttonsCount = pageButtons.Count();
-            
+
             // If the page has more buttons than we have support for, log out a warning.
             // We'll continue past this point, but the Dialogue should be updated with more buttons if this becomes a problem.
             if (buttonsCount > buttons.Count)
@@ -156,7 +163,7 @@ namespace Assets.Scripts.Dialogue.Frontend
             {
                 var physicalButton = buttons.ElementAt(i);
                 var buttonData = pageButtons.ElementAtOrDefault(i);
- 
+
                 // Update the text
                 Text text = physicalButton.GetComponentInChildren<Text>();
                 text.text = buttonData != null ? buttonData.Text : "";
@@ -177,8 +184,45 @@ namespace Assets.Scripts.Dialogue.Frontend
         /// <param name="currentPage"></param>
         protected void UpdatePageTextDisplay(IEnumerable<IDHistory> history, IDPage currentPage)
         {
-            textDisplay.GetComponent<TextMeshProUGUI>().text = BuildPageString(history, currentPage);
+
+            var textMeshPro = textDisplay.GetComponent<TextMeshProUGUI>();
+            var nextPageText = BuildPageString(history, currentPage);
+            if (history.Count() == 0)
+            {
+                textMeshPro.maxVisibleCharacters = 0;
+                textMeshPro.text = "";
+            }
+
+            // Resize the content based on what's already in the text
             UpdatePageScrolling();
+
+            textMeshPro.text = nextPageText;
+            StartCoroutine(UpdatePage(currentPage.Buttons));
+        }
+
+        protected IEnumerator UpdatePage(IEnumerable<IDButton> buttons)
+        {
+            UpdateButtons(new List<IDButton>());
+            yield return StartCoroutine(PlayTextTypingAnimation());
+            UpdateButtons(buttons);
+            UpdatePageScrolling();
+        }
+
+        /// <summary>
+        /// Plays an animation of each character being typed out one-by-one.
+        /// Animates from the currently displayed text to the next page.
+        /// </summary>
+        /// <returns></returns>
+        protected IEnumerator PlayTextTypingAnimation()
+        {
+            var textMeshPro = textDisplay.GetComponent<TextMeshProUGUI>();
+            int charCount = System.Text.RegularExpressions.Regex.Replace(textMeshPro.text, "<.*?>", String.Empty).Length;
+            for (var i = textMeshPro.maxVisibleCharacters; i < charCount; i++)
+            {
+                textMeshPro.maxVisibleCharacters = i;
+                yield return new WaitForSeconds(0.01f);
+            }
+            textMeshPro.maxVisibleCharacters = charCount;
         }
 
         /// <summary>
@@ -252,6 +296,8 @@ namespace Assets.Scripts.Dialogue.Frontend
         protected void Hide()
         {
             SetVisible(false);
+            EventManager.Instance.UnfreezeMap.Invoke();
+
         }
         /// <summary>
         /// Shows the Dialog UI.
@@ -259,6 +305,8 @@ namespace Assets.Scripts.Dialogue.Frontend
         protected void Show()
         {
             SetVisible(true);
+            EventManager.Instance.FreezeMap.Invoke();
+
         }
         /// <summary>
         /// Helper for Hiding & Showing. Makes it easy to adjust if need be.
@@ -267,6 +315,15 @@ namespace Assets.Scripts.Dialogue.Frontend
         protected void SetVisible(bool isVis)
         {
             gameObject.GetComponent<Canvas>().enabled = isVis;
+            if (isVis)
+            {
+                EventManager.Instance.FreezeMap.Invoke();
+            }
+            else
+            {
+
+                EventManager.Instance.UnfreezeMap.Invoke();
+            }
         }
 
         // Misc
@@ -282,7 +339,7 @@ namespace Assets.Scripts.Dialogue.Frontend
             //   3. It's possible for someone to press a button and stay on the same page. In this case ...
 
             var builder = new StringBuilder();
-            
+
             // Add in all the history
             builder.Append(TextTags.StartTags.GrayColorTag);
             foreach (var page in history)
