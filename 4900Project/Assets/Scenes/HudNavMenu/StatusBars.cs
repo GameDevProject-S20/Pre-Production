@@ -26,8 +26,7 @@ public class StatusBars : MonoBehaviour
     private void Update() {
         int count = DataTracker.Current.Player.Inventory.Contains("Fuel");
         fuelBarText.text = count.ToString("0");
-        fuelBar.fillAmount = count / (float)DataTracker.Current.Player.FuelCap;
-;
+        fuelBar.fillAmount = count / 20.0f;
     }
 
     void UpdateAmounts(int i=0)
