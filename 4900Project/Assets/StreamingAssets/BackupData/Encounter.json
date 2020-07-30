@@ -19,7 +19,7 @@
 					"buttons": [
 						{
 							"effects": [
-								"@set_node_encounter 12 -1",
+								"@set_node_encounter 127 -1",
 								"@set_dialogue_encounter 0 1",
 								"@resolve"
 							]
@@ -29,7 +29,6 @@
 			]
 		},
 		{
-
 			"encounter_id": 1,
 			"NOTE": "Smithsville sheriff should say this",
 			"valid": true,
@@ -76,7 +75,8 @@
 								"!has generator 1"
 							],
 							"effects": [
-								"@add_edge 3 15",
+								"@add_edge 119 124",
+								"@add_edge 119 120",
 								"@take generator 1"
 							],
 							"next_page_id": 2
@@ -89,16 +89,16 @@
 				},
 				{
 					"id": 2,
-					"text": "Thanks! Smithsville should be up and running again. Have some fuel.",
-					"buttons":[
+					"text": "Thanks! Smithsville should be up and running again. Have some more fuel.",
+					"buttons": [
 						{
 							"effects": [
-						"@give fuel 80",
-						"@set_dialogue_encounter 0 11",
-						"@resolve"
+								"@give fuel 80",
+								"@set_dialogue_encounter 0 11",
+								"@resolve"
+							]
+						}
 					]
-				}
-				]
 				},
 				{
 					"id": 3,
@@ -129,11 +129,11 @@
 					"text": "Exchange the medicine for a new <color=#2675AD>generator</color> at the local store.",
 					"buttons": [
 						{
-					"effects": [
-						"@resolve"
+							"effects": [
+								"@resolve"
+							]
+						}
 					]
-				}
-				]
 				}
 			]
 		},
@@ -168,7 +168,7 @@
 			]
 		},
 		{
-			"encounter_id": 8,
+			"encounter_id": 30,
 			"NOTE": "",
 			"encounter_name": "Broken Gas Station",
 			"valid": true,
@@ -187,16 +187,18 @@
 				},
 				{
 					"id": 2,
-					"text": "The owner sees you and says 'I could repair that, but I don't have enough supplies'",
+					"text": "The owner sees you and says \"I could repair that, but I don't have enough supplies\"",
 					"buttons": [
 						{
-							"text": "[Give 1 Wrench] Offer supplies.",
+							"text": "[Give 1 Wrench & 6 Scrap Metal] Offer supplies.",
 							"conditions": [
-								"!has wrench 1"
+								"!has wrench 1",
+								"!has scrap_metal 6"
 							],
 							"effects": [
 								"@take wrench 1",
-								"@set_node_encounter 9 9"
+								"@take scrap_metal 6",
+								"@set_node_encounter 32 31"
 							],
 							"next_page_id": 3
 						},
@@ -207,24 +209,28 @@
 				},
 				{
 					"id": 3,
-					"text": "Come back later and I'll have this fixed!"
+					"text": "\"Come back later and I'll have this fixed!\""
 				}
 			]
 		},
 		{
-			"encounter_id": 9,
+			"encounter_id": 31,
 			"NOTE": "",
 			"encounter_name": "Gas Station",
 			"valid": true,
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "A lone gas station on the side of the road. The owner calls to you: 'Hey Friend! Good price on fuel, just for you!'",
+					"text": "A lone gas station on the side of the road. The owner calls to you: \"Hey Friend! Good price on fuel, just for you!\"",
 					"buttons": [
 						{
-						"text": "Buy 7 Fuel.",
+							"text": "[Give 1 Scrap Metal] Buy 10 Fuel.",
+							"conditions": [
+								"!has scrap_metal 1"
+							],
 							"effects": [
-								"@give fuel 7"
+								"@take scrap_metal 1",
+								"@give fuel 10"
 							],
 							"next_page_id": 2
 						},
@@ -235,15 +241,170 @@
 				},
 				{
 					"id": 2,
-					"text": "'Thanks! Want to buy some more?'",
+					"text": "\"Thanks! Want to buy some more?\"",
 					"buttons": [
 						{
-						"text": "Buy 7 Fuel.",
+							"text": "[Give 1 Scrap Metal] Buy 10 Fuel.",
+							"conditions": [
+								"!has scrap_metal 1"
+							],
 							"effects": [
-								"@give fuel 7"
+								"@take scrap_metal 1",
+								"@give fuel 10"
 							],
 							"next_page_id": 2
 						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				}
+			]
+		},
+		{
+			"encounter_id": 32,
+			"NOTE": "",
+			"encounter_name": "Gas Station",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "A lone gas station on the side of the road. The owner is offering fuel at a standard price.",
+					"buttons": [
+						{
+							"text": "[Give 1 Scrap Metal] Buy 5 Fuel.",
+							"conditions": [
+								"!has scrap_metal 1"
+							],
+							"effects": [
+								"@take scrap_metal 1",
+								"@give fuel 5"
+							],
+							"next_page_id": 2
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "\"Want to buy some more?\"",
+					"buttons": [
+						{
+							"text": "[Give 1 Scrap Metal] Buy 5 Fuel.",
+							"conditions": [
+								"!has scrap_metal 1"
+							],
+							"effects": [
+								"@take scrap_metal 1",
+								"@give fuel 5"
+							],
+							"next_page_id": 2
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				}
+			]
+		},
+		{
+			"encounter_id": 36,
+			"NOTE": "",
+			"encounter_name": "Roadblock",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "A group of rough-looking people stop your caravan. \"This here's our road. Gotta pay to use it.\"",
+					"buttons": [
+						{
+							"text": "[Give 2 Scrap Metal]",
+							"conditions": [
+								"!has scrap_metal 2"
+							],
+							"effects": [
+								"@take scrap_metal 2"
+							],
+							"next_page_id": 2
+						},
+						{
+							"text": "[Give 5 Rations]",
+							"conditions": [
+								"!has Rations 5"
+							],
+							"effects": [
+								"@take Rations 5"
+							],
+							"next_page_id": 2
+						},
+						{
+							"text": "Leave without paying.",
+							"next_page_id": 3
+						},
+						{
+							"text": "Show your token.",
+							"conditions": [
+								"!has bandit_token 2"
+							],
+							"next_page_id": 4
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "You pay the toll and leave."
+				},
+				{
+					"id": 3,
+					"text": "\"Can't pay, huh? Heh, go right ahead...\"",
+					"buttons": [
+						{
+							"effects": [
+								"@health -15"
+							],
+							"next_page_id": 5
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "\"Sorry, guy. Go right ahead.\""
+				},
+				{
+					"id": 5,
+					"text": "As you drive away, you hear a loud thunk. The bandits have damaged your vehicle!"
+				}
+			]
+		},
+		{
+			"encounter_id": 38,
+			"NOTE": "",
+			"valid": true,
+			"encounter_name": "Warning",
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "You notice an old metal road sign. Someone has painted over it. It says \"Warning: Bandit Territory!\"",
+					"buttons": [
+						{
+							"text": "[Leave]"
+						}
+					]
+				}
+			]
+		},
+		{
+			"encounter_id": 39,
+			"NOTE": "",
+			"valid": true,
+			"encounter_name": "Blocked Road",
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "A landslide has blocked the road ahead.",
+					"buttons": [
 						{
 							"text": "[Leave]"
 						}
@@ -407,8 +568,7 @@
 			"encounter_name": "Equivalent Exchange",
 			"conditions": [],
 			"town_name": null,
-			"dialogue_tree": [
-			]
+			"dialogue_tree": []
 		},
 		{
 			"valid": false,
@@ -416,7 +576,9 @@
 			"encounter_id": 1003,
 			"tags": [],
 			"encounter_name": "Hull Upgrades",
-			"conditions": [ "<<ship is not fully upgraded>>" ],
+			"conditions": [
+				"<<ship is not fully upgraded>>"
+			],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -481,7 +643,9 @@
 			"encounter_id": 1004,
 			"tags": [],
 			"encounter_name": "Lightening the Load",
-			"conditions": [ "<<Player has at least one non-fuel resource>>" ],
+			"conditions": [
+				"<<Player has at least one non-fuel resource>>"
+			],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -588,8 +752,7 @@
 			"encounter_name": "The Gamble",
 			"conditions": [],
 			"town_name": null,
-			"dialogue_tree": [
-			]
+			"dialogue_tree": []
 		},
 		{
 			"valid": false,
@@ -597,7 +760,9 @@
 			"encounter_id": 1008,
 			"tags": [],
 			"encounter_name": "Gameshow",
-			"conditions": [ "<<ship is not fully upgraded>>" ],
+			"conditions": [
+				"<<ship is not fully upgraded>>"
+			],
 			"town_name": null,
 			"dialogue_tree": [
 				"big event I don't want to fill in without the systems"
@@ -684,7 +849,9 @@
 			"encounter_id": 1011,
 			"tags": [],
 			"encounter_name": "Sticky Fingers",
-			"conditions": [ "<<ship is not fully upgraded>>" ],
+			"conditions": [
+				"<<ship is not fully upgraded>>"
+			],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -811,7 +978,9 @@
 			"encounter_id": 1014,
 			"tags": [],
 			"encounter_name": "Food for Thought",
-			"conditions": ["!has Fuel 30"],
+			"conditions": [
+				"!has Fuel 30"
+			],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -863,7 +1032,9 @@
 			"encounter_id": 1016,
 			"tags": [],
 			"encounter_name": "Turbulence",
-			"conditions": [ "!has Scrap_Metal 5" ],
+			"conditions": [
+				"!has Scrap_Metal 5"
+			],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -1022,7 +1193,7 @@
 			"encounter_id": 1018,
 			"tags": [],
 			"encounter_name": "The Beggar",
-			"conditions": [ ],
+			"conditions": [],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -1031,7 +1202,7 @@
 					"buttons": [
 						{
 							"text": "[Kindness] Give 15 Rations, take box",
-							"conditions":[
+							"conditions": [
 								"!has Rations 15"
 							],
 							"effects": [
@@ -1104,7 +1275,7 @@
 			"encounter_id": 1019,
 			"tags": [],
 			"encounter_name": "Feeling Lucky?",
-			"conditions": [ ],
+			"conditions": [],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -1139,7 +1310,7 @@
 			"encounter_id": 1020,
 			"tags": [],
 			"encounter_name": "Free Samples",
-			"conditions": [ ],
+			"conditions": [],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -1200,8 +1371,7 @@
 			"encounter_name": "Unlucky decision",
 			"conditions": [],
 			"town_name": null,
-			"dialogue_tree": [
-			]
+			"dialogue_tree": []
 		},
 		{
 			"valid": false,
@@ -1211,8 +1381,7 @@
 			"encounter_name": "Lottery",
 			"conditions": [],
 			"town_name": null,
-			"dialogue_tree": [
-			]
+			"dialogue_tree": []
 		},
 		{
 			"valid": false,
@@ -1222,8 +1391,7 @@
 			"encounter_name": "One Small Step",
 			"conditions": [],
 			"town_name": null,
-			"dialogue_tree": [
-			]
+			"dialogue_tree": []
 		},
 		{
 			"valid": false,
@@ -1233,7 +1401,36 @@
 			"encounter_name": "Recruitment Office",
 			"conditions": [],
 			"town_name": null,
+			"dialogue_tree": []
+		},
+		{
+			"valid": true,
+			"encounter_id": 1025,
+			"tags": [],
+			"encounter_name": "Unusual find",
+			"conditions": [],
+			"town_name": null,
 			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "A gleam in the dirt catches your high. A metal object lies on the ground.",
+					"buttons": [
+						{
+							"text": "Pick it up.",
+							"effects": [
+								"@give bandit_token 1"
+							],
+							"next_page_id":2
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "You find a strange metal symbol. It doesn't seem to be worth much, but perhaps it has another use."
+				}
 			]
 		}
 	]

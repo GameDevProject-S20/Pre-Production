@@ -108,7 +108,16 @@ public class MapNode : MonoBehaviour
         DataTracker.Current.WorldMap.GetNode(NodeId, out node);
 
         if (Type == OverworldMap.LocationType.TOWN) {
-            panel.SetDetails(DataTracker.Current.TownManager.GetTownById(node.LocationId).Name);
+            Town t = DataTracker.Current.TownManager.GetTownById(node.LocationId);
+            var details = t.Name;
+            if (t.Tags.Count > 0){
+                 details += "\n";
+                 foreach(var tag in t.Tags){
+                details += tag.Name +" ";
+            }
+            }
+            
+            panel.SetDetails(details);
         }
         else if (Type == OverworldMap.LocationType.EVENT) {
             panel.SetDetails("Unknown Event");
