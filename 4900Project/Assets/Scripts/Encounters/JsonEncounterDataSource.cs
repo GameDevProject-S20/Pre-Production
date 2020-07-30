@@ -268,7 +268,7 @@ public class JsonEncounterDataSource : IEncounterDataSource
 
         if (identifier != CONDITION_CHAR)
         {
-            throw new ArgumentException(string.Format("Incorrect Identifier for condition {0}. Expected {1}", statement, CONDITION_CHAR));
+            throw new ArgumentException(string.Format("Incorrect Identifier for condition {0}. Got '{2}'.\n{3}", statement, CONDITION_CHAR, identifier, statement));
         }
 
         if (command == "encounter_complete")
@@ -412,7 +412,7 @@ public class JsonEncounterDataSource : IEncounterDataSource
 
         if (identifier != CONDITION_CHAR)
         {
-            throw new ArgumentException(string.Format("Incorrect identifier for condition {0}. Expected {1}", statement, CONDITION_CHAR));
+            throw new ArgumentException(string.Format("Incorrect identifier for condition {0}. Got '{2}'.\n{3}", statement, CONDITION_CHAR, identifier, statement));
         }
 
         if (command == "has")
@@ -454,7 +454,7 @@ public class JsonEncounterDataSource : IEncounterDataSource
 
         if (identifier != EFFECT_CHAR)
         {
-            throw new ArgumentException(string.Format("Incorrect identifier for effect {0}. Expected '{1}'.", statement, EFFECT_CHAR));
+            throw new ArgumentException(string.Format("Incorrect identifier for effect {0}. Expected '{1}'. Got '{2}'.\n{3}", statement, EFFECT_CHAR, identifier, statement));
         }
         if (command == "give")
         {
@@ -519,23 +519,90 @@ public class JsonEncounterDataSource : IEncounterDataSource
         }
         else if (command == "random")
         {
-            var firstEffectBegin = statement.SkipWhile(c => c != '(').Skip(1);
-            var e1 = firstEffectBegin.TakeWhile(c => c != ')');
-            var e2 = firstEffectBegin.SkipWhile(c => c != '(').Skip(1).TakeWhile(c => c != ')');
+            // Parsing works differently, so args must be overhauled
+            GetRandomCommandArgs(statement, out double percentFirst, out string es1, out string es2);
 
-            string s1 = new string(e1.ToArray());
-            string s2 = new string(e2.ToArray());
+            UnityEngine.Debug.Log(string.Format("Parsing Random\n{0}\n{1}", es1, es2));
 
-            UnityEngine.Debug.Log(string.Format("Random commands:\n{0}\n{1}", s1, s2));
-
-            var effect1 = parseEffect(s1, encounterId);
-            var effect2 = parseEffect(s2, encounterId);
-
-            var percentFirst = Convert.ToDouble(args[0]);
+            // Parse (will recurse if multiple randoms used)
+            var effect1 = parseEffect(es1, encounterId);
+            var effect2 = parseEffect(es2, encounterId);
 
             e = new RandomEffect(effect1, effect2, percentFirst);
+            UnityEngine.Debug.Log(e);
         }
 
         return e;
+    }
+
+    /// <summary>
+    /// Exclusively used by parseEffect.
+    /// 
+    /// Random's formatting works differently, so this parses that.
+    /// </summary>
+    /// <param name="statement">The full effect statement</param>
+    /// <param name="percentFirst">The chance argument</param>
+    /// <param name="effectA">The first of the possible effects</param>
+    /// <param name="effectB">The second of the possible effects</param>
+    private void GetRandomCommandArgs(string statement, out double percentFirst, out string effectA, out string effectB)
+    {
+        if (statement.Length == 0)
+        {
+            throw new ArgumentException("Command Empty");
+        }
+
+        statement = statement.Trim();
+
+        var statement_arr = string.Concat(statement.Skip(1)).Split();
+        percentFirst = double.Parse(statement_arr[1]);
+        
+        ParseParenthesis(statement, out int startIndex, out int endIndex);
+        effectA = statement.Substring(startIndex, endIndex - startIndex + 1);
+
+        var remainingStatement = statement.Substring(endIndex + 2);
+        ParseParenthesis(remainingStatement, out startIndex, out endIndex);
+        effectB = remainingStatement.Substring(startIndex, endIndex - startIndex + 1);
+    }
+
+    /// <summary>
+    /// Exlusively used by GetRandomCommandArgs
+    /// 
+    /// Used to extract effect between parentheses.
+    /// </summary>
+    /// <param name="statement">The statement to parse</param>
+    /// <param name="startIndex">The starting index of the effect (immediately following the first open parenthesis)</param>
+    /// <param name="endIndex">The end index of the effect (immediately before the first *closing* parenthesis)</param>
+    private void ParseParenthesis(string statement, out int startIndex, out int endIndex)
+    {
+        startIndex = -1;
+        endIndex = -1;
+
+        int queue = 0;
+        for (int i = 0; i < statement.Length; i++)
+        {
+            if (statement[i] == '(')
+            {
+                queue++;
+                if (startIndex == -1)
+                {
+                    startIndex = i+1;
+                }
+            }
+            else if (statement[i] == ')')
+            {
+                queue--;
+            }
+
+            if (queue < 0)
+            {
+                throw new ArgumentException(string.Format("Error with parentheses. Thrown at index {0}\n{1}", i, statement));
+            }
+
+            if (startIndex != -1 && queue == 0)
+            {
+                endIndex = i-1;
+                return;
+            }
+        }
     }
 }
