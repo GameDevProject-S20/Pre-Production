@@ -63,6 +63,8 @@ namespace SIEvents
         public UnityEvent OnTravelStart = new UnityEvent();
         public Events.MapEvents.LocationIdEvent OnEnterTownButtonClick = new Events.MapEvents.LocationIdEvent();
         public Events.MapEvents.LocationIdEvent OnEnterPOIButtonClick = new Events.MapEvents.LocationIdEvent();
+        public UnityEvent FreezeMap = new UnityEvent();
+        public UnityEvent UnfreezeMap = new UnityEvent();
 
 
         //=== Player =================================================//

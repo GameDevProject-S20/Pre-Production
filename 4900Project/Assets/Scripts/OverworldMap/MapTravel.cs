@@ -35,9 +35,14 @@ public class MapTravel : MonoBehaviour
         return Mathf.RoundToInt(baseFuelRate * weightMod);
     }
 
-    public static void Travel(MapNode destination){
-        DataTracker.Current.Player.Inventory.RemoveItem("Fuel", GetFuelCost(destination));
-        DataTracker.Current.dayCount += dayRate;
+    public static bool Travel(MapNode destination){
+        int cost = GetFuelCost(destination);
+        if (DataTracker.Current.Player.Inventory.Contains("Fuel") > cost) {
+            DataTracker.Current.Player.Inventory.RemoveItem("Fuel", cost);
+            DataTracker.Current.dayCount += dayRate;
+            return true;
+        }
+        return false;
     }
 
 }

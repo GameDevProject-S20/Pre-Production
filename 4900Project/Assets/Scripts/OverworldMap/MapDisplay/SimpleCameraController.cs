@@ -2,7 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using SIEvents;
 public class SimpleCameraController : MonoBehaviour
 {
     //[SerializeField] Currently not used // WSAD Controls 
@@ -37,12 +37,20 @@ public class SimpleCameraController : MonoBehaviour
     float panBorderSizeInMenu = 15;
     float panBorderSize = 80;
 
+    bool active = true;
+
+    private void Awake() {
+        EventManager.Instance.FreezeMap.AddListener(() => {active = false;});
+        EventManager.Instance.UnfreezeMap.AddListener(() => {active = true;});
+    }
 
     private void Update() 
     {
-        //transform.position = GeneralPurposeControl(transform.position); //WSAD! 
-        transform.position = MouseScrollControl(transform.position); ;
-        MouseDragControl();
+        if (active){
+            transform.position = GeneralPurposeControl(transform.position); //WSAD! 
+            transform.position = MouseScrollControl(transform.position);
+            MouseDragControl();
+        }
         
     }
 
@@ -52,11 +60,8 @@ public class SimpleCameraController : MonoBehaviour
         Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
         Vector3 nextPosition = position;
         if (input != Vector3.zero){
-            Vector3 velocity = input * panSpeed;
+            Vector3 velocity = input * panSpeed / 2.0f;
             nextPosition = position + velocity;
-            nextPosition.x = Mathf.Clamp(nextPosition.x, min.x, max.x);
-            nextPosition.z = Mathf.Clamp(nextPosition.z, min.z, max.z);
-
         }
         return nextPosition;
     }
