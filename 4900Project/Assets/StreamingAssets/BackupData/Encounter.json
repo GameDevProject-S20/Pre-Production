@@ -1191,6 +1191,50 @@
 					"text": "A number of uncomfortable cracks later you feel both much better and like you need to lay down for 12 hours. 'There ya go, good as new. Thanks for stopping by and don’t ya forget to spread the word, eh?' You thank them and hobble back to the ship."
 				}
 			]
+		},
+		{
+			"valid": false,
+			"COMMENT": "would losing %s of resources and tags in conditions",
+			"encounter_id": 1021,
+			"tags": [],
+			"encounter_name": "Unlucky decision",
+			"conditions": [],
+			"town_name": null,
+			"dialogue_tree": [
+			]
+		},
+		{
+			"valid": false,
+			"COMMENT": "upgrades, crew, resource %s, would losing %s of resources and tags in conditions, special effects like 'all healing recieved reduced by 70%' or something. unlikely to happen",
+			"encounter_id": 1022,
+			"tags": [],
+			"encounter_name": "Lottery",
+			"conditions": [],
+			"town_name": null,
+			"dialogue_tree": [
+			]
+		},
+		{
+			"valid": false,
+			"COMMENT": "ability to travel to a random node (or colony) on the map",
+			"encounter_id": 1023,
+			"tags": [],
+			"encounter_name": "One Small Step",
+			"conditions": [],
+			"town_name": null,
+			"dialogue_tree": [
+			]
+		},
+		{
+			"valid": false,
+			"COMMENT": "crew",
+			"encounter_id": 1024,
+			"tags": [],
+			"encounter_name": "Recruitment Office",
+			"conditions": [],
+			"town_name": null,
+			"dialogue_tree": [
+			]
 		}
 	]
 }
