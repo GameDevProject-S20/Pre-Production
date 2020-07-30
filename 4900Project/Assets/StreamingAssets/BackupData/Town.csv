@@ -1,8 +1,25 @@
 Id,Name,Leader,Colour,Size,Tags
-0,Smithsville,Sheriff Smith,#3492eb,Medium,
-1,York,the Northern Trade Coalition,#d43e15,Medium,
-2,Big Rock,Mayor Brown,#79a10b,Large,
-3,Riverbed,Old Man Jeb,#30b394,Small,Farm
-4,Lombard Canyon,Mayor Li,#ba27b3,Large,Hospital
-5,Ares,Overseer Ahmed,#dbc13d,Small,Mining
-6,Fields,the Green Pact,#10a381,Medium,Foundry
+0,TownName,LeaderName,#3492eb,Small,
+1,York,LeaderName,#3492eb,Medium,
+2,Smithsville,Sheriff Smith,#3492eb,Large,
+3,TownName,LeaderName,#3492eb,Large,
+4,New Ottawa,LeaderName,#3492eb,Large,
+5,Rocket City,LeaderName,#3492eb,Large,
+6,TownName,LeaderName,#3492eb,Medium,
+7,TownName,LeaderName,#3492eb,Medium,
+8,TownName,LeaderName,#3492eb,Medium,
+9,TownName,LeaderName,#3492eb,Medium,
+10,Fields,LeaderName,#3492eb,Small,
+11,Carrot Farm,LeaderName,#3492eb,Small,
+12,Sherbrooke,LeaderName,#3492eb,Small,
+13,TownName,LeaderName,#3492eb,Small,
+14,TownName,LeaderName,#3492eb,Small,
+15,TownName,LeaderName,#3492eb,Small,
+16,TownName,LeaderName,#3492eb,Small,
+17,TownName,LeaderName,#3492eb,Small,
+18,TownName,LeaderName,#3492eb,Small,
+19,TownName,LeaderName,#3492eb,Small,
+20,TownName,LeaderName,#3492eb,Small,
+21,TownName,LeaderName,#3492eb,Small,
+22,TownName,LeaderName,#3492eb,Large,
+
