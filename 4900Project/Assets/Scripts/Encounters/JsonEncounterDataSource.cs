@@ -486,8 +486,23 @@ public class JsonEncounterDataSource : IEncounterDataSource
         }
         else if (command == "health")
         {
+            var mod = Int16.Parse(args[0]);
+            e = new HealthEffect(mod);
+        }
+        else if (command == "health%")
+        {
             var perc = double.Parse(args[0]);
-            e = new HealthEffect(perc);
+            e = new HealthPercentEffect(perc);
+        }
+        else if (command == "max_health")
+        {
+            var mod = Int16.Parse(args[0]);
+            e = new MaxHealthEffect(mod);
+        }
+        else if (command == "max_health%")
+        {
+            var perc = double.Parse(args[0]);
+            e = new MaxHealthPercentEffect(perc);
         }
         else if (command == "start_quest")
         {
