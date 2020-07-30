@@ -61,11 +61,7 @@ Id,Name,Type,PosX,PosY,LocationId
 59,node59,NONE,4.857,-5,-1
 60,node60,NONE,4.065,-5.328,-1
 61,node61,EVENT,-4.039,0.596,-1
-<<<<<<< HEAD
 62,node62,NONE,-4.193,-0.457,36
-=======
-62,node62,POI,-4.193,-0.457,6
->>>>>>> 1c92aef8a11ae6c4b5ab0c9a356959ba0fd824eb
 63,node63,NONE,-3.873,-3.833,-1
 64,node64,NONE,-4.356,2.285,-1
 65,node65,TOWN,-1.46,6.665,4
@@ -130,11 +126,7 @@ Id,Name,Type,PosX,PosY,LocationId
 124,node124,NONE,-4.235,-11.754,-1
 125,node125,TOWN,-4.917,-11.135,0
 126,node126,TOWN,-0.609,-9.74,1
-<<<<<<< HEAD
 127,node127,NONE,-5.433,-10.596,0
-=======
-127,node127,NONE,-5.433,-10.596,-1
->>>>>>> 1c92aef8a11ae6c4b5ab0c9a356959ba0fd824eb
 128,node128,NONE,-5.895,-9.819,-1
 129,node129,NONE,-7.005,-9.714,-1
 130,node130,EVENT,-4.496,-3.117,-1

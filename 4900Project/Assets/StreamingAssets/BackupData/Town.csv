@@ -1,5 +1,4 @@
 Id,Name,Leader,Colour,Size,Tags
-<<<<<<< HEAD
 0,Smithsville,Sheriff Smith,#3492eb,Small,
 1,York,Mayor Li,#08b806,Medium,
 2,Frakton,Mayor Brown,#de8212,Large,
@@ -23,29 +22,4 @@ Id,Name,Leader,Colour,Size,Tags
 20,Lanark Mine,Mine Chief Keegan,#d1ad4b,Small,Mining
 21,Irony,Overseer Ahmed,#fcba03,Small,Mining
 22,Fin,Mayor Connor,#d62474,Large,
-=======
-0,TownName,LeaderName,#3492eb,Small,
-1,York,LeaderName,#3492eb,Medium,
-2,Smithsville,Sheriff Smith,#3492eb,Large,
-3,TownName,LeaderName,#3492eb,Large,
-4,New Ottawa,LeaderName,#3492eb,Large,
-5,Rocket City,LeaderName,#3492eb,Large,
-6,TownName,LeaderName,#3492eb,Medium,
-7,TownName,LeaderName,#3492eb,Medium,
-8,TownName,LeaderName,#3492eb,Medium,
-9,TownName,LeaderName,#3492eb,Medium,
-10,Fields,LeaderName,#3492eb,Small,
-11,Carrot Farm,LeaderName,#3492eb,Small,
-12,Sherbrooke,LeaderName,#3492eb,Small,
-13,TownName,LeaderName,#3492eb,Small,
-14,TownName,LeaderName,#3492eb,Small,
-15,TownName,LeaderName,#3492eb,Small,
-16,TownName,LeaderName,#3492eb,Small,
-17,TownName,LeaderName,#3492eb,Small,
-18,TownName,LeaderName,#3492eb,Small,
-19,TownName,LeaderName,#3492eb,Small,
-20,TownName,LeaderName,#3492eb,Small,
-21,TownName,LeaderName,#3492eb,Small,
-22,TownName,LeaderName,#3492eb,Large,
->>>>>>> 1c92aef8a11ae6c4b5ab0c9a356959ba0fd824eb
 
