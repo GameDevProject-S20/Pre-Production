@@ -32,8 +32,11 @@ public class QuestJournalWindow : MonoBehaviour
         
         // Grab text fields from SceneGraph (THESE ARE Erroneous. too ambigious)
         NameField = GameObject.Find("Quest Name").GetComponent<UnityEngine.UI.Text>();
+        NameField.text = "";
         DescriptionField = GameObject.Find("Description").GetComponent<UnityEngine.UI.Text>();
+        DescriptionField.text = "";
         TaskField = GameObject.Find("Task Text").GetComponent<UnityEngine.UI.Text>();
+        TaskField.text = "";
         QuestCollection = GameObject.Find("Quest List Content");
 
         // Load QuestItem resource
@@ -69,11 +72,6 @@ public class QuestJournalWindow : MonoBehaviour
         completedToggleButton.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(toggleCompleted);
         if (completedQuests.Count > 0) 
         {
-            if (activeQuests.Count == 0 && completedQuests.Count > 0)
-            {
-                selectedQuest = completedQuests[0];
-                updateFields();
-            }
 
                 foreach (Quest quest in completedQuests) 
                 {

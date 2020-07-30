@@ -80,7 +80,7 @@ PrefabInstance:
     - target: {fileID: 4600643977614708640, guid: 5fe01bf7ba5e0997fbb6754e5a524a2b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4600643977614708640, guid: 5fe01bf7ba5e0997fbb6754e5a524a2b,
         type: 3}
@@ -95,17 +95,17 @@ PrefabInstance:
     - target: {fileID: 4600643977614708640, guid: 5fe01bf7ba5e0997fbb6754e5a524a2b,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4600643977614708640, guid: 5fe01bf7ba5e0997fbb6754e5a524a2b,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4600643977614708640, guid: 5fe01bf7ba5e0997fbb6754e5a524a2b,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4600643977614708640, guid: 5fe01bf7ba5e0997fbb6754e5a524a2b,
         type: 3}
@@ -120,7 +120,7 @@ PrefabInstance:
     - target: {fileID: 5417956989063311737, guid: 5fe01bf7ba5e0997fbb6754e5a524a2b,
         type: 3}
       propertyPath: m_Name
-      value: Completed Quests
+      value: Completed Quests Variant
       objectReference: {fileID: 0}
     - target: {fileID: 6714665964459350997, guid: 5fe01bf7ba5e0997fbb6754e5a524a2b,
         type: 3}
