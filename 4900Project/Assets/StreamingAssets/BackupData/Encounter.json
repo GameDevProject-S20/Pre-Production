@@ -18,18 +18,18 @@
 					"text": "Looks like there is a town up ahead. Maybe you can get fuel there.",
 					"buttons": [
 						{
-						"effects": [ 
-							"@set_node_encounter 12 -1",
-							"@set_dialogue_encounter 0 1",
-							"@resolve"
-						]
-					}
+							"effects": [
+								"@set_node_encounter 12 -1",
+								"@set_dialogue_encounter 0 1",
+								"@resolve"
+							]
+						}
 					]
 				}
 			]
 		},
 		{
-			
+
 			"encounter_id": 1,
 			"NOTE": "Smithsville sheriff should say this",
 			"valid": true,
@@ -440,7 +440,7 @@
 							"text": "[Threaten] Upgrade your ship but take 20 damage",
 							"effects": [
 								"<<@give upgrade>>",
-								"@health% -20"
+								"@health -20"
 							],
 							"next_page_id": 4
 						},
@@ -505,7 +505,7 @@
 		},
 		{
 			"valid": true,
-			"COMMENT": "Would like it to only spawn if player is missing health, health has bugs",
+			"COMMENT": "Would like it to only spawn if player is missing health",
 			"encounter_id": 1005,
 			"tags": [],
 			"encounter_name": "Restoration Station",
@@ -575,7 +575,7 @@
 				},
 				{
 					"id": 3,
-					"text": "The stranger smiles and gives you the box before snatching the rations from your hands. You open the box to find some Jewelry! When you look up the merchant is gone."
+					"text": "The stranger smiles and gives you the box before snatching the Medicine from your hands. You open the box to find some Jewelry! When you look up the merchant is gone."
 				}
 			]
 		},
@@ -639,8 +639,8 @@
 			]
 		},
 		{
-			"valid": false,
-			"COMMENT": "max hp",
+			"valid": true,
+			"COMMENT": "",
 			"encounter_id": 1010,
 			"tags": [],
 			"encounter_name": "Pick Me Up",
@@ -678,8 +678,8 @@
 			]
 		},
 		{
-			"valid": false,
-			"COMMENT": "max hp, crew",
+			"valid": true,
+			"COMMENT": "TEST THIS crew",
 			"encounter_id": 1011,
 			"tags": [],
 			"encounter_name": "Sticky Fingers",
@@ -721,17 +721,17 @@
 						{
 							"text": "[Full Impact] Lose 10% max hp",
 							"effects": [
-								"<<lose 10% max hp>>"
+								"@health_max% -10"
 							],
 							"next_page_id": 5
 						},
 						{
-							"text": "[Sacrifice] Lose a random crew member",
+							"text": "[Sacrifice] <<WIP>> Lose a random crew member",
 							"conditions": [
-								"at least one crew member"
+								"!has fuel 10000"
 							],
 							"effects": [
-								"<<lose a crew member>>"
+								"@health 1"
 							],
 							"next_page_id": 6
 						}
@@ -752,8 +752,8 @@
 			]
 		},
 		{
-			"valid": false,
-			"COMMENT": "max hp, needs flavor text",
+			"valid": true,
+			"COMMENT": "TEST THIS needs flavor text",
 			"encounter_id": 1012,
 			"tags": [],
 			"encounter_name": "Blood for Blood",
@@ -768,7 +768,7 @@
 							"text": "[Vigor] heal 15% hp, lose 5% max hp",
 							"effects": [
 								"@health% 15",
-								"@health_max% -5%"
+								"@health_max% -5"
 							],
 							"next_page_id": 2
 						},
@@ -806,11 +806,11 @@
 		},
 		{
 			"valid": true,
-			"COMMENT": "need more food than rations",
+			"COMMENT": "need more food than rations, something like 'sugar donut'",
 			"encounter_id": 1014,
 			"tags": [],
 			"encounter_name": "Food for Thought",
-			"conditions": [],
+			"conditions": ["!has Fuel 30"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -818,13 +818,13 @@
 					"text": "You pull up for a brief break at a rest stop, the sign for a bakery nearby catches your eye.",
 					"buttons": [
 						{
-							"text": "[Trade] Buy 30 <<baked food item>> for 30 Fuel",
+							"text": "[Trade] Buy 30 <<baked food item>> for 20 Fuel",
 							"conditions": [
-								"!has Fuel 30"
+								"!has Fuel 20"
 							],
 							"effects": [
 								"@give Rations 30",
-								"@take Fuel 30"
+								"@take Fuel 20"
 							],
 							"next_page_id": 3
 						},
@@ -858,7 +858,7 @@
 		},
 		{
 			"valid": true,
-			"COMMENT": "would like more item variety, flat hp not %",
+			"COMMENT": "would like more item variety",
 			"encounter_id": 1016,
 			"tags": [],
 			"encounter_name": "Turbulence",
@@ -870,10 +870,10 @@
 					"text": "You spot a cluster of scrap in some turbulent looking space, feeling lucky you decide to go for it. Unfortunately you got more than you bargained for and now have to choose between taking some asteroid hits to get the loot or droping some weight to escape.",
 					"buttons": [
 						{
-							"text": "[Collect] Gain 30 Scrap Metal, lose 10% health",
+							"text": "[Collect] Gain 30 Scrap Metal, lose 10 health",
 							"effects": [
 								"@give Scrap_Metal 30",
-								"@health% -10"
+								"@health -10"
 							],
 							"next_page_id": 2
 						},
@@ -897,8 +897,8 @@
 			]
 		},
 		{
-			"valid": false,
-			"COMMENT": "REMEMBER TO CHANGE BOTH, SPLIT UP TEXT condition for hp to not kill, will add more options after max hp is added",
+			"valid": true,
+			"COMMENT": "condition for hp to not kill, IF UPDATING REMEMBER TO CHANGE BOTH",
 			"encounter_id": 1017,
 			"tags": [],
 			"encounter_name": "The Hierophant",
@@ -907,12 +907,12 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "You come across a somewhat sketchy looking lab; so of course you decide to dock and see what you can find. The bay doors close behind you and you are greeted by an enigmatic figure emerging from the darkness who offers to grant various requests in exchange for *blood*",
+					"text": "You come across a somewhat sketchy looking lab; so of course you decide to dock and see what you can find. The bay doors close behind you and you are greeted by an enigmatic figure emerging from the darkness who offers to grant various requests in exchange for 'Samples'",
 					"buttons": [
 						{
-							"text": "[Sustenance] Gain 15 Rations or Fuel, lose 7% health",
+							"text": "[Sustenance] Gain 20 Rations or Fuel, lose 7% health",
 							"effects": [
-								"@random 0.5 (@give Rations 15) (@give Fuel 15)",
+								"@random 0.5 (@give Rations 20) (@give Fuel 20)",
 								"@health% -7"
 							],
 							"next_page_id": 3
@@ -926,9 +926,10 @@
 							"next_page_id": 4
 						},
 						{
-							"text": "[Longevity] <<WIP>>",
+							"text": "[Longevity] Gain 3% max hp, lose 7% health",
 							"effects": [
-								"@health_max% 3"
+								"@health_max% 3",
+								"@health% -7"
 							],
 							"next_page_id": 5
 						},
@@ -946,9 +947,9 @@
 					"text": "Well? What is it?",
 					"buttons": [
 						{
-							"text": "[Sustenance] Gain 15 Rations or Fuel, lose 7% health",
+							"text": "[Sustenance] Gain 20 Rations or Fuel, lose 7% health",
 							"effects": [
-								"@random 0.5 (@give Rations 15) (@give Fuel 15)",
+								"@random 0.5 (@give Rations 20) (@give Fuel 20)",
 								"@health% -7"
 							],
 							"next_page_id": 3
@@ -962,9 +963,10 @@
 							"next_page_id": 4
 						},
 						{
-							"text": "[Longevity] <<WIP>>",
+							"text": "[Longevity] Gain 3% max hp, lose 7% health",
 							"effects": [
-								"@health_max% 3"
+								"@health_max% 3",
+								"@health% -7"
 							],
 							"next_page_id": 5
 						},
@@ -979,7 +981,7 @@
 				},
 				{
 					"id": 3,
-					"text": "They grab a clean syringe and draws a pint of blood before retrieving the agreed upon resources from their cloak. 'Anything else?'",
+					"text": "They grab a clean syringe and draw a pint of blood before retrieving the agreed upon resources from their cloak. 'Anything else?'",
 					"buttons": [
 						{
 							"text": "[Request] Make another request",
@@ -989,7 +991,7 @@
 				},
 				{
 					"id": 4,
-					"text": "They grab a clean syringe and draws a pint amount of blood before retrieving the agreed upon Luxury from their cloak. 'Anything else?'",
+					"text": "They grab a clean syringe and draw a pint of blood before retrieving the agreed upon Luxury from their cloak. 'Anything else?'",
 					"buttons": [
 						{
 							"text": "[Request] Make another request",
@@ -999,7 +1001,7 @@
 				},
 				{
 					"id": 5,
-					"text": "They grab a clean syringe and draws a pint amount of blood and proceeds to carve an intricate sigil into your flesh. Alarmed at first you're surprised when you feel no pain, and feel stronger when it's done. 'Anything else?'",
+					"text": "They grab a clean syringe and draw a pint of blood and proceeds to carve an intricate sigil into your flesh. Alarmed at first you're surprised when you feel no pain, and feel stronger when it's done. 'Anything else?'",
 					"buttons": [
 						{
 							"text": "[Request] Make another request",
@@ -1009,7 +1011,7 @@
 				},
 				{
 					"id": 6,
-					"text": "They raise an eyebrow as if the question is below them but harvest the payment from you anyway. 'Big flashing button next to the landing bay doors over there. Now if you don’t mind I’ve work to get back to', before you can comment they’ve already disappeared into the shadows. Best leave before they decide to harvest anything else."
+					"text": "They raise an eyebrow as if the question is below them but harvest the payment from you anyway. 'Big flashing button next to the landing bay doors over there. If you don’t mind I’ve work to get back to', before you can open your mouth they’ve already retreated back to the shadows. Best leave before they decide to harvest anything else."
 				}
 			]
 		}

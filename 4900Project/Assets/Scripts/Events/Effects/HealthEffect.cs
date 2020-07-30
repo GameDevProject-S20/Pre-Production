@@ -45,7 +45,7 @@ public class HealthPercentEffect : IEffect
 
     public bool Apply()
     {
-        int mod = Mathf.RoundToInt(((float)Player.Instance.Health) * (percent/100.0f));
+        int mod = Mathf.RoundToInt(((float)Player.Instance.HealthCap) * (percent/100.0f));
         return new HealthEffect(mod).Apply();
     }
 }
@@ -68,7 +68,20 @@ public class MaxHealthEffect : IEffect
     {
         int prevMaxHealth = Player.Instance.HealthCap;
         Player.Instance.ModifyCap(mod);
-        Player.Instance.AddHealth(mod);
+        int changeHealth = 0;
+        if(mod<0){
+          if(prevMaxHealth+mod<Player.Instance.Health)
+          {
+            changeHealth = UnityEngine.Mathf.Max(
+              prevMaxHealth-Player.Instance.Health-mod,
+              mod);
+          }
+        }
+        else
+        {
+          changeHealth = mod;
+        }
+        Player.Instance.AddHealth(changeHealth);
         return (prevMaxHealth + mod != Player.Instance.HealthCap);
     }
 }
