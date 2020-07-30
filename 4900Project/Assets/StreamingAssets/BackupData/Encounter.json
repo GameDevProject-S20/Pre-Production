@@ -440,7 +440,7 @@
 							"text": "[Threaten] Upgrade your ship but take 20 damage",
 							"effects": [
 								"<<@give upgrade>>",
-								"@health -0.2"
+								"@health% -20"
 							],
 							"next_page_id": 4
 						},
@@ -519,7 +519,7 @@
 						{
 							"text": "[Use supplies] Heal to full.",
 							"effects": [
-								"@health 1.0"
+								"@health% 100"
 							],
 							"next_page_id": 3
 						},
@@ -654,14 +654,14 @@
 						{
 							"text": "[raid infirmary] heal 30% hp",
 							"effects": [
-								"@health 0.3"
+								"@health% 30"
 							],
 							"next_page_id": 3
 						},
 						{
 							"text": "[raid armory] Gain 10% max hp",
 							"effects": [
-								"<<gain 10% max hp>>"
+								"@health_max% 10"
 							],
 							"next_page_id": 2
 						}
@@ -714,7 +714,7 @@
 						{
 							"text": "[Graze] take 20% damage",
 							"effects": [
-								"@health -0.20"
+								"@health% -20"
 							],
 							"next_page_id": 4
 						},
@@ -767,16 +767,16 @@
 						{
 							"text": "[Vigor] heal 15% hp, lose 5% max hp",
 							"effects": [
-								"@health 0.15",
-								"<<lose 5% max>>"
+								"@health% 15",
+								"@health_max% -5%"
 							],
 							"next_page_id": 2
 						},
 						{
 							"text": "[Longevity] Gain 5% max hp, lose 15% hp",
 							"effects": [
-								"@health -0.15",
-								"<<gain 5% max>>"
+								"@health_max% 5",
+								"@health% -15"
 							],
 							"next_page_id": 3
 						}
@@ -873,7 +873,7 @@
 							"text": "[Collect] Gain 30 Scrap Metal, lose 10% health",
 							"effects": [
 								"@give Scrap_Metal 30",
-								"@health -0.1"
+								"@health% -10"
 							],
 							"next_page_id": 2
 						},
@@ -913,7 +913,7 @@
 							"text": "[Sustenance] Gain 15 Rations or Fuel, lose 7% health",
 							"effects": [
 								"@random 0.5 (@give Rations 15) (@give Fuel 15)",
-								"@health -0.07"
+								"@health% -7"
 							],
 							"next_page_id": 3
 						},
@@ -921,22 +921,21 @@
 							"text": "[Greed] Gain a random Luxury item, lose 7% health",
 							"effects": [
 								"@give_tag Luxury 1",
-								"@health -0.07"
+								"@health% -7"
 							],
 							"next_page_id": 4
 						},
 						{
 							"text": "[Longevity] <<WIP>>",
 							"effects": [
-								"<<gain 3% max hp>>",
-								"@health -0.07"
+								"@health_max% 3"
 							],
 							"next_page_id": 5
 						},
 						{
 							"text": "[Escape] Ask to leave, lose 7% health",
 							"effects": [
-								"@health -0.07"
+								"@health% -7"
 							],
 							"next_page_id": 6
 						}
@@ -950,7 +949,7 @@
 							"text": "[Sustenance] Gain 15 Rations or Fuel, lose 7% health",
 							"effects": [
 								"@random 0.5 (@give Rations 15) (@give Fuel 15)",
-								"@health -0.07"
+								"@health% -7"
 							],
 							"next_page_id": 3
 						},
@@ -958,22 +957,21 @@
 							"text": "[Greed] Gain a random Luxury item, lose 7% health",
 							"effects": [
 								"@give_tag Luxury 1",
-								"@health -0.07"
+								"@health% -7"
 							],
 							"next_page_id": 4
 						},
 						{
 							"text": "[Longevity] <<WIP>>",
 							"effects": [
-								"<<gain 3% max hp>>",
-								"@health -0.07"
+								"@health_max% 3"
 							],
 							"next_page_id": 5
 						},
 						{
 							"text": "[Escape] Ask to leave, lose 7% health",
 							"effects": [
-								"@health -0.07"
+								"@health% -7"
 							],
 							"next_page_id": 6
 						}

@@ -9,36 +9,43 @@ public class HealthEffect : IEffect
 
     public HealthEffect(int mod)
     {
+        if (mod == 0)
+        {
+            throw new Exception("Useless Effect");
+        }
+        
         this.mod = mod;
     }
 
     public bool Apply()
     {
         int prevHealth = Player.Instance.Health;
-        Player.Instance.ModifyCap(mod);
+        Player.Instance.AddHealth(mod);
         return (prevHealth + mod != Player.Instance.Health);
     }
 }
 
 public class HealthPercentEffect : IEffect
 {
-    private readonly float percent;
+    private readonly int percent;
 
-    public HealthPercentEffect(double perc)
+    public HealthPercentEffect(int perc)
     {
-        if (perc < -1.0f || perc > 1.0f)
+        if (perc == 0)
         {
-            throw new ArgumentException("perc must be between -1.0 and 1.0, inclusive");
+            throw new ArgumentException("Useless Effect");
         }
-        else
+        else if (perc < -100 || perc > 100)
         {
-            percent = (float)perc;
+            throw new ArgumentException("perc must be between -100 and 100, inclusive");
         }
+
+        percent = perc;
     }
 
     public bool Apply()
     {
-        int mod = Mathf.RoundToInt(Player.Instance.Health * percent);
+        int mod = Mathf.RoundToInt(((float)Player.Instance.Health) * (percent/100.0f));
         return new HealthEffect(mod).Apply();
     }
 }
@@ -49,6 +56,11 @@ public class MaxHealthEffect : IEffect
 
     public MaxHealthEffect(int mod)
     {
+        if (mod == 0)
+        {
+            throw new Exception("Useless Effect");
+        }
+
         this.mod = mod;
     }
 
@@ -62,23 +74,23 @@ public class MaxHealthEffect : IEffect
 
 public class MaxHealthPercentEffect : IEffect
 {
-    private readonly float percent;
+    private readonly int percent;
 
-    public MaxHealthPercentEffect(double perc)
+    public MaxHealthPercentEffect(int perc)
     {
-        if (perc < -1.0f || perc > 1.0f)
+        if (perc == 0)
         {
-            throw new ArgumentException("perc must be between -1.0 and 1.0, inclusive");
+            throw new ArgumentException("Useless Effect");
         }
-        else
+        else if (perc < -100 || perc > 100)
         {
-            percent = (float)perc;
+            throw new ArgumentException("perc must be between -100 and 100, inclusive");
         }
     }
 
     public bool Apply()
     {
-        int mod = Mathf.RoundToInt(Player.Instance.HealthCap * percent);
+        int mod = Mathf.RoundToInt(((float)Player.Instance.HealthCap) * (percent/100.0f));
         return new MaxHealthEffect(mod).Apply();
     }
 }
