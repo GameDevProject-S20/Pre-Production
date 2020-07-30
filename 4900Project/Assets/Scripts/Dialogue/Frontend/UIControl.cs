@@ -103,6 +103,11 @@ namespace Assets.Scripts.Dialogue.Frontend
         {
             button.onClick.AddListener(() =>
             {
+                if (button.GetComponentInChildren<Text>().text == "")
+                {
+                    return;
+                }
+
                 DialogueManager.Instance.GetActiveDialogue().PressButton(index);
             });
         }
@@ -130,10 +135,9 @@ namespace Assets.Scripts.Dialogue.Frontend
                 Debug.Log(string.Format("Active Page\n\n{0}", activePage));
 
                 // Update all the data
-                UpdateButtons(activePage.Buttons);
                 UpdateAvatarDisplay(activePage.Avatar);
                 UpdatePageTextDisplay(history, activePage);
-
+                 
             }
         }
 
@@ -187,7 +191,14 @@ namespace Assets.Scripts.Dialogue.Frontend
             }
 
             UpdatePageScrolling();
-            StartCoroutine("PlayTextTypingAnimation");
+            StartCoroutine(UpdatePage(currentPage.Buttons));
+        }
+
+        protected IEnumerator UpdatePage(IEnumerable<IDButton> buttons)
+        {
+            UpdateButtons(new List<IDButton>());
+            yield return StartCoroutine(PlayTextTypingAnimation());
+            UpdateButtons(buttons);
         }
 
         /// <summary>
@@ -205,7 +216,6 @@ namespace Assets.Scripts.Dialogue.Frontend
                 yield return new WaitForSeconds(0.01f);
             }
             textMeshPro.maxVisibleCharacters = charCount;
-
         }
 
         /// <summary>
