@@ -2,6 +2,7 @@
 using System.Linq;
 using System;
 using SIEvents;
+using Extentions;
 
 public abstract class ItemEffect : IEffect
 {
@@ -14,7 +15,7 @@ public abstract class ItemEffect : IEffect
     {
         if (!string.IsNullOrEmpty(itemName))
         {
-            itemName = itemName.First().ToString().ToUpper() + itemName.Substring(1).ToLower();
+            itemName = itemName.ToTitleCase();
         }
         this.itemName = itemName;
         this.amount = amount;

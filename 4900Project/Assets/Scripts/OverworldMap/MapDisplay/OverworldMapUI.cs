@@ -138,7 +138,6 @@ public class OverworldMapUI : MonoBehaviour
             MapNode mn = nodeObj.GetComponent<MapNode>();
             mn.NodeId = node.Id;
             mn.Type = node.Type;
-            mn.LocationId = node.LocationId;
 
             // Move the player to the starting node
             if (node.Id == currentId)
