@@ -102,6 +102,9 @@ public class OverworldMapUI : MonoBehaviour
         EventManager.Instance.OnNodeMouseDown.AddListener(onNodeMouseDown);
         EventManager.Instance.OnTravelStart.AddListener(onTravelStart);
         EventManager.Instance.OnEnterTownButtonClick.AddListener(OnButtonClick);
+    
+        EventManager.Instance.FreezeMap.AddListener(() => {isActive = false;});
+        EventManager.Instance.UnfreezeMap.AddListener(() => {isActive = true;});
 
     }
 
@@ -218,11 +221,12 @@ public class OverworldMapUI : MonoBehaviour
     /// </summary>
     void onTravelStart()
     {
-        AudioSource audioSource = GameObject.Find("Audio Source").GetComponent<AudioSource>();
-        audioSource.PlayOneShot(Vroom, 2.0F);
-        targetPos = selectedNode.gameObject.transform.position;
-        isTravelling = true;
-        MapTravel.Travel(selectedNode);
+        if (MapTravel.Travel(selectedNode)) {
+            AudioSource audioSource = GameObject.Find("Audio Source").GetComponent<AudioSource>();
+            audioSource.PlayOneShot(Vroom, 2.0F);
+            targetPos = selectedNode.gameObject.transform.position;
+            isTravelling = true;
+        }
     }
 
     private void Update()
@@ -292,7 +296,7 @@ public class OverworldMapUI : MonoBehaviour
         TownMenuGameObject.GetComponent<TownWindow>().UpdatePrefab();
         TownMenuGameObject.SetActive(true);
         EnterNodeButtonCanvas.SetActive(false);
-        isActive = false;
+        EventManager.Instance.FreezeMap.Invoke();
     }
 
 
@@ -300,6 +304,6 @@ public class OverworldMapUI : MonoBehaviour
     {
         TownMenuGameObject.SetActive(false);
         EnterNodeButtonCanvas.SetActive(true);
-        isActive = true;
+        EventManager.Instance.UnfreezeMap.Invoke();
     }
 }

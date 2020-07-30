@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Quests;
+using SIEvents;
 
 public class QuestJournalWindow : MonoBehaviour
 {
@@ -96,6 +97,7 @@ public class QuestJournalWindow : MonoBehaviour
 
     public void disableUI()
     {
+        EventManager.Instance.UnfreezeMap.Invoke();
         transform.parent.gameObject.SetActive(false);
     }
 }

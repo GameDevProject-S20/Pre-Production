@@ -50,6 +50,8 @@ public class InventoryWindow : MonoBehaviour
 
     public void leave(){
         transform.parent.gameObject.SetActive(false);
+        EventManager.Instance.UnfreezeMap.Invoke();
+
     }
 
     // Add item sprites
