@@ -76,6 +76,7 @@
 								"!has generator 1"
 							],
 							"effects": [
+								"@add_edge 3 15",
 								"@take generator 1"
 							],
 							"next_page_id": 2
