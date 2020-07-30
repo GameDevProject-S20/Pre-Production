@@ -24,10 +24,10 @@ namespace Dialogue
 
         // Public Getters
         IDPage GetPage();
-        bool HasMorePages();
+        bool HasNextPage(int buttonId);
 
         // Public Methods
-        void GoToNextPage();
+        void GoToNextPage(int buttonId);
         void Hide();
         void PressButton(int buttonId);
         void Show();

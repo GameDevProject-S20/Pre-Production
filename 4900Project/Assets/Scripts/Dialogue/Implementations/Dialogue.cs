@@ -5,19 +5,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine.Events;
+using UnityEngine;
 
 namespace Dialogue
 {
     /// <summary>
     /// The actual implementation for a Dialogue.
     /// </summary>
+    [Serializable]
     class Dialogue : IDialogue
     {
         // Properties
         public int Id { get; protected set; }
         public bool IsVisible { get; protected set; }
-        protected IEnumerable<IDPage> Pages { get; set; }
-        protected IEnumerator<IDPage> PageEnumerator;
+
+        private IDPage FirstPage;
+        [SerializeField]
+        public IDPage CurrentPage { get; private set; }
 
         /// <summary>
         /// History of the Dialogue. 
@@ -31,7 +35,7 @@ namespace Dialogue
         /// Called when the page is updated.
         /// </summary>
         public DialogueUpdatedEvent PageUpdated { get; private set; }
-
+        
         /// <summary>
         /// Fires when the dialog should be closed.
         /// </summary>
@@ -44,21 +48,18 @@ namespace Dialogue
 
 
         // Constructor
-        public Dialogue(int id, IEnumerable<IDPage> pages)
+        public Dialogue(int id, IDPage root)
         {
             this.Id = id;
             this.IsVisible = true;
-            this.Pages = pages;
-            this.PageEnumerator = pages.GetEnumerator();
+            this.FirstPage = root;
+            this.CurrentPage = FirstPage;
             this.History = new List<IDHistory>();
 
             // initialize the events
             PageUpdated = new DialogueUpdatedEvent();
             DialogueClosed = new DialogueUpdatedEvent();
             DialogueOpened = new DialogueUpdatedEvent();
-
-            // Start off on the first page
-            PageEnumerator.MoveNext();
         }
 
         // Public Getters
@@ -68,35 +69,40 @@ namespace Dialogue
         /// <returns></returns>
         public IDPage GetPage()
         {
-            return PageEnumerator.Current;
+            return CurrentPage;
         }
 
         /// <summary>
         /// Checks if the enumerator has reached the last page.
+        /// 
+        /// Reuqires a button index in order to determine whether there is more dialogue down 
+        /// *that* particular branch.
         /// </summary>
+        /// <param name="buttonId">The index of the button to check</param>
         /// <returns></returns>
-        public bool HasMorePages()
+        public bool HasNextPage(int buttonId)
         {
             // We're on the last page if our enumerator's current page is the last in the list
-            return PageEnumerator.Current != Pages.LastOrDefault();
+            return CurrentPage.GetButton(buttonId).NextPage != null;
         }
 
 
         // Public Methods
         /// <summary>
-        /// Advances the dialog to the next page.
+        /// Checks if a particular branch has any more dialogue.
         /// </summary>
-        public void GoToNextPage()
+        /// <param name="buttonId">The index of the button representing the branch of dialogue to check</param>
+        public void GoToNextPage(int buttonId)
         {
             // Verify that we can move forward
-            if (!HasMorePages())
+            if (!HasNextPage(buttonId))
             {
                 // TODO: Does this throw an error? Or do we just silently fail?
                 throw new Exception("Attempted to move to the next page, but there are no more pages.");
             }
 
-            // Push forward to the next page
-            PageEnumerator.MoveNext();
+            CurrentPage = CurrentPage.GetButton(buttonId).NextPage;
+            
             Update();
         }
 
@@ -106,6 +112,7 @@ namespace Dialogue
         public void Hide()
         {
             IsVisible = false;
+            History.Clear();
             DialogueClosed.Invoke();
         }
 
@@ -124,19 +131,18 @@ namespace Dialogue
                 return;
             }
 
-            PressButton(button);
-        }
-        /// <summary>
-        /// Activates a button given the IDButton to activate.
-        /// </summary>
-        /// <param name="button"></param>
-        public void PressButton(IDButton button)
-        {
             AddToHistory(GetPage(), button.Text);
+
             button.OnButtonClick();
 
-            // Because the history would have updated, fire our changed event
-            PageUpdated.Invoke();
+            if (button.NextPage != null)
+            {
+                GoToNextPage(buttonIndex);
+            }
+            else
+            {
+                DFunctions.CloseDialogue();
+            }
         }
 
         /// <summary>
@@ -144,6 +150,7 @@ namespace Dialogue
         /// </summary>
         public void Show()
         {
+            CurrentPage = FirstPage; // ARL -- here??
             IsVisible = true;
             DialogueOpened.Invoke();
         }
@@ -162,7 +169,7 @@ namespace Dialogue
         /// </summary>
         /// <param name="page"></param>
         /// <param name="response"></param>
-        protected void AddToHistory(IDPage page, string response)
+        public void AddToHistory(IDPage page, string response)
         {
             // There's two situations here:
             // If the last page of our history is also our current page, then we just want to update that history.

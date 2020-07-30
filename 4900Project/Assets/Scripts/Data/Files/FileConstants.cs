@@ -47,6 +47,12 @@ namespace FileConstants
             MimeType = "text/csv"
         };
 
+        public static readonly FileStorageData Encounter = new FileStorageData()
+        {
+            GoogleDriveFileId = "1TnbTKRPdJhM8y8aJjfOHjc8hkNp0ou11",
+            LocalBackupFile = $"{Application.streamingAssetsPath}/BackupData/Encounter.json"
+        };
+
         // Tutorial CSV
         public static readonly FileStorageData Tutorial = new FileStorageData()
         {
@@ -111,6 +117,7 @@ namespace FileConstants
             Files.Dialog,
             Files.Items,
             Files.Town,
+            Files.Encounter,
             Files.Tutorial,
             Files.TestCsv,
             Files.TestBasicJson,

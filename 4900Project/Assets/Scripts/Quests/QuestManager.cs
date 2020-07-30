@@ -96,7 +96,7 @@ namespace Quests
             }
             else
             {
-                throw new ArgumentException("Quest Not Found");
+                throw new ArgumentException(string.Format("Quest '{0}' not found.\n\nAvailable Quests:\n{1}", questName, string.Join("\n", quests.Keys)));
             }
         }
 

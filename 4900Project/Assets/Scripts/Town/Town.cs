@@ -19,7 +19,7 @@ public class TownData
 
 
 
-//Town class 
+//Town class
 public class Town
 {
     public enum Sizes {Small, Medium, Large}
@@ -37,7 +37,7 @@ public class Town
     public string LeaderBlurb = "No Blurb Set";
     public int leaderDialogueEncounterId = 11;
     public List<int> shops;
-        
+
     /// <summary>
     /// Constructor for loading in from a TownData class
     /// </summary>
@@ -65,7 +65,7 @@ public class Town
 
         shops = new List<int>();
         this.Tags = new List<TownTag>();
-    
+
         string[] ts = Tags.Replace("\"", string.Empty).Split(',');
         foreach(string t in ts){
             if (t.Length >0){
@@ -114,6 +114,9 @@ public class Town
         shop.InitializeInventory(this);
         ShopManager.Instance.addShop(shop);
         shops.Add(shop.id);
+        if(this.Name.Equals("York")){
+            ShopManager.Instance.GetShopById(TownManager.Instance.GetTownByName("York").shops[0]).inventory.AddItem("Generator",1);
+        }
     }
 
 
@@ -154,7 +157,7 @@ public class Town
 
 They are lead by {this.Leader} and known for having lots of {getWord("resource")}. They will pay handsomely for {getWord("resource")}.
 
-The inhabitants are often found {getWord("verb")} and are {getWord("verb2")} when it comes to meeting new people.";  
+The inhabitants are often found {getWord("verb")} and are {getWord("verb2")} when it comes to meeting new people.";
     }
 
     private void SetLeaderBlurb()
@@ -192,4 +195,3 @@ The inhabitants are often found {getWord("verb")} and are {getWord("verb2")} whe
         }
     }
 }
-

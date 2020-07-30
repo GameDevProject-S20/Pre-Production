@@ -56,7 +56,6 @@ public class TownWindow : MonoBehaviour
     private void Start()
     {
         UpdatePrefab();
-
     }
 
     public void UpdatePrefab()
@@ -158,14 +157,14 @@ public class TownWindow : MonoBehaviour
         {
             NewAction.transform.Find("Portrait").GetComponent<Image>().sprite = IconMissing;
         }
-                    NewAction.transform.Find("Portrait").GetComponent<Image>().sprite = townData.LeaderPortrait;
-
+        
+        NewAction.transform.Find("Portrait").GetComponent<Image>().sprite = townData.LeaderPortrait;
         NewAction.transform.Find("Name").GetComponent<Text>().text = townData.Leader;
         NewAction.transform.Find("Description").GetComponent<Text>().text = townData.LeaderBlurb;
         NewAction.transform.Find("Interaction").GetComponent<Image>().sprite = TalkIcon;
         NewAction.transform.Find("Interaction").GetComponent<Button>().onClick.AddListener(() => 
         {
-            DataTracker.Current.EventManager.TriggerEncounter.Invoke(townData.leaderDialogueEncounterId);
+            DataTracker.Current.EventManager.OnOpenDialogueClick.Invoke(townData.leaderDialogueEncounterId);
         });
         //need to set talking interaction on button
 
@@ -204,21 +203,6 @@ public class TownWindow : MonoBehaviour
                 SceneManager.sceneUnloaded += OnSceneUnloaded;
                 SceneManager.LoadScene("ShopScene", LoadSceneMode.Additive); // Currently using additive for the shop. 
             });
-
-        // ! I am hardcoding this as a test
-        // ! Add a mechanic to Smithsville
-        if (townData.Id == 3){
-            NewAction = Instantiate(ActionPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-            NewAction.transform.parent = ActionMenu;
-            NewAction.transform.Find("Portrait").GetComponent<Image>().sprite = IconMissing;
-            NewAction.transform.Find("Name").GetComponent<Text>().text = "Rob's Repairs";
-            NewAction.transform.Find("Description").GetComponent<Text>().text = "Local Mechanic";
-            NewAction.transform.Find("Interaction").GetComponent<Image>().sprite = IconMissing;
-            NewAction.transform.Find("Interaction").GetComponent<Button>().onClick.AddListener(() => 
-            {
-                DataTracker.Current.EventManager.TriggerEncounter.Invoke(10);
-            });
-        }
         }
 
         EventManager.Instance.OnTownEnter.Invoke(townData);

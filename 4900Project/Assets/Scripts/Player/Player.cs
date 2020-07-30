@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using SIEvents;
 
@@ -20,19 +21,24 @@ public class Player
 
     public Inventory Inventory = new Inventory();
 
-    public int health {get; set;} = 100 ;
-    public int healthCap {get; set;} = 100;
+    public int Health {get; private set;} = 100;
+    public int HealthCap {get; private set;} = 100;
 
     private Player() { }
 
-    public void addHealth(int h)
+    public void AddHealth(int h)
     {
-        health += h;
-        if (health > healthCap)
-        {
-            health = healthCap;
-        }
-        EventManager.Instance.OnHealthChange.Invoke(health);
+        if (h == 0) return;
+        Health += h;
+        Health = UnityEngine.Mathf.Clamp(Health, 0, HealthCap);
+        EventManager.Instance.OnHealthChange.Invoke(Health);
     }
 
+    public void ModifyCap(int mod)
+    {
+        if (mod == 0) return;
+        HealthCap += mod;
+        HealthCap = UnityEngine.Mathf.Max(HealthCap, 0);
+        EventManager.Instance.OnHealthChange.Invoke(Health);
+    }
 }

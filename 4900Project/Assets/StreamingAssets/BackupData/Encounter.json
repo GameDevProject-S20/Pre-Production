@@ -1,0 +1,1240 @@
+{
+	"fixed_encounters": [
+		{
+			"encounter_id": 0,
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "You notice you are running low on gas.",
+					"buttons": [
+						{
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Looks like there is a town up ahead. Maybe you can get fuel there.",
+					"buttons": [
+						{
+							"effects": [
+								"@set_node_encounter 12 -1",
+								"@set_dialogue_encounter 0 1",
+								"@resolve"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+
+			"encounter_id": 1,
+			"NOTE": "Smithsville sheriff should say this",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Welcome to Smithsville! Our <color=#2675AD>generator</color> is out and we can't repair it. I will give you fuel if you help us.",
+					"buttons": [
+						{
+							"text": "[Accept Quest] Yeah, for sure.",
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Great! Take this medicine and fuel and trade for a new <color=#2675AD>generator</color> in York.",
+					"buttons": [
+						{
+							"effects": [
+								"@give fuel 60",
+								"@give medicine 8",
+								"@start_quest Tutorial_Quest",
+								"@set_dialogue_encounter 0 2",
+								"@resolve"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"encounter_id": 2,
+			"NOTE": "Smithsville Sheriff says this after (1)",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Do you have that new <color=#2675AD>generator</color>?",
+					"buttons": [
+						{
+							"text": "[Give generator] Yep! Perfect condition too, hope it helps.",
+							"conditions": [
+								"!has generator 1"
+							],
+							"effects": [
+								"@add_edge 3 15",
+								"@take generator 1"
+							],
+							"next_page_id": 2
+						},
+						{
+							"text": "Not yet.",
+							"next_page_id": 3
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Thanks! Smithsville should be up and running again. Have some fuel.",
+					"buttons":[
+						{
+							"effects": [
+						"@give fuel 80",
+						"@set_dialogue_encounter 0 11",
+						"@resolve"
+					]
+				}
+				]
+				},
+				{
+					"id": 3,
+					"text": "Shame, Please bring a <color=#2675AD>generator</color> soon."
+				}
+			]
+		},
+		{
+			"encounter_id": 3,
+			"conditions": [
+				"!encounter_complete 1"
+			],
+			"NOTE": "need a way to specify automatic resolve conditions",
+			"valid": true,
+			"town_name": "York",
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "You have arrived in York.",
+					"buttons": [
+						{
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Exchange the medicine for a new <color=#2675AD>generator</color> at the local store.",
+					"buttons": [
+						{
+					"effects": [
+						"@resolve"
+					]
+				}
+				]
+				}
+			]
+		},
+		{
+			"encounter_id": 4,
+			"conditions": [
+				"!stage_complete 0 0"
+			],
+			"valid": true,
+			"town_name": "York",
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Thanks buying that generator!",
+					"buttons": [
+						{
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Return to the sheriff in Smithsville.",
+					"buttons": [
+						{
+							"effects": [
+								"@resolve"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"encounter_id": 8,
+			"NOTE": "",
+			"encounter_name": "Broken Gas Station",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "A lone gas station on the side of the road. The pump is broken.",
+					"buttons": [
+						{
+							"next_page_id": 2
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "The owner sees you and says 'I could repair that, but I don't have enough supplies'",
+					"buttons": [
+						{
+							"text": "[Give 1 Wrench] Offer supplies.",
+							"conditions": [
+								"!has wrench 1"
+							],
+							"effects": [
+								"@take wrench 1",
+								"@set_node_encounter 9 9"
+							],
+							"next_page_id": 3
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Come back later and I'll have this fixed!"
+				}
+			]
+		},
+		{
+			"encounter_id": 9,
+			"NOTE": "",
+			"encounter_name": "Gas Station",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "A lone gas station on the side of the road. The owner calls to you: 'Hey Friend! Good price on fuel, just for you!'",
+					"buttons": [
+						{
+						"text": "Buy 7 Fuel.",
+							"effects": [
+								"@give fuel 7"
+							],
+							"next_page_id": 2
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "'Thanks! Want to buy some more?'",
+					"buttons": [
+						{
+						"text": "Buy 7 Fuel.",
+							"effects": [
+								"@give fuel 7"
+							],
+							"next_page_id": 2
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				}
+			]
+		},
+		{
+			"encounter_id": 11,
+			"NOTE": "",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "The town leader isn't available right now.",
+					"buttons": [
+						{
+							"text": "[Leave]"
+						}
+					]
+				}
+			]
+		}
+	],
+	"random_encounters": [
+		{
+			"valid": true,
+			"COMMENT": "",
+			"encounter_id": 1000,
+			"tags": [],
+			"conditions": [],
+			"town_name": "York",
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Welcome to these here parts",
+					"avatar_name": "Sheriff",
+					"buttons": [
+						{
+							"text": "[Greet] Howdy, Sheriff.",
+							"next_page_id": 2
+						},
+						{
+							"text": "[Trade] Can we trade?",
+							"next_page_id": 3
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "You should check out the store later.",
+					"buttons": [
+						{
+							"text": "[Leave] Will do!",
+							"next_page_id": 6
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Sure, but lets have a fun. Make an offer and I'll flip a coin to determine if I give you fuel or some spare wrenches.",
+					"buttons": [
+						{
+							"text": "[Sample] offer 10 rations for 5 fuel or wrenches.",
+							"conditions": [
+								"!has rations 10"
+							],
+							"effects": [
+								"@take rations 10",
+								"@random 0.5 (@give fuel 5) (@give wrench 5)"
+							],
+							"next_page_id": 5
+						},
+						{
+							"text": "[Bulk] offer 30 rations for 20 fuel/wrenches.]",
+							"conditions": [
+								"!has rations 30"
+							],
+							"effects": [
+								"@take rations 30",
+								"@random 0.5 (@give fuel 20) (@give wrench 20)"
+							],
+							"next_page_id": 5
+						},
+						{
+							"text": "[Leave] Never mind.",
+							"next_page_id": 6
+						}
+					]
+				},
+				{
+					"id": 5,
+					"text": "That seems mighty fair to me!",
+					"buttons": [
+						{
+							"text": "[Leave] See ya later."
+						}
+					]
+				},
+				{
+					"id": 6,
+					"text": "Well it's been nice talking to you."
+				}
+			]
+		},
+		{
+			"valid": false,
+			"COMMENT": "needs ability to give resources by a factor (eg remove 100%, give 100% more, take 50%, etc)",
+			"encounter_id": 1001,
+			"tags": [],
+			"encounter_name": "Duplication Glitch",
+			"conditions": [],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "You come across a strange device unlike anything you’ve seen before, you see what appears to be a button on the surface.",
+					"buttons": [
+						{
+							"text": "[press button] Double a <<random resource>>, at the cost of 50% of another <<random resource>>",
+							"conditions": [
+								"<<!has at least two resource types>>"
+							],
+							"effects": [
+								"<<@give double resource 1>>",
+								"<<@take half resource 2>>"
+							],
+							"next_page_id": 3
+						},
+						{
+							"text": "[Leave] Nothing happens",
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Best play it safe, you leave, wondering what it could have been."
+				},
+				{
+					"id": 3,
+					"text": "An interface flashes to life and you touch the button resembling <<resource 1>>, to your surprise the machine instantly transforms into that resource.",
+					"buttons": [
+						{
+							"text": "[continue]",
+							"next_page_id": 4
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "Not one to look a gift horse in the mouth, you bring your spoils to the cargo bay. However you find half your <resource 2> has disappeared."
+				}
+			]
+		},
+		{
+			"valid": false,
+			"COMMENT": "would require we can let the player select resources, so prob not going to be implemented",
+			"encounter_id": 1002,
+			"tags": [],
+			"encounter_name": "Equivalent Exchange",
+			"conditions": [],
+			"town_name": null,
+			"dialogue_tree": [
+			]
+		},
+		{
+			"valid": false,
+			"COMMENT": "ship/crew upgrades don't exist yet",
+			"encounter_id": 1003,
+			"tags": [],
+			"encounter_name": "Hull Upgrades",
+			"conditions": [ "<<ship is not fully upgraded>>" ],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "You come across an old engineering bay. You’re greeted by an elderly mechanic; 'You flew that hunk o junk all the way here? Hows about we get you an upgrade.'",
+					"avatar_name": "Mechanic",
+					"buttons": [
+						{
+							"text": "[Trade] Upgrade your ship for 15 Scrap Metal and 6 Fuel",
+							"conditions": [
+								"!has Fuel 6",
+								"!has Scrap_Metal 15"
+							],
+							"effects": [
+								"<<@give upgrade>>",
+								"@take Fuel 6",
+								"@take Scrap_Metal 15"
+							],
+							"next_page_id": 3
+						},
+						{
+							"text": "[Threaten] Upgrade your ship but take 20 damage",
+							"effects": [
+								"<<@give upgrade>>",
+								"@health -20"
+							],
+							"next_page_id": 4
+						},
+						{
+							"text": "[Leave] Nothing happens",
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "You decide not to take them up on their offer, don’t want to void your warranty."
+				},
+				{
+					"id": 3,
+					"text": "You pay the mechanic and they get to work, they were even nice enough to throw in a complimentary oil change."
+				},
+				{
+					"id": 4,
+					"text": "Seeing an opportunity, you pull your weapon and tell the mechanic to get to work, they oblige. After the work is complete you leave without a second thought.",
+					"buttons": [
+						{
+							"text": "[Examine engine]",
+							"next_page_id": 5
+						}
+					]
+				},
+				{
+					"id": 5,
+					"text": "You open the engine to see the work triggering a small explosion and lodging some shrapnel in your arm, seems the mechanic thought you deserving of a complimentary wrench..."
+				}
+			]
+		},
+		{
+			"valid": false,
+			"COMMENT": "upgrade, check non-essential resources",
+			"encounter_id": 1004,
+			"tags": [],
+			"encounter_name": "Lightening the Load",
+			"conditions": [ "<<Player has at least one non-fuel resource>>" ],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "The ship shakes violently interrupting your meal, you've found your way into an unmarked gravity well. The ship is too heavy for the engines to escape, you’ll need to ditch some cargo.",
+					"buttons": [
+						{
+							"text": "[Eject Resource] lose 100% of a random resource",
+							"effects": [
+								"<<@give upgrade>>",
+								"<<@take 100% of non-fuel resource>>"
+							],
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Quickly, you slam open the cargo bays and watch as all your <<resource>>, fall into the void. Luckily it was enough for you to escape. Not everyone is as lucky."
+				}
+			]
+		},
+		{
+			"valid": true,
+			"COMMENT": "Would like it to only spawn if player is missing health",
+			"encounter_id": 1005,
+			"tags": [],
+			"encounter_name": "Restoration Station",
+			"conditions": [],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "You come across an old medical bay. Better yet, there are still some supplies left.",
+					"buttons": [
+						{
+							"text": "[Use supplies] Heal to full.",
+							"effects": [
+								"@health% 100"
+							],
+							"next_page_id": 3
+						},
+						{
+							"text": "[Leave] Nothing happens",
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Something feels off, why would these supplies be left untouched. The last thing you want is your crew getting sick from bad meds, so you leave."
+				},
+				{
+					"id": 3,
+					"text": "You and your crew take turns tending to each others wounds and distribute antibiotics and pain killers as necessary."
+				}
+			]
+		},
+		{
+			"valid": true,
+			"COMMENT": "avatar name something like 'unwell merchant'",
+			"encounter_id": 1006,
+			"tags": [],
+			"encounter_name": "Loot Crate",
+			"conditions": [],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "You come across a sickly looking merchant. They show you a completely unmarked box, 'Trade?'",
+					"buttons": [
+						{
+							"text": "[Make Offer] Give 4 Medicine",
+							"conditions": [
+								"!has Medicine 4"
+							],
+							"effects": [
+								"@take Medicine 4",
+								"@random 0.5 (@random 0.5 (@give Jewelry 1) (@give Jewelry 2)) (@random 0.5 (@random 0.5 (@give Jewelry 3) (@give Jewelry 4)) (@give Jewelry 5))"
+							],
+							"next_page_id": 3
+						},
+						{
+							"text": "[Leave] Nothing happens",
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "You don't trust this merchant and decide to keep moving."
+				},
+				{
+					"id": 3,
+					"text": "The stranger smiles and gives you the box before snatching the Medicine from your hands. You open the box to find some Jewelry! When you look up the merchant is gone."
+				}
+			]
+		},
+		{
+			"valid": false,
+			"COMMENT": "would require we can let the player select resources, so prob not going to be implemented",
+			"encounter_id": 1007,
+			"tags": [],
+			"encounter_name": "The Gamble",
+			"conditions": [],
+			"town_name": null,
+			"dialogue_tree": [
+			]
+		},
+		{
+			"valid": false,
+			"COMMENT": "requires ship/crew upgrades don't exist yet",
+			"encounter_id": 1008,
+			"tags": [],
+			"encounter_name": "Gameshow",
+			"conditions": [ "<<ship is not fully upgraded>>" ],
+			"town_name": null,
+			"dialogue_tree": [
+				"big event I don't want to fill in without the systems"
+			]
+		},
+		{
+			"valid": true,
+			"COMMENT": "",
+			"encounter_id": 1009,
+			"tags": [],
+			"encounter_name": "Geocache",
+			"conditions": [],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "While travelling you find some stones that look out of place, being curious you move them and find a cache of medical supplies!",
+					"buttons": [
+						{
+							"text": "[Steal] take medical supplies",
+							"effects": [
+								"@random 0.8 (@random 0.25 (@give Surgical_Equipment 1) (@give Medicine 3)) (@give Medical_Kit 2)"
+							],
+							"next_page_id": 3
+						},
+						{
+							"text": "[Leave] Nothing happens",
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Given how it was hidden, whoever left it here will probably come back for it. Hopefully they need it more than you do."
+				},
+				{
+					"id": 3,
+					"text": "You don't even know if the person who left it is still alive, and you'll certainly have use for extra medicine. Having convinced yourself; you take the medical supplies."
+				}
+			]
+		},
+		{
+			"valid": true,
+			"COMMENT": "",
+			"encounter_id": 1010,
+			"tags": [],
+			"encounter_name": "Pick Me Up",
+			"conditions": [],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "You find an old military barracks while travelling, looks like it's still stocked with some supplies.",
+					"buttons": [
+						{
+							"text": "[raid infirmary] heal 30% hp",
+							"effects": [
+								"@health% 30"
+							],
+							"next_page_id": 3
+						},
+						{
+							"text": "[raid armory] Gain 10% max hp",
+							"effects": [
+								"@health_max% 10"
+							],
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "You find some bullet proof vests. While you don't plan on getting into gunfights any time soon but better safe than sorry."
+				},
+				{
+					"id": 3,
+					"text": "You and your crew take turns tending to each others wounds and distribute antibiotics and pain killers as necessary."
+				}
+			]
+		},
+		{
+			"valid": true,
+			"COMMENT": "TEST THIS crew",
+			"encounter_id": 1011,
+			"tags": [],
+			"encounter_name": "Sticky Fingers",
+			"conditions": [ "<<ship is not fully upgraded>>" ],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "You find an RPG laying out in the open. Something tells you it’s too good to be true.",
+					"buttons": [
+						{
+							"text": "[Take] claim the RPG -- trigger a trap",
+							"effects": [
+								"@give RPG 1"
+							],
+							"next_page_id": 3
+						},
+						{
+							"text": "[Leave] Nothing happens",
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Something that valuable wouldn’t just be laying around, best not risk it."
+				},
+				{
+					"id": 3,
+					"text": "Greed gets the better of you and you grab the RPG, something starts beeping. Your gut was right and the trap is sprung.",
+					"buttons": [
+						{
+							"text": "[Graze] take 20% damage",
+							"effects": [
+								"@health% -20"
+							],
+							"next_page_id": 4
+						},
+						{
+							"text": "[Full Impact] Lose 10% max hp",
+							"effects": [
+								"@health_max% -10"
+							],
+							"next_page_id": 5
+						},
+						{
+							"text": "[Sacrifice] <<WIP>> Lose a random crew member",
+							"conditions": [
+								"!has fuel 10000"
+							],
+							"effects": [
+								"@health 1"
+							],
+							"next_page_id": 6
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "You react quickly and jump to cover, you and your crew sustained a number of injuries but thankfully nothing that can't be healed. You decide to leave before the person who set the trap returns."
+				},
+				{
+					"id": 5,
+					"text": "By the time you realize what's happening it's too late, the blast goes off and heavy shrapnel is lodged into your leg. You've seen amputations for less. Hurriedly, you wrap it to stop the bleeding and limp back to the ship before the person who set the trap returns."
+				},
+				{
+					"id": 6,
+					"text": "In an act of selflessness, one of your crew jumps to action and throws themselves on the bomb. You begin shouting for them to stop but your words are silenced by the blast... You’ll hold a service for them when you get to port."
+				}
+			]
+		},
+		{
+			"valid": true,
+			"COMMENT": "TEST THIS needs flavor text",
+			"encounter_id": 1012,
+			"tags": [],
+			"encounter_name": "Blood for Blood",
+			"conditions": [],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "<<flavor text>>",
+					"buttons": [
+						{
+							"text": "[Vigor] heal 15% hp, lose 5% max hp",
+							"effects": [
+								"@health% 15",
+								"@health_max% -5"
+							],
+							"next_page_id": 2
+						},
+						{
+							"text": "[Longevity] Gain 5% max hp, lose 15% hp",
+							"effects": [
+								"@health_max% 5",
+								"@health% -15"
+							],
+							"next_page_id": 3
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "<<flavor text>>"
+				},
+				{
+					"id": 3,
+					"text": "<<flavor text>>"
+				}
+			]
+		},
+		{
+			"valid": false,
+			"COMMENT": "max hp, upgrades",
+			"encounter_id": 1013,
+			"tags": [],
+			"encounter_name": "No Pain no Gain",
+			"conditions": [],
+			"town_name": null,
+			"dialogue_tree": [
+				"stuff"
+			]
+		},
+		{
+			"valid": true,
+			"COMMENT": "need more food than rations, something like 'sugar donut'",
+			"encounter_id": 1014,
+			"tags": [],
+			"encounter_name": "Food for Thought",
+			"conditions": ["!has Fuel 30"],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "You pull up for a brief break at a rest stop, the sign for a bakery nearby catches your eye.",
+					"buttons": [
+						{
+							"text": "[Trade] Buy 30 <<baked food item>> for 20 Fuel",
+							"conditions": [
+								"!has Fuel 20"
+							],
+							"effects": [
+								"@give Rations 30",
+								"@take Fuel 20"
+							],
+							"next_page_id": 3
+						},
+						{
+							"text": "[Leave] Nothing happens.",
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "You had a big lunch, best not tempt yourself."
+				},
+				{
+					"id": 3,
+					"text": "'I'll just take a look at what they have' you told yourself. The smells convince you otherwise when you enter. The shelves are a great deal more spacious after you leave."
+				}
+			]
+		},
+		{
+			"valid": false,
+			"COMMENT": "quest support",
+			"encounter_id": 1015,
+			"tags": [],
+			"encounter_name": "Fasting",
+			"conditions": [],
+			"town_name": null,
+			"dialogue_tree": [
+				"stuff"
+			]
+		},
+		{
+			"valid": true,
+			"COMMENT": "would like more item variety",
+			"encounter_id": 1016,
+			"tags": [],
+			"encounter_name": "Turbulence",
+			"conditions": [ "!has Scrap_Metal 5" ],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "You spot a cluster of scrap in some turbulent looking space, feeling lucky you decide to go for it. Unfortunately you got more than you bargained for and now have to choose between taking some asteroid hits to get the loot or droping some weight to escape.",
+					"buttons": [
+						{
+							"text": "[Collect] Gain 30 Scrap Metal, lose 10 health",
+							"effects": [
+								"@give Scrap_Metal 30",
+								"@health -10"
+							],
+							"next_page_id": 2
+						},
+						{
+							"text": "[Flee] Lose 5 Scrap Metal",
+							"effects": [
+								"@take Scrap_Metal 5"
+							],
+							"next_page_id": 3
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "You manage to get to the cluster and escape with only a few scrapes. Some of the crew begin to realize why their insurance premiums went up after joining you."
+				},
+				{
+					"id": 3,
+					"text": "You get the feeling that being on a first name basis with the mechanic probably isn’t good for your pocket book and decide to cut your losses."
+				}
+			]
+		},
+		{
+			"valid": true,
+			"COMMENT": "condition for hp to not kill, IF UPDATING REMEMBER TO CHANGE BOTH",
+			"encounter_id": 1017,
+			"tags": [],
+			"encounter_name": "The Hierophant",
+			"conditions": [],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "You come across a somewhat sketchy looking lab; so of course you decide to dock and see what you can find. The bay doors close behind you and you are greeted by an enigmatic figure emerging from the darkness who offers to grant various requests in exchange for 'Samples'",
+					"buttons": [
+						{
+							"text": "[Sustenance] Gain 20 Rations or Fuel, lose 7% health",
+							"effects": [
+								"@random 0.5 (@give Rations 20) (@give Fuel 20)",
+								"@health% -7"
+							],
+							"next_page_id": 3
+						},
+						{
+							"text": "[Greed] Gain a random Luxury item, lose 7% health",
+							"effects": [
+								"@give_tag Luxury 1",
+								"@health% -7"
+							],
+							"next_page_id": 4
+						},
+						{
+							"text": "[Longevity] Gain 3% max hp, lose 7% health",
+							"effects": [
+								"@health_max% 3",
+								"@health% -7"
+							],
+							"next_page_id": 5
+						},
+						{
+							"text": "[Escape] Ask to leave, lose 7% health",
+							"effects": [
+								"@health% -7"
+							],
+							"next_page_id": 6
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Well? What is it?",
+					"buttons": [
+						{
+							"text": "[Sustenance] Gain 20 Rations or Fuel, lose 7% health",
+							"effects": [
+								"@random 0.5 (@give Rations 20) (@give Fuel 20)",
+								"@health% -7"
+							],
+							"next_page_id": 3
+						},
+						{
+							"text": "[Greed] Gain a random Luxury item, lose 7% health",
+							"effects": [
+								"@give_tag Luxury 1",
+								"@health% -7"
+							],
+							"next_page_id": 4
+						},
+						{
+							"text": "[Longevity] Gain 3% max hp, lose 7% health",
+							"effects": [
+								"@health_max% 3",
+								"@health% -7"
+							],
+							"next_page_id": 5
+						},
+						{
+							"text": "[Escape] Ask to leave, lose 7% health",
+							"effects": [
+								"@health% -7"
+							],
+							"next_page_id": 6
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "They grab a clean syringe and draw a pint of blood before retrieving the agreed upon resources from their cloak. 'Anything else?'",
+					"buttons": [
+						{
+							"text": "[Request] Make another request",
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "They grab a clean syringe and draw a pint of blood before retrieving the agreed upon Luxury from their cloak. 'Anything else?'",
+					"buttons": [
+						{
+							"text": "[Request] Make another request",
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 5,
+					"text": "They grab a clean syringe and draw a pint of blood and proceeds to carve an intricate sigil into your flesh. Alarmed at first you're surprised when you feel no pain, and feel stronger when it's done. 'Anything else?'",
+					"buttons": [
+						{
+							"text": "[Request] Make another request",
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 6,
+					"text": "They raise an eyebrow as if the question is below them but harvest the payment from you anyway. 'Big flashing button next to the landing bay doors over there. If you don’t mind I’ve work to get back to', before you can open your mouth they’ve already retreated back to the shadows. Best leave before they decide to harvest anything else."
+				}
+			]
+		},
+		{
+			"valid": true,
+			"COMMENT": "ADD CREW REMOVE EFFECT TO ID 5",
+			"encounter_id": 1018,
+			"tags": [],
+			"encounter_name": "The Beggar",
+			"conditions": [ ],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "You’re approached by an elderly man wearing not much more than rags. They slowly bring out an unmarked box and plead in a raspy voice, 'I don’t have much, but it's yours if you could spare some food'",
+					"buttons": [
+						{
+							"text": "[Kindness] Give 15 Rations, take box",
+							"conditions":[
+								"!has Rations 15"
+							],
+							"effects": [
+								"@take Rations 15",
+								"@give Jewelry 1"
+							],
+							"next_page_id": 3
+						},
+						{
+							"text": "[Cruelty] <<WIP>> Steal the box, lose a crew member",
+							"effects": [
+								"@give Jewelry 1"
+							],
+							"next_page_id": 4
+						},
+						{
+							"text": "[Apathy] Leave, nothing happens",
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "You walk by as if you didn’t hear him but you both know you did. He meekly lowers the box and begins looking for someone willing to hear his plea."
+				},
+				{
+					"id": 3,
+					"text": "'T-Thank you' he stammers. 'I'll not forget this kindess. That ring belonged to my partner; I'm too old for the trader's life, but it should be worth a bit'.",
+					"buttons": [
+						{
+							"text": "[Pity] Return the ring",
+							"effects": [
+								"@take Jewelry 1"
+							],
+							"next_page_id": 6
+						},
+						{
+							"text": "[Leave] Keep the ring",
+							"next_page_id": 7
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "You push the old man to the ground and steal the box. 'N-No! Please! It’s all I have!' he shouts after you. But you’re already too far away for him to do anything.",
+					"buttons": [
+						{
+							"text": "[Cowardice] Return to ship",
+							"next_page_id": 5
+						}
+					]
+				},
+				{
+					"id": 5,
+					"text": "you return to the ship and are confronted by one of your crew 'I saw what you did to that old man. I quit, effective immediately.', before you can try to defend your actions they walk away."
+				},
+				{
+					"id": 6,
+					"text": "you take pity on the man and return the ring. He breaks down and hugs you. You leave feeling you've done a good thing."
+				},
+				{
+					"id": 7,
+					"text": "You wish the man luck and continue on your way."
+				}
+			]
+		},
+		{
+			"valid": true,
+			"COMMENT": "",
+			"encounter_id": 1019,
+			"tags": [],
+			"encounter_name": "Feeling Lucky?",
+			"conditions": [ ],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "'You there!' two men beckon you towards them. 'We need someone to bear witness to our duel, to make it worth your time you can place a bet on who’ll win'. Sounds like easy money.",
+					"buttons": [
+						{
+							"text": "[Safe Bet] 70% chance to win 7 Iron Ore",
+							"effects": [
+								"@random 0.7 (@give Iron_Ore 7) (@give Iron_Ore 0)"
+							],
+							"next_page_id": 2
+						},
+						{
+							"text": "[Risky Bet] 30% chance to win 20 Iron Ore",
+							"effects": [
+								"@random 0.3 (@give Iron_Ore 20) (@give Iron_Ore 0)"
+							],
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "The smoke clears and the victor laughs in triumpth. 'Thanks for your time, you don't know how long we waited for someone willing to spectate!"
+				}
+			]
+		},
+		{
+			"valid": true,
+			"COMMENT": "",
+			"encounter_id": 1020,
+			"tags": [],
+			"encounter_name": "Free Samples",
+			"conditions": [ ],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "There is a fork in the road, A sign advertises that one path has a painter offering free samples and the other has a chiropractor offering free adjustments.",
+					"buttons": [
+						{
+							"text": "[Painter] Get a free painting",
+							"next_page_id": 3
+						},
+						{
+							"text": "[Clinic] Heal 15% health",
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "'Welcome, welcome!' you're ushered in. The wall is covered in Antique paintings, if not for the duplicates you wouldn't know they were forgeries.",
+					"buttons": [
+						{
+							"text": "[Sample] Select a painting",
+							"effects": [
+								"@give 2000's_Painting 1"
+							],
+							"next_page_id": 5
+						}
+					]
+				},
+				{
+					"id": 5,
+					"text": "As you leave the store with your sample the painter shouts after you 'Don’t forget to tell your friends where you got that now, ya hear!'"
+				},
+				{
+					"id": 2,
+					"text": "'Oi! How ya doing, mate' The physician welcomes you in. Here for the free adjustments ya say? Well, come on in then no need to be shy!'",
+					"buttons": [
+						{
+							"text": "[Follow] Accept your fate",
+							"effects": [
+								"@health% 15"
+							],
+							"next_page_id": 4
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "A number of uncomfortable cracks later you feel both much better and like you need to lay down for 12 hours. 'There ya go, good as new. Thanks for stopping by and don’t ya forget to spread the word, eh?' You thank them and hobble back to the ship."
+				}
+			]
+		},
+		{
+			"valid": false,
+			"COMMENT": "would losing %s of resources and tags in conditions",
+			"encounter_id": 1021,
+			"tags": [],
+			"encounter_name": "Unlucky decision",
+			"conditions": [],
+			"town_name": null,
+			"dialogue_tree": [
+			]
+		},
+		{
+			"valid": false,
+			"COMMENT": "upgrades, crew, resource %s, would losing %s of resources and tags in conditions, special effects like 'all healing recieved reduced by 70%' or something. unlikely to happen",
+			"encounter_id": 1022,
+			"tags": [],
+			"encounter_name": "Lottery",
+			"conditions": [],
+			"town_name": null,
+			"dialogue_tree": [
+			]
+		},
+		{
+			"valid": false,
+			"COMMENT": "ability to travel to a random node (or colony) on the map",
+			"encounter_id": 1023,
+			"tags": [],
+			"encounter_name": "One Small Step",
+			"conditions": [],
+			"town_name": null,
+			"dialogue_tree": [
+			]
+		},
+		{
+			"valid": false,
+			"COMMENT": "crew",
+			"encounter_id": 1024,
+			"tags": [],
+			"encounter_name": "Recruitment Office",
+			"conditions": [],
+			"town_name": null,
+			"dialogue_tree": [
+			]
+		}
+	]
+}

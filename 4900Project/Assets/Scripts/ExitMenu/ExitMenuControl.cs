@@ -1,10 +1,5 @@
 ﻿using Dialogue;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
 
 namespace Assets.Scripts.ExitMenu
 {
@@ -27,8 +22,7 @@ namespace Assets.Scripts.ExitMenu
             promptOpen = true;
 
             // Pops up a new Dialogue with the exit prompt
-            var menu = GetDialoguePages();
-            DialogueManager.Instance.CreateDialogue(menu);
+            DialogueManager.Instance.CreateDialogue(QuitPage);
         }
 
         /// <summary>
@@ -58,47 +52,37 @@ namespace Assets.Scripts.ExitMenu
             UnityEngine.Debug.Log("Player has cancelled the quit request");
         }
 
-        /// <summary>
-        /// Constructs the main prompt for the Exit Menu
-        /// </summary>
-        /// <returns></returns>
-        protected static IEnumerable<IDPage> GetDialoguePages()
+        protected static IDPage QuitPage
         {
-            return new List<IDPage>()
+            get => new DPage()
             {
-                new DPage()
-                {
-                    // No avatar on this one ... unless?
-                    Avatar = null,
+                // No avatar on this one ... unless?
+                Avatar = null,
 
-                    // Buttons
-                    Buttons = new List<IDButton>()
+                // Buttons
+                Buttons = new List<IDButton>()
                     {
                         // Confirm button
                         new DButton()
                         {
                             Text = "Yes.",
-                            OnButtonClick = () => {
-                                ConfirmQuit();
-                                DFunctions.CloseDialogue();
-                            }
+                            Effects = GenericEffect.CreateEnumerable(
+                                () => ConfirmQuit()
+                            )
                         },
 
                         // Cancel button
                         new DButton()
                         {
                             Text = "No.",
-                            OnButtonClick = () =>
-                            {
-                                CancelQuit();
-                                DFunctions.CloseDialogue();
-                            }
+                            Effects = GenericEffect.CreateEnumerable(
+                                () => CancelQuit()
+                            )
                         }
                     },
 
-                    // Prompt text
-                    Text = "Would you like to quit the game?"
-                }
+                // Prompt text
+                Text = "Would you like to quit the game?"
             };
         }
     }

@@ -36,7 +36,7 @@ public class Shop
         shortDescription = shortDescription_;
         description = description_;
         type = type_;
-        inventory.weightLimit = 10000;
+        inventory.WeightLimit = 10000;
         //InitializeInventory();
         // Randomly Select an Icon
         // Do not select the ugly ones
