@@ -61,11 +61,19 @@ public class MapNode : MonoBehaviour
             transform.Find("Icon").gameObject.SetActive(true);
         }
 
+<<<<<<< HEAD
         /*foreach(Transform child in transform) {
             if (!child.gameObject.activeInHierarchy && child.gameObject.name != "Icon"){
                 GameObject.Destroy(child.gameObject);
             }
         }*/
+=======
+        foreach(Transform child in transform) {
+            if (!child.gameObject.activeInHierarchy && child.gameObject.name != "Icon"){
+                GameObject.Destroy(child.gameObject);
+            }
+        }
+>>>>>>> 1c92aef8a11ae6c4b5ab0c9a356959ba0fd824eb
     }
 
     /// <summary>

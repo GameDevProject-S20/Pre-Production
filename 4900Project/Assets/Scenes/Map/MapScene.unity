@@ -793,10 +793,10 @@ MonoBehaviour:
   scrollMax: 20
   scrollMin: 4
   dragSpeed: -0.25
-  outerLeft: -10
-  outerRight: 10
-  outerUp: 12
-  outerDown: -12
+  outerLeft: -55
+  outerRight: 30
+  outerUp: 41
+  outerDown: -45
 --- !u!1001 &442956046
 PrefabInstance:
   m_ObjectHideFlags: 0
