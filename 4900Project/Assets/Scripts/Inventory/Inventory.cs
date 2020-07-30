@@ -161,7 +161,6 @@ public class Inventory
     /// <param name="name">Name of item</param>
     /// <returns>Amount of given item that can fit</returns>
     public int CanFitHowMany(string name){
-        Debug.Log("NAME:  " + name);
         ItemManager.Current.itemsMaster.TryGetValue(name, out Item item);
         if (item == null)
         {
