@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 using System.Linq;
+using Extentions;
 
 /// <summary>
 /// Does not give a lot of information, as Apply always returns true
@@ -11,6 +12,11 @@ public class StartQuestEffect : IEffect
 
     public StartQuestEffect(string questName)
     {
+        if (!string.IsNullOrEmpty(questName))
+        {
+            questName = questName.ToTitleCase();
+        }
+
         this.questName = questName;
     }
 

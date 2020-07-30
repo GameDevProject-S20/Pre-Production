@@ -52,7 +52,7 @@
 							"effects": [
 								"@give fuel 60",
 								"@give medicine 8",
-								"@start_quest TutorialQuest",
+								"@start_quest Tutorial_Quest",
 								"@set_dialogue_encounter 0 2",
 								"@resolve"
 							]

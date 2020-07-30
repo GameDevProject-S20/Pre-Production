@@ -57,7 +57,7 @@ public class Initializer : MonoBehaviour
 
     private void BuildQuest()
     {
-       Quest quest = new Quest.Builder("tutorialquest")
+       Quest quest = new Quest.Builder("Tutorial Quest")
             .SetDescription("Bring Smithsville a new generator.")
 
             .AddStage(new Stage.Builder("Purchase generator in York.")
