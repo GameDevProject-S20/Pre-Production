@@ -4,6 +4,9 @@ using Quests;
 
 namespace SIEvents
 {
+    /// <summary>
+    /// Satisfied when a specified stage is completed in a specified quest
+    /// </summary>
     public class StageCompleteCondition : Condition
     {
         private readonly int questId;
@@ -38,7 +41,7 @@ namespace SIEvents
 
         public override string ToString()
         {
-            throw new NotImplementedException();
+            return string.Format("StageCompleteCondition -> Quest {0}, Stage {1}", questId, stageNum);
         }
     }
 }

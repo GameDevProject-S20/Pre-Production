@@ -19,17 +19,22 @@ public class HudActions : MonoBehaviour
     public void OnInventoryButtonClick()
     {
         GameObject.Find("Map").GetComponent<OverworldMapUI>().InventoryCanvas.SetActive(true);
+        EventManager.Instance.FreezeMap.Invoke();
+
     }
 
     public void OnMenuButtonClick()
     {
         ExitMenuControl.BringUpExitMenu();
+        EventManager.Instance.FreezeMap.Invoke();
     }
 
     public void OnJournalButtonClick()
     {
-       GameObject.Find("Map").GetComponent<OverworldMapUI>().QuestJournalCanvas.SetActive(true); 
-       GameObject.Find("questjournal").GetComponent<UnityEngine.UI.Image>().color = Color.white;
+        GameObject.Find("Map").GetComponent<OverworldMapUI>().QuestJournalCanvas.SetActive(true); 
+        GameObject.Find("questjournal").GetComponent<UnityEngine.UI.Image>().color = Color.white;
+        EventManager.Instance.FreezeMap.Invoke();
+
     }
 
     public void QuestChangedHandler()

@@ -1,8 +1,10 @@
-﻿using System;
+﻿using SIEvents;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine.UI;
 
 namespace Dialogue
 {
@@ -40,20 +42,23 @@ namespace Dialogue
         /// </summary>
         private List<IDialogue> activeDialogs = new List<IDialogue>();
 
-        private DialogueManager() { }
+        private DialogueManager() 
+        {
+            EventManager.Instance.OnGivenToPlayer.AddListener((string iname, int iamount) => OnGiveTakeItemHandler(iname, iamount, "Received"));
+            EventManager.Instance.OnTakenFromPlayer.AddListener((string iname, int iamount) => OnGiveTakeItemHandler(iname, iamount, "Removed"));
+        }
 
         // Public Methods
         /// <summary>
-        /// Creates a new dialog box with the given pages. 
+        /// Creates a new dialog box using the given page as the root of the dialogue tree.
         /// </summary>
-        /// <param name="dialoguePages"></param>
-        public IDialogue CreateDialogue(IEnumerable<IDPage> dialoguePages)
+        /// <param name="root"></param>
+        public IDialogue CreateDialogue(IDPage root)
         {
             // The ID of the dialog will be the next index into our dialogs list.
             // Create the dialog for that ID, and add it to the list
-            IDialogue dialog = new Dialogue(dialogs.Count, dialoguePages);
+            IDialogue dialog = new Dialogue(dialogs.Count, root);
             dialogs.Add(dialog);
-            activeDialogs.Add(dialog);
 
             // Hook into the events for updating the active dialog / firing dialog changes
             // When a dialog is opened, set it as the active dialog
@@ -84,9 +89,6 @@ namespace Dialogue
             {
                 UpdateActiveDialogue();
             });
-
-            // Update with the new active dialog
-            UpdateActiveDialogue();
 
             // Return the new dialog
             return dialog;
@@ -135,6 +137,24 @@ namespace Dialogue
         private void UpdateActiveDialogue()
         {
             ActiveDialogueChanged.Invoke();
+        }
+
+        /// <summary>
+        /// Notify the dialogue when a dialogue effect that give/takes and item from the player.
+        /// </summary>
+        /// <param name="itemName">The item string</param>
+        /// <param name="amount">How much of the item</param>
+        /// <param name="giveTake"> The string to represent the action performed.</param>
+        private void OnGiveTakeItemHandler(string itemName, int amount, string giveTake)
+        {
+            Dialogue dialogue = (Dialogue) GetActiveDialogue();
+
+            if (dialogue != null)
+            {
+                IDPage proxyPage = new DPage();
+                string notification = string.Format("({0} {1}x {2}!)", giveTake, amount, itemName);
+                dialogue.AddToHistory(proxyPage, notification);
+            }
         }
     }
 }

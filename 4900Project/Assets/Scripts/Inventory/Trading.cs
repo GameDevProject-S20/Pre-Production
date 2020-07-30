@@ -107,7 +107,7 @@ public class Trading : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        foreach(var item in copyOfShopInventory.getContents()){
+        foreach(var item in copyOfShopInventory.Contents){
             buildListItem(item.Key, item.Value, shopInventoryObject, () => { addToCart(item.Key); });
         }
 
@@ -119,7 +119,7 @@ public class Trading : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        foreach(var item in copyOfPlayerInventory.getContents()){
+        foreach(var item in copyOfPlayerInventory.Contents){
             buildListItem(item.Key, item.Value, playerInventoryObject, () => { addToOffer(item.Key); });
         }
     }
@@ -130,7 +130,8 @@ public class Trading : MonoBehaviour
         foreach(Transform child in offerListObject.transform){
             Destroy(child.gameObject);
         }
-        foreach (var item in offer.getContents()){
+
+        foreach (var item in offer.Contents) {
             buildListItem(item.Key, item.Value, offerListObject, () => { removeFromOffer(item.Key); });
         }
     }
@@ -140,7 +141,8 @@ public class Trading : MonoBehaviour
             Destroy(child.gameObject);
             Destroy(child.gameObject);
         }
-        foreach(var item in cart.getContents()){
+
+        foreach(var item in cart.Contents){
             buildListItem(item.Key, item.Value, cartListObject, () => { removeFromCart(item.Key); });
         }
     }
@@ -314,7 +316,7 @@ public class Trading : MonoBehaviour
         Events.TransactionEvents.Entity from = Events.TransactionEvents.Entity.SYSTEM;
         Events.TransactionEvents.Entity to = Events.TransactionEvents.Entity.PLAYER;
 
-        foreach (var item in cart.getContents()){
+        foreach (var item in cart.Contents){
 
             shop.inventory.RemoveItem(item.Key, item.Value);
 
@@ -328,7 +330,7 @@ public class Trading : MonoBehaviour
         from = Events.TransactionEvents.Entity.PLAYER;
         to = Events.TransactionEvents.Entity.SYSTEM;
 
-        foreach (var item in offer.getContents()){
+        foreach (var item in offer.Contents){
 
             DataTracker.Current.Player.Inventory.RemoveItem(item.Key, item.Value);
             
@@ -339,8 +341,8 @@ public class Trading : MonoBehaviour
             DataTracker.Current.EventManager.OnTransaction.Invoke(transactionDetails);
         }
 
-        cart.getContents().Clear();
-        offer.getContents().Clear();
+        cart.Contents.Clear();
+        offer.Contents.Clear();
         buildPlayerList();
         buildShopList();
         buildOfferList();

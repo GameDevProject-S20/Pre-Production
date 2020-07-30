@@ -163,7 +163,7 @@ namespace Quests
                 });
 
                 QuestManager.Instance.AddQuest(q);
-                QuestManager.Instance.StartQuest(q.Name);
+                //QuestManager.Instance.StartQuest(q.Name);
 
                 return q;
             }

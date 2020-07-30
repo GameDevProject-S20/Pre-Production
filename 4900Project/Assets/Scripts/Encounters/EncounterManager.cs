@@ -1,3 +1,4 @@
+using SIEvents;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,8 +15,10 @@ namespace Encounters
     /// Manager class to randomly spawn encounters
     /// Uses the singleton pattern - get from RandomEncounterManager.Instance
     /// </summary>
+    [System.Serializable]
     public class EncounterManager
     {
+        [SerializeField]
         public static EncounterManager Instance
         {
             get
@@ -28,108 +31,141 @@ namespace Encounters
         private static EncounterManager instance;
         private Random random;
 
-        private Dictionary<int, Encounter> fixedEncounters
+        [SerializeField]
+        private Dictionary<int, FixedEncounter> fixedEncounters
         {
             get => EncounterCollection.Instance.FixedEncounters;
         }
 
-        private Dictionary<int, Encounter> randomEncounters
+        [SerializeField]
+        private Dictionary<int, RandomEncounter> randomEncounters
         {
             get => EncounterCollection.Instance.RandomEncounters;
         }
 
-        private Queue<Encounter> randomEncounterQueue;
+        private Queue<RandomEncounter> randomEncounterQueue;
 
         private EncounterManager()
         {
             random = new Random();
             randomEncounterQueue = reloadRandomEncounters();
+            EventManager.Instance.OnNodeArrive.AddListener((OverworldMap.LocationNode node) =>
+            {
+                if (node.Type == OverworldMap.LocationType.EVENT)
+                {
+                    RunRandomEncounter();
+                }
+                if (node.Type == OverworldMap.LocationType.NONE && node.LocationId != -1){
+                    RunEncounterById(node.LocationId);
+                }
+            });
+            EventManager.Instance.OnEnterPOIButtonClick.AddListener(RunEncounterById);
+            EventManager.Instance.OnOpenDialogueClick.AddListener(RunEncounterById);
+
         }
 
-        public void AddFixedEncounter(Encounter enc)
+        public void AddEncounter(Encounter enc)
         {
-            fixedEncounters.Add(enc.Id, enc);
+            FixedEncounter fenc = enc as FixedEncounter;
+            if (fenc != null)
+            {
+                fixedEncounters.Add(fenc.Id, fenc);
+                fenc.AllowProgression();
+            }
+            else
+            {
+                RandomEncounter renc = enc as RandomEncounter;
+                randomEncounters.Add(renc.Id, renc);
+            }
         }
 
-        public void RemoveFixedEncounter(Encounter encounter)
+        public void RemoveFixedEncounter(FixedEncounter enc)
         {
-            fixedEncounters.Remove(encounter.Id);
-        }
-
-        public void AddRandomEncounter(Encounter enc)
-        {
-            randomEncounters.Add(enc.Id, enc);
+            fixedEncounters.Remove(enc.Id);
+            enc.DisallowProgression();
         }
 
         /// <summary>
         /// Call this to get a random encounter
         /// </summary>
-        public void RunRandomEncounter()
+        public void RunRandomEncounter(string tag = null)
         {
-            Encounter next = randomEncounter();
+            Encounter next = randomEncounter(tag);
             Debug.Log(next);
             next.RunEncounter();
         }
 
-        public void RunFixedEncounter(int id)
-        {
-            fixedEncounters.TryGetValue(id, out Encounter encounter);
-            if (encounter != null)
-            {
-                encounter.RunEncounter();
-            }
+        public void RunEncounterById(int id){
+            Encounter next = GetEncounter(id);
+            Debug.Log(next);
+            next.RunEncounter();  
         }
 
         // Load from csv or wherever in the future...
         // For now this demonstrates how to create an encounter object.
-        private Queue<Encounter> reloadRandomEncounters()
+        private Queue<RandomEncounter> reloadRandomEncounters()
         {
             // hard coded for now
-            var nextEncounters = new List<Encounter>(randomEncounters.Values);
+            var nextEncounters = new List<RandomEncounter>(randomEncounters.Values);
 
             // Shuffle the list and return as a queue
-            return new Queue<Encounter>(nextEncounters.OrderBy(randomEncounterQueue => random.Next()));
+            return new Queue<RandomEncounter>(nextEncounters.OrderBy(randomEncounterQueue => random.Next()));
         }
 
         // Return the next random encounter in the shuffled queue
         // If all events have been used, events will be shuffled again.
-        private Encounter randomEncounter()
+        private Encounter randomEncounter(string tag = null)
         {
             Encounter enc;
-            try
+            if (tag != null)
             {
-                enc = randomEncounterQueue.Dequeue();
-            } catch (InvalidOperationException e)
-            {
-                randomEncounterQueue = reloadRandomEncounters();
-                enc = randomEncounterQueue.Dequeue();
+                List<RandomEncounter> tagged = randomEncounterQueue.Where(e => e.Tags.Contains(tag)).ToList();
+                if (tagged.Count == 0)
+                {
+                    tagged = randomEncounters.Values.Where(e => e.Tags.Contains(tag)).ToList();
+                    if (tagged.Count > 0)
+                    {
+                        enc = tagged[random.Next(tagged.Count)];
+                    }
+                    else
+                    {
+                        throw new Exception(string.Format("Encounter with tag '{0}' not found", tag));
+                    }
+                }
             }
+            {
+                if (randomEncounterQueue.Count > 0)
+                {
+                    enc = randomEncounterQueue.Dequeue();
+                }
+                else
+                {
+                    randomEncounterQueue = reloadRandomEncounters();
+                    enc = randomEncounterQueue.Dequeue();
+                }
+            }
+
             return enc;
         }
 
-        public Encounter GetFixedEncounter(int id)
+        public Encounter GetEncounter(int id)
         {
-            EncounterCollection.Instance.FixedEncounters.TryGetValue(id, out Encounter value);
-            return value;
+            EncounterCollection.Instance.FixedEncounters.TryGetValue(id, out FixedEncounter fvalue);
+            
+            if (fvalue != null)
+            {
+                return fvalue;
+            }
+            else
+            {
+                EncounterCollection.Instance.RandomEncounters.TryGetValue(id, out RandomEncounter rvalue);
+                return rvalue;
+            }
         }
 
         public override string ToString()
         {
             return string.Format("Fixed Encounters: {0}\nRandomEncounters: {1}", string.Join(", ", fixedEncounters.Keys), string.Join(", ", randomEncounters.Keys));
-        }
-
-        // Listen for TriggerEncounter events and trigger an encounter
-        // Allows encounters to be triggered by systems without needing a reference to the EncounterManager
-        // Also allows other systems (such as quests) to know when an encounter has been triggered
-        public void encounterTriggerListener(int id=-1){
-            if (id == -1)
-            {
-                RunRandomEncounter();
-            }
-            else
-            {
-                RunFixedEncounter(id);
-            }
         }
     }
 }

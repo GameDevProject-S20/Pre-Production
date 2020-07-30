@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SIEvents;
 
 namespace Dialogue
 {
@@ -16,9 +17,15 @@ namespace Dialogue
         /// </summary>
         string Text { get; set; }
 
+        IEnumerable<IPresentCondition> Conditions { get; set; }
+
+        IEnumerable<IEffect> Effects { get; set; }
+
+        IDPage NextPage { get; set; }
+
         /// <summary>
         /// Handler function to be called when the button is clicked. Passes in the ID for the dialogue.
         /// </summary>
-        Action OnButtonClick { get; set; }
+        Action OnButtonClick { get; }
     }
 }

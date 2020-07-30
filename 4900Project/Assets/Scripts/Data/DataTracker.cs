@@ -7,6 +7,7 @@ using SIEvents;
 using System.Linq;
 using Dialogue;
 
+[System.Serializable]
 public class DataTracker : MonoBehaviour
 {
     private static DataTracker _current;
@@ -16,6 +17,7 @@ public class DataTracker : MonoBehaviour
     public OverworldMap.LocationGraph WorldMap;
     public QuestManager QuestManager = QuestManager.Instance;
     public QuestJournal QuestJournal = QuestJournal.Instance;
+    [SerializeField]
     public EncounterManager EncounterManager = EncounterManager.Instance;
     public DialogueManager DialogueManager = DialogueManager.Instance;
     public EventManager EventManager = EventManager.Instance;
@@ -25,7 +27,7 @@ public class DataTracker : MonoBehaviour
     public float MapSize;
     [SerializeField]
     public int currentShopId = 0; // Needed if we want store to be their own scene. If we make the store window a prefab, we don't need this.
-    public int currentLocationId = 14;
+    public int currentLocationId = 1;
     public int dayCount = 0;
 
     private void Awake() {
@@ -38,15 +40,13 @@ public class DataTracker : MonoBehaviour
         WorldMap = OverworldMapLoader.LoadMap();
         ShopManager.LoadData();
         TownManager.LoadData();
-        Player.Inventory.weightLimit = 10000f;
-        Player.Inventory.AddItem("Rations", 8);
+        Player.Inventory.WeightLimit = 10000f;
+        Player.Inventory.AddItem("Rations", 12);
         Player.Inventory.AddItem("Fuel", 30);
         Player.Inventory.AddItem("Fresh Fruit", 1);
         Player.Inventory.AddItem("Scrap Metal", 9);
         Player.Inventory.AddItem("Wrench", 1);
         DontDestroyOnLoad(gameObject);
-
-        EventManager.TriggerEncounter.AddListener(EncounterManager.encounterTriggerListener);
         EventManager.onDataTrackerLoad.Invoke();
     }
 

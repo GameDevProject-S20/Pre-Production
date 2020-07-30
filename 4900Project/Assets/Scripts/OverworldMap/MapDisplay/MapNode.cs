@@ -10,7 +10,6 @@ public class MapNode : MonoBehaviour
 
     public int NodeId { get; set; }
     public OverworldMap.LocationType Type { get; set; }
-    public int LocationId { get; set; }
 
     TravelPanel panel;
     Camera cam;
@@ -21,13 +20,14 @@ public class MapNode : MonoBehaviour
     {
         cam = Camera.main;
         //EventManager.Instance.OnNodeMouseDown.AddListener(OtherNodeSelected);
-
+        OverworldMap.LocationNode node;
+        DataTracker.Current.WorldMap.GetNode(NodeId, out node);
         // Appearance is determined by node type
         if (Type == OverworldMap.LocationType.TOWN)
         {
             transform.Rotate(new Vector3(0, Random.Range(0, 360), 0), Space.Self);
 
-            Town t = DataTracker.Current.TownManager.GetTownById(LocationId);
+            Town t = DataTracker.Current.TownManager.GetTownById(node.LocationId);
 
             if (t.HasTag("Farm")){
                 transform.Find("farm").gameObject.SetActive(true);
@@ -104,8 +104,11 @@ public class MapNode : MonoBehaviour
             panel.SetTravelInfo(MapTravel.GetFuelCost(this), MapTravel.dayRate);
         }
 
+        OverworldMap.LocationNode node;
+        DataTracker.Current.WorldMap.GetNode(NodeId, out node);
+
         if (Type == OverworldMap.LocationType.TOWN) {
-            panel.SetDetails(DataTracker.Current.TownManager.GetTownById(LocationId).Name);
+            panel.SetDetails(DataTracker.Current.TownManager.GetTownById(node.LocationId).Name);
         }
         else if (Type == OverworldMap.LocationType.EVENT) {
             panel.SetDetails("Unknown Event");

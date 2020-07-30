@@ -16,7 +16,8 @@ namespace Assets.Scripts.Dialogue.Frontend
     {
         void Start()
         {
-            DialogueManager.Instance.CreateDialogue(new List<IDPage>()
+            // ARL - fix up
+            /*DialogueManager.Instance.CreateDialogue(new List<IDPage>()
             {
                 new DPage()
                 {
@@ -126,7 +127,7 @@ namespace Assets.Scripts.Dialogue.Frontend
                         }
                     }
                 },
-            });
+            });*/
         }
     }
 }

@@ -72,6 +72,12 @@ namespace Assets.Scripts.Dialogue.Frontend
         /// </summary>
         public RectTransform scrollViewContainerRect;
 
+        /// <summary>
+        /// Text colour for (un)interactable buttons
+        /// </summary>
+        public Color interactableButtonTextColour = new Color(204, 196, 179, 255);
+        public Color uninteractableButtonTextColour = new Color(145, 139, 126, 255);
+
         // Startup / constructor
         void Start()
         {
@@ -120,6 +126,8 @@ namespace Assets.Scripts.Dialogue.Frontend
                 // Show the display
                 Show();
 
+                Debug.Log(string.Format("Active Page\n\n{0}", activePage));
+
                 // Update all the data
                 UpdateButtons(activePage.Buttons);
                 UpdateAvatarDisplay(activePage.Avatar);
@@ -148,9 +156,17 @@ namespace Assets.Scripts.Dialogue.Frontend
             {
                 var physicalButton = buttons.ElementAt(i);
                 var buttonData = pageButtons.ElementAtOrDefault(i);
-
+ 
                 // Update the text
-                physicalButton.GetComponentInChildren<Text>().text = buttonData != null ? buttonData.Text : "";
+                Text text = physicalButton.GetComponentInChildren<Text>();
+                text.text = buttonData != null ? buttonData.Text : "";
+
+                if (buttonData != null)
+                {
+                    bool interactable = buttonData.Conditions.All(c => c.IsSatisfied());
+                    physicalButton.interactable = interactable;
+                    text.color = (interactable) ? interactableButtonTextColour : uninteractableButtonTextColour;
+                }
             }
         }
 

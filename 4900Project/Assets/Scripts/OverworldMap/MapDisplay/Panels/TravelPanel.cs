@@ -26,7 +26,7 @@ public class TravelPanel : InfoPanel
     [SerializeField]
     TextMeshProUGUI DetailText;  
 
-    MapNode Node;
+    MapNode NodeObj;
 
     protected override void Awake()
     {
@@ -39,7 +39,7 @@ public class TravelPanel : InfoPanel
 
     public void SetNode(MapNode node)
     {
-        Node = node;
+        NodeObj = node;
     }
 
     public void SetTravelInfo(int fuelCost, int travelTime)
@@ -68,11 +68,13 @@ public class TravelPanel : InfoPanel
     }
 
     public void OnButtonClick(){
-        if (Node.Type == OverworldMap.LocationType.TOWN){
-            EventManager.Instance.OnEnterTownButtonClick.Invoke(Node.LocationId);
+        OverworldMap.LocationNode node;
+        DataTracker.Current.WorldMap.GetNode(NodeObj.NodeId, out node);
+        if (node.Type == OverworldMap.LocationType.TOWN){
+            EventManager.Instance.OnEnterTownButtonClick.Invoke(node.LocationId);
         }
-        else if (Node.Type == OverworldMap.LocationType.POI){
-            EventManager.Instance.OnEnterPOIButtonClick.Invoke(Node.LocationId);
+        else if (node.Type == OverworldMap.LocationType.POI){
+            EventManager.Instance.OnEnterPOIButtonClick.Invoke(node.LocationId);
         }
     }
 
@@ -102,10 +104,10 @@ public class TravelPanel : InfoPanel
     }
 
     protected override void OnClosed(){
-        if (Node)
+        if (NodeObj)
         {
-            Node.Close();
-            Node = null;
+            NodeObj.Close();
+            NodeObj = null;
         }
         CostInfo.SetActive(false);
         EnterButton.SetActive(false);
