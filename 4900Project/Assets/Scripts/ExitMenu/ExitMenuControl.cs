@@ -1,9 +1,10 @@
 ﻿using Dialogue;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets.Scripts.ExitMenu
 {
-    public class ExitMenuControl
+    public class ExitMenuControl : MonoBehaviour
     {
         protected static bool promptOpen;
 
