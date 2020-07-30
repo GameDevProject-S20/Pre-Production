@@ -2319,6 +2319,11 @@ PrefabInstance:
       propertyPath: m_VerticalScrollbarVisibility
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3636470663968280279, guid: 73267574d9da8a94e9ee4d58fbda672a,
+        type: 3}
+      propertyPath: m_ScrollSensitivity
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3955353833057662057, guid: 73267574d9da8a94e9ee4d58fbda672a,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -2353,11 +2358,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_VerticalFit
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194118631162182948, guid: 73267574d9da8a94e9ee4d58fbda672a,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6194118631162182948, guid: 73267574d9da8a94e9ee4d58fbda672a,
         type: 3}
@@ -3130,6 +3130,11 @@ PrefabInstance:
       propertyPath: m_VerticalScrollbarVisibility
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3636470663968280279, guid: 73267574d9da8a94e9ee4d58fbda672a,
+        type: 3}
+      propertyPath: m_ScrollSensitivity
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3955353833057662057, guid: 73267574d9da8a94e9ee4d58fbda672a,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -3164,11 +3169,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_VerticalFit
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194118631162182948, guid: 73267574d9da8a94e9ee4d58fbda672a,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6194118631162182948, guid: 73267574d9da8a94e9ee4d58fbda672a,
         type: 3}
@@ -3385,6 +3385,11 @@ PrefabInstance:
       propertyPath: m_VerticalScrollbarVisibility
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3636470663968280279, guid: 73267574d9da8a94e9ee4d58fbda672a,
+        type: 3}
+      propertyPath: m_ScrollSensitivity
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3955353833057662057, guid: 73267574d9da8a94e9ee4d58fbda672a,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -3419,11 +3424,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_VerticalFit
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194118631162182948, guid: 73267574d9da8a94e9ee4d58fbda672a,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6194118631162182948, guid: 73267574d9da8a94e9ee4d58fbda672a,
         type: 3}
@@ -3750,6 +3750,11 @@ PrefabInstance:
       propertyPath: m_VerticalScrollbarVisibility
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3636470663968280279, guid: 73267574d9da8a94e9ee4d58fbda672a,
+        type: 3}
+      propertyPath: m_ScrollSensitivity
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3955353833057662057, guid: 73267574d9da8a94e9ee4d58fbda672a,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -3789,11 +3794,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_VerticalFit
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194118631162182948, guid: 73267574d9da8a94e9ee4d58fbda672a,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6194118631162182948, guid: 73267574d9da8a94e9ee4d58fbda672a,
         type: 3}
