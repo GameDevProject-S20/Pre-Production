@@ -6,15 +6,15 @@ Fresh Meat,A valuable delicacy.,Raising livestock is an expensive process. Meat 
 Wrench,An essential repair tool,Helps with maintaining machines. Wear and tear means you need a replacement once in a while.,5,1,Wrench.png,"Tools_And_Parts,General"
 Repair Patch,One use smart repair patch,"Uncommon tech allows these patches to conduct repairs autonomously, but burn out performing the job",15,4,RepairPatch.png,"Tools_And_Parts,General"
 Generator,Creates electricity,Consumes fuel to generate power. Vital for survival.,40,25,Generator.png,"Tools_And_Parts, Advanced"
-2000's Painting,Collectors love this stuff,Art from before the world ended. Nostalgic.,19,3,Painting.png,"Luxury,Antique"
+2000's Painting,Collectors love this stuff,Art from before the world ended. Nostalgic.,50,3,Painting.png,"Luxury,Antique"
 Jewelry,"A valuable, if nonfunctional, accessory",Goes nice with a finely tailored outfit. Good luck finding one,12,1,Jewlery.png,Luxury
 Concrete,Basic building material,What most things are built out of these days,3,10,Concrete.png,"Building_Materials,General"
 Scrap Metal,General purpose parts,Good for making something new or fixing something old,5,10,ScrapMetal.png,"Building_Materials,General"
 Steel,High-quality forged metal.,Durable material for building more than a shack.,15,25,steel.png,Building_Materials
 Hunting Rifle,Enough for animals.,"A low caliber firearm, useful for defense. Not very effective against armoured targets.",15,2,rifle.png,"Combat,General"
 Body Armor,Keeps you intact,Armor meant to protect from the typical bandit raid.,4,5,BodyArmor.png,Combat
-Rpg,Sends a message,Let anyone who intends to raid you serverly regret their choices for a whole second.,45,2,RPG.png,Combat
+Rpg,Sends a message,Let anyone who intends to raid you severely regret their choices for a whole second.,45,2,RPG.png,Combat
 Medicine,Patches up wounds.,General pruopse bandages and medicine to treat injuries and illnesses,6,3,Medicine.png,"Medical,General"
 Medical Kit,High end First Aid Kit for dangerous work,"Not only stocked with the best medical supplies on hand, but even contain stimulants and boosters to avoid injury in the first place",20,2,MedicalKit.png,Medical
-Surgical Equipment,Used in hospitals.,Advanced equipment used in hosptials to operate on patients.,45,10,surgicalEquipment.png,"Medical,Advanced"
+Surgical Equipment,Used in hospitals.,Advanced equipment used in hospitals to operate on patients.,45,10,surgicalEquipment.png,"Medical,Advanced"
 Iron Ore,Raw ore used in steel production.,"With the right amount of carbon content, raw iron can be refined in a Steel Mill.",12,3,iron.png,Mineral

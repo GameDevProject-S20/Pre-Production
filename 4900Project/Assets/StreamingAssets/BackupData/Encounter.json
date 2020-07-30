@@ -1015,6 +1015,182 @@
 					"text": "They raise an eyebrow as if the question is below them but harvest the payment from you anyway. 'Big flashing button next to the landing bay doors over there. If you don’t mind I’ve work to get back to', before you can open your mouth they’ve already retreated back to the shadows. Best leave before they decide to harvest anything else."
 				}
 			]
+		},
+		{
+			"valid": true,
+			"COMMENT": "ADD CREW REMOVE EFFECT TO ID 5",
+			"encounter_id": 1018,
+			"tags": [],
+			"encounter_name": "The Beggar",
+			"conditions": [ ],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "You’re approached by an elderly man wearing not much more than rags. They slowly bring out an unmarked box and plead in a raspy voice, 'I don’t have much, but it's yours if you could spare some food'",
+					"buttons": [
+						{
+							"text": "[Kindness] Give 15 Rations, take box",
+							"conditions":[
+								"!has Rations 15"
+							],
+							"effects": [
+								"@take Rations 15",
+								"@give Jewelry 1"
+							],
+							"next_page_id": 3
+						},
+						{
+							"text": "[Cruelty] <<WIP>> Steal the box, lose a crew member",
+							"effects": [
+								"@give Jewelry 1"
+							],
+							"next_page_id": 4
+						},
+						{
+							"text": "[Apathy] Leave, nothing happens",
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "You walk by as if you didn’t hear him but you both know you did. He meekly lowers the box and begins looking for someone willing to hear his plea."
+				},
+				{
+					"id": 3,
+					"text": "'T-Thank you' he stammers. 'I'll not forget this kindess. That ring belonged to my partner; I'm too old for the trader's life, but it should be worth a bit'.",
+					"buttons": [
+						{
+							"text": "[Pity] Return the ring",
+							"effects": [
+								"@take Jewelry 1"
+							],
+							"next_page_id": 6
+						},
+						{
+							"text": "[Leave] Keep the ring",
+							"next_page_id": 7
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "You push the old man to the ground and steal the box. 'N-No! Please! It’s all I have!' he shouts after you. But you’re already too far away for him to do anything.",
+					"buttons": [
+						{
+							"text": "[Cowardice] Return to ship",
+							"next_page_id": 5
+						}
+					]
+				},
+				{
+					"id": 5,
+					"text": "you return to the ship and are confronted by one of your crew 'I saw what you did to that old man. I quit, effective immediately.', before you can try to defend your actions they walk away."
+				},
+				{
+					"id": 6,
+					"text": "you take pity on the man and return the ring. He breaks down and hugs you. You leave feeling you've done a good thing."
+				},
+				{
+					"id": 7,
+					"text": "You wish the man luck and continue on your way."
+				}
+			]
+		},
+		{
+			"valid": true,
+			"COMMENT": "",
+			"encounter_id": 1019,
+			"tags": [],
+			"encounter_name": "Feeling Lucky?",
+			"conditions": [ ],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "'You there!' two men beckon you towards them. 'We need someone to bear witness to our duel, to make it worth your time you can place a bet on who’ll win'. Sounds like easy money.",
+					"buttons": [
+						{
+							"text": "[Safe Bet] 70% chance to win 7 Iron Ore",
+							"effects": [
+								"@random 0.7 (@give Iron_Ore 7) (@give Iron_Ore 0)"
+							],
+							"next_page_id": 2
+						},
+						{
+							"text": "[Risky Bet] 30% chance to win 20 Iron Ore",
+							"effects": [
+								"@random 0.3 (@give Iron_Ore 20) (@give Iron_Ore 0)"
+							],
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "The smoke clears and the victor laughs in triumpth. 'Thanks for your time, you don't know how long we waited for someone willing to spectate!"
+				}
+			]
+		},
+		{
+			"valid": true,
+			"COMMENT": "",
+			"encounter_id": 1020,
+			"tags": [],
+			"encounter_name": "Free Samples",
+			"conditions": [ ],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "There is a fork in the road, A sign advertises that one path has a painter offering free samples and the other has a chiropractor offering free adjustments.",
+					"buttons": [
+						{
+							"text": "[Painter] Get a free painting",
+							"next_page_id": 3
+						},
+						{
+							"text": "[Clinic] Heal 15% health",
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "'Welcome, welcome!' you're ushered in. The wall is covered in Antique paintings, if not for the duplicates you wouldn't know they were forgeries.",
+					"buttons": [
+						{
+							"text": "[Sample] Select a painting",
+							"effects": [
+								"@give 2000's_Painting 1"
+							],
+							"next_page_id": 5
+						}
+					]
+				},
+				{
+					"id": 5,
+					"text": "As you leave the store with your sample the painter shouts after you 'Don’t forget to tell your friends where you got that now, ya hear!'"
+				},
+				{
+					"id": 2,
+					"text": "'Oi! How ya doing, mate' The physician welcomes you in. Here for the free adjustments ya say? Well, come on in then no need to be shy!'",
+					"buttons": [
+						{
+							"text": "[Follow] Accept your fate",
+							"effects": [
+								"@health% 15"
+							],
+							"next_page_id": 4
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "A number of uncomfortable cracks later you feel both much better and like you need to lay down for 12 hours. 'There ya go, good as new. Thanks for stopping by and don’t ya forget to spread the word, eh?' You thank them and hobble back to the ship."
+				}
+			]
 		}
 	]
 }
