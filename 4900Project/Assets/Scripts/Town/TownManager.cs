@@ -181,7 +181,7 @@ public class TownManager
         tag.playerSellModifiers.Add(ItemTag.Tools_And_Parts, 1.2f);
 
         tag.AbundancyModifiers.Add(ItemTag.Mineral, new List<float>(){1.5f, 1.2f, 1.1f, 1.0f, 1.0f});
-        tag.RarityModifers.Add(ItemTag.Mineral, new List<float>(){1.0f, 1.5f, 1.5f, 2.0f, 3.0f});
+        tag.RarityModifers.Add(ItemTag.Mineral, new List<float>(){1.0f, 3.0f, 3.0f, 4.0f, 3.0f});
 
         Tags.Add(tag.Name, tag); 
 

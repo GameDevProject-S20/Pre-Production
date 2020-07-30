@@ -193,11 +193,11 @@
 							"text": "[Give 1 Wrench & 6 Scrap Metal] Offer supplies.",
 							"conditions": [
 								"!has wrench 1",
-								"!has scrap_metal 6"
+								"!has Scrap_Metal 6"
 							],
 							"effects": [
 								"@take wrench 1",
-								"@take scrap_metal 6",
+								"@take Scrap_Metal 6",
 								"@set_node_encounter 32 31"
 							],
 							"next_page_id": 3
@@ -224,18 +224,19 @@
 					"text": "A lone gas station on the side of the road. The owner calls to you: \"Hey Friend! Good price on fuel, just for you!\"",
 					"buttons": [
 						{
-							"text": "[Give 1 Scrap Metal] Buy 10 Fuel.",
+							"text": "[Trade] Offer 1 scrap for 10 Fuel.",
 							"conditions": [
-								"!has scrap_metal 1"
+								"!has Scrap_Metal 1"
 							],
 							"effects": [
-								"@take scrap_metal 1",
+								"@take Scrap_Metal 1",
 								"@give fuel 10"
 							],
 							"next_page_id": 2
 						},
 						{
-							"text": "[Leave]"
+							"text": "[Leave]",
+							"next_page_id": 3
 						}
 					]
 				},
@@ -244,20 +245,25 @@
 					"text": "\"Thanks! Want to buy some more?\"",
 					"buttons": [
 						{
-							"text": "[Give 1 Scrap Metal] Buy 10 Fuel.",
+							"text": "[Trade] Offer 1 scrap for 10 Fuel.",
 							"conditions": [
-								"!has scrap_metal 1"
+								"!has Scrap_Metal 1"
 							],
 							"effects": [
-								"@take scrap_metal 1",
+								"@take Scrap_Metal 1",
 								"@give fuel 10"
 							],
 							"next_page_id": 2
 						},
 						{
-							"text": "[Leave]"
+							"text": "[Leave]",
+							"next_page_id": 3
 						}
 					]
+				},
+				{
+					"id": 3,
+					"text": "You leave."
 				}
 			]
 		},
@@ -272,12 +278,12 @@
 					"text": "A lone gas station on the side of the road. The owner is offering fuel at a standard price.",
 					"buttons": [
 						{
-							"text": "[Give 1 Scrap Metal] Buy 5 Fuel.",
+							"text": "[Trade] Offer 1 scrap for 5 Fuel.",
 							"conditions": [
-								"!has scrap_metal 1"
+								"!has Scrap_Metal 1"
 							],
 							"effects": [
-								"@take scrap_metal 1",
+								"@take Scrap_Metal 1",
 								"@give fuel 5"
 							],
 							"next_page_id": 2
@@ -289,15 +295,15 @@
 				},
 				{
 					"id": 2,
-					"text": "\"Want to buy some more?\"",
+					"text": "'Want to buy some more?'",
 					"buttons": [
 						{
-							"text": "[Give 1 Scrap Metal] Buy 5 Fuel.",
+							"text": "[Trade] Offer 1 scrap for 5 Fuel.",
 							"conditions": [
-								"!has scrap_metal 1"
+								"!has Scrap_Metal 1"
 							],
 							"effects": [
-								"@take scrap_metal 1",
+								"@take Scrap_Metal 1",
 								"@give fuel 5"
 							],
 							"next_page_id": 2
@@ -320,22 +326,22 @@
 					"text": "A group of rough-looking people stop your caravan. \"This here's our road. Gotta pay to use it.\"",
 					"buttons": [
 						{
-							"text": "[Give 2 Scrap Metal]",
-							"conditions": [
-								"!has scrap_metal 2"
-							],
-							"effects": [
-								"@take scrap_metal 2"
-							],
-							"next_page_id": 2
-						},
-						{
 							"text": "[Give 5 Rations]",
 							"conditions": [
 								"!has Rations 5"
 							],
 							"effects": [
 								"@take Rations 5"
+							],
+							"next_page_id": 2
+						},
+						{
+							"text": "[Give 2 Scrap Metal]",
+							"conditions": [
+								"!has Scrap_Metal 2"
+							],
+							"effects": [
+								"@take Scrap_Metal 2"
 							],
 							"next_page_id": 2
 						},
