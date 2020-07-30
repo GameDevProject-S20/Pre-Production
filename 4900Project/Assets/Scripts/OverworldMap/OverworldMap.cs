@@ -18,6 +18,7 @@ public class OverworldMap
         TOWN,
         RESOURCE,
         EVENT,
+        POI,
         NONE
     }
 

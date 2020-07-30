@@ -44,7 +44,7 @@ public class Tooltip : MonoBehaviour
         gameObject.transform.GetChild(0).GetComponent<Text>().text = item.DisplayName;
         string descriptor = item.Description + "\n \n";
         string tagList = "";
-        foreach (typetag tag in item.tags)
+        foreach (ItemTag tag in item.tags)
         {
             tagList += tag.ToString() + ", ";
         }

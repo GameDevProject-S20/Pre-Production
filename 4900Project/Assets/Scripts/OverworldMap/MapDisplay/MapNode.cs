@@ -20,32 +20,39 @@ public class MapNode : MonoBehaviour
     private void Start()
     {
         cam = Camera.main;
-        EventManager.Instance.OnNodeMouseDown.AddListener(OtherNodeSelected);
+        //EventManager.Instance.OnNodeMouseDown.AddListener(OtherNodeSelected);
 
         // Appearance is determined by node type
         if (Type == OverworldMap.LocationType.TOWN)
         {
             transform.Rotate(new Vector3(0, Random.Range(0, 360), 0), Space.Self);
 
-            Town.Sizes size = DataTracker.Current.TownManager.GetTownById(LocationId).Size;
-            if (size == Town.Sizes.Tiny){
-                    transform.Find("tinyTown").gameObject.SetActive(true);
+            Town t = DataTracker.Current.TownManager.GetTownById(LocationId);
+
+            if (t.HasTag("Farm")){
+                transform.Find("farm").gameObject.SetActive(true);
             }
-            else if (size == Town.Sizes.Small){
+            else if (t.Size == Town.Sizes.Small){
                     transform.Find("smallTown").gameObject.SetActive(true);
 
             }
-            else if (size == Town.Sizes.Medium){
+            else if (t.Size == Town.Sizes.Medium){
                     transform.Find("town").gameObject.SetActive(true);
 
             }
-            else if (size == Town.Sizes.Large){
+            else if (t.Size == Town.Sizes.Large){
                     transform.Find("largeTown").gameObject.SetActive(true);
             }
+
         }
         else if (Type == OverworldMap.LocationType.EVENT)
         {
             transform.Find("EncounterMark").gameObject.SetActive(true);
+        }
+        else if (Type == OverworldMap.LocationType.POI)
+        {
+            transform.Rotate(new Vector3(0, Random.Range(0, 360), 0), Space.Self);
+            transform.Find("tinyTown").gameObject.SetActive(true);
         }
         else {
             transform.Find("Icon").gameObject.SetActive(true);
@@ -70,15 +77,40 @@ public class MapNode : MonoBehaviour
     /// Assosiate an info panel with this node
     /// </summary>
     /// <param name="obj">The info panel game object</param>
-    public void setPanel(GameObject obj)
+    public void setPanel(GameObject obj, bool showEnterButton)
     {
         if (panel) return;
+        bool adjacent = DataTracker.Current.WorldMap.HasEdge(NodeId, DataTracker.Current.currentLocationId);
+        if (Type == OverworldMap.LocationType.NONE && ! adjacent) return;
+
         panel = obj.GetComponent<TravelPanel>();
         panel.SetNode(this);
         obj.SetActive(true);
-        panel.SetInfo(MapTravel.GetFuelCost(this), MapTravel.dayRate);
+
+        if (showEnterButton){
+            panel.EnableButton();
+            panel.Select();
+        }
+        if (DataTracker.Current.WorldMap.HasEdge(NodeId, DataTracker.Current.currentLocationId)){
+            panel.SetTravelInfo(MapTravel.GetFuelCost(this), MapTravel.dayRate);
+        }
+
+        if (Type == OverworldMap.LocationType.TOWN) {
+            panel.SetDetails(DataTracker.Current.TownManager.GetTownById(LocationId).Name);
+        }
+        else if (Type == OverworldMap.LocationType.EVENT) {
+            panel.SetDetails("Unknown Event");
+
+        }
+        else if (Type == OverworldMap.LocationType.POI) {
+            panel.SetDetails("Point of Interest");
+        }
+
         obj.transform.position = cam.WorldToScreenPoint(gameObject.transform.position) + offset;
         panel.onNodeHover();
+        if (showEnterButton){
+            panel.Select();
+        }
 
     }
 
@@ -89,8 +121,7 @@ public class MapNode : MonoBehaviour
     private void OnMouseEnter()
     {
         if (panel) return;
-        if (DataTracker.Current.WorldMap.HasEdge(NodeId, DataTracker.Current.currentLocationId))
-            EventManager.Instance.OnNodeMouseEnter.Invoke(this);
+        EventManager.Instance.OnNodeMouseEnter.Invoke(this);
     }
 
     /// <summary>
@@ -125,19 +156,6 @@ public class MapNode : MonoBehaviour
             }
         }
 
-    }
-
-    /// <summary>
-    /// Close this node if another node is selected
-    /// </summary>
-    /// <param name="node">Node that was selected</param>
-    private void OtherNodeSelected(MapNode node)
-    {
-        if (panel && node.NodeId != NodeId)
-        {
-            panel.onCancelButtonClick();
-            Close();
-        }
     }
 
     /// <summary>

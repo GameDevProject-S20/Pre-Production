@@ -1,8 +1,8 @@
-Id,Name,Leader,Colour,Size
-0,Smithsville,Sheriff Smith,#3492eb,Small
-1,York,the Northern Trade Coalition,#d43e15,Medium
-2,Big Rock,Mayor Brown,#79a10b,Large
-3,Riverbed,Old Man Jeb,#30b394,Tiny
-4,Lombard Canyon,Mayor Li,#ba27b3,Large
-5,Ares,Overseer Ahmed,#dbc13d,Small
-6,Fields,the Green Pact,#10a381,Medium
+Id,Name,Leader,Colour,Size,Tags
+0,Smithsville,Sheriff Smith,#3492eb,Medium,
+1,York,the Northern Trade Coalition,#d43e15,Medium,
+2,Big Rock,Mayor Brown,#79a10b,Large,
+3,Riverbed,Old Man Jeb,#30b394,Small,Farm
+4,Lombard Canyon,Mayor Li,#ba27b3,Large,Hospital
+5,Ares,Overseer Ahmed,#dbc13d,Small,Mining
+6,Fields,the Green Pact,#10a381,Medium,Foundry

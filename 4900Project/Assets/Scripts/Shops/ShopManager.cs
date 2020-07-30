@@ -8,6 +8,8 @@ public class ShopManager
     //-set up to pull from csv
     //-set up to interact with data tracker
 
+    static int id = 0;
+
     private static ShopManager instance;
 
     public static ShopManager Instance
@@ -26,8 +28,8 @@ public class ShopManager
 
     public void LoadData()
     {
-        Shop testShop1 = new Shop(0, "George's General Store", "General Store", "", Shop.ShopTypes.GeneralStore);
-        Shop testShop2 = new Shop(1, "Phil's Pharmacy", "Medical Supplier", "", Shop.ShopTypes.Pharmacy);
+        //Shop testShop1 = new Shop(0, "George's General Store", "General Store", "", Shop.ShopTypes.GeneralStore);
+        /*Shop testShop2 = new Shop(1, "Phil's Pharmacy", "Medical Supplier", "", Shop.ShopTypes.Pharmacy);
         Shop testShop3 = new Shop(2, "Bill's Bulk Goods", "General Store", "", Shop.ShopTypes.GeneralStore);
         testShop3.inventory.AddItem("Generator", 1);
         Shop testShop4 = new Shop(3, "Hal's Hospital", "Medical Supplier", "", Shop.ShopTypes.Pharmacy);
@@ -37,7 +39,7 @@ public class ShopManager
         Shop testShop8 = new Shop(7, "Martha's Medicine", "Medical Supplier", "", Shop.ShopTypes.Pharmacy);
         Shop testShop9 = new Shop(8, "Mike's Marketplace", "General Store", "", Shop.ShopTypes.GeneralStore);
         Shop testShop10 = new Shop(9, "Harry's Healing", "Medical Supplier", "", Shop.ShopTypes.Pharmacy);
-        testShop3.fromPlayerModifiers.Add(typetag.Medicine, 0.25f);
+        testShop3.fromPlayerModifiers.Add(ItemTag.Medical, 0.25f);
         shops.Add(0, testShop1);
         shops.Add(1, testShop2);
         shops.Add(2, testShop3);
@@ -47,7 +49,15 @@ public class ShopManager
         shops.Add(6, testShop7);
         shops.Add(7, testShop8);
         shops.Add(8, testShop9);
-        shops.Add(9, testShop10);
+        shops.Add(9, testShop10);*/
+    }
+
+    public void addShop(Shop s){
+        shops.Add(s.id, s);
+    }
+
+    public int GetId(){
+        return id++;
     }
 
     //town retrieval
