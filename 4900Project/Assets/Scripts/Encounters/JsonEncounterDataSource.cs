@@ -449,89 +449,113 @@ public class JsonEncounterDataSource : IEncounterDataSource
     private IEffect parseEffect(string statement, int encounterId)
     {
         IEffect e = null;
+        string command = null;
+        string[] args = null;
 
-        SplitCommand(statement, out char identifier, out string command, out string[] args);
+        try
+        {
+            SplitCommand(statement, out char identifier, out command, out args);
 
-        if (identifier != EFFECT_CHAR)
-        {
-            throw new ArgumentException(string.Format("Incorrect identifier for effect {0}. Expected '{1}'. Got '{2}'.\n{3}", statement, EFFECT_CHAR, identifier, statement));
-        }
-        if (command == "give")
-        {
-            var iname = args[0];
-            var iamount = Int16.Parse(args[1]);
-            e = new GiveItem(iname, iamount);
-        }
-        else if (command == "give_tag")
-        {
-            var itag = args[0];
-            var iamount = Int16.Parse(args[1]);
-            e = new GiveItemWithTag(itag, iamount);
-        }
-        else if (command == "take")
-        {
-            var iname = args[0];
-            var iamount = Int16.Parse(args[1]);
-            e = new TakeItem(iname, iamount);
-        }
-        else if (command == "take_tag")
-        {
-            var itag = args[0];
-            var iamount = Int16.Parse(args[1]);
-            e = new TakeItemWithTag(itag, iamount);
-        }
-        else if (command == "resolve")
-        {
-            e = new ResolveEncounterEffect(encounterId);
-        }
-        else if (command == "health")
-        {
-            var perc = double.Parse(args[0]);
-            e = new HealthEffect(perc);
-        }
-        else if (command == "start_quest")
-        {
-            var name = args[0];
-            e = new StartQuestEffect(name);
-        }
-        else if (command == "set_node_encounter")
-        {
-            var nodeId = Int16.Parse(args[0]);
-            var encId = Int16.Parse(args[1]);
-            e = new SetNodeEncounterEffect(nodeId, encId);
-        }
-        else if (command == "set_dialogue_encounter")
-        {
-            var townId = Int16.Parse(args[0]);
-            var encId = Int16.Parse(args[1]);
-            e = new SetDialogueEncounterEffect(townId, encId);
-        }
-        else if (command == "add_edge")
-        {
-            var node1 = Int16.Parse(args[0]);
-            var node2 = Int16.Parse(args[1]);
-            e = new AddEdgeEffect(node1, node2);
-        }
-        else if (command == "trigger")
-        {
-            var name = args[0];
-            e = new TriggerEventEffect(name);
-        }
-        else if (command == "random")
-        {
-            // Parsing works differently, so args must be overhauled
-            GetRandomCommandArgs(statement, out double percentFirst, out string es1, out string es2);
+            if (identifier != EFFECT_CHAR)
+            {
+                throw new ArgumentException(string.Format("Incorrect identifier for effect {0}. Expected '{1}'. Got '{2}'.\n{3}", statement, EFFECT_CHAR, identifier, statement));
+            }
+            if (command == "give")
+            {
+                var iname = args[0];
+                var iamount = Int16.Parse(args[1]);
+                e = new GiveItem(iname, iamount);
+            }
+            else if (command == "give_tag")
+            {
+                var itag = args[0];
+                var iamount = Int16.Parse(args[1]);
+                e = new GiveItemWithTag(itag, iamount);
+            }
+            else if (command == "take")
+            {
+                var iname = args[0];
+                var iamount = Int16.Parse(args[1]);
+                e = new TakeItem(iname, iamount);
+            }
+            else if (command == "take_tag")
+            {
+                var itag = args[0];
+                var iamount = Int16.Parse(args[1]);
+                e = new TakeItemWithTag(itag, iamount);
+            }
+            else if (command == "resolve")
+            {
+                e = new ResolveEncounterEffect(encounterId);
+            }
+            else if (command == "health")
+            {
+                var mod = Int16.Parse(args[0]);
+                e = new HealthEffect(mod);
+            }
+            else if (command == "health%")
+            {
+                var perc = Int16.Parse(args[0]);
+                e = new HealthPercentEffect(perc);
+            }
+            else if (command == "max_health")
+            {
+                var mod = Int16.Parse(args[0]);
+                e = new MaxHealthEffect(mod);
+            }
+            else if (command == "max_health%")
+            {
+                var perc = Int16.Parse(args[0]);
+                e = new MaxHealthPercentEffect(perc);
+            }
+            else if (command == "start_quest")
+            {
+                var name = args[0];
+                e = new StartQuestEffect(name);
+            }
+            else if (command == "set_node_encounter")
+            {
+                var nodeId = Int16.Parse(args[0]);
+                var encId = Int16.Parse(args[1]);
+                e = new SetNodeEncounterEffect(nodeId, encId);
+            }
+            else if (command == "set_dialogue_encounter")
+            {
+                var townId = Int16.Parse(args[0]);
+                var encId = Int16.Parse(args[1]);
+                e = new SetDialogueEncounterEffect(townId, encId);
+            }
+            else if (command == "add_edge")
+            {
+                var node1 = Int16.Parse(args[0]);
+                var node2 = Int16.Parse(args[1]);
+                e = new AddEdgeEffect(node1, node2);
+            }
+            else if (command == "trigger")
+            {
+                var name = args[0];
+                e = new TriggerEventEffect(name);
+            }
+            else if (command == "random")
+            {
+                // Parsing works differently, so args must be overhauled
+                GetRandomCommandArgs(statement, out double percentFirst, out string es1, out string es2);
 
-            UnityEngine.Debug.Log(string.Format("Parsing Random\n{0}\n{1}", es1, es2));
+                UnityEngine.Debug.Log(string.Format("Parsing Random\n{0}\n{1}", es1, es2));
 
-            // Parse (will recurse if multiple randoms used)
-            var effect1 = parseEffect(es1, encounterId);
-            var effect2 = parseEffect(es2, encounterId);
+                // Parse (will recurse if multiple randoms used)
+                var effect1 = parseEffect(es1, encounterId);
+                var effect2 = parseEffect(es2, encounterId);
 
-            e = new RandomEffect(effect1, effect2, percentFirst);
-            UnityEngine.Debug.Log(e);
+                e = new RandomEffect(effect1, effect2, percentFirst);
+                UnityEngine.Debug.Log(e);
+            }
         }
-
+        catch (Exception exception)
+        {
+            throw new Exception(string.Format("{0} thrown by effect parser.\nEffect: {1}\nCommand: {2}\nArgs: {3}\n\nDetails:\n{4}", exception.GetType(), statement, command, string.Join(", ", args.Select(a => string.Format("'{0}'", a))), exception.Message));
+        }
+        
         return e;
     }
 

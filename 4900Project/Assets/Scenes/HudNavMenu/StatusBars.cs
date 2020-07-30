@@ -31,8 +31,8 @@ public class StatusBars : MonoBehaviour
 
     void UpdateAmounts(int i=0)
     {
-        healthBarText.text = DataTracker.Current.Player.health.ToString("0");
-        healthBar.fillAmount = DataTracker.Current.Player.health / DataTracker.Current.Player.healthCap;
+        healthBarText.text = DataTracker.Current.Player.Health.ToString("0");
+        healthBar.fillAmount = DataTracker.Current.Player.Health / DataTracker.Current.Player.HealthCap;
 
 
     }
