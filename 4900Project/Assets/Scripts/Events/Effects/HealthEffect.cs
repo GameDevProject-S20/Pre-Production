@@ -13,7 +13,7 @@ public class HealthEffect : IEffect
         {
             throw new Exception("Useless Effect");
         }
-        
+
         this.mod = mod;
     }
 
@@ -68,6 +68,7 @@ public class MaxHealthEffect : IEffect
     {
         int prevMaxHealth = Player.Instance.HealthCap;
         Player.Instance.ModifyCap(mod);
+        Player.Instance.AddHealth(mod);
         return (prevMaxHealth + mod != Player.Instance.HealthCap);
     }
 }
@@ -86,6 +87,10 @@ public class MaxHealthPercentEffect : IEffect
         {
             throw new ArgumentException("perc must be between -100 and 100, inclusive");
         }
+        else
+        {
+            percent = perc;
+        }
     }
 
     public bool Apply()
@@ -94,4 +99,3 @@ public class MaxHealthPercentEffect : IEffect
         return new MaxHealthEffect(mod).Apply();
     }
 }
-

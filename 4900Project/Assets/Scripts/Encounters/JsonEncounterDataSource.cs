@@ -235,7 +235,7 @@ public class JsonEncounterDataSource : IEncounterDataSource
         statement = statement.Trim();
         identifier = statement.FirstOrDefault();
 
-        var statement_arr = string.Concat(statement.Skip(1)).Split(); 
+        var statement_arr = string.Concat(statement.Skip(1)).Split();
         command = statement_arr.FirstOrDefault().ToLower();
         args = statement_arr.Skip(1).Select(a => a.Replace('_', ' ')).ToArray();
     }
@@ -498,12 +498,12 @@ public class JsonEncounterDataSource : IEncounterDataSource
                 var perc = Int16.Parse(args[0]);
                 e = new HealthPercentEffect(perc);
             }
-            else if (command == "max_health")
+            else if (command == "health_max")
             {
                 var mod = Int16.Parse(args[0]);
                 e = new MaxHealthEffect(mod);
             }
-            else if (command == "max_health%")
+            else if (command == "health_max%")
             {
                 var perc = Int16.Parse(args[0]);
                 e = new MaxHealthPercentEffect(perc);
@@ -555,13 +555,13 @@ public class JsonEncounterDataSource : IEncounterDataSource
         {
             throw new Exception(string.Format("{0} thrown by effect parser.\nEffect: {1}\nCommand: {2}\nArgs: {3}\n\nDetails:\n{4}", exception.GetType(), statement, command, string.Join(", ", args.Select(a => string.Format("'{0}'", a))), exception.Message));
         }
-        
+
         return e;
     }
 
     /// <summary>
     /// Exclusively used by parseEffect.
-    /// 
+    ///
     /// Random's formatting works differently, so this parses that.
     /// </summary>
     /// <param name="statement">The full effect statement</param>
@@ -579,7 +579,7 @@ public class JsonEncounterDataSource : IEncounterDataSource
 
         var statement_arr = string.Concat(statement.Skip(1)).Split();
         percentFirst = double.Parse(statement_arr[1]);
-        
+
         ParseParenthesis(statement, out int startIndex, out int endIndex);
         effectA = statement.Substring(startIndex, endIndex - startIndex + 1);
 
@@ -590,7 +590,7 @@ public class JsonEncounterDataSource : IEncounterDataSource
 
     /// <summary>
     /// Exlusively used by GetRandomCommandArgs
-    /// 
+    ///
     /// Used to extract effect between parentheses.
     /// </summary>
     /// <param name="statement">The statement to parse</param>
