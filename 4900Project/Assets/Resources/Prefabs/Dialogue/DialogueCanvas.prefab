@@ -980,8 +980,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -40}
+  m_SizeDelta: {x: 0, y: -80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7199653088484956935
 CanvasRenderer:
@@ -2096,6 +2096,8 @@ MonoBehaviour:
   avatarDisplayName: {fileID: 7199653088881238175}
   contentRect: {fileID: 7864621161261145241}
   scrollViewContainerRect: {fileID: 7864621162552622781}
+  interactableButtonTextColour: {r: 204, g: 196, b: 179, a: 255}
+  uninteractableButtonTextColour: {r: 145, g: 139, b: 126, a: 255}
 --- !u!1 &7199653089870455510
 GameObject:
   m_ObjectHideFlags: 0
