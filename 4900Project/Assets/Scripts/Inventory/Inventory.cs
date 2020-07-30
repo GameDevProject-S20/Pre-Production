@@ -166,14 +166,7 @@ public class Inventory
         {
             throw new ArgumentException(string.Format("Item {0} not found.\n\nAvailable:\n{1}", name, string.Join("\n", ItemManager.Current.itemsMaster.Keys)));
         }
-        if (name == "Fuel")
-        {
-            int fuelRoom = DataTracker.Current.Player.FuelCap - DataTracker.Current.Player.Inventory.Contains("Fuel");
-            if ( fuelRoom > 0)
-            {
-                return Math.Min(Mathf.FloorToInt((WeightLimit * weightOverflowModifier - TotalWeight()) / item.Weight), fuelRoom);
-            }
-        }
+
         return Mathf.FloorToInt((WeightLimit * weightOverflowModifier - TotalWeight()) / item.Weight);
     }
 
