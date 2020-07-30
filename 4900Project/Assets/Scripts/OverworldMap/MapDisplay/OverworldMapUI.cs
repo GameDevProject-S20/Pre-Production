@@ -13,7 +13,8 @@ public class OverworldMapUI : MonoBehaviour
     [Header("Display Settings")]
     [SerializeField]
     float MapDrawScale = 1;
-
+    [SerializeField]
+    Material material;
     // Prefabs
     [Header("Prefabs")]
     [SerializeField]
@@ -57,6 +58,7 @@ public class OverworldMapUI : MonoBehaviour
     //sounds
     [SerializeField]
     AudioClip Vroom;
+
 
 
     //Movement variables
@@ -159,8 +161,8 @@ public class OverworldMapUI : MonoBehaviour
                     new Vector3(edge.Item1.PosX, 0, edge.Item1.PosY)* DataTracker.Current.MapSize * MapDrawScale,
                     new Vector3(edge.Item2.PosX, 0, edge.Item2.PosY)* DataTracker.Current.MapSize * MapDrawScale
                 };
-            Vector3 a = lineEnds[0] - 0.2f * (lineEnds[0] - lineEnds[1]);
-            Vector3 b = lineEnds[1] - 0.2f * (lineEnds[1] - lineEnds[0]);
+            Vector3 a = lineEnds[0] - 0.15f * (lineEnds[0] - lineEnds[1]);
+            Vector3 b = lineEnds[1] - 0.15f * (lineEnds[1] - lineEnds[0]);
             lineEnds[0] = a;
             lineEnds[1] = b;
             lr.SetPositions(lineEnds);
@@ -227,6 +229,7 @@ public class OverworldMapUI : MonoBehaviour
 
     private void Update()
     {
+        material.SetVector("PlayerPosition", playerMarker.transform.position);
         // Move the player
         if (isTravelling)
         {

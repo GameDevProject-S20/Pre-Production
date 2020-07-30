@@ -43,6 +43,8 @@ public class MapNode : MonoBehaviour
             else if (t.Size == Town.Sizes.Large){
                     transform.Find("largeTown").gameObject.SetActive(true);
             }
+            transform.Find("Indicator").gameObject.SetActive(true);
+
 
         }
         else if (Type == OverworldMap.LocationType.EVENT)
@@ -53,9 +55,16 @@ public class MapNode : MonoBehaviour
         {
             transform.Rotate(new Vector3(0, Random.Range(0, 360), 0), Space.Self);
             transform.Find("tinyTown").gameObject.SetActive(true);
+            transform.Find("Indicator").gameObject.SetActive(true);
         }
         else {
             transform.Find("Icon").gameObject.SetActive(true);
+        }
+
+        foreach(Transform child in transform) {
+            if (!child.gameObject.activeInHierarchy && child.gameObject.name != "Icon"){
+                GameObject.Destroy(child.gameObject);
+            }
         }
     }
 

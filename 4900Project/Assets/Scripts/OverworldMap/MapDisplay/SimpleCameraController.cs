@@ -40,7 +40,7 @@ public class SimpleCameraController : MonoBehaviour
 
     private void Update() 
     {
-        //transform.position = GeneralPurposeControl(transform.position); //WSAD! 
+        transform.position = GeneralPurposeControl(transform.position); //WSAD! 
         transform.position = MouseScrollControl(transform.position); ;
         MouseDragControl();
         
@@ -54,8 +54,8 @@ public class SimpleCameraController : MonoBehaviour
         if (input != Vector3.zero){
             Vector3 velocity = input * panSpeed;
             nextPosition = position + velocity;
-            nextPosition.x = Mathf.Clamp(nextPosition.x, min.x, max.x);
-            nextPosition.z = Mathf.Clamp(nextPosition.z, min.z, max.z);
+            //nextPosition.x = Mathf.Clamp(nextPosition.x, min.x, max.x);
+            //nextPosition.z = Mathf.Clamp(nextPosition.z, min.z, max.z);
 
         }
         return nextPosition;
@@ -138,7 +138,7 @@ public class SimpleCameraController : MonoBehaviour
         Vector3 expectedTranslation = transform.position + move;
 
 
-        /* Check t0 make sure not outside of the bounds */ 
+       /* Check t0 make sure not outside of the bounds 
         if (outerRight > expectedTranslation.x && expectedTranslation.x > outerLeft)
         {
             transform.Translate(new Vector3(move.x, 0, 0), Space.World);
@@ -147,7 +147,7 @@ public class SimpleCameraController : MonoBehaviour
         if (outerUp > expectedTranslation.z && expectedTranslation.z > outerDown)
         {
             transform.Translate(new Vector3(0, 0, move.z), Space.World);
-        }
+        }*/
 
     }
 }
