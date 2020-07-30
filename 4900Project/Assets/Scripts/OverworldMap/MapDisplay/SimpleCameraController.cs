@@ -167,7 +167,7 @@ public class SimpleCameraController : MonoBehaviour
         Vector3 expectedTranslation = transform.position + move;
 
 
-       /* Check t0 make sure not outside of the bounds 
+        //Check to make sure not outside of the bounds 
         if (outerRight > expectedTranslation.x && expectedTranslation.x > outerLeft)
         {
             transform.Translate(new Vector3(move.x, 0, 0), Space.World);
@@ -176,7 +176,7 @@ public class SimpleCameraController : MonoBehaviour
         if (outerUp > expectedTranslation.z && expectedTranslation.z > outerDown)
         {
             transform.Translate(new Vector3(0, 0, move.z), Space.World);
-        }*/
+        }
 
     }
 }
