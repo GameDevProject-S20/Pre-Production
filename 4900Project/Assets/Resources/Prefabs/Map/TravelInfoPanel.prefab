@@ -834,7 +834,7 @@ GameObject:
   - component: {fileID: 5202232187694006560}
   - component: {fileID: 5100702543794871642}
   m_Layer: 5
-  m_Name: TMP SubMeshUI [Roboto SDF Material + LiberationSans SDF Atlas]
+  m_Name: TMP SubMeshUI [TextMeshPro/Sprite]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -879,19 +879,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 058cba836c1846c3aa1c5fd2e28aea77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2820595400477791272, guid: 2aec753ab2d7cb24c8eeb0aed01fdb5f,
+    type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_spriteAsset: {fileID: 0}
+  m_fontAsset: {fileID: 11400000, guid: adb6b887fd2cd3c408c3eb838e374287, type: 2}
+  m_spriteAsset: {fileID: 11400000, guid: 2aec753ab2d7cb24c8eeb0aed01fdb5f, type: 2}
   m_material: {fileID: 0}
-  m_sharedMaterial: {fileID: 0}
-  m_isDefaultMaterial: 0
-  m_padding: 1.25
+  m_sharedMaterial: {fileID: 2820595400477791272, guid: 2aec753ab2d7cb24c8eeb0aed01fdb5f,
+    type: 2}
+  m_isDefaultMaterial: 1
+  m_padding: 0
   m_canvasRenderer: {fileID: 5202232187694006560}
   m_TextComponent: {fileID: 1539842404060914086}
   m_materialReferenceIndex: 1
@@ -1029,7 +1031,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 113, y: 0}
   m_SizeDelta: {x: 226, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4900411016707034856
@@ -1079,7 +1081,7 @@ MonoBehaviour:
     bottomLeft: {r: 1, g: 1, b: 1, a: 1}
     bottomRight: {r: 1, g: 1, b: 1, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
+  m_spriteAsset: {fileID: 11400000, guid: 2aec753ab2d7cb24c8eeb0aed01fdb5f, type: 2}
   m_tintAllSprites: 0
   m_overrideHtmlColors: 0
   m_faceColor:
@@ -1098,7 +1100,7 @@ MonoBehaviour:
   m_textAlignment: 514
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: -50
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0

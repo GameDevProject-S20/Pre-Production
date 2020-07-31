@@ -100,6 +100,7 @@ public class MapNode : MonoBehaviour
 
         if (Type == OverworldMap.LocationType.TOWN) {
             panel.SetDetails(DataTracker.Current.TownManager.GetTownById(node.LocationId).Name);
+            panel.AddTownTags(DataTracker.Current.TownManager.GetTownById(node.LocationId).Tags);
         }
         else if (Type == OverworldMap.LocationType.EVENT) {
             panel.SetDetails("Unknown Event");
