@@ -130,17 +130,25 @@ public class TravelPanel : InfoPanel
                 }
             }
         }
-        if(positiveMods.Count > 0 || negativeMods.Count > 0)
+        if (positiveMods.Count > 0 || negativeMods.Count > 0)
         {
-            DetailText.text += "\n Buys:";
-        }
-        foreach(int a in positiveMods)
-        {
-            DetailText.text += "<sprite=9><sprite=" + a + ">"; 
-        }
-        foreach (int a in negativeMods)
-        {
-            DetailText.text += "<sprite=0><sprite=" + a + ">";
+            DetailText.text += "\n Buys: \n  ";
+            if (positiveMods.Count > 0)
+            {
+                DetailText.text += "<sprite=9>";
+            }
+            foreach (int a in positiveMods)
+            {
+                DetailText.text += "<sprite=" + a + ">";
+            }
+            if (negativeMods.Count > 0)
+            {
+                DetailText.text += "  <sprite=0>";
+            }
+            foreach (int a in negativeMods)
+            {
+                DetailText.text += "<sprite=" + a + ">";
+            }
         }
         positiveMods = new List<int>();
         negativeMods = new List<int>();
@@ -209,15 +217,23 @@ public class TravelPanel : InfoPanel
         }
         if (positiveMods.Count > 0 || negativeMods.Count > 0)
         {
-            DetailText.text += "\n \n Sells: ";
-        }
-        foreach (int a in positiveMods)
-        {
-            DetailText.text += "<sprite=9><sprite=" + a + ">";
-        }
-        foreach (int a in negativeMods)
-        {
-            DetailText.text += "<sprite=0><sprite=" + a + ">";
+            DetailText.text += "\n \n Sells: \n  ";
+            if (positiveMods.Count > 0)
+            {
+                DetailText.text += "<sprite=9>";
+            }
+            foreach (int a in positiveMods)
+            {
+                DetailText.text += "<sprite=" + a + ">";
+            }
+            if (negativeMods.Count > 0)
+            {
+                DetailText.text += "  <sprite=0>";
+            }
+            foreach (int a in negativeMods)
+            {
+                DetailText.text += "<sprite=" + a + ">";
+            }
         }
     }
 
