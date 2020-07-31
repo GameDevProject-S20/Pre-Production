@@ -118,6 +118,7 @@ public class MapNode : MonoBehaviour
             }
             
             panel.SetDetails(details);
+            panel.AddTownTags(t.Tags);
         }
         else if (Type == OverworldMap.LocationType.EVENT) {
             panel.SetDetails("Unknown Event");
