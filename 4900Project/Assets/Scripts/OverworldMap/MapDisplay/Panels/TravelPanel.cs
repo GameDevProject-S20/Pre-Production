@@ -217,7 +217,7 @@ public class TravelPanel : InfoPanel
         }
         if (positiveMods.Count > 0 || negativeMods.Count > 0)
         {
-            DetailText.text += "\n \n Sells: \n  ";
+            DetailText.text += "\n Sells: \n  ";
             if (positiveMods.Count > 0)
             {
                 DetailText.text += "<sprite=9>";
