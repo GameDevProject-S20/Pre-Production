@@ -352,7 +352,7 @@
 						{
 							"text": "Show your token.",
 							"conditions": [
-								"!has bandit_roken 1"
+								"!has bandit_token 1"
 							],
 							"next_page_id": 4
 						}
