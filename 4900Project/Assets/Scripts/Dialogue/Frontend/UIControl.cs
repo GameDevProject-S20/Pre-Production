@@ -1,5 +1,6 @@
 ﻿using Dialogue;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -102,6 +103,11 @@ namespace Assets.Scripts.Dialogue.Frontend
         {
             button.onClick.AddListener(() =>
             {
+                if (button.GetComponentInChildren<Text>().text == "")
+                {
+                    return;
+                }
+
                 DialogueManager.Instance.GetActiveDialogue().PressButton(index);
             });
         }
@@ -129,10 +135,9 @@ namespace Assets.Scripts.Dialogue.Frontend
                 Debug.Log(string.Format("Active Page\n\n{0}", activePage));
 
                 // Update all the data
-                UpdateButtons(activePage.Buttons);
                 UpdateAvatarDisplay(activePage.Avatar);
                 UpdatePageTextDisplay(history, activePage);
-
+                 
             }
         }
 
@@ -177,8 +182,45 @@ namespace Assets.Scripts.Dialogue.Frontend
         /// <param name="currentPage"></param>
         protected void UpdatePageTextDisplay(IEnumerable<IDHistory> history, IDPage currentPage)
         {
-            textDisplay.GetComponent<TextMeshProUGUI>().text = BuildPageString(history, currentPage);
+
+            var textMeshPro = textDisplay.GetComponent<TextMeshProUGUI>();
+            var nextPageText = BuildPageString(history, currentPage);
+            if (history.Count() == 0)
+            {
+                textMeshPro.maxVisibleCharacters = 0;
+                textMeshPro.text = "";
+            }
+
+            // Resize the content based on what's already in the text
             UpdatePageScrolling();
+
+            textMeshPro.text = nextPageText;
+            StartCoroutine(UpdatePage(currentPage.Buttons));
+        }
+
+        protected IEnumerator UpdatePage(IEnumerable<IDButton> buttons)
+        {
+            UpdateButtons(new List<IDButton>());
+            yield return StartCoroutine(PlayTextTypingAnimation());
+            UpdateButtons(buttons);
+            UpdatePageScrolling();
+        }
+
+        /// <summary>
+        /// Plays an animation of each character being typed out one-by-one.
+        /// Animates from the currently displayed text to the next page.
+        /// </summary>
+        /// <returns></returns>
+        protected IEnumerator PlayTextTypingAnimation()
+        {
+            var textMeshPro = textDisplay.GetComponent<TextMeshProUGUI>();
+            int charCount = System.Text.RegularExpressions.Regex.Replace(textMeshPro.text, "<.*?>", String.Empty).Length;
+            for (var i = textMeshPro.maxVisibleCharacters; i < charCount; i++)
+            {
+                textMeshPro.maxVisibleCharacters = i;
+                yield return new WaitForSeconds(0.01f);
+            }
+            textMeshPro.maxVisibleCharacters = charCount;
         }
 
         /// <summary>

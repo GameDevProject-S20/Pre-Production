@@ -7,6 +7,7 @@ namespace Assets.Scripts.ExitMenu
     public class ExitMenuControl : MonoBehaviour
     {
         protected static bool promptOpen;
+        protected static readonly IDialogue exitDialogue = DialogueManager.Instance.CreateDialogue(QuitPage);
 
         /// <summary>
         /// Pops up the prompt for quitting the game.
@@ -23,7 +24,7 @@ namespace Assets.Scripts.ExitMenu
             promptOpen = true;
 
             // Pops up a new Dialogue with the exit prompt
-            DialogueManager.Instance.CreateDialogue(QuitPage);
+            exitDialogue.Show();
         }
 
         /// <summary>
