@@ -9,10 +9,22 @@ namespace Assets.Scripts.ExitMenu
 {
     class EscapeButtonHandler : MonoBehaviour
     {
+        bool wasKeyDown = false;
+
         void Update()
         {
-            // Escape Button => Exit Menu
-            if (Input.GetKey(KeyCode.Escape))
+            var isDown = Input.GetKey(KeyCode.Escape);
+            
+            // Don't do anything if the input hasn't changed
+            if (isDown == wasKeyDown)
+            {
+                return;
+            }
+            wasKeyDown = isDown;
+
+
+            // If the key is down, fire the EscapeMenuRequested event
+            if (isDown)
             {
                 DataTracker.Current.EventManager.EscapeMenuRequested.Invoke();
             }

@@ -71,7 +71,27 @@ namespace Assets.Scripts.EscapeMenu.Interfaces
             {
                 UnityEngine.Debug.Log($"The setting {setting} changed");
             });
-            DataTracker.Current.EventManager.EscapeMenuRequested.AddListener(Show);
+            DataTracker.Current.EventManager.EscapeMenuRequested.AddListener(Toggle);
+        }
+
+        /// <summary>
+        /// Toggles the escape menu, either showing it or hiding it.
+        /// </summary>
+        public void Toggle()
+        {
+            // If the canvas is enabled, we want to disable it;
+            // Otherwise, we want to enable it
+            var canvas = gameObject.GetComponent<Canvas>();
+            if (canvas.enabled)
+            {
+                // Note that we're calling the method here so that the other stuff,
+                // like freezing/unfreezing the map, is automatic
+                Hide();
+            }
+            else
+            {
+                Show();
+            }
         }
 
         /// <summary>
