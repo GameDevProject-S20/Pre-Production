@@ -25,7 +25,7 @@ public class HudActions : MonoBehaviour
 
     public void OnMenuButtonClick()
     {
-        EventManager.Instance.HudMenuClicked.Invoke();
+        EventManager.Instance.EscapeMenuRequested.Invoke();
     }
 
     public void OnJournalButtonClick()
