@@ -33,7 +33,7 @@ namespace Assets.Scripts.EscapeMenu.Interfaces
         /// <summary>
         /// Multiplier for the typing speed animation. Lower value = slower animation.
         /// </summary>
-        public float TypingSpeedMultiplier { get; set; }
+        public float TypingSpeed { get; set; }
 
         /// <summary>
         /// Multiplier for the game volume. Lower value = lower volume.

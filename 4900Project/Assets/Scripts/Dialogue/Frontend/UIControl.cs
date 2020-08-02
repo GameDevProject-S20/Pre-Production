@@ -219,7 +219,7 @@ namespace Assets.Scripts.Dialogue.Frontend
             for (var i = textMeshPro.maxVisibleCharacters; i < charCount; i++)
             {
                 textMeshPro.maxVisibleCharacters = i;
-                yield return new WaitForSeconds(Settings.Instance.TypingSpeedMultiplier);
+                yield return new WaitForSeconds(Settings.Instance.TypingSpeed);
             }
             textMeshPro.maxVisibleCharacters = charCount;
         }

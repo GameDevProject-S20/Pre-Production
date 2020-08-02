@@ -45,6 +45,9 @@ namespace Assets.Scripts.EscapeMenu.Interfaces
                 // verify that the settings has the correct value
                 UpdateSetting(slider.SettingName, slider.slider.value);
 
+                // Update the shown text
+                UpdateValueDisplay(slider);
+
                 // hook up events
                 HookupSlider(slider);
             }
@@ -85,13 +88,11 @@ namespace Assets.Scripts.EscapeMenu.Interfaces
             // Identify the classes we need access to
             var slider = sliderData.slider;
             var customSlider = slider.GetComponent<CustomEscapeMenuSlider>();
-            var valueDisplay = slider.transform.Find("Background/ValueText").GetComponent<TMPro.TextMeshProUGUI>();
 
             // When the slider's value updates, we need to update the value in the UI
-            slider.onValueChanged.AddListener((float value) =>
+            slider.onValueChanged.AddListener((float _) =>
             {
-                // Format the value according to what's shown in the slider's data & update what's shown on the UI
-                valueDisplay.text = String.Format(sliderData.DisplayFormatPattern, value).Replace(" ", "");
+                UpdateValueDisplay(sliderData);
             });
 
             // When the player finishes changing a value, we want to update the setting
@@ -108,6 +109,17 @@ namespace Assets.Scripts.EscapeMenu.Interfaces
         private void UpdateSetting(string settingName, float value)
         {
             Settings.Instance.UpdateSettingValue(settingName, value);
+        }
+
+        /// <summary>
+        /// Updates the value displayed on the UI
+        /// </summary>
+        /// <param name="sliderData"></param>
+        private void UpdateValueDisplay(SettingsSliderData sliderData)
+        {
+            var slider = sliderData.slider;
+            var valueDisplay = slider.transform.Find("Background/ValueText").GetComponent<TMPro.TextMeshProUGUI>();
+            valueDisplay.text = String.Format(sliderData.DisplayFormatPattern, slider.value).Replace(" ", "");
         }
     }
 }
