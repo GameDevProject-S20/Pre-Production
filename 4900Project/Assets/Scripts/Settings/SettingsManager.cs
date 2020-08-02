@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Scripts.EscapeMenu.Interfaces
+namespace Assets.Scripts.Settings
 {
     /// <summary>
     /// The Settings class. This class stores values for every setting in the game.

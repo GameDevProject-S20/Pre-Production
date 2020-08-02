@@ -6,7 +6,7 @@ using Quests;
 using SIEvents;
 using System.Linq;
 using Dialogue;
-using Assets.Scripts.EscapeMenu.Interfaces;
+using Assets.Scripts.Settings;
 
 [System.Serializable]
 public class DataTracker : MonoBehaviour
