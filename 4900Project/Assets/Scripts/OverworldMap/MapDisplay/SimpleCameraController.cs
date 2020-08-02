@@ -69,7 +69,7 @@ public class SimpleCameraController : MonoBehaviour
 
         if (input != Vector3.zero)
         {
-            Vector3 velocity = input * panSpeed / 2.0f;
+            Vector3 velocity = input * panSpeed * GetDragMultiplier() / 2.0f;
             nextPosition = position + velocity;
 
             // Calculate the expect translation to make sure it does not exceed max/min 
@@ -159,9 +159,10 @@ public class SimpleCameraController : MonoBehaviour
         if (!Input.GetMouseButton(0)) return;
 
 
-        Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition - dragOrigin);
-        Vector3 move = new Vector3(pos.x * dragSpeed, 0, pos.y * dragSpeed);
+        float multiplier = GetDragMultiplier();
 
+        Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition - dragOrigin);
+        Vector3 move = new Vector3(pos.x * dragSpeed * multiplier, 0, pos.y * dragSpeed * multiplier);
 
         // Calculate the expect translation to make sure it does not exceed max/min 
         Vector3 expectedTranslation = transform.position + move;
@@ -178,5 +179,14 @@ public class SimpleCameraController : MonoBehaviour
             transform.Translate(new Vector3(0, 0, move.z), Space.World);
         }
 
+    }
+
+    /// <summary>
+    /// Retrieves the Drag multiplier from the SettingsManager.
+    /// </summary>
+    /// <returns></returns>
+    float GetDragMultiplier()
+    {
+        return DataTracker.Current.SettingsManager.ScrollingSpeedMultiplier;
     }
 }

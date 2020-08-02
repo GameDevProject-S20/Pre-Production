@@ -240,7 +240,8 @@ public class OverworldMapUI : MonoBehaviour
         // Move the player
         if (isTravelling)
         {
-            playerMarker.transform.position = Vector3.SmoothDamp(playerMarker.transform.position, targetPos, ref translatSmoothVelocity, translateSmoothTime * DataTracker.Current.SettingsManager.VehicleSpeed);
+            // Divides by the VehicleSpeed multiplier - eg. If we want to double the speed, then we want to divide it by 2x (so it takes 0.5 seconds)
+            playerMarker.transform.position = Vector3.SmoothDamp(playerMarker.transform.position, targetPos, ref translatSmoothVelocity, translateSmoothTime / DataTracker.Current.SettingsManager.VehicleSpeed);
             if (Vector3.Distance(playerMarker.transform.position, targetPos) > 0.2f)
             {
                 Vector3 dir = ((targetPos - playerMarker.transform.position).normalized);
