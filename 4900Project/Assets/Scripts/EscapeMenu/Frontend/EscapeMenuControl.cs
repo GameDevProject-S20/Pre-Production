@@ -23,7 +23,12 @@ namespace Assets.Scripts.EscapeMenu.Interfaces
         /// Button for closing the Escape Menu
         /// </summary>
         public Button closeButton;
-        
+
+        /// <summary>
+        /// Button for opening the credits
+        /// </summary>
+        public Button creditsButton;
+
         /// <summary>
         /// Every Slider that the Escape Menu should be controlling, along with additional data
         /// </summary>
@@ -36,8 +41,17 @@ namespace Assets.Scripts.EscapeMenu.Interfaces
         void Start()
         {
             // Hook up the buttons
-            quitButton.onClick.AddListener(ExitControl.BringUpExitMenu);
             closeButton.onClick.AddListener(Hide);
+            quitButton.onClick.AddListener(()=>
+            {
+                Hide();
+                ExitControl.BringUpExitMenu();
+            });
+            creditsButton.onClick.AddListener(() =>
+            {
+                UnityEngine.Debug.Log("Credits");
+                DataTracker.Current.EventManager.OnCreditsButtonClicked.Invoke();
+            });
 
             // Set up the sliders
             foreach (var slider in sliders)
@@ -52,6 +66,7 @@ namespace Assets.Scripts.EscapeMenu.Interfaces
                 HookupSlider(slider);
             }
 
+            // Listen for events
             DataTracker.Current.EventManager.OnSettingsChanged.AddListener((setting) =>
             {
                 UnityEngine.Debug.Log($"The setting {setting} changed");
