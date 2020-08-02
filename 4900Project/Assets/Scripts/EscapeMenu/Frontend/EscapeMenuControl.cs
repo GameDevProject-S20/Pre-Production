@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.EscapeMenu.Frontend;
 using Assets.Scripts.ExitMenu;
+using SIEvents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,7 +45,10 @@ namespace Assets.Scripts.EscapeMenu.Interfaces
                 HookupSlider(slider);
             }
 
-
+            EventManager.Instance.OnSettingsChanged.AddListener((setting) =>
+            {
+                UnityEngine.Debug.Log($"The setting {setting} changed");
+            });
         }
 
         /// <summary>

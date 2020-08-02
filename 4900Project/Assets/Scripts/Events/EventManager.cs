@@ -76,6 +76,8 @@ namespace SIEvents
 
         public Events.PlayerEvents.HealthEvent OnHealthChange = new Events.PlayerEvents.HealthEvent();
 
+        //=== Settings ==============================================//
+        public Events.SettingsEvents.SettingsChangedEvent OnSettingsChanged = new Events.SettingsEvents.SettingsChangedEvent();
 
         //=== Misc ===================================================//
         public UnityEvent onDataTrackerLoad = new UnityEvent();

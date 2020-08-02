@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SIEvents;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -59,12 +60,19 @@ namespace Assets.Scripts.EscapeMenu.Interfaces
         {
             // Update the property
             var prop = this.GetType().GetProperty(settingName);
+            var currentValue = prop.GetValue(this);
+
+            // If the value didn't change, don't do anything
+            if (value.Equals(currentValue))
+            {
+                return;
+            }
+
+            // Update the value
             prop.SetValue(this, value);
 
-            UnityEngine.Debug.Log($"The setting {settingName} has been updated to the value {value}");
-
-            // Fire the event in the EventManager
-            // TODO
+            // Fire the notification event
+            EventManager.Instance.OnSettingsChanged.Invoke(settingName);
         }
 
     }
