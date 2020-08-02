@@ -43,7 +43,7 @@ namespace Assets.Scripts.EscapeMenu.Interfaces
         /// <summary>
         /// Multiplier for the map's driving animation. Lower value = slower animation.
         /// </summary>
-        public float VehicleSpeedMultiplier { get; set; }
+        public float VehicleSpeed { get; set; }
 
         /// <summary>
         /// Multiplier for how fast the map scrolls (either by mouse or by WASD). Lower value = slower scrolling.
