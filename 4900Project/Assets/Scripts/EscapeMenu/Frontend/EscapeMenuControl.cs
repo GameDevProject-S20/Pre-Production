@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.ExitMenu;
+﻿using Assets.Scripts.EscapeMenu.Frontend;
+using Assets.Scripts.ExitMenu;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace Assets.Scripts.EscapeMenu.Interfaces
         /// </summary>
         void Start()
         {
-            // Hook up the quit button
+            // Hook up the buttons
             quitButton.onClick.AddListener(ExitControl.BringUpExitMenu);
             closeButton.onClick.AddListener(Hide);
 
@@ -62,12 +63,24 @@ namespace Assets.Scripts.EscapeMenu.Interfaces
         /// <param name="sliderData"></param>
         private void HookupSlider(SettingsSliderData sliderData)
         {
+            // Identify the classes we need access to
             var slider = sliderData.slider;
+            var customSlider = slider.GetComponent<CustomEscapeMenuSlider>();
             var valueDisplay = slider.transform.Find("Background/ValueText").GetComponent<TMPro.TextMeshProUGUI>();
+
+            // When the slider's value updates, we need to update the value in the UI
             slider.onValueChanged.AddListener((float value) =>
             {
+                // Format the value according to what's shown in the slider's data & update what's shown on the UI
                 valueDisplay.text = value.ToString(sliderData.DisplayFormatPattern);
-                UnityEngine.Debug.Log($"{sliderData.SettingName} updated to {value}");
+            });
+
+            // When the player finishes changing a value, we want to update the setting
+            // Note that this is done after a value is changed, so that we don't call the method too often
+            customSlider.MouseReleased.AddListener((value) =>
+            {
+                // Update the setting
+                Settings.Instance.UpdateSettingValue(sliderData.SettingName, value);
             });
         }
     }

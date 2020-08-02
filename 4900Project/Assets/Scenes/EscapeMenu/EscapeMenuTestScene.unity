@@ -387,16 +387,16 @@ MonoBehaviour:
   closeButton: {fileID: 488246283}
   sliders:
   - DisplayFormatPattern: 0%
-    SettingName: TypingSpeed
+    SettingName: TypingSpeedMultiplier
     slider: {fileID: 854909570}
   - DisplayFormatPattern: 0%
-    SettingName: ScrollingSpeed
+    SettingName: ScrollingSpeedMultiplier
     slider: {fileID: 327704618}
   - DisplayFormatPattern: 0%
-    SettingName: VehicleSpeed
+    SettingName: VehicleSpeedMultiplier
     slider: {fileID: 856897678}
   - DisplayFormatPattern: 0%
-    SettingName: MaxVolume
+    SettingName: VolumeMultiplier
     slider: {fileID: 162780290}
 --- !u!1 &96284524
 GameObject:
@@ -750,6 +750,7 @@ GameObject:
   m_Component:
   - component: {fileID: 162780289}
   - component: {fileID: 162780290}
+  - component: {fileID: 162780291}
   m_Layer: 5
   m_Name: VolumeSlider
   m_TagString: Untagged
@@ -829,6 +830,18 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &162780291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162780288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bf0d953ef17a8742af35d952f7accbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &174616634
 GameObject:
   m_ObjectHideFlags: 0
@@ -1354,6 +1367,7 @@ GameObject:
   m_Component:
   - component: {fileID: 327704617}
   - component: {fileID: 327704618}
+  - component: {fileID: 327704619}
   m_Layer: 5
   m_Name: MapScrollSlider
   m_TagString: Untagged
@@ -1433,6 +1447,18 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &327704619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 327704616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bf0d953ef17a8742af35d952f7accbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &369758620
 GameObject:
   m_ObjectHideFlags: 0
@@ -2711,7 +2737,7 @@ PrefabInstance:
     - target: {fileID: 7864621161261145241, guid: e8e0713c01c44684db4ab4c34a0a47e2,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -4822.5
+      value: -7797.5
       objectReference: {fileID: 0}
     - target: {fileID: 7864621161312667345, guid: e8e0713c01c44684db4ab4c34a0a47e2,
         type: 3}
@@ -3019,6 +3045,7 @@ GameObject:
   m_Component:
   - component: {fileID: 854909569}
   - component: {fileID: 854909570}
+  - component: {fileID: 854909571}
   m_Layer: 5
   m_Name: DialogueSlider (1)
   m_TagString: Untagged
@@ -3098,6 +3125,18 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &854909571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 854909568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bf0d953ef17a8742af35d952f7accbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &856897676
 GameObject:
   m_ObjectHideFlags: 0
@@ -3108,6 +3147,7 @@ GameObject:
   m_Component:
   - component: {fileID: 856897677}
   - component: {fileID: 856897678}
+  - component: {fileID: 856897679}
   m_Layer: 5
   m_Name: VehicleSpeedSlider
   m_TagString: Untagged
@@ -3187,6 +3227,18 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &856897679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856897676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bf0d953ef17a8742af35d952f7accbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &868423323
 GameObject:
   m_ObjectHideFlags: 0
