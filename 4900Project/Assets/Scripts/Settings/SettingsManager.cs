@@ -33,7 +33,7 @@ namespace Assets.Scripts.Settings
         /// <summary>
         /// Multiplier for the typing speed animation. Lower value = slower animation.
         /// </summary>
-        public float TypingSpeed { get; set; }
+        public float DialogueSpeed { get; set; }
 
         /// <summary>
         /// Multiplier for the game volume. Lower value = lower volume.

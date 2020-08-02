@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.EscapeMenu.Interfaces;
+﻿using Assets.Scripts.Settings;
 using SIEvents;
 using System.Collections;
 using System.Collections.Generic;

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Scripts.EscapeMenu.Interfaces
+namespace Assets.Scripts.Settings
 {
     public enum SettingTypes
     {
-        TypingSpeed,
+        DialogueSpeed,
         VolumeMultiplier,
         VehicleSpeed,
         ScrollingSpeedMultiplier
