@@ -79,6 +79,9 @@ namespace SIEvents
         //=== Settings ==============================================//
         public Events.SettingsEvents.SettingsChangedEvent OnSettingsChanged = new Events.SettingsEvents.SettingsChangedEvent();
 
+        //=== HUD ==================================================//
+        public UnityEvent HudMenuClicked = new UnityEvent();
+
         //=== Misc ===================================================//
         public UnityEvent onDataTrackerLoad = new UnityEvent();
     }

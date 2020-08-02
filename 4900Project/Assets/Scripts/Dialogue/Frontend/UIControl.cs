@@ -1,4 +1,5 @@
-﻿using Dialogue;
+﻿using Assets.Scripts.EscapeMenu.Interfaces;
+using Dialogue;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -218,7 +219,7 @@ namespace Assets.Scripts.Dialogue.Frontend
             for (var i = textMeshPro.maxVisibleCharacters; i < charCount; i++)
             {
                 textMeshPro.maxVisibleCharacters = i;
-                yield return new WaitForSeconds(0.01f);
+                yield return new WaitForSeconds(Settings.Instance.TypingSpeedMultiplier);
             }
             textMeshPro.maxVisibleCharacters = charCount;
         }
