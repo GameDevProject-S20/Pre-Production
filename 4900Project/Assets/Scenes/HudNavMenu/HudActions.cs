@@ -25,7 +25,7 @@ public class HudActions : MonoBehaviour
 
     public void OnMenuButtonClick()
     {
-        ExitMenuControl.BringUpExitMenu();
+        ExitControl.BringUpExitMenu();
         EventManager.Instance.FreezeMap.Invoke();
     }
 

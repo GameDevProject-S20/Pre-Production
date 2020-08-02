@@ -14,7 +14,7 @@ namespace Assets.Scripts.ExitMenu
             // Escape Button => Exit Menu
             if (Input.GetKey(KeyCode.Escape))
             {
-                ExitMenuControl.BringUpExitMenu();
+                ExitControl.BringUpExitMenu();
             }
         }
     }
