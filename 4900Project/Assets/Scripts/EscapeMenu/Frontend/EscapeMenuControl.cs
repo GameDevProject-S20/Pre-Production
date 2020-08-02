@@ -52,11 +52,11 @@ namespace Assets.Scripts.EscapeMenu.Interfaces
                 HookupSlider(slider);
             }
 
-            EventManager.Instance.OnSettingsChanged.AddListener((setting) =>
+            DataTracker.Current.EventManager.OnSettingsChanged.AddListener((setting) =>
             {
                 UnityEngine.Debug.Log($"The setting {setting} changed");
             });
-            EventManager.Instance.HudMenuClicked.AddListener(Show);
+            DataTracker.Current.EventManager.HudMenuClicked.AddListener(Show);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Assets.Scripts.EscapeMenu.Interfaces
         public void Show()
         {
             gameObject.GetComponent<Canvas>().enabled = true;
-            EventManager.Instance.FreezeMap.Invoke();
+            DataTracker.Current.EventManager.FreezeMap.Invoke();
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace Assets.Scripts.EscapeMenu.Interfaces
         public void Hide()
         {
             gameObject.GetComponent<Canvas>().enabled = false;
-            EventManager.Instance.UnfreezeMap.Invoke();
+            DataTracker.Current.EventManager.UnfreezeMap.Invoke();
         }
 
         // Private Methods
@@ -108,7 +108,7 @@ namespace Assets.Scripts.EscapeMenu.Interfaces
         /// </summary>
         private void UpdateSetting(string settingName, float value)
         {
-            Settings.Instance.UpdateSettingValue(settingName, value);
+            DataTracker.Current.SettingsManager.UpdateSettingValue(settingName, value);
         }
 
         /// <summary>

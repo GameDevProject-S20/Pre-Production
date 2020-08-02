@@ -6,6 +6,7 @@ using Quests;
 using SIEvents;
 using System.Linq;
 using Dialogue;
+using Assets.Scripts.EscapeMenu.Interfaces;
 
 [System.Serializable]
 public class DataTracker : MonoBehaviour
@@ -23,6 +24,7 @@ public class DataTracker : MonoBehaviour
     public EventManager EventManager = EventManager.Instance;
     public TownManager TownManager = TownManager.Instance;
     public ShopManager ShopManager = ShopManager.Instance;
+    public SettingsManager SettingsManager = SettingsManager.Instance;
     [SerializeField]
     public float MapSize;
     [SerializeField]

@@ -10,20 +10,20 @@ namespace Assets.Scripts.EscapeMenu.Interfaces
     /// <summary>
     /// The Settings class. This class stores values for every setting in the game.
     /// </summary>
-    class Settings
+    public class SettingsManager
     {
-        private static Settings instance;
+        private static SettingsManager instance;
 
         /// <summary>
         /// Maintains all Settings for the current game.
         /// </summary>
-        public static Settings Instance
+        public static SettingsManager Instance
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new Settings();
+                    instance = new SettingsManager();
                 }
                 return instance;
             }
