@@ -142,6 +142,9 @@ public class Town
         {
             shop.inventory.AddItem("Bandit Token", 5);
         }
+
+        // Notify that the town has changed
+        FireUpdatedEvent();
     }
 
 
@@ -223,5 +226,13 @@ The inhabitants are often found {getWord("verb")} and are {getWord("verb2")} whe
             default:
                 return "word";
         }
+    }
+
+    /// <summary>
+    /// Fires the TownUpdated event in the EventManager.
+    /// </summary>
+    private void FireUpdatedEvent()
+    {
+        DataTracker.Current.EventManager.OnTownUpdated.Invoke(this);
     }
 }
