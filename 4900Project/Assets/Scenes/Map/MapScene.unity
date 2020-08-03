@@ -3455,11 +3455,7 @@ PrefabInstance:
     - target: {fileID: 7864621161261145241, guid: e8e0713c01c44684db4ab4c34a0a47e2,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-<<<<<<< 51594c06ce1f1dab5af52c3d478d8304f05c0c74
       value: -657.5
-=======
-      value: -1847.5
->>>>>>> Side Panel
       objectReference: {fileID: 0}
     - target: {fileID: 7864621161312667345, guid: e8e0713c01c44684db4ab4c34a0a47e2,
         type: 3}
