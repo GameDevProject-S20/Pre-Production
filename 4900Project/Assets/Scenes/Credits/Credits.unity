@@ -658,8 +658,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -283, y: 227}
-  m_SizeDelta: {x: 900, y: 500}
+  m_AnchoredPosition: {x: -286, y: 213}
+  m_SizeDelta: {x: 898, y: 245}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &837020989
 MonoBehaviour:
@@ -732,7 +732,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 304.6, y: 215.5}
+  m_AnchoredPosition: {x: 290, y: 207}
   m_SizeDelta: {x: 528, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1006879893
@@ -1656,33 +1656,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Credits
---- !u!114 &2706321297148544167
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8708976544940901178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ac9c5fe5aa1c4d41b9862a8d595ff81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ActionPrefab: {fileID: 5837315476224663042, guid: 24ae6e73c3d660a49a383c43ba9c35b5,
-    type: 3}
-  AbundantIcon: {fileID: 21300000, guid: 9361528b04aff184ea92a4cad83f4510, type: 3}
-  CommonIcon: {fileID: 21300000, guid: bb5e727859dad164085c28c3f4e54e05, type: 3}
-  UncommonIcon: {fileID: 21300000, guid: fc663acf26812e241b1bf4bc64dbf23a, type: 3}
-  RareIcon: {fileID: 21300000, guid: 6356a4fd919c25d4689c7e96e59f9f89, type: 3}
-  LegendaryIcon: {fileID: 21300000, guid: 0951ad93e6ddd8d4b9c2646f267cde4e, type: 3}
-  FoodIcon: {fileID: 21300000, guid: 74a92418ef481cd42a7ff8a367530e15, type: 3}
-  FuelIcon: {fileID: 21300000, guid: 07e4a1403598fc142aa64e7d30b80fb3, type: 3}
-  MedicineIcon: {fileID: 21300000, guid: ea040ecd91fd65241891309ab747f72e, type: 3}
-  GeneralStoreIcon: {fileID: 21300000, guid: ac49d00755b86dc46bd33e2bfc6e3194, type: 3}
-  IconMissing: {fileID: 21300000, guid: 48a2031da6891144d8449a2bc8034e9a, type: 3}
-  TempTownIconBadCode: {fileID: 21300000, guid: 09bf262f584c1dd45a8e6fc2a60041f0,
-    type: 3}
-  TalkIcon: {fileID: 21300000, guid: a3f9b1d371d0c134a83fb2a456fb9351, type: 3}
 --- !u!222 &3068669918160210555
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1990,7 +1963,6 @@ GameObject:
   - component: {fileID: 4184677342596606984}
   - component: {fileID: 4622113710666988673}
   - component: {fileID: 1416604563059834891}
-  - component: {fileID: 2706321297148544167}
   m_Layer: 5
   m_Name: BaseWindow
   m_TagString: Untagged
