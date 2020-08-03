@@ -14,7 +14,7 @@ public class TownData
     public string Colour { get; set; } //hex code
     public string Size { get; set; } //hex code
     public string Tags { get; set; }
-
+    public bool HasHospital { get; set; }
 }
 
 
@@ -28,6 +28,7 @@ public class Town
     public string Name { get; set; }
     public string Leader { get; set; }
     public string Colour { get; set; }
+    public bool HasHospital { get; set; }
     public Sizes Size { get; set; }
     public List<TownTag> Tags;
     public Sprite Icon;
@@ -42,7 +43,7 @@ public class Town
     /// Constructor for loading in from a TownData class
     /// </summary>
     /// <param name="data"></param>
-    public Town(TownData data) : this(data.Id, data.Name, data.Leader, data.Colour, data.Size, data.Tags)
+    public Town(TownData data) : this(data.Id, data.Name, data.Leader, data.Colour, data.Size, data.Tags, data.HasHospital)
     {
 
     }
@@ -55,12 +56,13 @@ public class Town
     /// <param name="Leader"></param>
     /// <param name="Colour"></param>
 
-    public Town(int Id, string Name, string Leader, string Colour = "#FFFF5E0", string Size = "Medium", string Tags = "")
+    public Town(int Id, string Name, string Leader, string Colour = "#FFFF5E0", string Size = "Medium", string Tags = "", bool HasHospital = false)
     {
         this.Id = Id;
         this.Name = Name;
         this.Leader = Leader;
         this.Colour = Colour;
+        this.HasHospital = HasHospital;
         this.Size = (Sizes)System.Enum.Parse(typeof(Sizes), Size);
 
         shops = new List<int>();
@@ -127,6 +129,15 @@ public class Town
         {
             shop.inventory.AddItem("Bandit Token", 5);
         }
+    }
+
+    /// <summary>
+    /// Adds a Hospital to a town that doesn't already have one.
+    /// Does nothing if the town already has a hospital.
+    /// </summary>
+    public void InitializeHospital()
+    {
+        HasHospital = true;
     }
 
 

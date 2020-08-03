@@ -433,6 +433,38 @@
 					]
 				}
 			]
+		},
+		{
+			"encounter_id": 12,
+			"NOTE": "Called from the Hospital button in towns",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Welcome to the Hospital.",
+					"buttons": [
+						{
+							"text": "Heal",
+							"effects": [
+								"@health% 100"
+							],
+							"next_page_id": 2
+						},
+						{
+							"text": "[Leave]",
+							"next_page_id": 3
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "You healed."
+				},
+				{
+					"id": 3,
+					"text": "You left."
+				}
+			]
 		}
 	],
 	"random_encounters": [
