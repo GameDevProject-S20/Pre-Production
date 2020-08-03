@@ -76,6 +76,12 @@ namespace SIEvents
 
         public Events.PlayerEvents.HealthEvent OnHealthChange = new Events.PlayerEvents.HealthEvent();
 
+        //=== Escape Menu ===========================================//
+        public UnityEvent EscapeMenuRequested = new UnityEvent();
+        public UnityEvent OnCreditsButtonClicked = new UnityEvent();
+
+        //=== Settings ==============================================//
+        public Events.SettingsEvents.SettingsChangedEvent OnSettingsChanged = new Events.SettingsEvents.SettingsChangedEvent();
 
         //=== Misc ===================================================//
         public UnityEvent onDataTrackerLoad = new UnityEvent();

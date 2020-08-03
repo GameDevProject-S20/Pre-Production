@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Encounters;
 using SIEvents;
+using Assets.Scripts.EscapeMenu.Interfaces;
 
 public class OverworldMapUI : MonoBehaviour
 {
@@ -224,8 +225,10 @@ public class OverworldMapUI : MonoBehaviour
     void onTravelStart()
     {
         if (MapTravel.Travel(selectedNode)) {
+            float volume = 2.0F * DataTracker.Current.SettingsManager.VolumeMultiplier;
+
             AudioSource audioSource = GameObject.Find("Audio Source").GetComponent<AudioSource>();
-            audioSource.PlayOneShot(Vroom, 2.0F);
+            audioSource.PlayOneShot(Vroom, volume);
             targetPos = selectedNode.gameObject.transform.position;
             isTravelling = true;
         }
@@ -237,7 +240,8 @@ public class OverworldMapUI : MonoBehaviour
         // Move the player
         if (isTravelling)
         {
-            playerMarker.transform.position = Vector3.SmoothDamp(playerMarker.transform.position, targetPos, ref translatSmoothVelocity, translateSmoothTime);
+            // Divides by the VehicleSpeed multiplier - eg. If we want to double the speed, then we want to divide it by 2x (so it takes 0.5 seconds)
+            playerMarker.transform.position = Vector3.SmoothDamp(playerMarker.transform.position, targetPos, ref translatSmoothVelocity, translateSmoothTime / DataTracker.Current.SettingsManager.VehicleSpeed);
             if (Vector3.Distance(playerMarker.transform.position, targetPos) > 0.2f)
             {
                 Vector3 dir = ((targetPos - playerMarker.transform.position).normalized);

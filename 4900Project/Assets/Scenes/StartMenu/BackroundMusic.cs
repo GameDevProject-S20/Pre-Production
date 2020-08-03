@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.Settings;
+using SIEvents;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,7 +30,16 @@ public class BackroundMusic : MonoBehaviour
     {
         AS = AudioGameObject.GetComponent<AudioSource>(); 
         DontDestroyOnLoad(AS);
-        PlayASong(); 
+        PlayASong();
+
+        if (DataTracker.Current)
+        {
+            AddVolumeChangedEvent();
+        }
+        else
+        {
+            EventManager.Instance.onDataTrackerLoad.AddListener(AddVolumeChangedEvent);
+        }
     }
 
     // Update is called once per frame
@@ -91,7 +102,7 @@ public class BackroundMusic : MonoBehaviour
 
         Played.Add(random);
         AS.clip = Songs[random];
-        AS.volume = MAX_VOLUME;
+        UpdateVolume();
         AS.Play();
 
         if (playTime <= 0 && silenceTime <= 0)
@@ -139,15 +150,15 @@ public class BackroundMusic : MonoBehaviour
         {
             AS.volume = 0;
         }
-        else if (AS.volume > MAX_VOLUME)
+        else if (AS.volume > MAX_VOLUME * GetMultiplier())
         {
-            AS.volume = MAX_VOLUME;
+            AS.volume = MAX_VOLUME * GetMultiplier();
         }
 
         if (fadeTimeLeft <= 0)
         {
             isFading = false;
-            AS.volume = finalVolume;
+            UpdateVolume();
         }
     }
 
@@ -162,4 +173,41 @@ public class BackroundMusic : MonoBehaviour
         Debug.Log($"song silence time = {silenceTime}");
     }
 
+    /// <summary>
+    /// Sets the current volume to the maximum * the current multiplier.
+    /// </summary>
+    private void UpdateVolume()
+    {
+        AS.volume = MAX_VOLUME * GetMultiplier();
+    }
+
+    /// <summary>
+    /// Retrieves the volume multiplier from the settings manager.
+    /// </summary>
+    /// <returns></returns>
+    float GetMultiplier()
+    {
+        if (!DataTracker.Current || DataTracker.Current.SettingsManager == null)
+        {
+            return 1;
+        }
+
+        return DataTracker.Current.SettingsManager.VolumeMultiplier;
+    }
+
+    /// <summary>
+    /// Adds an event to listen for when volume changes.
+    /// </summary>
+    void AddVolumeChangedEvent()
+    {
+        DataTracker.Current.EventManager.OnSettingsChanged.AddListener((setting) =>
+        {
+            if (isFading || setting != SettingTypes.VolumeMultiplier.ToString())
+            {
+                return;
+            }
+
+            UpdateVolume();
+        });
+    }
 }

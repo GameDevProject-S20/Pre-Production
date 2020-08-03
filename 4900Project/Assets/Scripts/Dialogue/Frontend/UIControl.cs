@@ -1,4 +1,5 @@
-﻿using Dialogue;
+﻿using Assets.Scripts.EscapeMenu.Interfaces;
+using Dialogue;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -218,7 +219,11 @@ namespace Assets.Scripts.Dialogue.Frontend
             for (var i = textMeshPro.maxVisibleCharacters; i < charCount; i++)
             {
                 textMeshPro.maxVisibleCharacters = i;
-                yield return new WaitForSeconds(0.01f);
+
+                // Typing Speed goes from 10 to 100, where 10 is the slowest and 100 is the fastest.
+                // The fastest speed we can go is 0.01, which is 1/100.
+                // The slowest speed we want to go is 0.10, which is 1/10. So use 1/TypingSpeed
+                yield return new WaitForSeconds(1 / DataTracker.Current.SettingsManager.DialogueSpeed);
             }
             textMeshPro.maxVisibleCharacters = charCount;
         }

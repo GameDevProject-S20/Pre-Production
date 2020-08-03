@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.ExitMenu
 {
-    public class ExitMenuControl : MonoBehaviour
+    public class ExitControl : MonoBehaviour
     {
         protected static bool promptOpen;
         protected static readonly IDialogue exitDialogue = DialogueManager.Instance.CreateDialogue(QuitPage);

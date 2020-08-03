@@ -113,6 +113,12 @@ namespace SIEvents
             public class HealthEvent : UnityEvent<int> { };
 
         }
+
+        public class SettingsEvents
+        {
+            [System.Serializable]
+            public class SettingsChangedEvent : UnityEvent<string> { };
+        }
     }
 }
 
