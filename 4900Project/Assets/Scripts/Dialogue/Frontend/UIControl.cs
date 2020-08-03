@@ -232,6 +232,7 @@ namespace Assets.Scripts.Dialogue.Frontend
                 catch { } 
 
                 yield return new WaitForSeconds(1 / speed);
+
             }
             textMeshPro.maxVisibleCharacters = charCount;
         }
