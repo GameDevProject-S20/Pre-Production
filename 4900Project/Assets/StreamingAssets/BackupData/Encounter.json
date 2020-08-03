@@ -147,7 +147,7 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "Thanks buying that generator!",
+					"text": "Thanks for buying that generator!",
 					"buttons": [
 						{
 							"next_page_id": 2
@@ -187,7 +187,7 @@
 				},
 				{
 					"id": 2,
-					"text": "The owner sees you and says \"I could repair that, but I don't have enough supplies\"",
+					"text": "The owner sees you and says \"I could repair that, but I don't have enough supplies\".",
 					"buttons": [
 						{
 							"text": "[Give 1 Wrench & 6 Scrap Metal] Offer supplies.",
@@ -295,7 +295,7 @@
 				},
 				{
 					"id": 2,
-					"text": "'Want to buy some more?'",
+					"text": "\"Want to buy some more?\"",
 					"buttons": [
 						{
 							"text": "[Trade] Offer 1 scrap for 5 Fuel.",
@@ -323,7 +323,7 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "A group of rough-looking people stop your caravan. \"This here's our road. Gotta pay to use it.\"",
+					"text": "A group of rough looking people stop your caravan. \"This here's our road. Gotta pay to use it.\"",
 					"buttons": [
 						{
 							"text": "[Give 5 Rations]",
@@ -471,10 +471,10 @@
 				},
 				{
 					"id": 3,
-					"text": "Sure, but lets have a fun. Make an offer and I'll flip a coin to determine if I give you fuel or some spare wrenches.",
+					"text": "Sure, but lets have a little fun. Make an offer and we'll flip a coin to pick between fuel or some spare wrenches.",
 					"buttons": [
 						{
-							"text": "[Sample] offer 10 rations for 5 fuel or wrenches.",
+							"text": "[Sample] offer 10 rations for 5 fuel or 5 wrenches.",
 							"conditions": [
 								"!has rations 10"
 							],
@@ -527,7 +527,7 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "You come across a strange device unlike anything you’ve seen before, you see what appears to be a button on the surface.",
+					"text": "You come across a strange device unlike anything you’ve seen before, with what appears to be a button on its surface.",
 					"buttons": [
 						{
 							"text": "[press button] Double a <<random resource>>, at the cost of 50% of another <<random resource>>",
@@ -548,7 +548,7 @@
 				},
 				{
 					"id": 2,
-					"text": "Best play it safe, you leave, wondering what it could have been."
+					"text": "Better to play it safe. You leave, wondering what it could have been."
 				},
 				{
 					"id": 3,
@@ -562,7 +562,7 @@
 				},
 				{
 					"id": 4,
-					"text": "Not one to look a gift horse in the mouth, you bring your spoils to the cargo bay. However you find half your <resource 2> has disappeared."
+					"text": "You bring your spoils to the cargo bay, but when you arrive you find that half of your <resource 2> has disappeared."
 				}
 			]
 		},
@@ -589,7 +589,7 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "You come across an old engineering bay. You’re greeted by an elderly mechanic; 'You flew that hunk o junk all the way here? Hows about we get you an upgrade.'",
+					"text": "You come across an old engineering bay. You’re greeted by an elderly mechanic; \"You flew that hunk o' junk all the way here? How's about we get you an upgrade?\"",
 					"avatar_name": "Mechanic",
 					"buttons": [
 						{
@@ -606,7 +606,7 @@
 							"next_page_id": 3
 						},
 						{
-							"text": "[Threaten] Upgrade your ship but take 20 damage",
+							"text": "[Threaten] Upgrade your ship, but take 20 damage",
 							"effects": [
 								"<<@give upgrade>>",
 								"@health -20"
@@ -621,7 +621,7 @@
 				},
 				{
 					"id": 2,
-					"text": "You decide not to take them up on their offer, don’t want to void your warranty."
+					"text": "You decide not to take them up on their offer. Don’t want to void your warranty."
 				},
 				{
 					"id": 3,
@@ -629,7 +629,7 @@
 				},
 				{
 					"id": 4,
-					"text": "Seeing an opportunity, you pull your weapon and tell the mechanic to get to work, they oblige. After the work is complete you leave without a second thought.",
+					"text": "Seeing an opportunity, you pull out your weapon and tell the mechanic to get to work, they oblige. After the work is complete you leave without a second thought.",
 					"buttons": [
 						{
 							"text": "[Examine engine]",
@@ -639,7 +639,7 @@
 				},
 				{
 					"id": 5,
-					"text": "You open the engine to see the work triggering a small explosion and lodging some shrapnel in your arm, seems the mechanic thought you deserving of a complimentary wrench..."
+					"text": "You open the engine to inspect the work but trigger a small explosion. Pieces of shrapnel litter your arm; it seems the mechanic thought you deserving of a little surprise..."
 				}
 			]
 		},
@@ -656,7 +656,7 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "The ship shakes violently interrupting your meal, you've found your way into an unmarked gravity well. The ship is too heavy for the engines to escape, you’ll need to ditch some cargo.",
+					"text": "The ship shakes violently, interrupting your meal. You've found your way into an unmarked gravity well. The ship is too heavy for the engines to escape, you’ll need to ditch some cargo.",
 					"buttons": [
 						{
 							"text": "[Eject Resource] lose 100% of a random resource",
@@ -685,7 +685,7 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "You come across an old medical bay. Better yet, there are still some supplies left.",
+					"text": "You come across an old medical bay. Surprisingly, there are still some supplies left.",
 					"buttons": [
 						{
 							"text": "[Use supplies] Heal to full.",
@@ -702,7 +702,7 @@
 				},
 				{
 					"id": 2,
-					"text": "Something feels off, why would these supplies be left untouched. The last thing you want is your crew getting sick from bad meds, so you leave."
+					"text": "Something feels off - why would these supplies be left untouched? The last thing you want is your crew getting sick from bad meds, so you leave."
 				},
 				{
 					"id": 3,
@@ -788,7 +788,7 @@
 					"text": "While travelling you find some stones that look out of place, being curious you move them and find a cache of medical supplies!",
 					"buttons": [
 						{
-							"text": "[Steal] take medical supplies",
+							"text": "[Steal] Take medical supplies",
 							"effects": [
 								"@random 0.8 (@random 0.25 (@give Surgical_Equipment 1) (@give Medicine 3)) (@give Medical_Kit 2)"
 							],
@@ -806,7 +806,7 @@
 				},
 				{
 					"id": 3,
-					"text": "You don't even know if the person who left it is still alive, and you'll certainly have use for extra medicine. Having convinced yourself; you take the medical supplies."
+					"text": "You don't even know if the person who left these is still alive, and you certainly have use for extra medicine. Having convinced yourself, you take the medical supplies."
 				}
 			]
 		},
@@ -821,17 +821,17 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "You find an old military barracks while travelling, looks like it's still stocked with some supplies.",
+					"text": "You find an old military barracks while travelling, seemingly still stocked with some supplies.",
 					"buttons": [
 						{
-							"text": "[raid infirmary] heal 30% hp",
+							"text": "[Raid Infirmary] Heal 30% hp",
 							"effects": [
 								"@health% 30"
 							],
 							"next_page_id": 3
 						},
 						{
-							"text": "[raid armory] Gain 10% max hp",
+							"text": "[Raid Armory] Gain 10% max hp",
 							"effects": [
 								"@health_max% 10"
 							],
@@ -841,7 +841,7 @@
 				},
 				{
 					"id": 2,
-					"text": "You find some bullet proof vests. While you don't plan on getting into gunfights any time soon but better safe than sorry."
+					"text": "You find some bullet proof vests. While you don't plan on getting into any gunfights any time soon, always better safe than sorry."
 				},
 				{
 					"id": 3,
@@ -865,7 +865,7 @@
 					"text": "You find an RPG laying out in the open. Something tells you it’s too good to be true.",
 					"buttons": [
 						{
-							"text": "[Take] claim the RPG -- trigger a trap",
+							"text": "[Take] claim the RPG",
 							"effects": [
 								"@give RPG 1"
 							],
@@ -879,14 +879,14 @@
 				},
 				{
 					"id": 2,
-					"text": "Something that valuable wouldn’t just be laying around, best not risk it."
+					"text": "Something that valuable wouldn’t just be laying around, better not to risk it."
 				},
 				{
 					"id": 3,
-					"text": "Greed gets the better of you and you grab the RPG, something starts beeping. Your gut was right and the trap is sprung.",
+					"text": "Greed gets the better of you and you grab the RPG - then something starts beeping. Your gut was right and the trap is sprung.",
 					"buttons": [
 						{
-							"text": "[Graze] take 20% damage",
+							"text": "[Graze] Take 20% damage",
 							"effects": [
 								"@health% -20"
 							],
@@ -917,11 +917,11 @@
 				},
 				{
 					"id": 5,
-					"text": "By the time you realize what's happening it's too late, the blast goes off and heavy shrapnel is lodged into your leg. You've seen amputations for less. Hurriedly, you wrap it to stop the bleeding and limp back to the ship before the person who set the trap returns."
+					"text": "By the time you realize what's happening, it's too late. The blast goes off and heavy shrapnel is lodged into your leg. You've seen amputations for less. Hurriedly, you wrap it to stop the bleeding and limp back to the ship before the person who set the trap returns."
 				},
 				{
 					"id": 6,
-					"text": "In an act of selflessness, one of your crew jumps to action and throws themselves on the bomb. You begin shouting for them to stop but your words are silenced by the blast... You’ll hold a service for them when you get to port."
+					"text": "In an act of selflessness, one of your crew jumps to action and throws themselves onto the bomb. You begin shouting for them to stop but your words are silenced by the blast... You’ll hold a service for them when you get to port."
 				}
 			]
 		},
@@ -930,16 +930,16 @@
 			"COMMENT": "TEST THIS needs flavor text",
 			"encounter_id": 1012,
 			"tags": [],
-			"encounter_name": "Blood for Blood",
+			"encounter_name": "Lazarus Station",
 			"conditions": [],
 			"town_name": null,
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "<<flavor text>>",
+					"text": "You stumble accross a decaying research facility, isolated and desolate. As you wander from room to room, you come across two vials of translucent liquid. You gather from nearby files that each contains a variant of nanobots. One will heal you then deactivate, while the second will survive, and increase your vitality, but cripple you in the short term.",
 					"buttons": [
 						{
-							"text": "[Vigor] heal 15% hp, lose 5% max hp",
+							"text": "[Vigor] Heal 15% hp, lose 5% max hp",
 							"effects": [
 								"@health% 15",
 								"@health_max% -5"
@@ -958,11 +958,11 @@
 				},
 				{
 					"id": 2,
-					"text": "<<flavor text>>"
+					"text": "The nanobots quickly purge your body of trauma - you can't remember the last time you felt this good."
 				},
 				{
 					"id": 3,
-					"text": "<<flavor text>>"
+					"text": "You fall over in pain as the nanobots aggressively invade your body. Hopefully it'll pay off in the long run."
 				}
 			]
 		},
@@ -971,7 +971,7 @@
 			"COMMENT": "max hp, upgrades",
 			"encounter_id": 1013,
 			"tags": [],
-			"encounter_name": "No Pain no Gain",
+			"encounter_name": "No Pain, No Gain",
 			"conditions": [],
 			"town_name": null,
 			"dialogue_tree": [
@@ -983,7 +983,7 @@
 			"COMMENT": "need more food than rations, something like 'sugar donut'",
 			"encounter_id": 1014,
 			"tags": [],
-			"encounter_name": "Food for Thought",
+			"encounter_name": "Food For Thought",
 			"conditions": [
 				"!has Fuel 30"
 			],
@@ -991,7 +991,7 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "You pull up for a brief break at a rest stop, the sign for a bakery nearby catches your eye.",
+					"text": "You pull up for a brief break at a rest stop, the sign for a nearby bakery catches your eye.",
 					"buttons": [
 						{
 							"text": "[Trade] Buy 30 <<baked food item>> for 20 Fuel",
@@ -1016,7 +1016,7 @@
 				},
 				{
 					"id": 3,
-					"text": "'I'll just take a look at what they have' you told yourself. The smells convince you otherwise when you enter. The shelves are a great deal more spacious after you leave."
+					"text": "\"I'll just take a look at what they have\", you told yourself. The smells convince you otherwise when you enter. The shelves are a great deal more spacious after you leave."
 				}
 			]
 		},
@@ -1070,7 +1070,7 @@
 				},
 				{
 					"id": 3,
-					"text": "You get the feeling that being on a first name basis with the mechanic probably isn’t good for your pocket book and decide to cut your losses."
+					"text": "You get the feeling that being on a first name basis with the mechanic probably isn’t good for your pockets and decide to cut your losses."
 				}
 			]
 		},
@@ -1085,7 +1085,7 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "You come across a somewhat sketchy looking lab; so of course you decide to dock and see what you can find. The bay doors close behind you and you are greeted by an enigmatic figure emerging from the darkness who offers to grant various requests in exchange for 'Samples'",
+					"text": "You come across a somewhat sketchy looking lab; so of course you decide to dock and see what you can find. The bay doors close behind you and you are greeted by an enigmatic figure who offers to grant various requests in exchange for 'Samples'",
 					"buttons": [
 						{
 							"text": "[Sustenance] Gain 20 Rations or Fuel, lose 7% health",
@@ -1159,7 +1159,7 @@
 				},
 				{
 					"id": 3,
-					"text": "They grab a clean syringe and draw a pint of blood before retrieving the agreed upon resources from their cloak. 'Anything else?'",
+					"text": "They grab a clean syringe and draw a pint of blood before retrieving the agreed upon resources from their cloak. \"Anything else?\"",
 					"buttons": [
 						{
 							"text": "[Request] Make another request",
@@ -1169,7 +1169,7 @@
 				},
 				{
 					"id": 4,
-					"text": "They grab a clean syringe and draw a pint of blood before retrieving the agreed upon Luxury from their cloak. 'Anything else?'",
+					"text": "They grab a clean syringe and draw a pint of blood before retrieving the agreed upon Luxury from their cloak. \"Anything else?\"",
 					"buttons": [
 						{
 							"text": "[Request] Make another request",
@@ -1179,7 +1179,7 @@
 				},
 				{
 					"id": 5,
-					"text": "They grab a clean syringe and draw a pint of blood and proceeds to carve an intricate sigil into your flesh. Alarmed at first you're surprised when you feel no pain, and feel stronger when it's done. 'Anything else?'",
+					"text": "They grab a clean syringe and draw a pint of blood and proceeds to carve an intricate sigil into your flesh. Alarmed at first, you're surprised when you feel no pain, and feel stronger when it's done. \"Anything else?\"",
 					"buttons": [
 						{
 							"text": "[Request] Make another request",
@@ -1189,7 +1189,7 @@
 				},
 				{
 					"id": 6,
-					"text": "They raise an eyebrow as if the question is below them but harvest the payment from you anyway. 'Big flashing button next to the landing bay doors over there. If you don’t mind I’ve work to get back to', before you can open your mouth they’ve already retreated back to the shadows. Best leave before they decide to harvest anything else."
+					"text": "They raise an eyebrow as if the question is below them but harvest the payment from you anyway. \"Big flashing button next to the landing bay doors over there. If you don’t mind I’ve work to get back to\", before you can open your mouth they’ve already retreated back to the shadows. Best leave before they decide to harvest anything else."
 				}
 			]
 		},
@@ -1204,7 +1204,7 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "You’re approached by an elderly man wearing not much more than rags. They slowly bring out an unmarked box and plead in a raspy voice, 'I don’t have much, but it's yours if you could spare some food'",
+					"text": "You’re approached by an elderly man draped in rags. He slowly brings out an unmarked box and pleads in a raspy voice, \"I don’t have much, but it's yours if you could spare some food\"",
 					"buttons": [
 						{
 							"text": "[Kindness] Give 15 Rations, take box",
@@ -1236,7 +1236,7 @@
 				},
 				{
 					"id": 3,
-					"text": "'T-Thank you' he stammers. 'I'll not forget this kindess. That ring belonged to my partner; I'm too old for the trader's life, but it should be worth a bit'.",
+					"text": "\"Th-Thank you\" he stammers, \"I'll not forget this kindess. This ring belonged to my partner; I'm too old for the trader's life, but it should be worth something\".",
 					"buttons": [
 						{
 							"text": "[Pity] Return the ring",
@@ -1253,7 +1253,7 @@
 				},
 				{
 					"id": 4,
-					"text": "You push the old man to the ground and steal the box. 'N-No! Please! It’s all I have!' he shouts after you. But you’re already too far away for him to do anything.",
+					"text": "You push the old man to the ground and steal the box. \"N-No! Please! It’s all I have!\" he shouts at you, but his resigned look tells you he won't be putting up any struggle.",
 					"buttons": [
 						{
 							"text": "[Cowardice] Return to ship",
@@ -1263,11 +1263,11 @@
 				},
 				{
 					"id": 5,
-					"text": "you return to the ship and are confronted by one of your crew 'I saw what you did to that old man. I quit, effective immediately.', before you can try to defend your actions they walk away."
+					"text": "You return to the ship and are confronted by one of your crew \"I saw what you did to that old man. I quit, effective immediately.\". Before you can try to defend your actions, they walk away."
 				},
 				{
 					"id": 6,
-					"text": "you take pity on the man and return the ring. He breaks down and hugs you. You leave feeling you've done a good thing."
+					"text": "You take pity on the man and return the ring. He breaks down and hugs you. You leave feeling you've done a good thing."
 				},
 				{
 					"id": 7,
@@ -1286,7 +1286,7 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "'You there!' two men beckon you towards them. 'We need someone to bear witness to our duel, to make it worth your time you can place a bet on who’ll win'. Sounds like easy money.",
+					"text": "\"You there!\", two men beckon you towards them. \"We need someone to bear witness to our duel, to make it worth your time you can place a bet on who’ll win\". Sounds like easy money.",
 					"buttons": [
 						{
 							"text": "[Safe Bet] 70% chance to win 7 Iron Ore",
@@ -1306,7 +1306,7 @@
 				},
 				{
 					"id": 2,
-					"text": "The smoke clears and the victor laughs in triumpth. 'Thanks for your time, you don't know how long we waited for someone willing to spectate!"
+					"text": "The smoke clears and the victor laughs in triumph. \"Thanks for your time, you don't know how long we've waited for someone willing to spectate!"
 				}
 			]
 		},
@@ -1335,7 +1335,7 @@
 				},
 				{
 					"id": 3,
-					"text": "'Welcome, welcome!' you're ushered in. The wall is covered in Antique paintings, if not for the duplicates you wouldn't know they were forgeries.",
+					"text": "\"Welcome, welcome!\" you're ushered in. The wall is covered in antique paintings, if not for the duplicates you wouldn't know they were forgeries.",
 					"buttons": [
 						{
 							"text": "[Sample] Select a painting",
@@ -1348,11 +1348,11 @@
 				},
 				{
 					"id": 5,
-					"text": "As you leave the store with your sample the painter shouts after you 'Don’t forget to tell your friends where you got that now, ya hear!'"
+					"text": "As you leave the store with your sample the painter shouts after you \"Don’t forget to tell your friends where you got that now, ya hear!\""
 				},
 				{
 					"id": 2,
-					"text": "'Oi! How ya doing, mate' The physician welcomes you in. Here for the free adjustments ya say? Well, come on in then no need to be shy!'",
+					"text": "\"Oi! How ya doing, mate?\", the physician welcomes you in. \"Here for the free adjustments ya say? Well, come on in then no need to be shy!\"",
 					"buttons": [
 						{
 							"text": "[Follow] Accept your fate",
@@ -1365,7 +1365,7 @@
 				},
 				{
 					"id": 4,
-					"text": "A number of uncomfortable cracks later you feel both much better and like you need to lay down for 12 hours. 'There ya go, good as new. Thanks for stopping by and don’t ya forget to spread the word, eh?' You thank them and hobble back to the ship."
+					"text": "A number of uncomfortable cracks later you feel much better. \"There ya go, good as new. Thanks for stopping by and don’t ya forget to spread the word, eh?\" You thank them and hobble back to the ship."
 				}
 			]
 		},
@@ -1413,13 +1413,13 @@
 			"valid": true,
 			"encounter_id": 1025,
 			"tags": [],
-			"encounter_name": "Unusual find",
+			"encounter_name": "Unusual Find",
 			"conditions": [],
 			"town_name": null,
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "A gleam in the dirt catches your high. A metal object lies on the ground.",
+					"text": "A gleam in the dirt catches your eye - a metal object lies on the ground.",
 					"buttons": [
 						{
 							"text": "Pick it up.",
