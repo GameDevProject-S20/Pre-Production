@@ -39,28 +39,22 @@ public class OverworldMapUI : MonoBehaviour
     [SerializeField]
     Transform PathsContainer;
 
-    [Header("Button")]
-    [SerializeField]
-    Button enterNodeButton;
-
-    // Canvases
+    // Canvases & Windows
     [Header("Canvases")]
     [SerializeField]
     GameObject TownMenuGameObject;
-    [SerializeField]
-    GameObject EnterNodeButtonCanvas;
     [SerializeField]
     public GameObject QuestJournalCanvas;
     [SerializeField]
     Canvas TravelPanelCanvas;
     [SerializeField]
     public GameObject InventoryCanvas;
+    [SerializeField]
+    SidePanel SidePanel;
 
     //sounds
     [SerializeField]
     AudioClip Vroom;
-
-
 
     //Movement variables
     bool isActive = true;
@@ -107,7 +101,8 @@ public class OverworldMapUI : MonoBehaviour
         EventManager.Instance.OnEnterTownButtonClick.AddListener(OnButtonClick);
     
         EventManager.Instance.FreezeMap.AddListener(() => {isActive = false;});
-        EventManager.Instance.UnfreezeMap.AddListener(() => {isActive = true;});
+        EventManager.Instance.UnfreezeMap.AddListener(() => {if (!TownMenuGameObject.activeInHierarchy) isActive = true;});
+        EventManager.Instance.OnDialogueEnd.AddListener(ShowSidePanel);
 
     }
 
@@ -115,6 +110,15 @@ public class OverworldMapUI : MonoBehaviour
     {
         Clear();
         DrawGraph();
+    }
+
+    void ShowSidePanel(){
+        if (!TownMenuGameObject.activeInHierarchy){
+        OverworldMap.LocationNode node;
+        DataTracker.Current.WorldMap.GetNode(DataTracker.Current.currentLocationId, out node);
+        if (node.Type == OverworldMap.LocationType.POI || node.Type == OverworldMap.LocationType.TOWN){
+            SidePanel.Open();
+        }}
     }
 
     private void Clear()
@@ -203,7 +207,7 @@ public class OverworldMapUI : MonoBehaviour
     {
         if (!isTravelling && isActive)
         {
-            node.setPanel(GetTravelPanel(), false);
+            node.setPanel(GetTravelPanel());
         }
     }
 
@@ -224,14 +228,12 @@ public class OverworldMapUI : MonoBehaviour
     /// </summary>
     void onTravelStart()
     {
-        if (MapTravel.Travel(selectedNode)) {
-            float volume = 2.0F * DataTracker.Current.SettingsManager.VolumeMultiplier;
+        float volume = 2.0F * DataTracker.Current.SettingsManager.VolumeMultiplier;
 
             AudioSource audioSource = GameObject.Find("Audio Source").GetComponent<AudioSource>();
             audioSource.PlayOneShot(Vroom, volume);
             targetPos = selectedNode.gameObject.transform.position;
             isTravelling = true;
-        }
     }
 
     private void Update()
@@ -252,7 +254,6 @@ public class OverworldMapUI : MonoBehaviour
             else
             {
                 OnNodeArrival();
-                isTravelling = false;
             }
         }
     }
@@ -265,6 +266,7 @@ public class OverworldMapUI : MonoBehaviour
     /// </summary>
     void OnNodeArrival()
     {
+        isTravelling = false;
         OverworldMap.LocationNode node;
         if (DataTracker.Current.WorldMap.GetNode(selectedNode.NodeId, out node))
         {
@@ -281,17 +283,27 @@ public class OverworldMapUI : MonoBehaviour
                 }
             }
 
-            if (node.Type == OverworldMap.LocationType.TOWN || node.Type == OverworldMap.LocationType.POI)
+            if (node.Type == OverworldMap.LocationType.TOWN)
             {
-                selectedNode.setPanel(GetTravelPanel(), true);
+                SidePanel.OpenTown(node.LocationId);
             }
-            else
-            {
-                enterNodeButton.gameObject.SetActive(false);
+            else if (node.Type == OverworldMap.LocationType.POI){
+                SidePanel.OpenPOI(node.LocationId);
             }
 
             DataTracker.Current.currentLocationId = node.Id;
             DataTracker.Current.EventManager.OnNodeArrive.Invoke(node);
+        }
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, 1000)){
+            MapNode mn = hit.transform.gameObject.GetComponent<MapNode>();
+            if (mn) {
+                Debug.Log(hit.transform.gameObject.name);
+                mn.OnMouseEnter();
+            }
         }
     }
 
@@ -299,7 +311,6 @@ public class OverworldMapUI : MonoBehaviour
     {
         TownMenuGameObject.GetComponent<TownWindow>().UpdatePrefab();
         TownMenuGameObject.SetActive(true);
-        EnterNodeButtonCanvas.SetActive(false);
         EventManager.Instance.FreezeMap.Invoke();
     }
 
@@ -307,7 +318,7 @@ public class OverworldMapUI : MonoBehaviour
     public void TownMapClosed()
     {
         TownMenuGameObject.SetActive(false);
-        EnterNodeButtonCanvas.SetActive(true);
+        SidePanel.Open();
         EventManager.Instance.UnfreezeMap.Invoke();
     }
 }

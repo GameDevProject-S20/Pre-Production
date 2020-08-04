@@ -85,7 +85,7 @@ public class TownWindow : MonoBehaviour
         transform.Find("TownBackground").Find("TownName").GetComponent<Text>().text = townData.Name;
         transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("Description").GetComponent<Text>().text = townData.Description;
 
-        // TODO: disabled for build, and because it isn't working - replace with accepted mockup style 
+       { // TODO: disabled for build, and because it isn't working - replace with accepted mockup style 
         //use Rarity tier of town to determine proper icon
         //if (townData.tier != Rarity.None)
         //{
@@ -136,12 +136,38 @@ public class TownWindow : MonoBehaviour
                 transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("TownImage").Find("ResourceIcon" + i.ToString()).GetComponent<Image>().enabled = false;
             }
         }*/
+       }
         
-        TextMeshProUGUI t = transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("Tags").GetComponent<TextMeshProUGUI>();
-        t.text = "";
-        foreach(var tag in townData.Tags){
-            t.text += "<color="+ tag.Colour +">" + tag.Name +"</color>; ";
-        }
+        string details = "";
+            if (townData.Tags.Count > 0)
+            {
+                foreach (var tag in townData.Tags)
+                {
+                    if (tag.Name == "Small" || tag.Name == "Medium" || tag.Name == "Large")
+                    {
+                        continue;
+                    }
+                    details += "<color=" + tag.Colour+">"+tag.Name + "</color> ";
+                }
+            }
+
+            switch (townData.Size)
+            {
+                case Town.Sizes.Small:
+                    details += "Hamlet";
+                    break;
+                case Town.Sizes.Medium:
+                    details += "Town";
+                    break;
+                case Town.Sizes.Large:
+                    details += "City";
+                    break;
+                default:
+                    details += "Town";
+                    break;
+            }
+            transform.Find("TownBackground").Find("DataBackground").Find("TownDataBackground").Find("TownData").Find("Tags").GetComponent<TextMeshProUGUI>().text = details;
+
         //find town image
         if (townData.Icon != null)
         {

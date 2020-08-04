@@ -22,11 +22,11 @@ public class TravelPanel : InfoPanel
     [SerializeField]
     TextMeshProUGUI fuelText;
     [SerializeField]
-    GameObject EnterButton;
+    TextMeshProUGUI NameText; 
     [SerializeField]
     TextMeshProUGUI DetailText;  
 
-    MapNode NodeObj;
+    MapNode Node;
 
     protected override void Awake()
     {
@@ -39,7 +39,7 @@ public class TravelPanel : InfoPanel
 
     public void SetNode(MapNode node)
     {
-        NodeObj = node;
+        Node = node;
     }
 
     public void SetTravelInfo(int fuelCost, int travelTime)
@@ -58,29 +58,23 @@ public class TravelPanel : InfoPanel
         }
     }
 
+    public void SetName(string name){
+        NameText.gameObject.SetActive(true);
+        NameText.text = name;
+    }
     public void SetDetails(string details){
         DetailText.gameObject.SetActive(true);
         DetailText.text = details;
     }
 
-    public void EnableButton(){
-        EnterButton.SetActive(true);
-    }
 
-    public void OnButtonClick(){
-        OverworldMap.LocationNode node;
-        DataTracker.Current.WorldMap.GetNode(NodeObj.NodeId, out node);
-        if (node.Type == OverworldMap.LocationType.TOWN){
-            EventManager.Instance.OnEnterTownButtonClick.Invoke(node.LocationId);
-        }
-        else if (node.Type == OverworldMap.LocationType.POI){
-            EventManager.Instance.OnEnterPOIButtonClick.Invoke(node.LocationId);
-        }
-    }
 
     public void onNodeClick()
     {
-        EventManager.Instance.OnTravelStart.Invoke();
+        if (MapTravel.Travel(Node)){
+            EventManager.Instance.OnTravelStart.Invoke();
+        }
+
     }
 
     public void onNodeHover()
@@ -104,13 +98,13 @@ public class TravelPanel : InfoPanel
     }
 
     protected override void OnClosed(){
-        if (NodeObj)
+        if (Node)
         {
-            NodeObj.Close();
-            NodeObj = null;
+            Node.Close();
+            Node = null;
         }
         CostInfo.SetActive(false);
-        EnterButton.SetActive(false);
+        NameText.gameObject.SetActive(false);
         DetailText.gameObject.SetActive(false);
         gameObject.SetActive(false);
     }

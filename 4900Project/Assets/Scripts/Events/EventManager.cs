@@ -58,6 +58,7 @@ namespace SIEvents
         //=== Dialogue ===============================================//
 
         public Events.DialogueEvents.SelectionEvent OnDialogueSelected = new Events.DialogueEvents.SelectionEvent();
+        public UnityEvent OnDialogueEnd = new UnityEvent();
 
         //=== Map ====================================================//
 

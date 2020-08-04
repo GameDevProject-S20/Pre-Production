@@ -178,11 +178,34 @@ public class Town
 
     private void SetDescription()
     {
-        this.Description = $@"{this.Name} is a {getWord("size")} situated in {getWord("region")} nearby a {getWord("adj")} {getWord("noun")}.
+        string desc = $@"{this.Name} is a {getWord((Size == Sizes.Small) ? "sizeSmall" : (Size == Sizes.Medium) ? "sizeMedium" : "sizeLarge")} situated in {getWord("region")} nearby a {getWord("adj")} {getWord("noun")}.
 
-They are lead by {this.Leader} and known for having lots of {getWord("resource")}. They will pay handsomely for {getWord("resource")}.
+They are lead by {this.Leader}. ";
 
-The inhabitants are often found {getWord("verb")} and are {getWord("verb2")} when it comes to meeting new people.";
+        List<string> s = new List<string>();
+        for(int i = 0; i<Tags.Count; i++){
+            if (Tags[i].Specialization == ItemTag.None) continue;
+            s.Add(Tags[i].Specialization.ToString());
+        }
+
+        if (s.Count >0){
+            desc += "They specialize in ";
+            for(int i = 0; i<s.Count; i++){
+                string t = Tags[i].Specialization.ToString().Replace("_", " ");
+                if (i < s.Count -1){
+                    desc += t +", ";
+                }
+                else {
+                    desc += "and " + t +".\n\n";
+                }
+            }
+        }
+        else {
+            desc += "They sell general goods.\n\n";
+        }
+
+        desc += $@"The inhabitants are often found {getWord("verb")} and are {getWord("verb2")} when it comes to meeting new people.";
+        this.Description = desc;
     }
 
     private void SetLeaderBlurb()
@@ -199,7 +222,10 @@ The inhabitants are often found {getWord("verb")} and are {getWord("verb2")} whe
         string[] verb2 = new string[] { "wary", "welcoming", "aggresive", "curious", "stand offish", "dismissive", "enthusatic" };
         string[] noun = new string[] { "river", "forest", "mountain", "swamp", "cave", "ruin", "field" };
         string[] resource = new string[] { "wood", "food", "metal", "medicine", "weapons", "jewlery", "armour" };
-        string[] size = new string[] { "small group of huts", "town", "small city", "large city", "base", "tent city", "empire" };
+        string[] sizeSmall = new string[] { "small group of huts", "small village", "village", "hamlet", "outpost", "bunch of hovels", "compound"};
+        string[] sizeMedium = new string[] { "town", "large village", "township", "mid-sized settlement", "base", "town", "town" };
+        string[] sizeLarge = new string[] { "metropolis", "city", "city-state", "fortress", "large city", "city center", "seat of power" };
+
         switch (type)
         {
             case "adj":
@@ -212,8 +238,12 @@ The inhabitants are often found {getWord("verb")} and are {getWord("verb2")} whe
                 return noun[randNum];
             case "resource":
                 return resource[randNum];
-            case "size":
-                return size[randNum];
+            case "sizeSmall":
+                return sizeSmall[randNum];
+            case "sizeMedium":
+                return sizeMedium[randNum];
+            case "sizeLarge":
+                return sizeLarge[randNum];
             case "region":
                 return region[randNum];
             default:

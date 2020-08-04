@@ -33,6 +33,10 @@ public class InfoPanel : MonoBehaviour
         Close();
     }
 
+    private void Update() {
+        rt.ForceUpdateRectTransforms();
+    }
+
     protected void Open()
     {
         state = States.Open;
