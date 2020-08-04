@@ -84,7 +84,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - PlayerPosition: {r: -17.2095, g: 0, b: -38.9725, a: 0}
+    - PlayerPosition: {r: -21.71616, g: 0, b: -34.263992, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

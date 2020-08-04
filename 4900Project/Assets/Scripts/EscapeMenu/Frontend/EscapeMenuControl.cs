@@ -132,12 +132,12 @@ namespace Assets.Scripts.EscapeMenu.Interfaces
                 UpdateValueDisplay(sliderData);
                 UpdateSetting(sliderData.SettingName, value);
             });
-
+            /*
             // When the player finishes changing a value, we want to update the setting
             // Note that this is done after a value is changed, so that we don't call the method too often
             customSlider.MouseReleased.AddListener((value) =>
             {
-            });
+            });*/
         }
 
         /// <summary>
