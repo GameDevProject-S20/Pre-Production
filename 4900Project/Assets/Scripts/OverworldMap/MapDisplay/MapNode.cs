@@ -8,27 +8,24 @@ using SIEvents;
 public class MapNode : MonoBehaviour
 {
 
-    public int NodeId { get; set; }
-    public OverworldMap.LocationType Type { get; set; }
 
+    public OverworldMap.LocationNode NodeData { get; set; }
+    EncounterNode encounterData;
     TravelPanel panel;
     Camera cam;
     Vector3 offset = new Vector3(0, 60, 0);
 
 
-    private void Start()
-    {
+    public void Init(OverworldMap.LocationNode Node){
+        NodeData = Node;
         cam = Camera.main;
-
-        // Appearance is determined by node type
-        OverworldMap.LocationNode node;
-        DataTracker.Current.WorldMap.GetNode(NodeId, out node);
     
-        if (Type == OverworldMap.LocationType.TOWN)
+        // Appearance is determined by node type
+        if (NodeData.Type == OverworldMap.LocationType.TOWN)
         {
             transform.Rotate(new Vector3(0, Random.Range(0, 360), 0), Space.Self);
 
-            Town t = DataTracker.Current.TownManager.GetTownById(node.LocationId);
+            Town t = DataTracker.Current.TownManager.GetTownById(NodeData.LocationId);
 
             if (t.HasTag("Farm"))
             {
@@ -52,11 +49,7 @@ public class MapNode : MonoBehaviour
 
 
         }
-        else if (Type == OverworldMap.LocationType.EVENT)
-        {
-            transform.Find("EncounterMark").gameObject.SetActive(true);
-        }
-        else if (Type == OverworldMap.LocationType.POI)
+        else if (NodeData.Type == OverworldMap.LocationType.POI)
         {
             transform.Rotate(new Vector3(0, Random.Range(0, 360), 0), Space.Self);
             transform.Find("tinyTown").gameObject.SetActive(true);
@@ -64,9 +57,35 @@ public class MapNode : MonoBehaviour
         }
         else
         {
+            encounterData = new EncounterNode();
+            encounterData.Init();
+            encounterData.SampleTexture(NodeData.PosX, NodeData.PosY);
             transform.Find("Icon").gameObject.SetActive(true);
+            SpriteRenderer sprite =  transform.Find("Icon").GetComponent<SpriteRenderer>();
+            switch (encounterData.probabilityCategory)
+            {
+                case "Low":
+                    sprite.sprite = Resources.Load<Sprite>("Sprites/Map/Nodes/hexagon");
+                    sprite.color = new Vector4(77, 156, 20, 255)/255;
+                break;
+                case "Medium":
+                    sprite.sprite = Resources.Load<Sprite>("Sprites/Map/Nodes/diamond");
+                    sprite.color = new Vector4(217, 182, 11, 255)/255;
+                break;
+                case "High":
+                    sprite.sprite = Resources.Load<Sprite>("Sprites/Map/Nodes/triangle");
+                    sprite.color = new Vector4(209, 99, 2, 255)/255;
+                break;
+                case "Very High":
+                    sprite.sprite = Resources.Load<Sprite>("Sprites/Map/Nodes/cross");
+                    sprite.color = new Vector4(201, 10, 0, 255)/255;
+                break;
+                default:
+                    sprite.sprite = Resources.Load<Sprite>("Sprites/Map/Nodes/circle");
+                    sprite.color = new Vector4(8, 76, 97, 255)/255;
+                break;
+            }
         }
-
     }
 
     /// <summary>
@@ -90,23 +109,21 @@ public class MapNode : MonoBehaviour
     public void setPanel(GameObject obj)
     {
         if (panel) return;
-        bool adjacent = DataTracker.Current.WorldMap.HasEdge(NodeId, DataTracker.Current.currentLocationId);
-        if (Type == OverworldMap.LocationType.NONE && !adjacent) return;
+        bool adjacent = DataTracker.Current.WorldMap.HasEdge(NodeData.Id, DataTracker.Current.currentLocationId);
+        if (NodeData.Type == OverworldMap.LocationType.NONE && ! adjacent) return;
 
         panel = obj.GetComponent<TravelPanel>();
         panel.SetNode(this);
         obj.SetActive(true);
 
-        if (DataTracker.Current.WorldMap.HasEdge(NodeId, DataTracker.Current.currentLocationId))
-        {
+        if (DataTracker.Current.WorldMap.HasEdge(NodeData.Id, DataTracker.Current.currentLocationId)){
             panel.SetTravelInfo(MapTravel.GetFuelCost(this), MapTravel.dayRate);
         }
 
         OverworldMap.LocationNode node;
-        DataTracker.Current.WorldMap.GetNode(NodeId, out node);
+        DataTracker.Current.WorldMap.GetNode(NodeData.Id, out node);
 
-        if (Type == OverworldMap.LocationType.TOWN)
-        {
+        if (NodeData.Type == OverworldMap.LocationType.TOWN) {
             Town t = DataTracker.Current.TownManager.GetTownById(node.LocationId);
             panel.SetName(t.Name);
             string details = "";
@@ -139,14 +156,12 @@ public class MapNode : MonoBehaviour
             }
             panel.SetDetails(details);
         }
-        else if (Type == OverworldMap.LocationType.EVENT)
-        {
-            panel.SetName("Unknown Event");
+        else if (NodeData.Type == OverworldMap.LocationType.EVENT) {
+            panel.SetDetails("Unknown Event");
 
         }
-        else if (Type == OverworldMap.LocationType.POI)
-        {
-            panel.SetName("Point of Interest");
+        else if (NodeData.Type == OverworldMap.LocationType.POI) {
+            panel.SetDetails("Point of Interest");
         }
 
         obj.transform.position = cam.WorldToScreenPoint(gameObject.transform.position) + offset;
@@ -159,6 +174,9 @@ public class MapNode : MonoBehaviour
     /// </summary>
     public void OnMouseEnter()
     {
+        int xMod = Mathf.RoundToInt(Mathf.Lerp(0, 800, (NodeData.PosX + 1) / 2.0f));
+        int yMod = Mathf.RoundToInt(Mathf.Lerp(0, 600, (NodeData.PosY + 1) / 2.0f));
+        Debug.Log($"({xMod}, {yMod})");
         if (panel) return;
         EventManager.Instance.OnNodeMouseEnter.Invoke(this);
     }
@@ -180,7 +198,7 @@ public class MapNode : MonoBehaviour
     private void OnMouseDown()
     {
         // Only allow clicks on adjacent nodes
-        if (DataTracker.Current.WorldMap.HasEdge(NodeId, DataTracker.Current.currentLocationId))
+        if (DataTracker.Current.WorldMap.HasEdge(NodeData.Id, DataTracker.Current.currentLocationId))
         {
             if (panel)
             {
