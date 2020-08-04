@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -223,7 +224,15 @@ namespace Assets.Scripts.Dialogue.Frontend
                 // Typing Speed goes from 10 to 100, where 10 is the slowest and 100 is the fastest.
                 // The fastest speed we can go is 0.01, which is 1/100.
                 // The slowest speed we want to go is 0.10, which is 1/10. So use 1/TypingSpeed
-                yield return new WaitForSeconds(1 / DataTracker.Current.SettingsManager.DialogueSpeed);
+                float speed = 100f;
+                try
+                {
+                    speed = DataTracker.Current.SettingsManager.DialogueSpeed;
+                }
+                catch { } 
+
+                yield return new WaitForSeconds(1 / speed);
+
             }
             textMeshPro.maxVisibleCharacters = charCount;
         }
