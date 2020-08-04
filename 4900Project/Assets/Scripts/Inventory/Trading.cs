@@ -66,6 +66,9 @@ public class Trading : MonoBehaviour
     [SerializeField]
     public Tooltip tooltip;
 
+    [SerializeField]
+    TextMeshProUGUI valueText;
+
     public void Start() {
         shop = ShopManager.Instance.GetShopById(DataTracker.Current.currentShopId);
         copyOfPlayerInventory = new Inventory(DataTracker.Current.Player.Inventory);
@@ -74,7 +77,25 @@ public class Trading : MonoBehaviour
         buildPlayerList();
         Name.text = shop.name;
         Portrait.GetComponent<Image>().sprite = shop.Portrait ?? IconMissing;
+        float value = DataTracker.Current.Player.Inventory.TotalValue();
+        valueText.text = "Approx. Total Value: " + Round((int)value);
 
+    }
+
+    /// <summary>
+    /// Round to the nearest multiple of a given integer
+    /// </summary>
+    /// <param name="val">Value to round</param>
+    /// <param name="roundTo">Round to the nearest multiple of this integer</param>
+    /// <returns></returns>
+    int Round(int val, int roundTo=25){
+        if (val % roundTo == 0) return val;
+        int lower = val - val % roundTo;
+        int higher = roundTo - val % roundTo + val;
+
+        int diffLow = val - lower;
+        int diffHigh = higher - val;
+        return (diffHigh >= diffLow) ? lower : higher;
     }
 
     //======================================================================//
@@ -347,6 +368,8 @@ public class Trading : MonoBehaviour
         buildShopList();
         buildOfferList();
         buildCartList();
+        float value = DataTracker.Current.Player.Inventory.TotalValue();
+        valueText.text = "Approx. Total Value: " + Round((int)value);
     }
 
     public void leave(){
