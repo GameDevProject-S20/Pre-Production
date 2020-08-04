@@ -146,8 +146,7 @@ public class OverworldMapUI : MonoBehaviour
             nodeObj.transform.SetParent(NodesContainer, true);
             nodeObj.name = node.Name;
             MapNode mn = nodeObj.GetComponent<MapNode>();
-            mn.NodeId = node.Id;
-            mn.Type = node.Type;
+            mn.Init(node);
 
             // Move the player to the starting node
             if (node.Id == currentId)
@@ -179,6 +178,18 @@ public class OverworldMapUI : MonoBehaviour
             {
                 lr.material = pathHighlightMaterial;
             }
+            Color color1 = new Color(0.19f, 0.2f, 0.21f);
+            Color color2 = new Color(0.19f, 0.2f, 0.21f);
+            GameObject icon1 = NodesContainer.transform.Find(edge.Item1.Name).Find("Icon").gameObject;
+            if (icon1.activeInHierarchy) {
+                color1 = icon1.GetComponent<SpriteRenderer>().color;
+            }
+            GameObject icon2 = NodesContainer.transform.Find(edge.Item2.Name).Find("Icon").gameObject;
+            if (icon2.activeInHierarchy) {
+                color2 = icon2.GetComponent<SpriteRenderer>().color;
+            }
+            lr.startColor = color1;
+            lr.endColor = color2;
         }
 
     }
@@ -267,33 +278,29 @@ public class OverworldMapUI : MonoBehaviour
     void OnNodeArrival()
     {
         isTravelling = false;
-        OverworldMap.LocationNode node;
-        if (DataTracker.Current.WorldMap.GetNode(selectedNode.NodeId, out node))
+        foreach (Transform path in PathsContainer.transform)
         {
-
-            foreach (Transform path in PathsContainer.transform)
+            if (path.gameObject.name.Contains("_" + DataTracker.Current.currentLocationId.ToString() + "_"))
             {
-                if (path.gameObject.name.Contains("_" + DataTracker.Current.currentLocationId.ToString() + "_"))
-                {
-                    path.GetComponent<LineRenderer>().material = pathDefaultMaterial;
-                }
-                if (path.gameObject.name.Contains("_" + node.Id.ToString() + "_"))
-                {
-                    path.GetComponent<LineRenderer>().material = pathHighlightMaterial;
-                }
+                path.GetComponent<LineRenderer>().material = pathDefaultMaterial;
             }
-
-            if (node.Type == OverworldMap.LocationType.TOWN)
+            if (path.gameObject.name.Contains("_" + selectedNode.NodeData.Id.ToString() + "_"))
             {
-                SidePanel.OpenTown(node.LocationId);
+                path.GetComponent<LineRenderer>().material = pathHighlightMaterial;
             }
-            else if (node.Type == OverworldMap.LocationType.POI){
-                SidePanel.OpenPOI(node.LocationId);
-            }
-
-            DataTracker.Current.currentLocationId = node.Id;
-            DataTracker.Current.EventManager.OnNodeArrive.Invoke(node);
         }
+
+        if (selectedNode.NodeData.Type == OverworldMap.LocationType.TOWN)
+        {
+            SidePanel.OpenTown(selectedNode.NodeData.LocationId);
+        }
+        else if (selectedNode.NodeData.Type == OverworldMap.LocationType.POI){
+            SidePanel.OpenPOI(selectedNode.NodeData.LocationId);
+        }
+
+        DataTracker.Current.currentLocationId = selectedNode.NodeData.Id;
+        DataTracker.Current.EventManager.OnNodeArrive.Invoke(selectedNode.NodeData);
+        
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
