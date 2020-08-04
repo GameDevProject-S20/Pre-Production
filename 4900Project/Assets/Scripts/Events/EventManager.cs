@@ -37,6 +37,7 @@ namespace SIEvents
 
         public Events.TownEvents.EnterEvent OnTownEnter = new Events.TownEvents.EnterEvent();
         public Events.TownEvents.ClickDialogueEvent OnOpenDialogueClick = new Events.TownEvents.ClickDialogueEvent();
+        public Events.TownEvents.UpdatedEvent OnTownUpdated = new Events.TownEvents.UpdatedEvent();
 
         //=== Encounters ============================================//
 

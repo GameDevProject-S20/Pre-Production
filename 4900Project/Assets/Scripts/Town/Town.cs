@@ -112,10 +112,25 @@ public class Town
 
     }
 
+    /// <summary>
+    /// Convenience method, initializes a shop with the default values.
+    /// </summary>
     public void InitializeShop()
     {
+        InitializeShop("Marketplace", "Trade Goods", Shop.ShopTypes.None);
+    }
+
+    /// <summary>
+    /// Initializes a new shop, given the shop's name, description, and shopType.
+    /// The shop gets added into this town's shop list.
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="description"></param>
+    /// <param name="shopType"></param>
+    public void InitializeShop(string name, string description, Shop.ShopTypes shopType)
+    {
         // Create a store and populate it based on the town's tags
-        Shop shop = new Shop(ShopManager.Instance.GetId(), "Marketplace", "Trade Goods", "", Shop.ShopTypes.None);
+        Shop shop = new Shop(ShopManager.Instance.GetId(), name, description, "", shopType);
         shop.InitializeInventory(this);
         ShopManager.Instance.addShop(shop);
         shops.Add(shop.id);
@@ -127,6 +142,9 @@ public class Town
         {
             shop.inventory.AddItem("Bandit Token", 5);
         }
+
+        // Notify that the town has changed
+        FireUpdatedEvent();
     }
 
 
@@ -238,5 +256,13 @@ They are lead by {this.Leader}. ";
             default:
                 return "word";
         }
+    }
+
+    /// <summary>
+    /// Fires the TownUpdated event in the EventManager.
+    /// </summary>
+    private void FireUpdatedEvent()
+    {
+        DataTracker.Current.EventManager.OnTownUpdated.Invoke(this);
     }
 }

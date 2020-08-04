@@ -56,6 +56,15 @@ public class TownWindow : MonoBehaviour
     private void Start()
     {
         UpdatePrefab();
+        DataTracker.Current.EventManager.OnTownUpdated.AddListener((town) =>
+        {
+            // If we're in this town, we want to update the window
+            var currentTown = TownManager.Instance.GetCurrentTownData();
+            if (currentTown != null && currentTown.Id == town.Id) 
+            {
+                UpdatePrefab();
+            }
+        });
     }
 
     public void UpdatePrefab()

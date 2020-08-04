@@ -46,7 +46,12 @@ public class TownManager
             towns.Add(data.Id, town);
             Debug.Log("DATA:" + town.Description);
             resultString.AppendLine("\tCreated town #" + data.Id + ": " + data.Name);
-            town.InitializeShop();
+
+            // Note: Smithsville's marketplace is only available after completing the Generator quest.
+            if (town.Id != 0)
+            {
+                town.InitializeShop();
+            }
         }
         UnityEngine.Debug.Log(resultString);
 
