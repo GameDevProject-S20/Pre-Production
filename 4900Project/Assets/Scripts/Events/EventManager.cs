@@ -73,10 +73,10 @@ namespace SIEvents
         public UnityEvent FreezeMap = new UnityEvent();
         public UnityEvent UnfreezeMap = new UnityEvent();
 
-
         //=== Player =================================================//
 
         public Events.PlayerEvents.HealthEvent OnHealthChange = new Events.PlayerEvents.HealthEvent();
+        public Events.PlayerEvents.TravelTypeChangeEvent OnTravelTypeChanged = new Events.PlayerEvents.TravelTypeChangeEvent();
 
         //=== Escape Menu ===========================================//
         public UnityEvent EscapeMenuRequested = new UnityEvent();
