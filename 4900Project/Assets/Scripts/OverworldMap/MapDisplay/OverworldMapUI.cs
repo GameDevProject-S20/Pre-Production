@@ -58,6 +58,7 @@ public class OverworldMapUI : MonoBehaviour
 
     //Movement variables
     bool isActive = true;
+    int FreezeCount = 0; 
     bool isTravelling = false;
     float translateSmoothTime = 1f;
     Vector3 translatSmoothVelocity;
@@ -100,8 +101,23 @@ public class OverworldMapUI : MonoBehaviour
         EventManager.Instance.OnTravelStart.AddListener(onTravelStart);
         EventManager.Instance.OnEnterTownButtonClick.AddListener(OnButtonClick);
     
-        EventManager.Instance.FreezeMap.AddListener(() => {isActive = false;});
-        EventManager.Instance.UnfreezeMap.AddListener(() => {if (!TownMenuGameObject.activeInHierarchy) isActive = true;});
+        EventManager.Instance.FreezeMap.AddListener(() => {
+            isActive = false;
+            FreezeCount++;
+            Debug.Log("F+: " + FreezeCount);
+        });
+
+        EventManager.Instance.UnfreezeMap.AddListener(() => {
+            //if (!TownMenuGameObject.activeInHierarchy) isActive = true;
+            FreezeCount--;
+            if (FreezeCount <= 0)
+            {
+                FreezeCount = 0;
+                Debug.Log("Here unfreeze map if"); 
+                isActive = true;
+            }
+            Debug.Log("F-: " + FreezeCount);
+        });
         EventManager.Instance.OnDialogueEnd.AddListener(ShowSidePanel);
 
     }
