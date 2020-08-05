@@ -115,7 +115,7 @@ public class OverworldMapUI : MonoBehaviour
                 FreezeCount = 0;
                 Debug.Log("Here unfreeze map if"); 
                 isActive = true;
-            }
+            } 
             Debug.Log("F-: " + FreezeCount);
         });
         EventManager.Instance.OnDialogueEnd.AddListener(ShowSidePanel);

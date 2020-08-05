@@ -39,10 +39,25 @@ public class SimpleCameraController : MonoBehaviour
 
     bool active = true;
 
+    int FreezeCount = 0; 
+
     private void Awake()
     {
-        EventManager.Instance.FreezeMap.AddListener(() => { active = false; });
-        EventManager.Instance.UnfreezeMap.AddListener(() => { active = true; });
+        EventManager.Instance.FreezeMap.AddListener(() => {
+            active = false;
+            FreezeCount++;
+            Debug.Log("Fc+: " + FreezeCount);
+        });
+        EventManager.Instance.UnfreezeMap.AddListener(() => {
+            FreezeCount--;
+            if (FreezeCount <= 0)
+            {
+                FreezeCount = 0;
+                Debug.Log("Here unfreeze map if");
+                active = true;
+            }
+            Debug.Log("Fc-: " + FreezeCount);
+        });
     }
 
     private void Update()
