@@ -31,13 +31,14 @@ public class HudActions : MonoBehaviour
     public void OnJournalButtonClick()
     {
         GameObject.Find("Map").GetComponent<OverworldMapUI>().QuestJournalCanvas.SetActive(true); 
-        GameObject.Find("questjournal").GetComponent<UnityEngine.UI.Image>().color = Color.white;
+        GameObject.Find("questjournal").GetComponent<UnityEngine.UI.RawImage>().material = default;
         EventManager.Instance.FreezeMap.Invoke();
 
     }
 
     public void QuestChangedHandler()
     {
-       GameObject.Find("questjournal").GetComponent<UnityEngine.UI.Image>().color = Color.red;
+       Material glowing = Resources.Load<Material>("Materials/Glowing");
+       GameObject.Find("questjournal").GetComponent<UnityEngine.UI.RawImage>().material = Instantiate(glowing);
     }
 }
