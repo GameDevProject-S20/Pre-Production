@@ -110,7 +110,7 @@ namespace SIEvents
         public partial class PlayerEvents
         {
             [System.Serializable]
-            public class HealthEvent : UnityEvent<int> { };
+            public class HealthEvent : UnityEvent<int, int, int, string> { };
 
         }
 
@@ -121,4 +121,3 @@ namespace SIEvents
         }
     }
 }
-
