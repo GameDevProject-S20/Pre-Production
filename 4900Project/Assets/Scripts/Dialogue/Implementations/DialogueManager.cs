@@ -42,10 +42,11 @@ namespace Dialogue
         /// </summary>
         private List<IDialogue> activeDialogs = new List<IDialogue>();
 
-        private DialogueManager() 
+        private DialogueManager()
         {
             EventManager.Instance.OnGivenToPlayer.AddListener((string iname, int iamount) => OnGiveTakeItemHandler(iname, iamount, "Received"));
             EventManager.Instance.OnTakenFromPlayer.AddListener((string iname, int iamount) => OnGiveTakeItemHandler(iname, iamount, "Removed"));
+            EventManager.Instance.OnHealthChange.AddListener((int diff, int current, int max, string flatmax) => OnHealthChangeHandler(diff, current, max, flatmax));
         }
 
         // Public Methods
@@ -153,6 +154,27 @@ namespace Dialogue
             {
                 IDPage proxyPage = new DPage();
                 string notification = string.Format("({0} {1}x {2}!)", giveTake, amount, itemName);
+                dialogue.AddToHistory(proxyPage, notification);
+            }
+        }
+
+
+        private void OnHealthChangeHandler(int diff, int current, int max, string flatmax)
+        {
+            Dialogue dialogue = (Dialogue) GetActiveDialogue();
+
+            if (dialogue != null)
+            {
+                string notification = "";
+                if(diff>0)
+                {
+                  notification = string.Format("Gained {0} {1} health!", diff, flatmax);
+                }
+                else if(diff<0)
+                {
+                  notification = string.Format("Lost {0} {1} health!", diff, flatmax);
+                }
+                IDPage proxyPage = new DPage();
                 dialogue.AddToHistory(proxyPage, notification);
             }
         }

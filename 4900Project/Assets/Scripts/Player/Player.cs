@@ -31,7 +31,7 @@ public class Player
         if (h == 0) return;
         Health += h;
         Health = UnityEngine.Mathf.Clamp(Health, 0, HealthCap);
-        EventManager.Instance.OnHealthChange.Invoke(Health);
+        EventManager.Instance.OnHealthChange.Invoke(h, Health, HealthCap, "");
     }
 
     public void ModifyCap(int mod)
@@ -39,6 +39,6 @@ public class Player
         if (mod == 0) return;
         HealthCap += mod;
         HealthCap = UnityEngine.Mathf.Max(HealthCap, 0);
-        EventManager.Instance.OnHealthChange.Invoke(Health);
+        EventManager.Instance.OnHealthChange.Invoke(mod, Health, HealthCap, "max");
     }
 }

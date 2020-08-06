@@ -11,7 +11,7 @@ public class HealthEffect : IEffect
     {
         if (mod == 0)
         {
-            throw new Exception("Useless Effect");
+            //throw new Exception("Useless Effect");
         }
 
         this.mod = mod;
@@ -33,7 +33,7 @@ public class HealthPercentEffect : IEffect
     {
         if (perc == 0)
         {
-            throw new ArgumentException("Useless Effect");
+            //throw new ArgumentException("Useless Effect");
         }
         else if (perc < -100 || perc > 100)
         {
@@ -46,6 +46,7 @@ public class HealthPercentEffect : IEffect
     public bool Apply()
     {
         int mod = Mathf.RoundToInt(((float)Player.Instance.HealthCap) * (percent/100.0f));
+        mod = Mathf.Max(mod, 1-Player.Instance.HealthCap); //serves to not kill the player if they have full hp
         return new HealthEffect(mod).Apply();
     }
 }
@@ -58,7 +59,7 @@ public class MaxHealthEffect : IEffect
     {
         if (mod == 0)
         {
-            throw new Exception("Useless Effect");
+            //throw new Exception("Useless Effect");
         }
 
         this.mod = mod;
@@ -72,9 +73,7 @@ public class MaxHealthEffect : IEffect
         if(mod<0){
           if(prevMaxHealth+mod<Player.Instance.Health)
           {
-            changeHealth = UnityEngine.Mathf.Max(
-              prevMaxHealth-Player.Instance.Health-mod,
-              mod);
+            changeHealth = prevMaxHealth-Player.Instance.Health+mod;
           }
         }
         else
@@ -94,7 +93,7 @@ public class MaxHealthPercentEffect : IEffect
     {
         if (perc == 0)
         {
-            throw new ArgumentException("Useless Effect");
+            //throw new ArgumentException("Useless Effect");
         }
         else if (perc < -100 || perc > 100)
         {
