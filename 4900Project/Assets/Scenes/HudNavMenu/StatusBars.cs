@@ -41,7 +41,7 @@ public class StatusBars : MonoBehaviour
         fuelBarText.text = count.ToString("0");
         fuelBar.fillAmount = count / 20.0f;
         float temp = DataTracker.Current.Player.Inventory.GetWeightRatio();
-        weightBarText.text = (temp*100).ToString() + "% Capacity";
+        weightBarText.text = ((int)(temp*100)).ToString() + "% Capacity";
         weightBar.fillAmount = temp;
     }
 
@@ -56,7 +56,7 @@ public class StatusBars : MonoBehaviour
     void WarningCheck()
     {
         int count = DataTracker.Current.Player.Inventory.Contains("Fuel");
-        if(count < 12)
+        if(count < 18)
         {
             fuelBar.enabled = !fuelBar.enabled;
             FuelWarning.enabled = true;
