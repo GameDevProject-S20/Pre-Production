@@ -41,4 +41,8 @@ public class HudActions : MonoBehaviour
        Material glowing = Resources.Load<Material>("Materials/Glowing");
        GameObject.Find("questjournal").GetComponent<UnityEngine.UI.RawImage>().material = Instantiate(glowing);
     }
+
+    public void OnToggleView(){
+        GameObject.Find("Map").GetComponent<OverworldMapUI>().ToggleColourMode();
+    }
 }
