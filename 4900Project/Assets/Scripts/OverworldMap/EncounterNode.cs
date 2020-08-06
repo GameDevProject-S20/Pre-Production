@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using SIEvents;
 public class EncounterNode
 {
 
@@ -36,6 +36,7 @@ public class EncounterNode
         bool triggered = (Random.value < probabilities[p]);
         if (triggered) {
             p = "Safe";
+            EventManager.Instance.OnProbabilityChange.Invoke(id);
         }
         return triggered;
     }
