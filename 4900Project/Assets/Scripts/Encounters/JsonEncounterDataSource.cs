@@ -531,6 +531,14 @@ public class JsonEncounterDataSource : IEncounterDataSource
                 var node2 = Int16.Parse(args[1]);
                 e = new AddEdgeEffect(node1, node2);
             }
+            else if (command == "add_shop")
+            {
+                var townId = Int16.Parse(args[0]);
+                var shopName = args[1];
+                var shopDescription = args[2];
+                var shopType = args[3];
+                e = new AddShopEffect(townId, shopName, shopDescription, shopType);
+            }
             else if (command == "trigger")
             {
                 var name = args[0];

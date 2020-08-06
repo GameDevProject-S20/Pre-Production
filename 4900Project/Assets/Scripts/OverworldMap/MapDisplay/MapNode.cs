@@ -19,29 +19,34 @@ public class MapNode : MonoBehaviour
     private void Start()
     {
         cam = Camera.main;
-        //EventManager.Instance.OnNodeMouseDown.AddListener(OtherNodeSelected);
+
+        // Appearance is determined by node type
         OverworldMap.LocationNode node;
         DataTracker.Current.WorldMap.GetNode(NodeId, out node);
-        // Appearance is determined by node type
+    
         if (Type == OverworldMap.LocationType.TOWN)
         {
             transform.Rotate(new Vector3(0, Random.Range(0, 360), 0), Space.Self);
 
             Town t = DataTracker.Current.TownManager.GetTownById(node.LocationId);
 
-            if (t.HasTag("Farm")){
+            if (t.HasTag("Farm"))
+            {
                 transform.Find("farm").gameObject.SetActive(true);
             }
-            else if (t.Size == Town.Sizes.Small){
-                    transform.Find("smallTown").gameObject.SetActive(true);
+            else if (t.Size == Town.Sizes.Small)
+            {
+                transform.Find("smallTown").gameObject.SetActive(true);
 
             }
-            else if (t.Size == Town.Sizes.Medium){
-                    transform.Find("town").gameObject.SetActive(true);
+            else if (t.Size == Town.Sizes.Medium)
+            {
+                transform.Find("town").gameObject.SetActive(true);
 
             }
-            else if (t.Size == Town.Sizes.Large){
-                    transform.Find("largeTown").gameObject.SetActive(true);
+            else if (t.Size == Town.Sizes.Large)
+            {
+                transform.Find("largeTown").gameObject.SetActive(true);
             }
             transform.Find("Indicator").gameObject.SetActive(true);
 
@@ -57,15 +62,11 @@ public class MapNode : MonoBehaviour
             transform.Find("tinyTown").gameObject.SetActive(true);
             transform.Find("Indicator").gameObject.SetActive(true);
         }
-        else {
+        else
+        {
             transform.Find("Icon").gameObject.SetActive(true);
         }
 
-        /*foreach(Transform child in transform) {
-            if (!child.gameObject.activeInHierarchy && child.gameObject.name != "Icon"){
-                GameObject.Destroy(child.gameObject);
-            }
-        }*/
     }
 
     /// <summary>
@@ -86,60 +87,77 @@ public class MapNode : MonoBehaviour
     /// Assosiate an info panel with this node
     /// </summary>
     /// <param name="obj">The info panel game object</param>
-    public void setPanel(GameObject obj, bool showEnterButton)
+    public void setPanel(GameObject obj)
     {
         if (panel) return;
         bool adjacent = DataTracker.Current.WorldMap.HasEdge(NodeId, DataTracker.Current.currentLocationId);
-        if (Type == OverworldMap.LocationType.NONE && ! adjacent) return;
+        if (Type == OverworldMap.LocationType.NONE && !adjacent) return;
 
         panel = obj.GetComponent<TravelPanel>();
         panel.SetNode(this);
         obj.SetActive(true);
 
-        if (showEnterButton){
-            panel.EnableButton();
-            panel.Select();
-        }
-        if (DataTracker.Current.WorldMap.HasEdge(NodeId, DataTracker.Current.currentLocationId)){
+        if (DataTracker.Current.WorldMap.HasEdge(NodeId, DataTracker.Current.currentLocationId))
+        {
             panel.SetTravelInfo(MapTravel.GetFuelCost(this), MapTravel.dayRate);
         }
 
         OverworldMap.LocationNode node;
         DataTracker.Current.WorldMap.GetNode(NodeId, out node);
 
-        if (Type == OverworldMap.LocationType.TOWN) {
+        if (Type == OverworldMap.LocationType.TOWN)
+        {
             Town t = DataTracker.Current.TownManager.GetTownById(node.LocationId);
-            var details = t.Name;
-            if (t.Tags.Count > 0){
-                 details += "\n";
-                 foreach(var tag in t.Tags){
-                details += tag.Name +" ";
+            panel.SetName(t.Name);
+            string details = "";
+            if (t.Tags.Count > 0)
+            {
+                foreach (var tag in t.Tags)
+                {
+                    if (tag.Name == "Small" || tag.Name == "Medium" || tag.Name == "Large")
+                    {
+                        continue;
+                    }
+                    details += tag.Name + " ";
+                }
             }
+
+            switch (t.Size)
+            {
+                case Town.Sizes.Small:
+                    details += "Hamlet";
+                    break;
+                case Town.Sizes.Medium:
+                    details += "Town";
+                    break;
+                case Town.Sizes.Large:
+                    details += "City";
+                    break;
+                default:
+                    details += "Town";
+                    break;
             }
-            
             panel.SetDetails(details);
         }
-        else if (Type == OverworldMap.LocationType.EVENT) {
-            panel.SetDetails("Unknown Event");
+        else if (Type == OverworldMap.LocationType.EVENT)
+        {
+            panel.SetName("Unknown Event");
 
         }
-        else if (Type == OverworldMap.LocationType.POI) {
-            panel.SetDetails("Point of Interest");
+        else if (Type == OverworldMap.LocationType.POI)
+        {
+            panel.SetName("Point of Interest");
         }
 
         obj.transform.position = cam.WorldToScreenPoint(gameObject.transform.position) + offset;
         panel.onNodeHover();
-        if (showEnterButton){
-            panel.Select();
-        }
-
     }
 
     /// <summary>
     /// Invoke an event on mouse over
     /// This tells the map UI to assign this node an info panel
     /// </summary>
-    private void OnMouseEnter()
+    public void OnMouseEnter()
     {
         if (panel) return;
         EventManager.Instance.OnNodeMouseEnter.Invoke(this);
@@ -168,12 +186,6 @@ public class MapNode : MonoBehaviour
             {
                 EventManager.Instance.OnNodeMouseDown.Invoke(this);
                 panel.onNodeClick();
-            }
-            else
-            {
-                // If the mouse is over the node as it becomes adjacent, there will not be a panel
-                // So request a panel from Map UI
-                EventManager.Instance.OnNodeMouseEnter.Invoke(this);
             }
         }
 
