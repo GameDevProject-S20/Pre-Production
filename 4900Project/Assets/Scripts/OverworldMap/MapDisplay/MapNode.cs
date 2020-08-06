@@ -84,7 +84,7 @@ public class MapNode : MonoBehaviour
                 case "Low":
                     sprite.sprite = Resources.Load<Sprite>("Sprites/Map/Nodes/hexagon");
                 break;
-                case "Medium":
+                case "Moderate":
                     sprite.sprite = Resources.Load<Sprite>("Sprites/Map/Nodes/diamond");
                 break;
                 case "High":
@@ -126,7 +126,7 @@ public class MapNode : MonoBehaviour
                 case "Low":
                     sprite.color = g.Evaluate(0.25f);
                 break;
-                case "Medium":
+                case "Moderate":
                     sprite.color = g.Evaluate(0.5f);
                 break;
                 case "High":

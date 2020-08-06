@@ -39,7 +39,6 @@ public class MapTravel : MonoBehaviour
         int cost = GetFuelCost(destination);
         if (DataTracker.Current.Player.Inventory.Contains("Fuel") >= cost) {
             DataTracker.Current.Player.Inventory.RemoveItem("Fuel", cost);
-            DataTracker.Current.IncrementTime(timeRate);
             return true;
         }
         return false;

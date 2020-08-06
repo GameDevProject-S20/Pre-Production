@@ -11,15 +11,24 @@ public class EncounterNode
 
     string DefaultProbability;
     public string p { get; set; }
-    Dictionary<string, float> probabilities  = new Dictionary<string, float>(){
+    static Dictionary<string, float> probabilities  = new Dictionary<string, float>(){
         {"Safe", 0.0f},
         {"Low", 0.20f},
-        {"Medium", 0.4f},
+        {"Moderate", 0.4f},
         {"High", 0.7f},
         {"Very High", 0.9f}
     };
 
-    int growthTime = 2;    
+    static Dictionary<string, int> growthMod  = new Dictionary<string, int>(){
+        {"Safe", 1}, // 12
+        {"Low", 2}, // 24
+        {"Moderate", 3}, // 36
+        {"High", 4}, // 48
+        {"Very High", 5} // 64
+    };
+
+    int growthTime = 0;
+    int growthTimeMax = 12;
 
     public void Init(int id)
     {
@@ -28,6 +37,28 @@ public class EncounterNode
         {
             probMap = Resources.Load<Texture2D>("Sprites/Map/eventProbabilityTexture");
             loaded = true;
+        }
+        EventManager.Instance.OnTimeAdvance.AddListener(TimePass);
+    }
+
+    void TimePass(int i){
+        if (p == DefaultProbability) return;
+        growthTime += i * growthMod[DefaultProbability];
+        if (growthTime >= growthTimeMax) {
+            if (p == "Safe") {
+                p = "Low";
+            }
+            else if (p == "Low") {
+                p = "Moderate";
+            }
+            else if (p == "Moderate") {
+                p = "High";
+            }
+            else if (p == "High") {
+                p = "Very High";
+            }
+            growthTime = growthTime % growthTimeMax;
+            EventManager.Instance.OnProbabilityChange.Invoke(id);
         }
     }
 
@@ -57,7 +88,7 @@ public class EncounterNode
         }
         else if (val < 0.50f)
         {
-            p = "Medium";
+            p = "Moderate";
 
         }
         else if (val < 0.75f)

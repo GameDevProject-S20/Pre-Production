@@ -123,6 +123,12 @@ namespace SIEvents
             [System.Serializable]
             public class SettingsChangedEvent : UnityEvent<string> { };
         }
+
+        public partial class MiscEvents
+        {
+            [System.Serializable]
+            public class TimeEvent : UnityEvent <int> { };
+        }
     }
 }
 

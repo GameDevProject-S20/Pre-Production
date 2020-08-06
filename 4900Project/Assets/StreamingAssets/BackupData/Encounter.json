@@ -285,7 +285,7 @@
 							],
 							"effects": [
 								"@take Scrap_Metal 1",
-								"@give fuel 5"
+								"@give Fuel 5"
 							],
 							"next_page_id": 2
 						},
@@ -305,7 +305,7 @@
 							],
 							"effects": [
 								"@take Scrap_Metal 1",
-								"@give fuel 5"
+								"@give Fuel 5"
 							],
 							"next_page_id": 2
 						},
