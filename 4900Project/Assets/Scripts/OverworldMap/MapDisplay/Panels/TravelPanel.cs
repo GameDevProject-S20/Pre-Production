@@ -81,8 +81,10 @@ public class TravelPanel : InfoPanel
 
     public void onNodeClick()
     {
-        if (MapTravel.Travel(Node)){
-            EventManager.Instance.OnTravelStart.Invoke();
+        if (state == States.Open){
+            if (MapTravel.Travel(Node)){
+                EventManager.Instance.OnTravelStart.Invoke();
+            }
         }
 
     }

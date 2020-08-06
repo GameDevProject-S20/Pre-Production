@@ -70,7 +70,7 @@ public class DataTracker : MonoBehaviour
 
     public void IncrementTime(int i){
         hourCount += i;
-        EventManager.OnTimeAdvance.Invoke();
+        EventManager.OnTimeAdvance.Invoke(i);
         if (hourCount == 20) {
             EventManager.OnEvening.Invoke();
         }

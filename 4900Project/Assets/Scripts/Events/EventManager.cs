@@ -90,7 +90,7 @@ namespace SIEvents
 
         //=== Misc ===================================================//
         public UnityEvent onDataTrackerLoad = new UnityEvent();
-        public UnityEvent OnTimeAdvance = new UnityEvent();
+        public Events.MiscEvents.TimeEvent OnTimeAdvance = new Events.MiscEvents.TimeEvent();
         public UnityEvent OnDayAdvance = new UnityEvent();
         public UnityEvent OnEvening = new UnityEvent();
     }
