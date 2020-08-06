@@ -78,6 +78,12 @@ public class OverworldMapUI : MonoBehaviour
     [SerializeField]
     Material pathHighlightMaterial;
 
+    [Header("Colours")]
+    [SerializeField]
+    public Vector4 color1;
+    [SerializeField]
+    public Vector4 color2;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -191,19 +197,32 @@ public class OverworldMapUI : MonoBehaviour
             {
                 lr.material = pathHighlightMaterial;
             }
-            Color color1 = new Color(0.19f, 0.2f, 0.21f);
-            Color color2 = new Color(0.19f, 0.2f, 0.21f);
+            Color color1 = Color.black;
+            Color color2 = Color.black;
             GameObject icon1 = NodesContainer.transform.Find(edge.Item1.Name).Find("Icon").gameObject;
+            GameObject icon2 = NodesContainer.transform.Find(edge.Item2.Name).Find("Icon").gameObject;
+
             if (icon1.activeInHierarchy) {
                 color1 = icon1.GetComponent<SpriteRenderer>().color;
             }
-            GameObject icon2 = NodesContainer.transform.Find(edge.Item2.Name).Find("Icon").gameObject;
             if (icon2.activeInHierarchy) {
                 color2 = icon2.GetComponent<SpriteRenderer>().color;
+            }
+            if (icon1.activeInHierarchy && !icon2.activeInHierarchy) {
+                color2 = color1;
+                color2.a = 0.0f;
+            }
+            if (!icon1.activeInHierarchy && icon2.activeInHierarchy) {
+                color1 = color2;
+                color1.a = 0.0f;
             }
             lr.startColor = color1;
             lr.endColor = color2;
         }
+
+    }
+
+    public void Colour(){
 
     }
 
@@ -310,9 +329,16 @@ public class OverworldMapUI : MonoBehaviour
         else if (selectedNode.NodeData.Type == OverworldMap.LocationType.POI){
             SidePanel.OpenPOI(selectedNode.NodeData.LocationId);
         }
+       
+        // Trigger encounters on empty nodes
+        if (selectedNode.NodeData.Type == OverworldMap.LocationType.NONE){
+            if (selectedNode.NodeData.LocationId != -1 || selectedNode.RollEncounter()){
+                EventManager.Instance.OnEncounterTrigger.Invoke(selectedNode.NodeData.LocationId);
+            }
+        }
 
         DataTracker.Current.currentLocationId = selectedNode.NodeData.Id;
-        DataTracker.Current.EventManager.OnNodeArrive.Invoke(selectedNode.NodeData);
+        EventManager.Instance.OnNodeArrive.Invoke(selectedNode.NodeData);
         
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

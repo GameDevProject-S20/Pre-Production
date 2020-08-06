@@ -16,6 +16,8 @@ public class MapNode : MonoBehaviour
     Vector3 offset = new Vector3(0, 60, 0);
 
 
+
+
     public void Init(OverworldMap.LocationNode Node){
         NodeData = Node;
         cam = Camera.main;
@@ -45,15 +47,13 @@ public class MapNode : MonoBehaviour
             {
                 transform.Find("largeTown").gameObject.SetActive(true);
             }
-            transform.Find("Indicator").gameObject.SetActive(true);
+            //transform.Find("Indicator").gameObject.SetActive(true);
 
 
         }
         else if (NodeData.Type == OverworldMap.LocationType.POI)
         {
-            transform.Rotate(new Vector3(0, Random.Range(0, 360), 0), Space.Self);
-            transform.Find("tinyTown").gameObject.SetActive(true);
-            transform.Find("Indicator").gameObject.SetActive(true);
+            transform.Find("EncounterMark").gameObject.SetActive(true);
         }
         else
         {
@@ -62,30 +62,53 @@ public class MapNode : MonoBehaviour
             encounterData.SampleTexture(NodeData.PosX, NodeData.PosY);
             transform.Find("Icon").gameObject.SetActive(true);
             SpriteRenderer sprite =  transform.Find("Icon").GetComponent<SpriteRenderer>();
-            switch (encounterData.probabilityCategory)
+            
+            // gradient stuff
+            Gradient g = new Gradient();
+            GradientColorKey[] colorKey;
+            GradientAlphaKey[] alphaKey;
+            colorKey = new GradientColorKey[2];
+            colorKey[0].color = GameObject.Find("Map").GetComponent<OverworldMapUI>().color1 / 255.0f;
+            colorKey[0].time = 0.0f;
+            colorKey[1].color = GameObject.Find("Map").GetComponent<OverworldMapUI>().color2 / 255.0f;
+            colorKey[1].time = 1.0f;
+        
+            alphaKey = new GradientAlphaKey[2];
+            alphaKey[0].alpha = 1.0f;
+            alphaKey[0].time = 0.0f;
+            alphaKey[1].alpha = 1.0f;
+            alphaKey[1].time = 1.0f;
+
+            g.SetKeys(colorKey, alphaKey);
+
+            switch (encounterData.p)
             {
                 case "Low":
                     sprite.sprite = Resources.Load<Sprite>("Sprites/Map/Nodes/hexagon");
-                    sprite.color = new Vector4(77, 156, 20, 255)/255;
+                    sprite.color = g.Evaluate(0.25f);
                 break;
                 case "Medium":
                     sprite.sprite = Resources.Load<Sprite>("Sprites/Map/Nodes/diamond");
-                    sprite.color = new Vector4(217, 182, 11, 255)/255;
+                    sprite.color = g.Evaluate(0.5f);
                 break;
                 case "High":
                     sprite.sprite = Resources.Load<Sprite>("Sprites/Map/Nodes/triangle");
-                    sprite.color = new Vector4(209, 99, 2, 255)/255;
+                    sprite.color = g.Evaluate(0.75f);
                 break;
                 case "Very High":
                     sprite.sprite = Resources.Load<Sprite>("Sprites/Map/Nodes/cross");
-                    sprite.color = new Vector4(201, 10, 0, 255)/255;
+                    sprite.color = g.Evaluate(1.0f);
                 break;
                 default:
                     sprite.sprite = Resources.Load<Sprite>("Sprites/Map/Nodes/circle");
-                    sprite.color = new Vector4(8, 76, 97, 255)/255;
+                    sprite.color = g.Evaluate(0.0f);
                 break;
             }
         }
+    }
+
+    public bool RollEncounter(){
+        return encounterData.RollEncounter();
     }
 
     /// <summary>
@@ -117,7 +140,7 @@ public class MapNode : MonoBehaviour
         obj.SetActive(true);
 
         if (DataTracker.Current.WorldMap.HasEdge(NodeData.Id, DataTracker.Current.currentLocationId)){
-            panel.SetTravelInfo(MapTravel.GetFuelCost(this), MapTravel.dayRate);
+            panel.SetTravelInfo(MapTravel.GetFuelCost(this), MapTravel.timeRate);
         }
 
         OverworldMap.LocationNode node;
