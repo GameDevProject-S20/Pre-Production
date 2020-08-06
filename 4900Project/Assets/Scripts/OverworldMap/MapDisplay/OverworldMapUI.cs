@@ -83,6 +83,9 @@ public class OverworldMapUI : MonoBehaviour
     [SerializeField]
     public Vector4 color2;
 
+    enum ColourModes {Default, Probability}
+    ColourModes colourMode = ColourModes.Default;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -180,37 +183,28 @@ public class OverworldMapUI : MonoBehaviour
             lineEnds[1] = b;
             lr.SetPositions(lineEnds);
             line.transform.SetParent(PathsContainer, true);
+            line.GetComponent<Edge>().init(
+                NodesContainer.Find(edge.Item1.Name).GetComponent<MapNode>(),
+                NodesContainer.Find(edge.Item2.Name).GetComponent<MapNode>()
+            );
             if (edge.Item1.Id == DataTracker.Current.currentLocationId || edge.Item2.Id == DataTracker.Current.currentLocationId)
             {
                 lr.material = pathHighlightMaterial;
             }
-            Color color1 = Color.black;
-            Color color2 = Color.black;
-            GameObject icon1 = NodesContainer.transform.Find(edge.Item1.Name).Find("Icon").gameObject;
-            GameObject icon2 = NodesContainer.transform.Find(edge.Item2.Name).Find("Icon").gameObject;
-
-            if (icon1.activeInHierarchy) {
-                color1 = icon1.GetComponent<SpriteRenderer>().color;
-            }
-            if (icon2.activeInHierarchy) {
-                color2 = icon2.GetComponent<SpriteRenderer>().color;
-            }
-            if (icon1.activeInHierarchy && !icon2.activeInHierarchy) {
-                color2 = color1;
-                color2.a = 0.0f;
-            }
-            if (!icon1.activeInHierarchy && icon2.activeInHierarchy) {
-                color1 = color2;
-                color1.a = 0.0f;
-            }
-            lr.startColor = color1;
-            lr.endColor = color2;
         }
 
     }
 
-    public void Colour(){
-
+    public void ToggleColourMode(){
+        if (colourMode == ColourModes.Default){
+            EventManager.Instance.SetViewProbability.Invoke();
+            colourMode = ColourModes.Probability;
+        }
+        else if (colourMode == ColourModes.Probability){
+            EventManager.Instance.SetViewDefault.Invoke();
+            colourMode = ColourModes.Default;
+        }
+        EventManager.Instance.OnColourChange.Invoke();
     }
 
     /// <summary>
@@ -235,7 +229,7 @@ public class OverworldMapUI : MonoBehaviour
     /// <param name="node"></param>
     void onNodeMouseEnter(MapNode node)
     {
-        if (!isTravelling && isActive)
+        if (!isTravelling && isActive && node.NodeData.Id != DataTracker.Current.currentLocationId)
         {
             node.setPanel(GetTravelPanel());
         }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EncounterNode
 {
+
+    int id;
     static Texture2D probMap;
     static bool loaded = false;
 
@@ -19,8 +21,9 @@ public class EncounterNode
 
     int growthTime = 2;    
 
-    public void Init()
+    public void Init(int id)
     {
+        this.id = id;
         if (!loaded)
         {
             probMap = Resources.Load<Texture2D>("Sprites/Map/eventProbabilityTexture");

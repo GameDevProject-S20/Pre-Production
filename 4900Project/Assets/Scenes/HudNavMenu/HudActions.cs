@@ -40,4 +40,8 @@ public class HudActions : MonoBehaviour
     {
        GameObject.Find("questjournal").GetComponent<UnityEngine.UI.Image>().color = Color.red;
     }
+
+    public void OnToggleView(){
+        GameObject.Find("Map").GetComponent<OverworldMapUI>().ToggleColourMode();
+    }
 }

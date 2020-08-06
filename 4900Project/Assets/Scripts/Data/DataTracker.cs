@@ -68,7 +68,7 @@ public class DataTracker : MonoBehaviour
         Debug.Log(string.Format("[COMPLETE]\n\n{0}", string.Join("\n", QuestJournal.Instance.CompletedQuests.Select(q => q.ToString()))));
     }
 
-    public void incrementTime(int i){
+    public void IncrementTime(int i){
         hourCount += i;
         EventManager.OnTimeAdvance.Invoke();
         if (hourCount == 20) {

@@ -4,25 +4,25 @@ using UnityEngine;
 using SIEvents;
 
 // Behaviour for the game object in the Map Scene corresponding to a node
-
+// This class handles the visual appearence of nodes, mouse events, and partialy the info panels
 public class MapNode : MonoBehaviour
 {
 
 
     public OverworldMap.LocationNode NodeData { get; set; }
     EncounterNode encounterData;
+    
+    // Panel
     TravelPanel panel;
-    Camera cam;
     Vector3 offset = new Vector3(0, 60, 0);
-
-
-
+    Camera cam;
 
     public void Init(OverworldMap.LocationNode Node){
         NodeData = Node;
         cam = Camera.main;
     
         // Appearance is determined by node type
+        // Towns are represented by a mesh
         if (NodeData.Type == OverworldMap.LocationType.TOWN)
         {
             transform.Rotate(new Vector3(0, Random.Range(0, 360), 0), Space.Self);
@@ -47,23 +47,62 @@ public class MapNode : MonoBehaviour
             {
                 transform.Find("largeTown").gameObject.SetActive(true);
             }
-            //transform.Find("Indicator").gameObject.SetActive(true);
-
-
         }
+
+        // Points of interest are represetned by an '!'
         else if (NodeData.Type == OverworldMap.LocationType.POI)
         {
             transform.Find("EncounterMark").gameObject.SetActive(true);
         }
+
+        // Empty nodes have a shape which corresponds to the chance of triggering an encounter
         else
         {
             encounterData = new EncounterNode();
-            encounterData.Init();
+            encounterData.Init(NodeData.Id);
             encounterData.SampleTexture(NodeData.PosX, NodeData.PosY);
             transform.Find("Icon").gameObject.SetActive(true);
+            SetSprite();
+        }
+
+        // Listeners
+        EventManager.Instance.OnProbabilityChange.AddListener((int id)=> {
+            if (id == this.NodeData.Id){
+                SetSprite();
+            }
+        });
+
+        EventManager.Instance.SetViewDefault.AddListener(ColourToBlack);
+        EventManager.Instance.SetViewProbability.AddListener(ColourByProbability);
+    }
+
+    void SetSprite(){
+        if (NodeData.Type == OverworldMap.LocationType.NONE) {
             SpriteRenderer sprite =  transform.Find("Icon").GetComponent<SpriteRenderer>();
-            
-            // gradient stuff
+            switch (encounterData.p)
+            {
+                case "Low":
+                    sprite.sprite = Resources.Load<Sprite>("Sprites/Map/Nodes/hexagon");
+                break;
+                case "Medium":
+                    sprite.sprite = Resources.Load<Sprite>("Sprites/Map/Nodes/diamond");
+                break;
+                case "High":
+                    sprite.sprite = Resources.Load<Sprite>("Sprites/Map/Nodes/triangle");
+                break;
+                case "Very High":
+                    sprite.sprite = Resources.Load<Sprite>("Sprites/Map/Nodes/cross");
+                break;
+                default:
+                    sprite.sprite = Resources.Load<Sprite>("Sprites/Map/Nodes/circle");
+                break;
+            }
+        }
+    }
+
+    void ColourByProbability(){
+    if (NodeData.Type == OverworldMap.LocationType.NONE) {
+        // gradient stuff
             Gradient g = new Gradient();
             GradientColorKey[] colorKey;
             GradientAlphaKey[] alphaKey;
@@ -80,33 +119,40 @@ public class MapNode : MonoBehaviour
             alphaKey[1].time = 1.0f;
 
             g.SetKeys(colorKey, alphaKey);
-
+        
+            SpriteRenderer sprite =  transform.Find("Icon").GetComponent<SpriteRenderer>();
             switch (encounterData.p)
             {
                 case "Low":
-                    sprite.sprite = Resources.Load<Sprite>("Sprites/Map/Nodes/hexagon");
                     sprite.color = g.Evaluate(0.25f);
                 break;
                 case "Medium":
-                    sprite.sprite = Resources.Load<Sprite>("Sprites/Map/Nodes/diamond");
                     sprite.color = g.Evaluate(0.5f);
                 break;
                 case "High":
-                    sprite.sprite = Resources.Load<Sprite>("Sprites/Map/Nodes/triangle");
                     sprite.color = g.Evaluate(0.75f);
                 break;
                 case "Very High":
-                    sprite.sprite = Resources.Load<Sprite>("Sprites/Map/Nodes/cross");
                     sprite.color = g.Evaluate(1.0f);
                 break;
                 default:
-                    sprite.sprite = Resources.Load<Sprite>("Sprites/Map/Nodes/circle");
                     sprite.color = g.Evaluate(0.0f);
                 break;
             }
         }
     }
 
+    void ColourToBlack(){
+        if (NodeData.Type == OverworldMap.LocationType.NONE) {
+            SpriteRenderer sprite =  transform.Find("Icon").GetComponent<SpriteRenderer>();
+            sprite.color = Color.black; 
+        }
+    }
+
+    /// <summary>
+    /// Roll the probability on a node to see if an encounter is triggered
+    /// </summary>
+    /// <returns>True if an encounter was triggered</returns>
     public bool RollEncounter(){
         return encounterData.RollEncounter();
     }
@@ -126,28 +172,26 @@ public class MapNode : MonoBehaviour
     }
 
     /// <summary>
-    /// Assosiate an info panel with this node
+    /// Takes an info panel and fills it with this node's data
     /// </summary>
     /// <param name="obj">The info panel game object</param>
     public void setPanel(GameObject obj)
     {
         if (panel) return;
         bool adjacent = DataTracker.Current.WorldMap.HasEdge(NodeData.Id, DataTracker.Current.currentLocationId);
-        if (NodeData.Type == OverworldMap.LocationType.NONE && ! adjacent) return;
 
         panel = obj.GetComponent<TravelPanel>();
         panel.SetNode(this);
         obj.SetActive(true);
 
-        if (DataTracker.Current.WorldMap.HasEdge(NodeData.Id, DataTracker.Current.currentLocationId)){
+        // Show travel costs for adjacent panels
+        if (adjacent){
             panel.SetTravelInfo(MapTravel.GetFuelCost(this), MapTravel.timeRate);
         }
 
-        OverworldMap.LocationNode node;
-        DataTracker.Current.WorldMap.GetNode(NodeData.Id, out node);
-
+        // For towns, the info panel shows the town's tags
         if (NodeData.Type == OverworldMap.LocationType.TOWN) {
-            Town t = DataTracker.Current.TownManager.GetTownById(node.LocationId);
+            Town t = DataTracker.Current.TownManager.GetTownById(NodeData.LocationId);
             panel.SetName(t.Name);
             string details = "";
             if (t.Tags.Count > 0)
@@ -179,8 +223,15 @@ public class MapNode : MonoBehaviour
             }
             panel.SetDetails(details);
         }
-        else if (NodeData.Type == OverworldMap.LocationType.EVENT) {
-            panel.SetDetails("Unknown Event");
+
+        // Empty nodes show chance of event
+        else if (NodeData.Type == OverworldMap.LocationType.NONE) {
+            if (encounterData.p == "Safe"){
+                panel.SetDetails("Safe to travel");
+            }
+            else{
+                panel.SetDetails($"{encounterData.p} chance of event");
+            }
 
         }
         else if (NodeData.Type == OverworldMap.LocationType.POI) {
@@ -193,13 +244,10 @@ public class MapNode : MonoBehaviour
 
     /// <summary>
     /// Invoke an event on mouse over
-    /// This tells the map UI to assign this node an info panel
+    /// This requests the map UI controller to give us an info panel
     /// </summary>
     public void OnMouseEnter()
     {
-        int xMod = Mathf.RoundToInt(Mathf.Lerp(0, 800, (NodeData.PosX + 1) / 2.0f));
-        int yMod = Mathf.RoundToInt(Mathf.Lerp(0, 600, (NodeData.PosY + 1) / 2.0f));
-        Debug.Log($"({xMod}, {yMod})");
         if (panel) return;
         EventManager.Instance.OnNodeMouseEnter.Invoke(this);
     }
