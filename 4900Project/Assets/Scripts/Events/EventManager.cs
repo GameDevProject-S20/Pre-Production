@@ -42,6 +42,7 @@ namespace SIEvents
         //=== Encounters ============================================//
 
         public Events.EncounterEvents.EncounterComplete OnEncounterComplete = new Events.EncounterEvents.EncounterComplete();
+        public Events.EncounterEvents.EncounterTrigger OnEncounterTrigger = new Events.EncounterEvents.EncounterTrigger();
 
         //=== Effects ===============================================//
 
@@ -87,5 +88,8 @@ namespace SIEvents
 
         //=== Misc ===================================================//
         public UnityEvent onDataTrackerLoad = new UnityEvent();
+        public UnityEvent OnTimeAdvance = new UnityEvent();
+        public UnityEvent OnDayAdvance = new UnityEvent();
+        public UnityEvent OnEvening = new UnityEvent();
     }
 }
