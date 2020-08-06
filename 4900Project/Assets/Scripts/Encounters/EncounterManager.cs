@@ -116,7 +116,7 @@ namespace Encounters
         // If all events have been used, events will be shuffled again.
         private Encounter randomEncounter(string tag = null)
         {
-            Encounter enc;
+            Encounter enc = null;
             if (tag != null)
             {
                 List<RandomEncounter> tagged = randomEncounterQueue.Where(e => e.Tags.Contains(tag)).ToList();
@@ -133,7 +133,7 @@ namespace Encounters
                     }
                 }
             }
-            {
+            else {
                 if (randomEncounterQueue.Count > 0)
                 {
                     enc = randomEncounterQueue.Dequeue();

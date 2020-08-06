@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using SIEvents;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -35,13 +37,34 @@ public class MapTravel : MonoBehaviour
         return Mathf.RoundToInt(baseFuelRate * weightMod);
     }
 
-    public static bool Travel(MapNode destination){
+    /// <summary>
+    /// Travels. Passes through an action to be called when travel is ready.
+    /// This allows it to delay until an encounter completes, if the player runs out of gas.
+    /// </summary>
+    /// <param name="destination"></param>
+    /// <param name="onTravelReady"></param>
+    public static void Travel(MapNode destination, Action onTravelReady){
         int cost = GetFuelCost(destination);
-        if (DataTracker.Current.Player.Inventory.Contains("Fuel") >= cost) {
+        int currentFuel = DataTracker.Current.Player.Inventory.Contains("Fuel");
+
+        // If the player has enough fuel to travel: Go ahead & travel
+        if (currentFuel >= cost) { 
             DataTracker.Current.Player.Inventory.RemoveItem("Fuel", cost);
-            return true;
+            DataTracker.Current.dayCount += dayRate;
+            onTravelReady();
         }
-        return false;
+        else
+        {
+            // Otherwise, we need to run a LowFuel encounter
+            DataTracker.Current.EncounterManager.RunRandomEncounter("LowFuel");
+
+            // Delay the progression of travel until they complete the encounter
+            EventManager.Instance.OnDialogueEnd.AddListener(() =>
+            {
+                DataTracker.Current.dayCount += dayRate;
+                onTravelReady();
+            });
+        }
     }
 
 }

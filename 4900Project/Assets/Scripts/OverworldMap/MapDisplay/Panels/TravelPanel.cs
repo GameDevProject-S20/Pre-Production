@@ -82,9 +82,10 @@ public class TravelPanel : InfoPanel
     public void onNodeClick()
     {
         if (state == States.Open){
-            if (MapTravel.Travel(Node)){
+            MapTravel.Travel(Node, () =>
+            {
                 EventManager.Instance.OnTravelStart.Invoke();
-            }
+            });
         }
 
     }

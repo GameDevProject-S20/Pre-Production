@@ -1593,6 +1593,30 @@
 					"text": "You find a strange metal symbol. It doesn't seem to be worth much, but perhaps it has another use."
 				}
 			]
+		},
+		{
+			"valid": true,
+			"encounter_id": 1100,
+			"tags": ["LowFuel"],
+			"encounter_name": "The Break-Up",
+			"conditions": [],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "You are out of fuel.",
+					"buttons": [
+						{
+							"text": "That is true.",
+							"next_page_id":2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "You walk your vehicle to the next node."
+				}
+			]
 		}
 	]
 }
