@@ -1,5 +1,5 @@
 DisplayName,Tooltip,Description,Value,Weight,IconName,Tags
-Fuel,A neccesity for travel between colonies,"Fuel is the lifeblood of traders, never leave port without first checking your tank. ",1,1,Fuel.png,"Fuel,General,All"
+Fuel,A neccesity for travel between colonies,"Fuel is the lifeblood of traders, never leave port without first checking your tank. ",1,1,Fuel.png,"Fuel,General"
 Rations,Unappetizing but cheap,The bare minimum to keep someone running for a day,3,1,Food.png,"Food,General,All"
 Fresh Fruit,"Tasty, but spoils without proper storage","A rarity in a good portion of the world, which makes is quite valuable to the right people.",7,1,FreshFruit.png,"Food, Luxury,All"
 Fresh Meat,A valuable delicacy.,Raising livestock is an expensive process. Meat is highly valued.,13,1,FreshMeat.png,"Food, Luxury,All"

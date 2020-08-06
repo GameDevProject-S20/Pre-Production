@@ -573,7 +573,7 @@
 						{
 							"text": "[Smash Device] Lose 15 health",
 							"effects": [
-								"health -15"
+								"@health -15"
 							],
 							"next_page_id": 2
 						}
@@ -610,7 +610,7 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "You find an old alchemists laboratory, in it a device with slots for two objects",
+					"text": "You find an old alchemist's laboratory, in it a device with slots for two objects",
 					"buttons": [
 						{
 							"text": "[Transmute] Lose all of one random item, gain 20 Fuel",
@@ -632,7 +632,7 @@
 						{
 							"text": "[Clumsy] Drop the device, lose 20 health",
 							"effects": [
-								"health -20"
+								"@health -20"
 							],
 							"next_page_id": 2
 						}
@@ -640,11 +640,11 @@
 				},
 				{
 					"id": 2,
-					"text": "Being the clutz you are, you knock the device off the table and are caught in a small explosion. No serious injuries but you're definitely worse for wear."
+					"text": "Being the clutz you are, you knock the device off the table and are caught in a small explosion. Thankfully you have no life-threatening injuries, but you're definitely worse for wear."
 				},
 				{
 					"id": 3,
-					"text": "The materials begin to glow brighter and brighter until nearly blinding. Once the light stops you find the device is nowhere to be found, but a fair amount of fuel in its place"
+					"text": "The materials begin to glow brighter and brighter until nearly blinding. Once the light stops you find the device is nowhere to be found, but a fair amount of fuel is left in its place"
 				}
 			]
 		},
@@ -679,9 +679,6 @@
 							"conditions": [
 								"!has Hunting_Rifle 1"
 							],
-							"effects": [
-								"@health -20"
-							],
 							"next_page_id": 4
 						}
 					]
@@ -696,6 +693,9 @@
 					"buttons": [
 						{
 							"text": "[Examine engine]",
+							"effects": [
+								"@health -20"
+							],
 							"next_page_id": 5
 						}
 					]
@@ -766,13 +766,13 @@
 				},
 				{
 					"id": 3,
-					"text": "You and your crew take turns tending to each others wounds and distribute antibiotics and pain killers as necessary."
+					"text": "You and your crew take turns tending to each others wounds, distributing antibiotics and pain killers as necessary."
 				}
 			]
 		},
 		{
 			"valid": true,
-			"COMMENT": "avatar name something like 'unwell merchant'",
+			"COMMENT": "if we get random next page change the text for the outcome avatar name something like 'unwell merchant'",
 			"encounter_id": 1006,
 			"tags": [],
 			"encounter_name": "Loot Crate",
@@ -848,7 +848,7 @@
 				},
 				{
 					"id": 6,
-					"text": "The merchant snarls \"Worthless! Pathetic!\". A loud bang accompanies the stabbing pain that shoots through your thigh as you feel the blood pour down leg. Thankfully they weren't aiming to kill."
+					"text": "The merchant snarls \"Worthless! Pathetic!\". A loud bang accompanies the stabbing pain that shoots through your thigh as you fall to the ground and feel the blood pour down leg. Thankfully they seem happy with their pound of flesh and retreat."
 				}
 			]
 		},
@@ -1081,21 +1081,31 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "You stumble accross a decaying research facility, isolated and desolate. As you wander from room to room, you come across two vials of translucent liquid. You gather from nearby files that each contains a variant of nanobots. One will heal you then deactivate, while the second will survive, and increase your vitality, but cripple you in the short term.",
+					"text": "You stumble accross a decaying research facility, isolated and desolate. As you wander from room to room, you come across two vials of translucent liquid. You find some files nearby documenting the effects",
 					"buttons": [
 						{
-							"text": "[Vigor] Heal 15% hp, lose 5% max hp",
+							"text": "[Inquisitive] Read the files.",
+							"next_page_id": 4
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "You gather that each vial contains a variant of nanobots. One will heal you at the cost of reducing your life expectancy, the other will temporarily cripple you but make your body behave as if you were a decade younger in the long term.",
+					"buttons": [
+						{
+							"text": "[Vigor] Heal 30% hp, lose 5% max hp",
 							"effects": [
-								"@health% 15",
+								"@health% 30",
 								"@health_max% -5"
 							],
 							"next_page_id": 2
 						},
 						{
-							"text": "[Longevity] Gain 5% max hp, lose 15% hp",
+							"text": "[Longevity] Gain 5% max hp, lose 30% hp",
 							"effects": [
-								"@health_max% 5",
-								"@health% -15"
+								"@health% -30",
+								"@health_max% 5"
 							],
 							"next_page_id": 3
 						}
@@ -1107,7 +1117,7 @@
 				},
 				{
 					"id": 3,
-					"text": "You fall over in pain as the nanobots aggressively invade your body. Hopefully it'll pay off in the long run."
+					"text": "You double over in pain as the nanobots aggressively invade your body. Hopefully it'll pay off in the long run."
 				}
 			]
 		},
