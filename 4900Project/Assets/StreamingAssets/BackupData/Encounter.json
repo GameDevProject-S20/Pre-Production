@@ -185,13 +185,13 @@
 				},
 				{
 					"id": 2,
-					"text": "You walk over and pick up the sparkling object. It looks like it might be some weird symbol. You should take it to the Bandit Camp.",
+					"text": "You walk over and pick up the sparkling object. They might know about it in Rocket City.",
 					"buttons": [
 						{
 							"effects": [
 								"@start_quest Bandit_Quest",
 								"@set_node_encounter 119 -1",
-								"@set_dialogue_encounter 9 6",
+								"@set_dialogue_encounter 5 6",
 								"@resolve"
 							]
 						}
@@ -202,26 +202,45 @@
 		{
 			"encounter_id": 6,
 			"valid": true,
-			"NOTE": "Said on conclusion of the Bandit quest by the leader of Skull.",
+			"NOTE": "Part 2 of the Bandit quest. The player is directed to go to a far-off town, where the town leader mentions the use of the Bandit Token.",
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "Hmm, what's that? You say you found a token?",
+					"text": "Ah, your token? Yes, I've seen that before..",
 					"buttons": [
 						{
-							"text": "[ Hand over token ]",
+							"text": "What is it?",
 							"next_page_id": 2
 						}
 					]
 				},
 				{
 					"id": 2,
-					"text": "Yep, that's one of ours. A bandit token. You can use that for free access past our tolls. One time use, of course.",
+					"text": "It's a Bandit Token. The bandits are usually very dangerous to interact with, but in exchange for one of those, they'll give you a free pass.",
+					"buttons": [
+						{
+							"effects": [
+								"@set_dialogue_encounter 5 11",
+								"@set_dialogue_encounter 9 7",
+								"@resolve"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"encounter_id": 7,
+			"valid": true,
+			"NOTE": "Said on conclusion of the Bandit quest by the leader of Skull.",
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "I see you've made it through to our bandit camp. Welcome. Don't assume it'll be this easy next time.",
 					"buttons": [
 						{
 							"effects": [
 								"@set_dialogue_encounter 9 11",
-								"@give bandit_token 1",
 								"@resolve"
 							]
 						}

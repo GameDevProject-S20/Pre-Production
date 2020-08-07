@@ -73,15 +73,21 @@ public class Initializer : MonoBehaviour
 
             .Build();
 
-        // Build Follow-Up Quest
+        // Build Follow-Up Quest - Investigate the Bandit Token
         Quest banditQuest = new Quest.Builder("Bandit Quest")
             .SetDescription("Investigate the weird token you found.")
-            .AddStage(new Stage.Builder("Travel to the Bandit Camp.")
-                       .AddCondition(new TownEnterCondition("Travel to Skull.", 9))
+            
+            // First step: Travel to Rocket City to investigate the token
+            .AddStage(new Stage.Builder("Go ask the town leader of Rocket City about the token.")
+                        .AddCondition(new TownEnterCondition("Travel to Rocket City.", 5))
+                        .AddCondition(new EncounterCompleteCondition("Talk to the town leader.", 6))
                        )
-            .AddStage(new Stage.Builder("Ask the leader of Skull about that weird token you found.")
-                        .AddCondition(new EncounterCompleteCondition("Talk to the leader of Skull.", 6))
-                        )
+
+            // Second step: Use the token to get into the Bandit Camp
+            .AddStage(new Stage.Builder("Use the token to get into the bandit camp.")
+                        .AddCondition(new TownEnterCondition("Travel to Skull.", 9))
+                       )
+
             .Build();
     }
 
