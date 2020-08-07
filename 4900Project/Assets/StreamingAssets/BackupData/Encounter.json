@@ -95,7 +95,7 @@
 						{
 							"effects": [
 								"@give fuel 80",
-								"@set_dialogue_encounter 0 11",
+								"@set_dialogue_encounter 0 70",
 								"@resolve"
 							]
 						}
@@ -464,6 +464,347 @@
 				{
 					"id": 3,
 					"text": "You left."
+				}
+			]
+		},
+		{
+			"encounter_id": 70,
+			"NOTE": "Said by the town leader for Smithsville",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Thanks for getting us that generator!",
+					"buttons": [
+						{
+							"text": "You're welcome!"
+						}
+					]
+				}
+			]
+		},
+		{
+			"encounter_id": 71,
+			"NOTE": "Said by the town leader for York",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Welcome to York! We don't specialize here, so feel free to trade us for anything!"
+				}
+			]
+		},
+		{
+			"encounter_id": 72,
+			"NOTE": "Said by the town leader for Frakton",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Welcome to Frakton! We're a large city with no specialties. Feel free to trade us for anything you like!"
+				}
+			]
+		},
+		{
+			"encounter_id": 73,
+			"NOTE": "Said by the town leader for Alabaster",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Welcome to Alabaster! We're a large town. Make us any trades you'd like!"
+				}
+			]
+		},
+		{
+			"encounter_id": 74,
+			"NOTE": "Said by the town leader for New Ottawa",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Hello there! Welcome to New Ottawa. We're a large city with a hospital!",
+					"buttons": [
+						{
+							"text": "Hello",
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "We don't need medicine. But we can always use advanced goods!"
+				}
+			]
+		},
+		{
+			"encounter_id": 75,
+			"NOTE": "Said by the town leader for Rocket City",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Hello there! Welcome to Rocket City! We're a large city with no specialties."
+				}
+			]
+		},
+		{
+			"encounter_id": 76,
+			"NOTE": "Said by the town leader for Steelton",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Welcome to Steelton! As our name would suggest, we specialize in steel. We're always looking for more minerals!"
+				}
+			]
+		},
+		{
+			"encounter_id": 77,
+			"NOTE": "Said by the town leader for Big Rock",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Hi there, welcome to Big Rock! We're a very general town. Make us any offers you'd like!"
+				}
+			]
+		},
+		{
+			"encounter_id": 78,
+			"NOTE": "Said by the town leader for Lombard",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Welcome to Lombard! We are a town with no specialties. Feel free to trade us anything you'd like!"
+				}
+			]
+		},
+		{
+			"encounter_id": 79,
+			"NOTE": "Said by the town leader for Skull",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "This is a bandit camp. You'd best be careful around here.",
+					"buttons": [
+						{
+							"text": "I'm here to trade.",
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Here to trade, eh? We sell weapons. We'll give you them in exchange for food, building materials, or tools."
+				}
+			]
+		},
+		{
+			"encounter_id": 80,
+			"NOTE": "Said by the town leader for Fields",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Welcome to the Fields! We're a small farming community.",
+					"buttons": [
+						{
+							"text": "Want to make some trades?",
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "We're always up for a good trade. We'll give you some food in exchange for materials and parts."
+				}
+			]
+		},
+		{
+			"encounter_id": 81,
+			"NOTE": "Said by the town leader for Carrot Farm",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Hi there, welcome to the carrot farm! We're a farming community.",
+					"buttons": [
+						{
+							"text": "I'm here to trade.",
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Trade, hmm? That's great! We'll give you food in exchange for materials and parts!"
+				}
+			]
+		},
+		{
+			"encounter_id": 82,
+			"NOTE": "Said by the town leader for Sherbrooke",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Welcome to Sherbrooke! We're a farming town. We'll give you food in exchange for your materials and parts!"
+				}
+			]
+		},
+		{
+			"encounter_id": 83,
+			"NOTE": "Said by the town leader for Riverbed",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Welcome to the Riverbed! We're a small farming town. We'll trade you food in exchange for materials & parts!"
+				}
+			]
+		},
+		{
+			"encounter_id": 84,
+			"NOTE": "Said by the town leader for Bordevide",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Welcome to Bordevide! We sell food. We'll trade you for your materials and parts!"
+				}
+			]
+		},
+		{
+			"encounter_id": 85,
+			"NOTE": "Said by the town leader for Respite",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Welcome to Respite! We're a farming town. We welcome materials & parts in exchange for our food!"
+				}
+			]
+		},
+		{
+			"encounter_id": 86,
+			"NOTE": "Said by the town leader for Farm-By-The-Island",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Welcome to our small town! We're always looking for some good trades.",
+					"buttons": [
+						{
+							"text": "What do you sell?",
+							"next_page_id": 2
+						},
+						{
+							"text": "[ Leave ]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "We produce and sell food! We'll trade you in exchange for your building materials and parts."
+				}
+			]
+		},
+		{
+			"encounter_id": 87,
+			"NOTE": "Said by the town leader for Green Greens",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Welcome to Green Greens! We're a farming town. Feel free to trade us for our food!"
+				}
+			]
+		},
+		{
+			"encounter_id": 88,
+			"NOTE": "Said by the town leader for Dustbowl",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "I'm Mayor X, welcome to the Dustbowl!",
+					"buttons": [
+						{
+							"text": "Hi Mayor X!",
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "We're farmers, so we sell food. We'll give you good deals for your materials & parts!",
+					"buttons": [
+						{
+							"text": "Thanks!"
+						}
+					]
+				}
+			]
+		},
+		{
+			"encounter_id": 89,
+			"NOTE": "Said by the town leader for Jeb's Town",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Welcome to my town! We're all farmers here.",
+					"buttons": [
+						{
+							"text": "Hello there!",
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "We sell food. We'll give you good deals for your materials & parts!",
+					"buttons": [
+						{
+							"text": "Thanks!"
+						}
+					]
+				}
+			]
+		},
+		{
+			"encounter_id": 90,
+			"NOTE": "Said by the town leader for Lanark Mine",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Welcome to Lanark Mine! We're a farming town. Feel free to trade us for some food!"
+				}
+			]
+		},
+		{
+			"encounter_id": 91,
+			"NOTE": "Said by the town leader for Irony",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Welcome to Irony! We're a farming town. Feel free to trade us for some food!"
+				}
+			]
+		},
+		{
+			"encounter_id": 92,
+			"NOTE": "Said by the town leader for Fin",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Welcome to Fin! We're a farming town. Feel free to trade us for some food!"
 				}
 			]
 		}
