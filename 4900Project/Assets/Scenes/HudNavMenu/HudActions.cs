@@ -50,7 +50,7 @@ public class HudActions : MonoBehaviour
             IwasKeyDown = IisDown;
             if (GameObject.Find("Map").GetComponent<OverworldMapUI>().InventoryCanvas.activeInHierarchy)
             {
-                GameObject.Find("Map").GetComponent<OverworldMapUI>().InventoryCanvas.SetActive(false);
+                GameObject.FindGameObjectWithTag("InventoryWindow").GetComponent<InventoryWindow>().leave();
             }
             else
             {
