@@ -7,6 +7,7 @@ using SIEvents;
 using System.Linq;
 using Dialogue;
 using Assets.Scripts.Settings;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class DataTracker : MonoBehaviour
@@ -31,7 +32,7 @@ public class DataTracker : MonoBehaviour
     public int currentShopId = 0; // Needed if we want store to be their own scene. If we make the store window a prefab, we don't need this.
     public int currentLocationId = 1;
     public int dayCount = 0;
-    public int hourCount = 6;
+    public int hourCount = 17; //ARL modified for testing. Return to 6
     private void Awake() {
         if (_current != null && _current != this)
         {
@@ -73,6 +74,7 @@ public class DataTracker : MonoBehaviour
         EventManager.OnTimeAdvance.Invoke(i);
         if (hourCount == 20) {
             EventManager.OnEvening.Invoke();
+            SceneManager.LoadScene("Campfire", LoadSceneMode.Additive);
         }
         if (hourCount >= 24){
             EventManager.OnDayAdvance.Invoke();

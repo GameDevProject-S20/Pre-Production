@@ -627,7 +627,7 @@ PrefabInstance:
     - target: {fileID: 7864621161261145241, guid: e8e0713c01c44684db4ab4c34a0a47e2,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -2145
+      value: -3930
       objectReference: {fileID: 0}
     - target: {fileID: 7864621161312667345, guid: e8e0713c01c44684db4ab4c34a0a47e2,
         type: 3}
@@ -1028,10 +1028,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa719fb3c8276a7419288fcfcc1efab8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Songs:
-  - {fileID: 8300000, guid: e95150998a62c3a47a374fb98f66056c, type: 3}
-  - {fileID: 8300000, guid: 97ac72058ab7bed4f8a8707b0ac527ae, type: 3}
-  - {fileID: 8300000, guid: b0a2939b017ce2a44a415fa114e795d5, type: 3}
+  Songs: []
   AudioGameObject: {fileID: 562784442}
 --- !u!82 &562784444
 AudioSource:

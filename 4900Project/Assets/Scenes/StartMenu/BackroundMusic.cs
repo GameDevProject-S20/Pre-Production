@@ -1,18 +1,20 @@
 ﻿using Assets.Scripts.Settings;
+using Extentions;
 using SIEvents;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BackroundMusic : MonoBehaviour
 {
 
-    [SerializeField]    
-    public List<AudioClip> Songs;
+    [SerializeField]
+    public List<Song> Songs;
     public GameObject AudioGameObject;
 
     private AudioSource AS;
-    private List<int> Played = new List<int> { -1 }; 
 
     private const float MAX_VOLUME = 0.5f;
     private const float FADE_STEP_TIME = 0.25f;
@@ -25,11 +27,55 @@ public class BackroundMusic : MonoBehaviour
     private float playTime = 0;
     private float silenceTime = 0;
 
+    [Serializable]
+    public class Song
+    {
+        [SerializeField]
+        public AudioClip Clip;
+        [SerializeField]
+        public MusicTag Tag;
+        public bool Played { get; private set; }
+
+        public Song(AudioClip clip, MusicTag tag)
+        {
+            Clip = clip;
+            Tag = tag;
+            Played = false;
+        }
+
+        public void Play(AudioSource source)
+        {
+            source.clip = Clip;
+            source.Play();
+            Played = true;
+        }
+
+        public void Reset()
+        {
+            Played = false;
+        }
+    }
+
+    public enum MusicTag
+    {
+        GENERAL,
+        CAMPFIRE
+    }
+
+    private MusicTag currentTag = MusicTag.GENERAL;
+
     // Start is called before the first frame update
     void Start()
     {
         AS = AudioGameObject.GetComponent<AudioSource>(); 
         DontDestroyOnLoad(AS);
+
+        UnityEngine.Random.InitState((int)System.Environment.TickCount);
+
+        Songs.AddRange(Resources.LoadAll("Music/General").Select(f => new Song(f as AudioClip, MusicTag.GENERAL)));
+
+        Songs.AddRange(Resources.LoadAll("Music/Campfire").Select(f => new Song(f as AudioClip, MusicTag.CAMPFIRE)));
+
         PlayASong();
 
         if (DataTracker.Current)
@@ -62,14 +108,14 @@ public class BackroundMusic : MonoBehaviour
             if (playTime <= 0 && silenceTime <= 0)
             {
                 InitSongPlayTime();
-                InitVolumeFade(MAX_VOLUME, Random.Range(8, 18));
+                InitVolumeFade(MAX_VOLUME, UnityEngine.Random.Range(8, 18));
             }
             else if (playTime > 0)
             {
                 playTime -= dTime;
                 if (playTime <= 0)
                 {
-                    InitVolumeFade(0f, Random.Range(8, 18));
+                    InitVolumeFade(0f, UnityEngine.Random.Range(8, 18));
                 }
             }
             else
@@ -85,25 +131,27 @@ public class BackroundMusic : MonoBehaviour
     /// </summary>
     void PlayASong()
     {
-        int random = -1;
 
-        Random.InitState((int)System.Environment.TickCount);  
-
-        if ((Played.Count+1) == Songs.Count)
+        var songsOfTag = Songs.Where(s => s.Tag == currentTag);
+        int count = songsOfTag.Count();
+        if (count == 0)
         {
-            Played = new List<int> { -1 }; 
+            Debug.LogError(string.Format("No songs found for tag {0}", currentTag));
+            return;
         }
 
+        var unplayedSongsOfTag = songsOfTag.Where(s => !s.Played);
+        count = unplayedSongsOfTag.Count();
+        if (count == 0)
+        {
+            unplayedSongsOfTag = songsOfTag.ForEach(s => s.Reset());
+        }
 
-        while (Played.Contains(random))
-            random = Random.Range(0, Songs.Count);
+        unplayedSongsOfTag.ElementAt(UnityEngine.Random.Range(0, count)).Play(AS);
 
-        Debug.Log(random);  
 
-        Played.Add(random);
-        AS.clip = Songs[random];
-        UpdateVolume();
-        AS.Play();
+        //UpdateVolume();
+        //AS.Play();
 
         if (playTime <= 0 && silenceTime <= 0)
         {
@@ -167,8 +215,8 @@ public class BackroundMusic : MonoBehaviour
     /// </summary>
     void InitSongPlayTime()
     {
-        playTime = Random.Range(1, 3) * 60;  // s
-        silenceTime = Random.Range(6, 10);  // s
+        playTime = UnityEngine.Random.Range(1, 3) * 60;  // s
+        silenceTime = UnityEngine.Random.Range(6, 10);  // s
         Debug.Log($"song play time = {playTime}");
         Debug.Log($"song silence time = {silenceTime}");
     }
