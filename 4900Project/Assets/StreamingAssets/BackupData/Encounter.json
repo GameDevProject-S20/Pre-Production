@@ -95,7 +95,7 @@
 						{
 							"effects": [
 								"@give fuel 80",
-								"@set_dialogue_encounter 0 11",
+								"@set_dialogue_encounter 0 70",
 								"@resolve"
 							]
 						}
@@ -464,6 +464,55 @@
 				{
 					"id": 3,
 					"text": "You left."
+				}
+			]
+		},
+		{
+			"encounter_id": 70,
+			"NOTE": "Said by the town leader for Smithsville",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Thanks for getting us that generator!",
+					"buttons": [
+						{
+							"text": "You're welcome!"
+						}
+					]
+				}
+			]
+		},
+		{
+			"encounter_id": 71,
+			"NOTE": "Said by the town leader for York",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Welcome to York! We are a town that highly values medicine!"
+				}
+			]
+		},
+		{
+			"encounter_id": 72,
+			"NOTE": "Said by the town leader for Frakton",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Welcome to Frakton! We sell a wide variety of general goods!"
+				}
+			]
+		},
+		{
+			"encounter_id": 73,
+			"NOTE": "Said by the town leader for Sherbrooke",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Welcome to Sherbrooke! We're a farming town. Feel free to trade us for some food!"
 				}
 			]
 		}

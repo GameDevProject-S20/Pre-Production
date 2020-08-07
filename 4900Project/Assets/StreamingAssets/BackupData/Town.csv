@@ -1,24 +1,24 @@
-Id,Name,Leader,Colour,Size,Tags,HasHospital
-0,Smithsville,Sheriff Smith,#3492eb,Medium,,TRUE
-1,York,Mayor Li,#08b806,Medium,,FALSE
-2,Frakton,Mayor Brown,#de8212,Large,,FALSE
-3,Alabaster,Sheriff Cailyn,#fc1e1e,Large,,FALSE
-4,New Ottawa,Dr David,#94d914,Large,Hospital,TRUE
-5,Rocket City,Overseer Zachary,#0c28c7,Large,,FALSE
-6,Steelton,the Northern Trade Coalition,#38c29f,Medium,Steel,FALSE
-7,Big Rock,Mayor Aaron,#fcba03,Medium,,FALSE
-8,Lombard,the New Democratic Council,#6a0cc7,Medium,,FALSE
-9,Skull,Chief Alex,#3492eb,Medium,Bandit,FALSE
-10,Fields,Wilson Agriculture Corp,#27c6db,Small,Farming,FALSE
-11,Carrot Farm,the Green Pact,#d62474,Small,Farming,FALSE
-12,Sherbrooke,Farmer Sean,##cc2c00,Small,Farming,FALSE
-13,Riverbed,Mayor Tali,#c99863,Small,Farming,FALSE
-14,Bordevide,Sheriff Jean-Guy,#ae3bdb,Small,Farming,FALSE
-15,Respite,Farmer Kyle,#08b806,Small,Farming,FALSE
-16,Farm-By-The-Island,Dr Pavarti,#0c28c7,Small,Farming,FALSE
-17,Green Greens,Kevin & Do-yun,#fc1e1e,Small,Farming,FALSE
-18,Dustbowl,Mayor X,#27c6db,Small,Farming,FALSE
-19,Jeb's Town,Old Man Jeb,##6a0cc7,Small,Farming,FALSE
-20,Lanark Mine,Mine Chief Keegan,#d1ad4b,Small,Mining,FALSE
-21,Irony,Overseer Ahmed,#fcba03,Small,Mining,FALSE
-22,Fin,Mayor Connor,#d62474,Large,,FALSE
+Id,Name,Leader,Colour,Size,Tags,HasHospital,LeaderEncounterId
+0,Smithsville,Sheriff Smith,#3492eb,Medium,,TRUE,70
+1,York,Mayor Li,#08b806,Medium,,FALSE,71
+2,Frakton,Mayor Brown,#de8212,Large,,FALSE,72
+3,Alabaster,Sheriff Cailyn,#fc1e1e,Large,,FALSE,11
+4,New Ottawa,Dr David,#94d914,Large,Hospital,TRUE,11
+5,Rocket City,Overseer Zachary,#0c28c7,Large,,FALSE,11
+6,Steelton,the Northern Trade Coalition,#38c29f,Medium,Steel,FALSE,11
+7,Big Rock,Mayor Aaron,#fcba03,Medium,,FALSE,11
+8,Lombard,the New Democratic Council,#6a0cc7,Medium,,FALSE,11
+9,Skull,Chief Alex,#3492eb,Medium,Bandit,FALSE,11
+10,Fields,Wilson Agriculture Corp,#27c6db,Small,Farming,FALSE,11
+11,Carrot Farm,the Green Pact,#d62474,Small,Farming,FALSE,11
+12,Sherbrooke,Farmer Sean,##cc2c00,Small,Farming,FALSE,73
+13,Riverbed,Mayor Tali,#c99863,Small,Farming,FALSE,11
+14,Bordevide,Sheriff Jean-Guy,#ae3bdb,Small,Farming,FALSE,11
+15,Respite,Farmer Kyle,#08b806,Small,Farming,FALSE,11
+16,Farm-By-The-Island,Dr Pavarti,#0c28c7,Small,Farming,FALSE,11
+17,Green Greens,Kevin & Do-yun,#fc1e1e,Small,Farming,FALSE,11
+18,Dustbowl,Mayor X,#27c6db,Small,Farming,FALSE,11
+19,Jeb's Town,Old Man Jeb,##6a0cc7,Small,Farming,FALSE,11
+20,Lanark Mine,Mine Chief Keegan,#d1ad4b,Small,Mining,FALSE,11
+21,Irony,Overseer Ahmed,#fcba03,Small,Mining,FALSE,11
+22,Fin,Mayor Connor,#d62474,Large,,FALSE,11
