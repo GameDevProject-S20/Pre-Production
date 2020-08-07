@@ -1,5 +1,5 @@
 Id,Name,Leader,Colour,Size,Tags,HasHospital
-0,Smithsville,Sheriff Smith,#3492eb,Small,,TRUE
+0,Smithsville,Sheriff Smith,#3492eb,Medium,,TRUE
 1,York,Mayor Li,#08b806,Medium,,FALSE
 2,Frakton,Mayor Brown,#de8212,Large,,FALSE
 3,Alabaster,Sheriff Cailyn,#fc1e1e,Large,,FALSE
