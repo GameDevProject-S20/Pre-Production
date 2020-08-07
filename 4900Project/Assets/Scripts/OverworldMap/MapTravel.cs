@@ -70,7 +70,7 @@ public class MapTravel : MonoBehaviour
         else
         {
             // Otherwise, we need to run a LowFuel encounter
-            DataTracker.Current.EncounterManager.RunRandomEncounter("LowFuel");
+            DataTracker.Current.EncounterManager.RunRandomEncounter();
 
             // Delay the progression of travel until they complete the encounter
             EventManager.Instance.OnDialogueEnd.AddListener(() =>
