@@ -42,7 +42,7 @@ public class DataTracker : MonoBehaviour
         WorldMap = OverworldMapLoader.LoadMap();
         ShopManager.LoadData();
         TownManager.LoadData();
-        Player.Inventory.WeightLimit = 10000f;
+        Player.Inventory.WeightLimit = 750f;
         Player.Inventory.AddItem("Rations", 12);
         Player.Inventory.AddItem("Fuel", 30);
         Player.Inventory.AddItem("Fresh Fruit", 1);

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using SIEvents;
+using TMPro;
 
 public class StatusBars : MonoBehaviour
 {
@@ -23,9 +24,15 @@ public class StatusBars : MonoBehaviour
     private Image weightBar;
 
     [SerializeField]
-    private Text HealthWarning;
+    private TextMeshProUGUI HealthWarning;
     [SerializeField]
-    private Text FuelWarning;
+    private TextMeshProUGUI FuelWarning;
+
+    Color32 fuel2 = new Color32(14, 27, 221, 255);
+    Color32 fuel1 = new Color32(28, 33, 106, 255);
+
+    Color32 health1 = new Color32(106, 28, 32, 255);
+    Color32 health2 = new Color32(217, 40, 49, 255);
 
     void Awake()
     {
@@ -56,25 +63,40 @@ public class StatusBars : MonoBehaviour
     void WarningCheck()
     {
         int count = DataTracker.Current.Player.Inventory.Contains("Fuel");
-        if(count < 18)
+        if(count < 24)
         {
-            fuelBar.enabled = !fuelBar.enabled;
+
+            if(fuelBar.color == fuel1)
+            {
+                fuelBar.color = fuel2;
+            }
+            else
+            {
+                fuelBar.color = fuel1;
+            }
             FuelWarning.enabled = true;
         }
         else
         {
-            fuelBar.enabled = true;
+            fuelBar.color = fuel1;
             FuelWarning.enabled = false;
         }
         count = DataTracker.Current.Player.Health;
         if (count < 30)
         {
-            healthBar.enabled = !healthBar.enabled;
+            if (healthBar.color == health1)
+            {
+                healthBar.color = health2;
+            }
+            else
+            {
+                healthBar.color = health1;
+            }
             HealthWarning.enabled = true;
         }
         else
         {
-            healthBar.enabled = true;
+            healthBar.color = health1;
             HealthWarning.enabled = false;
         }
     }
