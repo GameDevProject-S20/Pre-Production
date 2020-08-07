@@ -86,6 +86,7 @@ public class Initializer : MonoBehaviour
             // Second step: Use the token to get into the Bandit Camp
             .AddStage(new Stage.Builder("Use the token to get into the bandit camp.")
                         .AddCondition(new TownEnterCondition("Travel to Skull.", 9))
+                        .AddCondition(new EncounterCompleteCondition("Talk to the bandit leader.", 7))
                        )
 
             .Build();
