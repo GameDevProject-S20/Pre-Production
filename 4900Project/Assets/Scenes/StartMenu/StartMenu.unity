@@ -627,7 +627,7 @@ PrefabInstance:
     - target: {fileID: 7864621161261145241, guid: e8e0713c01c44684db4ab4c34a0a47e2,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -3930
+      value: -5715
       objectReference: {fileID: 0}
     - target: {fileID: 7864621161312667345, guid: e8e0713c01c44684db4ab4c34a0a47e2,
         type: 3}
@@ -1010,7 +1010,7 @@ GameObject:
   - component: {fileID: 562784444}
   - component: {fileID: 562784443}
   m_Layer: 0
-  m_Name: Audio Source
+  m_Name: MusicManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

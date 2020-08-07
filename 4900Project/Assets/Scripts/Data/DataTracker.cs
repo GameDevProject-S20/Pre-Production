@@ -26,13 +26,15 @@ public class DataTracker : MonoBehaviour
     public TownManager TownManager = TownManager.Instance;
     public ShopManager ShopManager = ShopManager.Instance;
     public SettingsManager SettingsManager = SettingsManager.Instance;
+    public CampfireManager CampfireManager = CampfireManager.Instance;
+
     [SerializeField]
     public float MapSize;
     [SerializeField]
     public int currentShopId = 0; // Needed if we want store to be their own scene. If we make the store window a prefab, we don't need this.
     public int currentLocationId = 1;
     public int dayCount = 0;
-    public int hourCount = 17; //ARL modified for testing. Return to 6
+    public int hourCount = 19; //ARL modified for testing. Return to 6
     private void Awake() {
         if (_current != null && _current != this)
         {
@@ -74,7 +76,7 @@ public class DataTracker : MonoBehaviour
         EventManager.OnTimeAdvance.Invoke(i);
         if (hourCount == 20) {
             EventManager.OnEvening.Invoke();
-            SceneManager.LoadScene("Campfire", LoadSceneMode.Additive);
+            CampfireManager.Instance.LoadCampfireScene();
         }
         if (hourCount >= 24){
             EventManager.OnDayAdvance.Invoke();

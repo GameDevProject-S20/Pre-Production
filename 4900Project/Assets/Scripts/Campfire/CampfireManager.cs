@@ -1,4 +1,5 @@
-﻿using UnityEngine.SceneManagement;
+﻿using SIEvents;
+using UnityEngine.SceneManagement;
 
 public class CampfireManager
 {
@@ -19,7 +20,7 @@ public class CampfireManager
         SceneManager.sceneUnloaded += OnSceneUnloaded;
     }
 
-    public void LoadScene()
+    public void LoadCampfireScene()
     {
         SceneManager.LoadScene("Campfire", LoadSceneMode.Additive);
     }
@@ -28,7 +29,7 @@ public class CampfireManager
     {
         if (scene.name == "Campfire")
         {
-            // Need to make BackgroundMusic a singleton
+            EventManager.Instance.OnCampfireStarted.Invoke();
         }
     }
 
@@ -36,7 +37,7 @@ public class CampfireManager
     {
         if (scene.name == "Campfire")
         {
-
+            EventManager.Instance.OnCampfireEnded.Invoke();
         }
     }
 }

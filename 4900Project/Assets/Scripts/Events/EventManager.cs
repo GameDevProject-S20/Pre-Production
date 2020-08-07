@@ -77,21 +77,32 @@ namespace SIEvents
         public UnityEvent SetViewDefault = new UnityEvent();
         public UnityEvent SetViewProbability = new UnityEvent();
         public UnityEvent OnColourChange = new UnityEvent();
+
         //=== Player =================================================//
 
         public Events.PlayerEvents.HealthEvent OnHealthChange = new Events.PlayerEvents.HealthEvent();
 
         //=== Escape Menu ===========================================//
+
         public UnityEvent EscapeMenuRequested = new UnityEvent();
         public UnityEvent OnCreditsButtonClicked = new UnityEvent();
 
+        //=== Campfire ==============================================//
+
+        public UnityEvent OnCampfireStarted = new UnityEvent();
+        public UnityEvent OnCampfireEnded = new UnityEvent();
+
         //=== Settings ==============================================//
+
         public Events.SettingsEvents.SettingsChangedEvent OnSettingsChanged = new Events.SettingsEvents.SettingsChangedEvent();
 
-        //=== Misc ===================================================//
-        public UnityEvent onDataTrackerLoad = new UnityEvent();
+        //=== Time ==================================================//
+
         public Events.MiscEvents.TimeEvent OnTimeAdvance = new Events.MiscEvents.TimeEvent();
         public UnityEvent OnDayAdvance = new UnityEvent();
         public UnityEvent OnEvening = new UnityEvent();
+
+        //=== Misc ===================================================//
+        public UnityEvent onDataTrackerLoad = new UnityEvent();
     }
 }
