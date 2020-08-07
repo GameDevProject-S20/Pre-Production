@@ -8,6 +8,11 @@ public class MapTravel : MonoBehaviour
 {
     static int baseFuelRate = 5;
 
+    /// <summary>
+    /// Serves as a debounce. Ignore double-clicks if the player already requested travel.
+    /// </summary>
+    protected static bool isTravelling;
+
     static Dictionary<float, float> weightThresholds = new Dictionary<float, float>(){
         {0.0f, 0.6f},
         {0.1f, 0.8f},
@@ -44,13 +49,22 @@ public class MapTravel : MonoBehaviour
     /// <param name="destination"></param>
     /// <param name="onTravelReady"></param>
     public static void Travel(MapNode destination, Action onTravelReady){
+        // If we already have the player travelling (i.e. double clicks), exit out here
+        if (isTravelling)
+        {
+            return;
+        }
+        // And track that they are already travelling
+        isTravelling = true;
+
         int cost = GetFuelCost(destination);
         int currentFuel = DataTracker.Current.Player.Inventory.Contains("Fuel");
 
         // If the player has enough fuel to travel: Go ahead & travel
         if (currentFuel >= cost) { 
             DataTracker.Current.Player.Inventory.RemoveItem("Fuel", cost);
-            DataTracker.Current.dayCount += dayRate;
+            DataTracker.Current.dayCount += timeRate;
+            isTravelling = false; // Remove the debounce
             onTravelReady();
         }
         else
@@ -61,7 +75,11 @@ public class MapTravel : MonoBehaviour
             // Delay the progression of travel until they complete the encounter
             EventManager.Instance.OnDialogueEnd.AddListener(() =>
             {
-                DataTracker.Current.dayCount += dayRate;
+                // Remove the debounce
+                isTravelling = false;
+
+                // Travel
+                DataTracker.Current.dayCount += timeRate;
                 onTravelReady();
             });
         }
