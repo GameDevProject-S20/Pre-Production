@@ -20,6 +20,54 @@ public class HudActions : MonoBehaviour
         questChangedEvent.AddListener(new UnityEngine.Events.UnityAction(() => { QuestChangedHandler();}));
 
     }
+
+    bool JwasKeyDown = false;
+    bool IwasKeyDown = false;
+    public void Update()
+    {
+
+        /*
+         * Journal hot key
+         */
+        var JisDown = Input.GetKey(KeyCode.J);
+        if (JisDown != JwasKeyDown && JisDown) 
+        {
+            JwasKeyDown = JisDown;
+            if (GameObject.Find("Map").GetComponent<OverworldMapUI>().QuestJournalCanvas.activeSelf)
+            {
+                GameObject.Find("QuestUI").GetComponent<QuestJournalWindow>().disableUI();
+            }
+            else
+            {
+                OnJournalButtonClick();
+            }
+        }
+
+        JwasKeyDown = JisDown;
+
+        /*
+         * inventory hot key
+         */
+        var IisDown = Input.GetKey(KeyCode.I);
+        if (IisDown != IwasKeyDown && IisDown)
+        {
+            IwasKeyDown = IisDown;
+            if (GameObject.Find("Map").GetComponent<OverworldMapUI>().InventoryCanvas.activeInHierarchy)
+            {
+                GameObject.FindGameObjectWithTag("InventoryWindow").GetComponent<InventoryWindow>().leave();
+            }
+            else
+            {
+                OnInventoryButtonClick();
+            }
+        }
+        IwasKeyDown = IisDown;
+
+
+    }
+
+
+
     public void OnInventoryButtonClick()
     {
         ActivateInterface(GameObject.Find("Map").GetComponent<OverworldMapUI>().InventoryCanvas);

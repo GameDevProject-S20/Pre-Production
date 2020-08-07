@@ -21,10 +21,27 @@ public class SidePanel : MonoBehaviour
 
     bool isTown;
     int id;
+    bool isOpen = false; 
 
     private void Start() {
         EventManager.Instance.OnTravelStart.AddListener(Close);
         Close();
+    }
+
+    bool EwasKeyDown = false; 
+    private void Update()
+    {
+        /*
+         * Enter hot key
+         */
+        var EisDown = Input.GetKey(KeyCode.E);
+        if (EisDown != EwasKeyDown && EisDown && isOpen)
+        {
+            EwasKeyDown = EisDown;
+            OnButtonClick();
+        }
+        EwasKeyDown = EisDown;
+
     }
 
     public void OpenTown(int id){
@@ -85,10 +102,12 @@ public class SidePanel : MonoBehaviour
     }
 
     public void Open(){
+        isOpen = true;
         gameObject.GetComponent<RectTransform>().DOLocalMoveX(500, 0.5f);
     }
 
     public void Close(){
+        isOpen = false; 
         gameObject.GetComponent<RectTransform>().DOLocalMoveX(800, 0.5f);
     }
 
