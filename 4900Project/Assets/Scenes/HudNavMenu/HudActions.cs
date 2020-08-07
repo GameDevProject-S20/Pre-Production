@@ -8,6 +8,7 @@ using DG.Tweening;
 
 public class HudActions : MonoBehaviour
 {
+    protected GameObject activeObject;
 
     Events.QuestEvents.QuestManagerUpdated questChangedEvent;
     bool helpPanelOpened = false;
@@ -21,28 +22,54 @@ public class HudActions : MonoBehaviour
     }
     public void OnInventoryButtonClick()
     {
-        GameObject.Find("Map").GetComponent<OverworldMapUI>().InventoryCanvas.SetActive(true);
+        ActivateInterface(GameObject.Find("Map").GetComponent<OverworldMapUI>().InventoryCanvas);
         EventManager.Instance.FreezeMap.Invoke();
 
     }
 
     public void OnMenuButtonClick()
     {
+        DeactivateInterface();
         EventManager.Instance.EscapeMenuRequested.Invoke();
     }
 
     public void OnJournalButtonClick()
     {
-        GameObject.Find("Map").GetComponent<OverworldMapUI>().QuestJournalCanvas.SetActive(true); 
+        ActivateInterface(GameObject.Find("Map").GetComponent<OverworldMapUI>().QuestJournalCanvas);
         GameObject.Find("questjournal").GetComponent<UnityEngine.UI.RawImage>().material = default;
         EventManager.Instance.FreezeMap.Invoke();
-
     }
 
     public void QuestChangedHandler()
     {
        Material glowing = Resources.Load<Material>("Materials/Glowing");
        GameObject.Find("questjournal").GetComponent<UnityEngine.UI.RawImage>().material = Instantiate(glowing);
+    }
+
+    /// <summary>
+    /// Deactivates all opened interfaces.
+    /// </summary>
+    protected void DeactivateInterface()
+    {
+        if (activeObject != null)
+        {
+            activeObject.SetActive(false);
+        }
+
+        // Tell the Escape Menu to close
+        DataTracker.Current.EventManager.EscapeMenuCloseRequested.Invoke();
+    }
+
+    /// <summary>
+    /// Activates a new interface. Closes the past one if one was open.
+    /// </summary>
+    /// <param name="interfaceCanvas"></param>
+    protected void ActivateInterface(GameObject interfaceCanvas)
+    {
+        DeactivateInterface();
+
+        interfaceCanvas.SetActive(true);
+        activeObject = interfaceCanvas;
     }
 
     public void OnToggleView(){
