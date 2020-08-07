@@ -220,7 +220,7 @@
 					"buttons": [
 						{
 							"effects": [
-								"@set_dialogue_encounter 5 11",
+								"@set_dialogue_encounter 5 75",
 								"@set_dialogue_encounter 9 7",
 								"@resolve"
 							]
@@ -240,7 +240,7 @@
 					"buttons": [
 						{
 							"effects": [
-								"@set_dialogue_encounter 9 11",
+								"@set_dialogue_encounter 9 79",
 								"@resolve"
 							]
 						}
