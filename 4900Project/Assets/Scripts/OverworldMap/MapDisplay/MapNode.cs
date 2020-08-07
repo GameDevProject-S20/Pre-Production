@@ -17,6 +17,9 @@ public class MapNode : MonoBehaviour
     Vector3 offset = new Vector3(0, 60, 0);
     Camera cam;
 
+    enum ColourModes {Default, Probability}
+    ColourModes colourMode = ColourModes.Default;
+
     public void Init(OverworldMap.LocationNode Node){
         NodeData = Node;
         cam = Camera.main;
@@ -69,6 +72,9 @@ public class MapNode : MonoBehaviour
         EventManager.Instance.OnProbabilityChange.AddListener((int id)=> {
             if (id == this.NodeData.Id){
                 SetSprite();
+                if (colourMode == ColourModes.Probability) {
+                    ColourByProbability();
+                }
             }
         });
 
@@ -102,6 +108,7 @@ public class MapNode : MonoBehaviour
 
     void ColourByProbability(){
     if (NodeData.Type == OverworldMap.LocationType.NONE) {
+        colourMode = ColourModes.Probability;
         // gradient stuff
             Gradient g = new Gradient();
             GradientColorKey[] colorKey;
@@ -144,6 +151,7 @@ public class MapNode : MonoBehaviour
 
     void ColourToBlack(){
         if (NodeData.Type == OverworldMap.LocationType.NONE) {
+            colourMode = ColourModes.Default;
             SpriteRenderer sprite =  transform.Find("Icon").GetComponent<SpriteRenderer>();
             sprite.color = Color.black; 
         }

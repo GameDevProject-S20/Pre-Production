@@ -59,6 +59,7 @@ public class EncounterNode
             }
             growthTime = growthTime % growthTimeMax;
             EventManager.Instance.OnProbabilityChange.Invoke(id);
+            EventManager.Instance.OnColourChange.Invoke();
         }
     }
 
@@ -68,6 +69,7 @@ public class EncounterNode
         if (triggered) {
             p = "Safe";
             EventManager.Instance.OnProbabilityChange.Invoke(id);
+            EventManager.Instance.OnColourChange.Invoke();
         }
         return triggered;
     }
