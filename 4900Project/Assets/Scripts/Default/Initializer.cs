@@ -57,6 +57,7 @@ public class Initializer : MonoBehaviour
 
     private void BuildQuest()
     {
+        // Build Tutorial quest
        Quest quest = new Quest.Builder("Tutorial Quest")
             .SetDescription("Bring Smithsville a new generator.")
 
@@ -70,6 +71,17 @@ public class Initializer : MonoBehaviour
                 )
             )
 
+            .Build();
+
+        // Build Follow-Up Quest
+        Quest banditQuest = new Quest.Builder("Bandit Quest")
+            .SetDescription("Investigate the weird token you found.")
+            .AddStage(new Stage.Builder("Travel to the Bandit Camp.")
+                       .AddCondition(new TownEnterCondition("Travel to Skull.", 9))
+                       )
+            .AddStage(new Stage.Builder("Ask the leader of Skull about that weird token you found.")
+                        .AddCondition(new EncounterCompleteCondition("Talk to the leader of Skull.", 6))
+                        )
             .Build();
     }
 

@@ -6,6 +6,7 @@ namespace SIEvents
     public class TownEnterCondition : Condition
     {
         private readonly int townId;
+        private readonly string townName;
         private readonly UnityAction<Town> listener;
 
         public TownEnterCondition(string _description, int townId)
@@ -35,7 +36,7 @@ namespace SIEvents
 
         public override string ToString()
         {
-            throw new NotImplementedException();
+            return this.Description;
         }
     }
 }

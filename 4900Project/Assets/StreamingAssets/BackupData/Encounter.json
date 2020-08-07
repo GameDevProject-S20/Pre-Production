@@ -169,6 +169,67 @@
 			]
 		},
 		{
+			"encounter_id": 5,
+			"valid": true,
+			"NOTE": "The starting follow-up quest encounter. Said when the player reaches the first node past the original tutorial.",
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "In the distance, you see an old outpost. There seems to be some object sparkling underneath it.",
+					"buttons": [
+						{
+							"text": "[ Pick it up ]",
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "You walk over and pick up the sparkling object. It looks like it might be some weird symbol. You should take it to the Bandit Camp.",
+					"buttons": [
+						{
+							"effects": [
+								"@start_quest Bandit_Quest",
+								"@set_node_encounter 119 -1",
+								"@set_dialogue_encounter 9 6",
+								"@resolve"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"encounter_id": 6,
+			"valid": true,
+			"NOTE": "Said on conclusion of the Bandit quest by the leader of Skull.",
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Hmm, what's that? You say you found a token?",
+					"buttons": [
+						{
+							"text": "[ Hand over token ]",
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Yep, that's one of ours. A bandit token. You can use that for free access past our tolls. One time use, of course.",
+					"buttons": [
+						{
+							"effects": [
+								"@set_dialogue_encounter 9 11",
+								"@give bandit_token 1",
+								"@resolve"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
 			"encounter_id": 30,
 			"NOTE": "",
 			"encounter_name": "Broken Gas Station",

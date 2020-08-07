@@ -19,3 +19,4 @@ Medical Kit,High end First Aid Kit for dangerous work,"Not only stocked with the
 Surgical Equipment,Used in hospitals.,Advanced equipment used in hospitals to operate on patients.,45,10,surgicalEquipment.png,"Medical,Advanced,All"
 Iron Ore,Raw ore used in steel production.,"With the right amount of carbon content, raw iron can be refined in a Steel Mill.",12,3,iron.png,"Mineral,All"
 Bandit Token,A symbol of alliance.,"A Greek 'Omega', roughly fashioned from metal. Bandits will not hassle you.",5,1,banditToken.png,"Luxury,Bandit,All"
+Strange Token,A shiny object you found. You're not sure what this does.,A strange object you found sparkling in the dirt. You're not sure what purpose this serves.,-5000,1,banditToken.png,"Luxury,All"
