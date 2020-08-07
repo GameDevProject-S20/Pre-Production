@@ -17,7 +17,7 @@ public class MapTravel : MonoBehaviour
         {1.45f, 3.0f}
     };
 
-    public static int dayRate { get; set; } = 1;
+    public static int timeRate { get; set; } = 1;
 
 
     public static int GetFuelCost(MapNode destination){
@@ -37,9 +37,8 @@ public class MapTravel : MonoBehaviour
 
     public static bool Travel(MapNode destination){
         int cost = GetFuelCost(destination);
-        if (DataTracker.Current.Player.Inventory.Contains("Fuel") > cost) {
+        if (DataTracker.Current.Player.Inventory.Contains("Fuel") >= cost) {
             DataTracker.Current.Player.Inventory.RemoveItem("Fuel", cost);
-            DataTracker.Current.dayCount += dayRate;
             return true;
         }
         return false;
