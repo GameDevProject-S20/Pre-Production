@@ -68,22 +68,64 @@ public class MusicManager : MonoBehaviour
 
     private static class Fader
     {
-        private static float fadeTime = 1.5f;
-
-        public static IEnumerator FadeOut(MusicManager manager)
+        private const float DEFAULT_FADE_OUT = 1.5f;
+        private const float DEFAULT_FADE_IN = 3.0f;
+        
+        // Fades out current song and plays next song
+        public static IEnumerator FadeOut(MusicManager manager, float fadeOutTime = DEFAULT_FADE_OUT)
         {
             AudioSource source = manager.AS;
             float startVolume = source.volume;
 
             while (source.volume > 0)
             {
-                source.volume -= startVolume * Time.deltaTime / fadeTime;
+                source.volume -= startVolume * Time.deltaTime / fadeOutTime;
                 yield return null;
             }
 
             source.Stop();
             source.volume = startVolume;
             manager.PlayASong();
+        }
+
+        // Plays a new song with a fade in
+        public static IEnumerator FadeIn(MusicManager manager, float targetVolume, float fadeInTime = DEFAULT_FADE_IN)
+        {
+            AudioSource source = manager.AS;
+            float deltaVolume = targetVolume - source.volume;
+
+            manager.PlayASong();
+
+            while (source.volume < targetVolume)
+            {
+                source.volume += deltaVolume * Time.deltaTime / fadeInTime;
+                yield return null;
+            }
+            source.volume = targetVolume;
+        }
+
+        // Fades out current song and plays next song with fade in
+        public static IEnumerator Crossfade(MusicManager manager, float fadeOutTime = DEFAULT_FADE_OUT, float fadeInTime = DEFAULT_FADE_IN)
+        {
+            AudioSource source = manager.AS;
+            float startVolume = source.volume;
+
+            while (source.volume > 0)
+            {
+                source.volume -= startVolume * Time.deltaTime / fadeOutTime;
+                yield return null;
+            }
+
+            source.Stop();
+            manager.PlayASong();
+
+            while (source.volume < startVolume)
+            {
+                source.volume += startVolume * Time.deltaTime / fadeInTime;
+                yield return null;
+            }
+
+            source.volume = startVolume;
         }
     }
 
@@ -196,7 +238,7 @@ public class MusicManager : MonoBehaviour
     private void SetSongType(MusicTag type)
     {
         currentTag = type;
-        StartCoroutine(Fader.FadeOut(this));
+        StartCoroutine(Fader.Crossfade(this));
     }
 
     /// <summary>
