@@ -71,9 +71,6 @@ public class Town
         this.Tags = new List<TownTag>();
 
 
-        SetDescription();
-        SetLeaderBlurb();
-
         // Fetch town leader avatar
         {
             string path = $"Icons/CyberPunk Avatars/TownLeaders/{Leader}";
@@ -113,7 +110,8 @@ public class Town
             }
         }
 
-
+        SetDescription();
+        SetLeaderBlurb();
     }
 
     /// <summary>
@@ -205,18 +203,22 @@ They are lead by {this.Leader}. ";
         List<string> s = new List<string>();
         for(int i = 0; i<Tags.Count; i++){
             if (Tags[i].Specialization == ItemTag.None) continue;
-            s.Add(Tags[i].Specialization.ToString());
+            s.Add(Tags[i].SpecializationDesc);
         }
 
         if (s.Count >0){
             desc += "They specialize in ";
             for(int i = 0; i<s.Count; i++){
-                string t = Tags[i].Specialization.ToString().Replace("_", " ");
-                if (i < s.Count -1){
-                    desc += t +", ";
+                if (s.Count == 1){
+                    desc += s[i] + ".\n\n";
                 }
                 else {
-                    desc += "and " + t +".\n\n";
+                    if (i < s.Count -1){
+                        desc += s[i] +", ";
+                    }
+                    else {
+                        desc += "and " + s[i] +".\n\n";
+                    }
                 }
             }
         }

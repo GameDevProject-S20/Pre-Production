@@ -107,6 +107,7 @@ public class TownManager
         tag.Name = "Farming";
         tag.Colour = "#078d39";
         tag.Specialization = ItemTag.Food;
+        tag.SpecializationDesc = "food";
         tag.Summary = "- Produces food\n- Values Materials & Parts";
 
         tag.shopSellModifiers.Add(ItemTag.Food, 0.6f);
@@ -158,6 +159,7 @@ public class TownManager
         tag.Name = "Large";
         tag.Colour = "#FFF5E0";
         tag.Specialization = ItemTag.Advanced;
+        tag.SpecializationDesc = "advanced goods";
         tag.Summary = "- Sells a high variety of goods\n- Highly values food";
 
         tag.shopSellModifiers.Add(ItemTag.Food, 1.5f);
@@ -178,6 +180,7 @@ public class TownManager
         tag.Name = "Mining";
         tag.Colour = "#b57a74";
         tag.Specialization = ItemTag.Mineral;
+        tag.SpecializationDesc = "minerals";
         tag.Summary = "- Produces ore\n- Values Materials & Parts";
 
         tag.shopSellModifiers.Add(ItemTag.Food, 1.5f);
@@ -201,6 +204,7 @@ public class TownManager
         tag.Name = "Steel";
         tag.Colour = "#bfb1a3";
         tag.Specialization = ItemTag.Building_Materials;
+        tag.SpecializationDesc = "materials";
         tag.Summary = "- Smelts ore into steel";
 
         tag.playerSellModifiers.Add(ItemTag.Mineral, 1.5f);
@@ -213,6 +217,7 @@ public class TownManager
         tag.Name = "Hospital";
         tag.Colour = "#d9304c";
         tag.Specialization = ItemTag.Medical;
+        tag.SpecializationDesc = "medical goods";
         tag.Summary = "- Sells medicine\n- Values advanced goods";
 
         tag.shopSellModifiers.Add(ItemTag.Food, 1.2f);
@@ -234,6 +239,7 @@ public class TownManager
         tag.Name = "Bandit";
         tag.Colour = "#c40202";
         tag.Specialization = ItemTag.Combat;
+        tag.SpecializationDesc = "weaponry";
         tag.Summary = "- Sells weapons\n- Values basic goods";
 
         tag.shopSellModifiers.Add(ItemTag.Food, 1.2f);
@@ -266,6 +272,7 @@ public class TownTag
     public string Colour;
     public string Summary;
     public ItemTag Specialization = ItemTag.None; // Specialized in these item type
+    public string SpecializationDesc = "";
     public Dictionary<ItemTag, float> playerSellModifiers = new Dictionary<ItemTag, float>();
     public Dictionary<ItemTag, float> shopSellModifiers = new Dictionary<ItemTag, float>();
     public List<float> BaseAbundancyModifier = new List<float>(){1.0f, 1.0f, 1.0f, 1.0f, 1.0f};

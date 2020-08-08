@@ -48,6 +48,7 @@ public class DataTracker : MonoBehaviour
         Player.Inventory.AddItem("Fresh Fruit", 1);
         Player.Inventory.AddItem("Scrap Metal", 9);
         Player.Inventory.AddItem("Wrench", 1);
+        Player.Inventory.AddItem("Jewelry", 1);
         DontDestroyOnLoad(gameObject);
         EventManager.onDataTrackerLoad.Invoke();
     }

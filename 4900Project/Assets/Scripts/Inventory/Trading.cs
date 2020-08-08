@@ -110,16 +110,51 @@ public class Trading : MonoBehaviour
     /// <param name="quantity"></param>
     /// <param name="parent"></param>
     /// <param name="onClick"></param>
-    void buildListItem(string itemName, int quantity, Transform parent, UnityAction onClick)
+    void buildListItem(string itemName, int quantity, Transform parent, bool isPlayerItem, UnityAction onClick)
     {
+        var item = ItemManager.Current.itemsMaster[itemName];
         var listItem = GameObject.Instantiate(inventoryListItem, Vector3.zero, Quaternion.identity);
-        listItem.GetComponentInChildren<TextMeshProUGUI>().text = ItemManager.Current.itemsMaster[itemName].DisplayName + " (" + quantity + ") ";
-        listItem.transform.Find("Text").Find("Rarity").GetComponent<Image>().sprite = getValueString(ItemManager.Current.itemsMaster[itemName].Value);
-        listItem.transform.Find("Icon").GetComponent<Image>().sprite = ItemManager.Current.itemsMaster[itemName].Icon;
+        listItem.GetComponentInChildren<TextMeshProUGUI>().text = item.DisplayName + " (" + quantity + ") ";
+        listItem.transform.Find("Text").Find("Rarity").GetComponent<Image>().sprite = getValueString(item.Value);
+        listItem.transform.Find("Icon").GetComponent<Image>().sprite = item.Icon;
         listItem.transform.SetParent(parent, false);
         listItem.GetComponent<Button>().onClick.AddListener(onClick);
-        listItem.name = ItemManager.Current.itemsMaster[itemName].DisplayName + "_button";
+        listItem.name = item.DisplayName + "_button";
         listItem.GetComponent<HoverBehaviour>().tooltip = tooltip;
+
+        // Calculate the total value modifier and add an arrow if the final price is modified
+        GameObject PriceIcon = listItem.transform.Find("PriceIcon").gameObject;
+        float mod = 1.0f;
+        foreach (var tag in item.tags){
+            if ( isPlayerItem && shop.playerSellModifiers.ContainsKey(tag)){
+                mod *= shop.playerSellModifiers[tag];
+            }
+            else if ( !isPlayerItem && shop.shopSellModifiers.ContainsKey(tag)){
+                mod *= shop.shopSellModifiers[tag];
+            }
+        }
+        if (mod != 1.0f) {
+            PriceIcon.SetActive(true);
+            if (mod < 1.0f){
+                PriceIcon.transform.rotation = Quaternion.Euler(0,0,90);
+                if (isPlayerItem) {
+                    PriceIcon.GetComponent<Image>().color = Color.red;
+                }
+                else {
+                    PriceIcon.GetComponent<Image>().color = Color.green;
+                }
+            }
+            else {
+                PriceIcon.transform.rotation = Quaternion.Euler(0,0,-90);
+                if (isPlayerItem) {
+                    PriceIcon.GetComponent<Image>().color = Color.green;
+                }
+                else {
+                    PriceIcon.GetComponent<Image>().color = Color.red;
+                }
+            }
+        }
+
     }
 
     void buildShopList(){
@@ -129,7 +164,7 @@ public class Trading : MonoBehaviour
         }
 
         foreach(var item in copyOfShopInventory.Contents){
-            buildListItem(item.Key, item.Value, shopInventoryObject, () => { addToCart(item.Key); });
+            buildListItem(item.Key, item.Value, shopInventoryObject, false, () => { addToCart(item.Key); });
         }
 
     }
@@ -141,7 +176,7 @@ public class Trading : MonoBehaviour
         }
 
         foreach(var item in copyOfPlayerInventory.Contents){
-            buildListItem(item.Key, item.Value, playerInventoryObject, () => { addToOffer(item.Key); });
+            buildListItem(item.Key, item.Value, playerInventoryObject, true, () => { addToOffer(item.Key); });
         }
     }
 
@@ -153,7 +188,7 @@ public class Trading : MonoBehaviour
         }
 
         foreach (var item in offer.Contents) {
-            buildListItem(item.Key, item.Value, offerListObject, () => { removeFromOffer(item.Key); });
+            buildListItem(item.Key, item.Value, offerListObject, true, () => { removeFromOffer(item.Key); });
         }
     }
 
@@ -164,7 +199,7 @@ public class Trading : MonoBehaviour
         }
 
         foreach(var item in cart.Contents){
-            buildListItem(item.Key, item.Value, cartListObject, () => { removeFromCart(item.Key); });
+            buildListItem(item.Key, item.Value, cartListObject, false, () => { removeFromCart(item.Key); });
         }
     }
 
