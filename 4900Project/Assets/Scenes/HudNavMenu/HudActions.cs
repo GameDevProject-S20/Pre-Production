@@ -23,6 +23,8 @@ public class HudActions : MonoBehaviour
 
     bool JwasKeyDown = false;
     bool IwasKeyDown = false;
+    bool TwasKeyDown = false;
+    bool HwasKeyDown = false; 
     public void Update()
     {
 
@@ -62,6 +64,28 @@ public class HudActions : MonoBehaviour
             }
         }
         IwasKeyDown = IisDown;
+
+        /*
+         * toggle map T hot key
+         */
+        var TisDown = Input.GetKey(KeyCode.T);
+        if (TisDown != TwasKeyDown && TisDown)
+        {
+            TwasKeyDown = TisDown;
+            OnToggleView(); 
+        }
+        TwasKeyDown = TisDown;
+
+        /*
+         * toggle map T hot key
+         */
+        var HisDown = Input.GetKey(KeyCode.H);
+        if (HisDown != HwasKeyDown && HisDown)
+        {
+            HwasKeyDown = HisDown;
+            ToggleHelpPanel();
+        }
+        HwasKeyDown = HisDown;
 
 
     }
