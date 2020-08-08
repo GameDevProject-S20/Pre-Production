@@ -216,12 +216,14 @@
 				},
 				{
 					"id": 2,
-					"text": "It's a Bandit Token. The bandits are usually very dangerous to interact with, but in exchange for one of those, they'll give you a free pass.",
+					"text": "It's a Bandit Token. The bandits are usually very dangerous to interact with, but in exchange for one of those, they'll give you a free passage.",
 					"buttons": [
 						{
 							"effects": [
 								"@set_dialogue_encounter 5 75",
 								"@set_dialogue_encounter 9 7",
+								"@add_edge 58 70",
+								"@add_edge 47 62",
 								"@resolve"
 							]
 						}
