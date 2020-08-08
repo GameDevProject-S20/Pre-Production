@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DeveloperCheats : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private UnityEngine.Events.UnityEvent devModeEvent;
 
     void Start()
     {
@@ -12,10 +12,11 @@ public class DeveloperCheats : MonoBehaviour
         var DevModeButton = Resources.Load("Prefabs/General/DeveloperModeButton");
         GameObject devmode = (GameObject)GameObject.Instantiate(DevModeButton);
 
-        // Add Dev Mode Functionality
-        devmode.GetComponentInChildren<UnityEngine.UI.Button>().onClick.AddListener(devModeEnable);
-        // Add Button Functionality
-        devmode.GetComponentInChildren<UnityEngine.UI.Button>().onClick.AddListener(() => {GameObject.Find("Initializer").GetComponent<Initializer>().OnEnterGameClick();});
+        // Subscribe to Button onClick Event
+        devModeEvent = devmode.GetComponentInChildren<UnityEngine.UI.Button>().onClick;
+
+        devModeEvent.AddListener(devModeEnable);
+        devModeEvent.AddListener(() => {GameObject.Find("Initializer").GetComponent<Initializer>().OnEnterGameClick();});
     }
 
     public void devModeEnable()
