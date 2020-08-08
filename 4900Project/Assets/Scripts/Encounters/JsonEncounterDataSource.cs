@@ -425,6 +425,11 @@ public class JsonEncounterDataSource : IEncounterDataSource
             var iamount = Int16.Parse(args[1]);
             c = new HasItemPresentConditon(iname, iamount);
         }
+        else if (command == "has_tag")
+        {
+            var itag = args[0];
+            c = new HasItemTagPresentConditon(itag);
+        }
 
         return c;
     }
