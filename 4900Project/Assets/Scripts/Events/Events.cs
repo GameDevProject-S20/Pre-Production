@@ -63,6 +63,8 @@ namespace SIEvents
         {
             [System.Serializable]
             public class EncounterComplete : UnityEvent<Encounters.Encounter> { };
+            [System.Serializable]
+            public class EncounterTrigger : UnityEvent<int> { };
         }
 
         public class EffectEvents
@@ -120,6 +122,12 @@ namespace SIEvents
         {
             [System.Serializable]
             public class SettingsChangedEvent : UnityEvent<string> { };
+        }
+
+        public partial class MiscEvents
+        {
+            [System.Serializable]
+            public class TimeEvent : UnityEvent <int> { };
         }
     }
 }

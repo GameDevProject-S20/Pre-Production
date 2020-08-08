@@ -45,15 +45,27 @@ public class TravelPanel : InfoPanel
     public void SetTravelInfo(int fuelCost, int travelTime)
     {
         CostInfo.SetActive(true);
-        timeText.text = travelTime + " Day";
+        timeText.text = travelTime + " Hour";
         if (travelTime > 1) timeText.text += "s";
 
-        if (fuelCost > DataTracker.Current.Player.Inventory.Contains("Fuel"))
-        {
+        int fuelCount = DataTracker.Current.Player.Inventory.Contains("Fuel");
+
+        if (fuelCount < fuelCost) {
             fuelText.text = "<color=#F91509>" + fuelCost + " Fuel</color>";
+
+        } 
+        else if (fuelCount == fuelCost) {
+            fuelText.text = "<color=#F91509>" + fuelCost + " Fuel</color>";
+
         }
-        else
-        {
+        else if (fuelCount <= 5 * fuelCost) {
+            fuelText.text = "<color=#b0120a>" + fuelCost + " Fuel</color>";
+
+        }
+        else if (fuelCount <= 10 * fuelCost) {
+            fuelText.text = "<color=#7c100b>" + fuelCost + " Fuel</color>";
+        }
+        else {
             fuelText.text = fuelCost + " Fuel";
         }
     }
@@ -67,12 +79,13 @@ public class TravelPanel : InfoPanel
         DetailText.text = details;
     }
 
-
-
     public void onNodeClick()
     {
-        if (MapTravel.Travel(Node)){
-            EventManager.Instance.OnTravelStart.Invoke();
+        if (state == States.Open){
+            MapTravel.Travel(Node, () =>
+            {
+                EventManager.Instance.OnTravelStart.Invoke();
+            });
         }
 
     }

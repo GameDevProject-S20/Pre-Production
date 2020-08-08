@@ -15,6 +15,7 @@ public class TownData
     public string Size { get; set; } //hex code
     public string Tags { get; set; }
     public bool HasHospital { get; set; }
+    public int LeaderEncounterId { get; set; }
 }
 
 
@@ -43,7 +44,7 @@ public class Town
     /// Constructor for loading in from a TownData class
     /// </summary>
     /// <param name="data"></param>
-    public Town(TownData data) : this(data.Id, data.Name, data.Leader, data.Colour, data.Size, data.Tags, data.HasHospital)
+    public Town(TownData data) : this(data.Id, data.Name, data.Leader, data.Colour, data.Size, data.Tags, data.HasHospital, data.LeaderEncounterId)
     {
 
     }
@@ -56,7 +57,7 @@ public class Town
     /// <param name="Leader"></param>
     /// <param name="Colour"></param>
 
-    public Town(int Id, string Name, string Leader, string Colour = "#FFFF5E0", string Size = "Medium", string Tags = "", bool HasHospital = false)
+    public Town(int Id, string Name, string Leader, string Colour = "#FFFF5E0", string Size = "Medium", string Tags = "", bool HasHospital = false, int LeaderEncounterId = 11)
     {
         this.Id = Id;
         this.Name = Name;
@@ -64,6 +65,7 @@ public class Town
         this.Colour = Colour;
         this.HasHospital = HasHospital;
         this.Size = (Sizes)System.Enum.Parse(typeof(Sizes), Size);
+        this.leaderDialogueEncounterId = LeaderEncounterId;
 
         shops = new List<int>();
         this.Tags = new List<TownTag>();

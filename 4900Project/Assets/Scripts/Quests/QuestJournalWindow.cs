@@ -30,7 +30,8 @@ public class QuestJournalWindow : MonoBehaviour
 
     void OnEnable()
     {
-        
+        Clear();
+
         // Grab text fields from SceneGraph (THESE ARE Erroneous. too ambigious)
         NameField = GameObject.Find("Quest Name").GetComponent<UnityEngine.UI.Text>();
         NameField.text = "";
@@ -128,14 +129,27 @@ public class QuestJournalWindow : MonoBehaviour
     {
         EventManager.Instance.UnfreezeMap.Invoke();
         transform.parent.gameObject.SetActive(false);
-        GameObject.Destroy(completedToggleButton);
-        GameObject.Destroy(activeToggleButton);
-        foreach(GameObject Item in activeQuestItems)
+    }
+
+    /// <summary>
+    /// Destroys all existing game objects. Clears the UI.
+    /// </summary>
+    protected void Clear()
+    {
+        if (completedToggleButton != null)
+        {
+            GameObject.Destroy(completedToggleButton);
+        }
+        if (activeToggleButton != null)
+        {
+            GameObject.Destroy(activeToggleButton);
+        }
+        foreach (GameObject Item in activeQuestItems)
         {
             Destroy(Item);
         }
         activeQuestItems = new List<GameObject>();
-        foreach(GameObject Item in completedQuestItems)
+        foreach (GameObject Item in completedQuestItems)
         {
             Destroy(Item);
         }

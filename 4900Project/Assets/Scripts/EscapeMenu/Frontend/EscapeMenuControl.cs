@@ -74,6 +74,7 @@ namespace Assets.Scripts.EscapeMenu.Interfaces
                 UnityEngine.Debug.Log($"The setting {setting} changed");
             });
             DataTracker.Current.EventManager.EscapeMenuRequested.AddListener(Toggle);
+            DataTracker.Current.EventManager.EscapeMenuCloseRequested.AddListener(Hide);
         }
 
         /// <summary>

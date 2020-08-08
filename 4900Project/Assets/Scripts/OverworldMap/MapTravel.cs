@@ -1,10 +1,17 @@
-﻿using System.Collections;
+﻿using SIEvents;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MapTravel : MonoBehaviour
 {
     static int baseFuelRate = 5;
+
+    /// <summary>
+    /// Serves as a debounce. Ignore double-clicks if the player already requested travel.
+    /// </summary>
+    protected static bool isTravelling;
 
     static Dictionary<float, float> weightThresholds = new Dictionary<float, float>(){
         {0.0f, 0.6f},
@@ -17,7 +24,7 @@ public class MapTravel : MonoBehaviour
         {1.45f, 3.0f}
     };
 
-    public static int dayRate { get; set; } = 1;
+    public static int timeRate { get; set; } = 1;
 
 
     public static int GetFuelCost(MapNode destination){
@@ -35,14 +42,47 @@ public class MapTravel : MonoBehaviour
         return Mathf.RoundToInt(baseFuelRate * weightMod);
     }
 
-    public static bool Travel(MapNode destination){
-        int cost = GetFuelCost(destination);
-        if (DataTracker.Current.Player.Inventory.Contains("Fuel") > cost) {
-            DataTracker.Current.Player.Inventory.RemoveItem("Fuel", cost);
-            DataTracker.Current.dayCount += dayRate;
-            return true;
+    /// <summary>
+    /// Travels. Passes through an action to be called when travel is ready.
+    /// This allows it to delay until an encounter completes, if the player runs out of gas.
+    /// </summary>
+    /// <param name="destination"></param>
+    /// <param name="onTravelReady"></param>
+    public static void Travel(MapNode destination, Action onTravelReady){
+        // If we already have the player travelling (i.e. double clicks), exit out here
+        if (isTravelling)
+        {
+            return;
         }
-        return false;
+        // And track that they are already travelling
+        isTravelling = true;
+
+        int cost = GetFuelCost(destination);
+        int currentFuel = DataTracker.Current.Player.Inventory.Contains("Fuel");
+
+        // If the player has enough fuel to travel: Go ahead & travel
+        if (currentFuel >= cost) { 
+            DataTracker.Current.Player.Inventory.RemoveItem("Fuel", cost);
+            DataTracker.Current.dayCount += timeRate;
+            isTravelling = false; // Remove the debounce
+            onTravelReady();
+        }
+        else
+        {
+            // Otherwise, we need to run a LowFuel encounter
+            DataTracker.Current.EncounterManager.RunRandomEncounter();
+
+            // Delay the progression of travel until they complete the encounter
+            EventManager.Instance.OnDialogueEnd.AddListener(() =>
+            {
+                // Remove the debounce
+                isTravelling = false;
+
+                // Travel
+                DataTracker.Current.dayCount += timeRate;
+                onTravelReady();
+            });
+        }
     }
 
 }
