@@ -193,9 +193,9 @@ public class MapNode : MonoBehaviour
         obj.SetActive(true);
 
         // Show travel costs for adjacent panels
-        if (adjacent){
+        //if (adjacent){
             panel.SetTravelInfo(MapTravel.GetFuelCost(this), MapTravel.timeRate);
-        }
+        //}
 
         // For towns, the info panel shows the town's tags
         if (NodeData.Type == OverworldMap.LocationType.TOWN) {
@@ -277,14 +277,14 @@ public class MapNode : MonoBehaviour
     private void OnMouseDown()
     {
         // Only allow clicks on adjacent nodes
-        if (DataTracker.Current.WorldMap.HasEdge(NodeData.Id, DataTracker.Current.currentLocationId))
-        {
+        //if (DataTracker.Current.WorldMap.HasEdge(NodeData.Id, DataTracker.Current.currentLocationId))
+        //{
             if (panel)
             {
                 EventManager.Instance.OnNodeMouseDown.Invoke(this);
                 panel.onNodeClick();
             }
-        }
+        //}
 
     }
 

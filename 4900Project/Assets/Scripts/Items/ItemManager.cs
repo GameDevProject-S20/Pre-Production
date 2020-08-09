@@ -8,7 +8,7 @@ using UnityEngine.UI;
 using UnityUtility;
 
 public enum Rarity {None, Abundant, Common, Uncommon, Rare, Unique}
-public enum ItemTag {None,General,Fuel,Useable,Food,Luxury,Medical,Machinery,Steel,Building_Materials,Tools_And_Parts,Combat,Scientific,Mineral,Antique,Advanced,Bandit,All}
+public enum ItemTag {None,Unique,General,Fuel,Useable,Food,Luxury,Medical,Machinery,Steel,Building_Materials,Tools_And_Parts,Combat,Scientific,Mineral,Antique,Advanced,Bandit,All}
 
 /// <summary>
 /// Intermediate class for handling loading items from a CSV file.
@@ -48,15 +48,15 @@ public class Item
         {
             return Rarity.Common;
         }
-        else if (Value <= 40)
+        else if (Value <= 25)
         {
             return Rarity.Uncommon;
         }
-        else if (Value <= 90)
+        else if (Value <= 50)
         {
             return Rarity.Rare;
         }
-        else if (Value > 90)
+        else if (Value > 50)
         {
             return Rarity.Unique;
         }

@@ -1,9 +1,9 @@
 Id,Name,Leader,Colour,Size,Tags,HasHospital,LeaderEncounterId
-0,Smithsville,Sheriff Smith,#3492eb,Medium,,TRUE,70
+0,Smithsville,Sheriff Smith,#3492eb,Medium,,FALSE,70
 1,York,Mayor Li,#08b806,Medium,,FALSE,71
 2,Frakton,Sheriff Cailyn,#de8212,Large,,FALSE,72
-3,Alabaster,Dr David,#fc1e1e,Large,Hospital,FALSE,73
-4,New Ottawa,the New Democratic Council,#94d914,Large,Factory,TRUE,74
+3,Alabaster,Dr David,#fc1e1e,Large,Hospital,TRUE,73
+4,New Ottawa,the New Democratic Council,#94d914,Large,Factory,FALSE,74
 5,Rocket City,Overseer Zachary,#0c28c7,Large,,FALSE,75
 6,Steelton,the Northern Trade Coalition,#38c29f,Medium,Steel,FALSE,76
 7,Lombard,Mayor Aaron,#6a0cc7,Medium,Historical,FALSE,77

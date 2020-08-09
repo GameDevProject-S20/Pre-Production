@@ -128,7 +128,7 @@ public class TownManager
         tag.Colour = "#c2bdb2";
         tag.Summary = "- Specialized in one type of good\n- Doesn't value luxuries.";
 
-        tag.playerSellModifiers.Add(ItemTag.Luxury, 0.25f);
+        tag.playerSellModifiers.Add(ItemTag.Luxury, 0.5f);
     
         Tags.Add(tag.Name, tag);
         
@@ -183,7 +183,7 @@ public class TownManager
         tag.SpecializationDesc = "steel";
         tag.Summary = "- Smelts ore into steel";
 
-        tag.playerSellModifiers.Add(ItemTag.Mineral, 1.5f);
+        tag.playerSellModifiers.Add(ItemTag.Mineral, 3.0f);
 
         Tags.Add(tag.Name, tag);
 
@@ -214,12 +214,12 @@ public class TownManager
         tag.Summary = "- Sells weapons\n- Values basic goods";
 
         tag.shopSellModifiers.Add(ItemTag.Food, 1.2f);
-        tag.shopSellModifiers.Add(ItemTag.Building_Materials, 1.2f);
+        tag.shopSellModifiers.Add(ItemTag.Building_Materials, 1.5f);
         tag.shopSellModifiers.Add(ItemTag.Tools_And_Parts, 1.2f);
         tag.shopSellModifiers.Add(ItemTag.Bandit, 10.0f);
 
         tag.playerSellModifiers.Add(ItemTag.Food, 1.2f);
-        tag.playerSellModifiers.Add(ItemTag.Building_Materials, 1.2f);
+        tag.playerSellModifiers.Add(ItemTag.Building_Materials, 1.5f);
         tag.playerSellModifiers.Add(ItemTag.Tools_And_Parts, 1.2f);
 
         tag.RarityModifier = 1.5f;
@@ -246,7 +246,7 @@ public class TownManager
         tag = new TownTag();
         tag.Name = "Historical";
         tag.Colour = "#d9a223";
-        tag.Specialization = ItemTag.Machinery;
+        tag.Specialization = ItemTag.Antique;
         tag.SpecializationDesc = "artifacts";
         tag.Summary = "- Values artifacts";
 
