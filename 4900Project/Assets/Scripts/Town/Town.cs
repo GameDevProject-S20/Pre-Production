@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityUtility;
+using SIEvents;
 
 /// <summary>
 /// Used for reading town data from a CSV
@@ -39,6 +40,9 @@ public class Town
     public string LeaderBlurb = "No Blurb Set";
     public int leaderDialogueEncounterId = 11;
     public List<int> shops;
+
+    int ShopResetTimer = 0;
+    int ShopResetTimerMax = 24;
 
     /// <summary>
     /// Constructor for loading in from a TownData class
@@ -147,6 +151,7 @@ public class Town
 
         // Notify that the town has changed
         FireUpdatedEvent();
+        EventManager.Instance.OnTransaction.AddListener(BeginRestockTimer);
     }
 
     /// <summary>
@@ -158,24 +163,29 @@ public class Town
         HasHospital = true;
     }
 
+    // Shop restocking
+    void BeginRestockTimer(Events.TransactionEvents.Details details){
+        if (shops.Contains(details.SystemId)) {
+            ShopResetTimer = 0;
+            EventManager.Instance.OnTimeAdvance.AddListener(AdvanceRestockTimer);
+            EventManager.Instance.OnTransaction.RemoveListener(BeginRestockTimer);
+        }
+    }
 
+    void AdvanceRestockTimer(int i){
+        ShopResetTimer += i;
+        if (ShopResetTimer >= ShopResetTimerMax){
+            RestockShops();
+        }
+    }
 
-    /* public void AddShop(int i)
-     {
-         shops.Add(i);
-     }
-
-     public void RemoveShop(int i)
-     {
-         for(int j = 0; j < shops.Count; j++)
-         {
-             if(shops[j] == i)
-             {
-                 shops.Remove(j);
-                 break;
-             }
-         }
-     }*/
+    void RestockShops(){
+        foreach(var shop in shops){
+            ShopManager.Instance.GetShopById(shop).Restock(this);
+        }
+        EventManager.Instance.OnTransaction.AddListener(BeginRestockTimer);
+        EventManager.Instance.OnTimeAdvance.RemoveListener(AdvanceRestockTimer);
+    }
 
     public void AddTag(TownTag tag)
     {

@@ -246,6 +246,12 @@ public class OverworldMapUI : MonoBehaviour
         {
             node.setPanel(GetTravelPanel());
         }
+        Debug.Log("Panels");
+        foreach(GameObject panel in travelPanelPool){
+            if (panel.activeInHierarchy){
+                Debug.Log(panel.transform.localPosition);
+            }
+        }
     }
 
     /// <summary>

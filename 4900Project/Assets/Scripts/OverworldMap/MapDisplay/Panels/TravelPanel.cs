@@ -6,14 +6,27 @@ using TMPro;
 using UnityEngine.UI;
 using SIEvents;
 
-public class TravelPanel : InfoPanel
+public class TravelPanel : MonoBehaviour
 {
 
 
-   // [SerializeField]
-   // GameObject acceptButton;
-   // [SerializeField]
-   // GameObject cancelButton;
+    protected enum States { Closed, Open, Selected }
+    protected States state;
+
+    [SerializeField]
+    protected RectTransform rt;
+
+    [SerializeField]
+    protected RectTransform pointerRt;
+    protected Tween t;
+
+    [SerializeField]
+    int a;
+    [SerializeField]
+    int b;
+
+    [SerializeField]
+    protected float openTime = 0.2f;
 
     [SerializeField]
     GameObject CostInfo;
@@ -28,13 +41,17 @@ public class TravelPanel : InfoPanel
 
     MapNode Node;
 
-    protected override void Awake()
+    private void Awake()
     {
         Close();
         EventManager.Instance.OnTravelStart.AddListener(() =>
         {
             Close();
         });
+    }
+
+    private void Update() {
+        rt.ForceUpdateRectTransforms();
     }
 
     public void SetNode(MapNode node)
@@ -110,12 +127,35 @@ public class TravelPanel : InfoPanel
         state = States.Selected;
     }
 
-    protected override void OnClosed(){
-        if (Node)
-        {
+    private void Open()
+    {
+        state = States.Open;
+        Sequence s = DOTween.Sequence();
+        s.Append(pointerRt.DOScale(1, openTime));
+        s.Join(pointerRt.DOLocalMoveY(-13, openTime));
+        s.Join(rt.DOLocalMoveY(a, openTime));
+        s.Insert(openTime / 2, rt.DOScaleX(1, openTime));
+        s.Play();
+    }
+
+    private void Close()
+    {
+        if (Node){
             Node.Close();
             Node = null;
         }
+        state = States.Closed;
+        Sequence s = DOTween.Sequence();
+        s.Append(rt.DOScaleX(0, openTime));
+        s.Insert(openTime / 2, pointerRt.DOScale(0, openTime));
+        s.Join(pointerRt.DOLocalMoveY(-40, openTime));
+        s.Join(rt.DOLocalMoveY(b, openTime));
+        s.AppendCallback(OnClosed);
+        s.Play();
+
+    }
+
+    private void OnClosed(){
         CostInfo.SetActive(false);
         NameText.gameObject.SetActive(false);
         DetailText.gameObject.SetActive(false);

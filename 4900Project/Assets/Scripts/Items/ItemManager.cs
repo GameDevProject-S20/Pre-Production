@@ -8,7 +8,7 @@ using UnityEngine.UI;
 using UnityUtility;
 
 public enum Rarity {None, Abundant, Common, Uncommon, Rare, Unique}
-public enum ItemTag {None,General,Fuel,Useable,Food,Luxury,Medical,Building_Materials,Tools_And_Parts,Combat,Scientific,Mineral,Antique,Advanced,Bandit,All}
+public enum ItemTag {None,General,Fuel,Useable,Food,Luxury,Medical,Machinery,Steel,Building_Materials,Tools_And_Parts,Combat,Scientific,Mineral,Antique,Advanced,Bandit,All}
 
 /// <summary>
 /// Intermediate class for handling loading items from a CSV file.
@@ -48,15 +48,15 @@ public class Item
         {
             return Rarity.Common;
         }
-        else if (Value <= 30)
+        else if (Value <= 40)
         {
             return Rarity.Uncommon;
         }
-        else if (Value <= 60)
+        else if (Value <= 90)
         {
             return Rarity.Rare;
         }
-        else if (Value > 60)
+        else if (Value > 90)
         {
             return Rarity.Unique;
         }
@@ -122,6 +122,10 @@ public class ItemManager : MonoBehaviour
             _current = this;
         }
 
+       
+    }
+
+    public void Init(){
         //create item list
         GameData.LoadCsv(Files.Items, out IEnumerable<ItemCsvData> itemsData);
         foreach (var itemData in itemsData)
@@ -141,6 +145,9 @@ public class ItemManager : MonoBehaviour
         }
     }
 
+    // Manually build a dictionary of all items with the AT LEAST ONE of the given tags
+    // Useful for returning items from many types at once
+    // If you just want all items of one type, use the function below
     public Dictionary<string, Item> GetItemsByType(List<ItemTag> types)
     {
         Dictionary<string, Item> values = new Dictionary<string, Item>();
@@ -157,6 +164,7 @@ public class ItemManager : MonoBehaviour
         return values;
     }
 
+    // Directly returns a list of all items with tag Type
     public List<Item> GetAllItemsOfType(ItemTag type){
         List<Item> l;
         if (itemsByCategory.TryGetValue(type, out l)){
