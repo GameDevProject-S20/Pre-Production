@@ -38,7 +38,9 @@ public class InventoryWindow : MonoBehaviour
     {
         if (instance != null) Destroy(instance);
         instance = this;
-        tooltip = GameObject.Find("Tooltip").GetComponent<Tooltip>();
+
+        tooltip = transform.parent.Find("InventoryWindow/Tooltip").gameObject.GetComponent<Tooltip>();
+
         itemObjects = new List<GameObject>();
         Populate();
 

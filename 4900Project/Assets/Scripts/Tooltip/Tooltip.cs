@@ -29,7 +29,7 @@ public class Tooltip : MonoBehaviour
         }
 
         gameObject.transform.GetChild(0).GetComponent<Text>().text = title;
-        gameObject.transform.GetChild(1).GetComponent<Text>().text = desc;
+        gameObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = desc;
     }
 
     public void GenerateTooltip (Item item)

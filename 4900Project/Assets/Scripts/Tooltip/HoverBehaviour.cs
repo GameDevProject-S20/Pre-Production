@@ -11,7 +11,7 @@ public class HoverBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnter
 
     void Awake()
     {
-        //tooltip = InventoryWindow.Instance.tooltip;
+        tooltip = InventoryWindow.Instance.tooltip;
     }
 
     public void OnPointerClick(PointerEventData eventData)
