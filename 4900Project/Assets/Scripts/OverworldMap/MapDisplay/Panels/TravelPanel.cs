@@ -140,11 +140,7 @@ public class TravelPanel : MonoBehaviour
 
     private void Close()
     {
-        if (Node){
-            Node.Close();
-            Node = null;
-        }
-        state = States.Closed;
+        
         Sequence s = DOTween.Sequence();
         s.Append(rt.DOScaleX(0, openTime));
         s.Insert(openTime / 2, pointerRt.DOScale(0, openTime));
@@ -156,9 +152,18 @@ public class TravelPanel : MonoBehaviour
     }
 
     private void OnClosed(){
+        if (Node){
+            Node.Close();
+            Node = null;
+        }
+        state = States.Closed;
         CostInfo.SetActive(false);
         NameText.gameObject.SetActive(false);
         DetailText.gameObject.SetActive(false);
         gameObject.SetActive(false);
+    }
+
+    public bool IsOpen(){
+        return state == States.Open;
     }
 }

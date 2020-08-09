@@ -185,7 +185,7 @@ public class MapNode : MonoBehaviour
     /// <param name="obj">The info panel game object</param>
     public void setPanel(GameObject obj)
     {
-        if (panel) return;
+        if (panel || obj == null) return;
         bool adjacent = DataTracker.Current.WorldMap.HasEdge(NodeData.Id, DataTracker.Current.currentLocationId);
 
         panel = obj.GetComponent<TravelPanel>();

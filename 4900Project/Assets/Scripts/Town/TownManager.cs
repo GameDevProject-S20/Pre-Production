@@ -108,16 +108,18 @@ public class TownManager
         tag.Colour = "#078d39";
         tag.Specialization = ItemTag.Food;
         tag.SpecializationDesc = "food";
-        tag.Summary = "- Produces food\n- Values Materials & Parts";
+        tag.Summary = "- Produces food\n- Values Materials, Parts, Machinery";
 
         tag.shopSellModifiers.Add(ItemTag.Food, 0.6f);
         tag.shopSellModifiers.Add(ItemTag.Building_Materials, 1.5f);
         tag.shopSellModifiers.Add(ItemTag.Tools_And_Parts, 1.5f);
-    
+        tag.shopSellModifiers.Add(ItemTag.Machinery, 1.5f);
+
         tag.playerSellModifiers.Add(ItemTag.Food, 0.6f);
         tag.playerSellModifiers.Add(ItemTag.Building_Materials, 1.5f);
         tag.playerSellModifiers.Add(ItemTag.Tools_And_Parts, 1.5f);
-    
+        tag.playerSellModifiers.Add(ItemTag.Machinery, 1.5f);
+
         Tags.Add(tag.Name, tag);
         
 
