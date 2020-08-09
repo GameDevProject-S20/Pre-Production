@@ -85,6 +85,7 @@ namespace SIEvents
         //=== Escape Menu ===========================================//
 
         public UnityEvent EscapeMenuRequested = new UnityEvent();
+        public UnityEvent EscapeMenuCloseRequested = new UnityEvent();
         public UnityEvent OnCreditsButtonClicked = new UnityEvent();
 
         //=== Campfire ==============================================//
