@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Scripts.Dialogue.Frontend
@@ -17,6 +18,16 @@ namespace Assets.Scripts.Dialogue.Frontend
         void Start()
         {
             // ARL - fix up
+            var dialogue = DialogueManager.Instance.CreateDialogue(new DPage()
+            {
+                Text = "This contains some text that will be coming through.\nAnd more.\nAnd more.\nAnd more.\nAnd more.\nAnd more.\nAnd more.\nAnd more.\nAnd more.\nAnd more.\nAnd more.\nAnd more.\nAnd more.\nAnd more.\nAnd more.\nAnd more.",
+                Buttons = new List<IDButton>()
+                {
+                    DButton.Exit
+                }
+            });
+            dialogue.Show();
+
             /*DialogueManager.Instance.CreateDialogue(new List<IDPage>()
             {
                 new DPage()

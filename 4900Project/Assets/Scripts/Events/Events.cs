@@ -55,12 +55,16 @@ namespace SIEvents
             public class EnterEvent : UnityEvent<Town> { };
             [System.Serializable]
             public class ClickDialogueEvent : UnityEvent<int> { };
+            [System.Serializable]
+            public class UpdatedEvent : UnityEvent<Town> { };
         }
 
         public class EncounterEvents
         {
             [System.Serializable]
             public class EncounterComplete : UnityEvent<Encounters.Encounter> { };
+            [System.Serializable]
+            public class EncounterTrigger : UnityEvent<int> { };
         }
 
         public class EffectEvents
@@ -110,9 +114,20 @@ namespace SIEvents
         public partial class PlayerEvents
         {
             [System.Serializable]
-            public class HealthEvent : UnityEvent<int> { };
+            public class HealthEvent : UnityEvent<int, int, int, string> { };
 
+        }
+
+        public class SettingsEvents
+        {
+            [System.Serializable]
+            public class SettingsChangedEvent : UnityEvent<string> { };
+        }
+
+        public partial class MiscEvents
+        {
+            [System.Serializable]
+            public class TimeEvent : UnityEvent <int> { };
         }
     }
 }
-

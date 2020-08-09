@@ -22,11 +22,11 @@ public class TravelPanel : InfoPanel
     [SerializeField]
     TextMeshProUGUI fuelText;
     [SerializeField]
-    GameObject EnterButton;
+    TextMeshProUGUI NameText; 
     [SerializeField]
     TextMeshProUGUI DetailText;  
 
-    MapNode NodeObj;
+    MapNode Node;
 
     protected override void Awake()
     {
@@ -39,25 +39,41 @@ public class TravelPanel : InfoPanel
 
     public void SetNode(MapNode node)
     {
-        NodeObj = node;
+        Node = node;
     }
 
     public void SetTravelInfo(int fuelCost, int travelTime)
     {
         CostInfo.SetActive(true);
-        timeText.text = travelTime + " Day";
+        timeText.text = travelTime + " Hour";
         if (travelTime > 1) timeText.text += "s";
 
-        if (fuelCost > DataTracker.Current.Player.Inventory.Contains("Fuel"))
-        {
+        int fuelCount = DataTracker.Current.Player.Inventory.Contains("Fuel");
+
+        if (fuelCount < fuelCost) {
             fuelText.text = "<color=#F91509>" + fuelCost + " Fuel</color>";
+
+        } 
+        else if (fuelCount == fuelCost) {
+            fuelText.text = "<color=#F91509>" + fuelCost + " Fuel</color>";
+
         }
-        else
-        {
+        else if (fuelCount <= 5 * fuelCost) {
+            fuelText.text = "<color=#b0120a>" + fuelCost + " Fuel</color>";
+
+        }
+        else if (fuelCount <= 10 * fuelCost) {
+            fuelText.text = "<color=#7c100b>" + fuelCost + " Fuel</color>";
+        }
+        else {
             fuelText.text = fuelCost + " Fuel";
         }
     }
 
+    public void SetName(string name){
+        NameText.gameObject.SetActive(true);
+        NameText.text = name;
+    }
     public void SetDetails(string details){
         DetailText.gameObject.SetActive(true);
         DetailText.text = details;
@@ -254,7 +270,13 @@ public class TravelPanel : InfoPanel
 
     public void onNodeClick()
     {
-        EventManager.Instance.OnTravelStart.Invoke();
+        if (state == States.Open){
+            MapTravel.Travel(Node, () =>
+            {
+                EventManager.Instance.OnTravelStart.Invoke();
+            });
+        }
+
     }
 
     public void onNodeHover()
@@ -278,13 +300,13 @@ public class TravelPanel : InfoPanel
     }
 
     protected override void OnClosed(){
-        if (NodeObj)
+        if (Node)
         {
-            NodeObj.Close();
-            NodeObj = null;
+            Node.Close();
+            Node = null;
         }
         CostInfo.SetActive(false);
-        EnterButton.SetActive(false);
+        NameText.gameObject.SetActive(false);
         DetailText.gameObject.SetActive(false);
         gameObject.SetActive(false);
     }

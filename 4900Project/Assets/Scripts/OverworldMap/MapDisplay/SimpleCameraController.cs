@@ -39,10 +39,16 @@ public class SimpleCameraController : MonoBehaviour
 
     bool active = true;
 
+    float zoom;
+
+    [SerializeField]
+    float zoomTimeMultiplier = 2.0f;
+
     private void Awake()
     {
         EventManager.Instance.FreezeMap.AddListener(() => { active = false; });
         EventManager.Instance.UnfreezeMap.AddListener(() => { active = true; });
+        zoom = transform.position.y;
     }
 
     private void Update()
@@ -51,9 +57,11 @@ public class SimpleCameraController : MonoBehaviour
         if (active)
         {
             GeneralPurposeControl(); //WSAD! 
-            transform.position = MouseScrollControl(transform.position);
+            MouseScrollControl();
             MouseDragControl();
         }
+
+        transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, zoom, transform.position.z), Time.deltaTime * zoomTimeMultiplier);
 
     }
 
@@ -69,7 +77,7 @@ public class SimpleCameraController : MonoBehaviour
 
         if (input != Vector3.zero)
         {
-            Vector3 velocity = input * panSpeed / 2.0f;
+            Vector3 velocity = input * panSpeed * GetDragMultiplier() / 2.0f;
             nextPosition = position + velocity;
 
             // Calculate the expect translation to make sure it does not exceed max/min 
@@ -138,15 +146,17 @@ public class SimpleCameraController : MonoBehaviour
         return nextPosition;
     }
 
-    public Vector3 MouseScrollControl(Vector3 position)
+    public void MouseScrollControl()
     {
-        Vector3 nextPosition = position;
+        //Vector3 nextPosition = position;
 
-        nextPosition.y -= Input.mouseScrollDelta.y * zoomSpeed;
-        nextPosition.y = Mathf.Clamp(nextPosition.y, scrollMin, scrollMax);
+        zoom -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
+        zoom = Mathf.Clamp(zoom, scrollMin, scrollMax);
 
-        return nextPosition;
+        //return nextPosition;
     }
+
+    
 
     public void MouseDragControl()
     {
@@ -159,9 +169,10 @@ public class SimpleCameraController : MonoBehaviour
         if (!Input.GetMouseButton(0)) return;
 
 
-        Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition - dragOrigin);
-        Vector3 move = new Vector3(pos.x * dragSpeed, 0, pos.y * dragSpeed);
+        float multiplier = GetDragMultiplier();
 
+        Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition - dragOrigin);
+        Vector3 move = new Vector3(pos.x * dragSpeed * multiplier, 0, pos.y * dragSpeed * multiplier);
 
         // Calculate the expect translation to make sure it does not exceed max/min 
         Vector3 expectedTranslation = transform.position + move;
@@ -178,5 +189,14 @@ public class SimpleCameraController : MonoBehaviour
             transform.Translate(new Vector3(0, 0, move.z), Space.World);
         }
 
+    }
+
+    /// <summary>
+    /// Retrieves the Drag multiplier from the SettingsManager.
+    /// </summary>
+    /// <returns></returns>
+    float GetDragMultiplier()
+    {
+        return DataTracker.Current.SettingsManager.ScrollingSpeedMultiplier;
     }
 }

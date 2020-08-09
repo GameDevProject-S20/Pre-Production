@@ -46,7 +46,12 @@ public class TownManager
             towns.Add(data.Id, town);
             Debug.Log("DATA:" + town.Description);
             resultString.AppendLine("\tCreated town #" + data.Id + ": " + data.Name);
-            town.InitializeShop();
+
+            // Note: Smithsville's marketplace is only available after completing the Generator quest.
+            if (town.Id != 0)
+            {
+                town.InitializeShop();
+            }
         }
         UnityEngine.Debug.Log(resultString);
 
@@ -99,9 +104,10 @@ public class TownManager
     void CreateTownTags(){
         
         TownTag tag = new TownTag();
-        tag.Name = "Farm";
+        tag.Name = "Farming";
         tag.Colour = "#078d39";
         tag.Specialization = ItemTag.Food;
+        tag.Summary = "- Produces food\n- Values Materials & Parts";
 
         tag.shopSellModifiers.Add(ItemTag.Food, 0.6f);
         tag.shopSellModifiers.Add(ItemTag.Advanced, 0.3f);
@@ -124,8 +130,9 @@ public class TownManager
         
         tag = new TownTag();
         tag.Name = "Small";
-        tag.Colour = "#918b7e";
-   
+        tag.Colour = "#c2bdb2";
+        tag.Summary = "- Specialized in one type of good\n- Doesn't value luxuries.";
+
         tag.playerSellModifiers.Add(ItemTag.Advanced, 0.3f);
         tag.playerSellModifiers.Add(ItemTag.Luxury, 0.25f);
     
@@ -137,8 +144,9 @@ public class TownManager
 //=============================================================
         tag = new TownTag();
         tag.Name = "Medium";
-        tag.Colour = "#ccc4b3";
-        
+        tag.Colour = "#dbd7ce";
+        tag.Summary = "- Sells a variety of goods";
+
         tag.BaseAbundancyModifier = new List<float>(){0.7f, 0.8f, 1.0f, 0.8f, 1.0f};
         tag.BaseRarityModifier = new List<float>(){1.0f, 1.3f, 1.2f, 0.75f, 0.0f};
 
@@ -150,6 +158,7 @@ public class TownManager
         tag.Name = "Large";
         tag.Colour = "#FFF5E0";
         tag.Specialization = ItemTag.Advanced;
+        tag.Summary = "- Sells a high variety of goods\n- Highly values food";
 
         tag.shopSellModifiers.Add(ItemTag.Food, 1.5f);
         tag.shopSellModifiers.Add(ItemTag.Luxury, 1.3f);
@@ -169,6 +178,7 @@ public class TownManager
         tag.Name = "Mining";
         tag.Colour = "#b57a74";
         tag.Specialization = ItemTag.Mineral;
+        tag.Summary = "- Produces ore\n- Values Materials & Parts";
 
         tag.shopSellModifiers.Add(ItemTag.Food, 1.5f);
         tag.shopSellModifiers.Add(ItemTag.Building_Materials, 1.2f);
@@ -188,9 +198,10 @@ public class TownManager
 //=============================================================
         
         tag = new TownTag();
-        tag.Name = "Foundry";
+        tag.Name = "Steel";
         tag.Colour = "#bfb1a3";
         tag.Specialization = ItemTag.Building_Materials;
+        tag.Summary = "- Smelts ore into steel";
 
         tag.playerSellModifiers.Add(ItemTag.Mineral, 1.5f);
 
@@ -202,6 +213,7 @@ public class TownManager
         tag.Name = "Hospital";
         tag.Colour = "#d9304c";
         tag.Specialization = ItemTag.Medical;
+        tag.Summary = "- Sells medicine\n- Values advanced goods";
 
         tag.shopSellModifiers.Add(ItemTag.Food, 1.2f);
         tag.shopSellModifiers.Add(ItemTag.Advanced, 1.5f);
@@ -220,8 +232,9 @@ public class TownManager
         
         tag = new TownTag();
         tag.Name = "Bandit";
-        tag.Colour = "#800808";
+        tag.Colour = "#c40202";
         tag.Specialization = ItemTag.Combat;
+        tag.Summary = "- Sells weapons\n- Values basic goods";
 
         tag.shopSellModifiers.Add(ItemTag.Food, 1.2f);
         tag.shopSellModifiers.Add(ItemTag.Building_Materials, 1.2f);
@@ -251,6 +264,7 @@ public class TownTag
 {
     public string Name;
     public string Colour;
+    public string Summary;
     public ItemTag Specialization = ItemTag.None; // Specialized in these item type
     public Dictionary<ItemTag, float> playerSellModifiers = new Dictionary<ItemTag, float>();
     public Dictionary<ItemTag, float> shopSellModifiers = new Dictionary<ItemTag, float>();

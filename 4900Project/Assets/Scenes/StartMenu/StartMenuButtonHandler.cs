@@ -51,6 +51,14 @@ public class StartMenuButtonHandler : MonoBehaviour
 
     public void OnQuitPress(){
         // Application.Quit() will close the application
-        ExitMenuControl.BringUpExitMenu();
+        ExitControl.BringUpExitMenu();
+
+    }
+
+    public void OnCreditsPress()
+    {
+        SceneManager.LoadSceneAsync("Credits", LoadSceneMode.Additive);
+
+
     }
 }

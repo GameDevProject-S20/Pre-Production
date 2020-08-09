@@ -8,7 +8,7 @@ using UnityEngine.UI;
 using UnityUtility;
 
 public enum Rarity {None, Abundant, Common, Uncommon, Rare, Unique}
-public enum ItemTag {None,General,Fuel,Useable,Food,Luxury,Medical,Building_Materials,Tools_And_Parts,Combat,Scientific,Mineral,Antique,Advanced,Bandit}
+public enum ItemTag {None,General,Fuel,Useable,Food,Luxury,Medical,Building_Materials,Tools_And_Parts,Combat,Scientific,Mineral,Antique,Advanced,Bandit,All}
 
 /// <summary>
 /// Intermediate class for handling loading items from a CSV file.
@@ -26,7 +26,7 @@ public struct ItemCsvData
     public string IconName { get; set; }
 }
 
-public class Item 
+public class Item
 {
     public string DisplayName;
     public string Tooltip;

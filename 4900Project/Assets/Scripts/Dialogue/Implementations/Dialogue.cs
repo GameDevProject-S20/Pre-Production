@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine.Events;
 using UnityEngine;
+using SIEvents;
 
 namespace Dialogue
 {
@@ -114,6 +115,7 @@ namespace Dialogue
             IsVisible = false;
             History.Clear();
             DialogueClosed.Invoke();
+            EventManager.Instance.UnfreezeMap.Invoke();
         }
 
         /// <summary>
@@ -152,6 +154,7 @@ namespace Dialogue
         {
             CurrentPage = FirstPage; // ARL -- here??
             IsVisible = true;
+            EventManager.Instance.FreezeMap.Invoke();
             DialogueOpened.Invoke();
         }
 

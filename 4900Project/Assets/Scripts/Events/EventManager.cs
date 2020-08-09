@@ -37,10 +37,12 @@ namespace SIEvents
 
         public Events.TownEvents.EnterEvent OnTownEnter = new Events.TownEvents.EnterEvent();
         public Events.TownEvents.ClickDialogueEvent OnOpenDialogueClick = new Events.TownEvents.ClickDialogueEvent();
+        public Events.TownEvents.UpdatedEvent OnTownUpdated = new Events.TownEvents.UpdatedEvent();
 
         //=== Encounters ============================================//
 
         public Events.EncounterEvents.EncounterComplete OnEncounterComplete = new Events.EncounterEvents.EncounterComplete();
+        public Events.EncounterEvents.EncounterTrigger OnEncounterTrigger = new Events.EncounterEvents.EncounterTrigger();
 
         //=== Effects ===============================================//
 
@@ -58,6 +60,7 @@ namespace SIEvents
         //=== Dialogue ===============================================//
 
         public Events.DialogueEvents.SelectionEvent OnDialogueSelected = new Events.DialogueEvents.SelectionEvent();
+        public UnityEvent OnDialogueEnd = new UnityEvent();
 
         //=== Map ====================================================//
 
@@ -70,14 +73,26 @@ namespace SIEvents
         public Events.MapEvents.LocationIdEvent OnEnterPOIButtonClick = new Events.MapEvents.LocationIdEvent();
         public UnityEvent FreezeMap = new UnityEvent();
         public UnityEvent UnfreezeMap = new UnityEvent();
-
-
+        public Events.MapEvents.LocationIdEvent OnProbabilityChange = new Events.MapEvents.LocationIdEvent();
+        public UnityEvent SetViewDefault = new UnityEvent();
+        public UnityEvent SetViewProbability = new UnityEvent();
+        public UnityEvent OnColourChange = new UnityEvent();
         //=== Player =================================================//
 
         public Events.PlayerEvents.HealthEvent OnHealthChange = new Events.PlayerEvents.HealthEvent();
 
+        //=== Escape Menu ===========================================//
+        public UnityEvent EscapeMenuRequested = new UnityEvent();
+        public UnityEvent EscapeMenuCloseRequested = new UnityEvent();
+        public UnityEvent OnCreditsButtonClicked = new UnityEvent();
+
+        //=== Settings ==============================================//
+        public Events.SettingsEvents.SettingsChangedEvent OnSettingsChanged = new Events.SettingsEvents.SettingsChangedEvent();
 
         //=== Misc ===================================================//
         public UnityEvent onDataTrackerLoad = new UnityEvent();
+        public Events.MiscEvents.TimeEvent OnTimeAdvance = new Events.MiscEvents.TimeEvent();
+        public UnityEvent OnDayAdvance = new UnityEvent();
+        public UnityEvent OnEvening = new UnityEvent();
     }
 }

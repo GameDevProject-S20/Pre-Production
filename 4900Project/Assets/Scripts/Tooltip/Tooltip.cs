@@ -18,6 +18,20 @@ public class Tooltip : MonoBehaviour
         }
     }
 
+    public void GenerateTooltip(string title, string desc)
+    {
+        gameObject.GetComponent<Image>().enabled = true;
+        gameObject.SetActive(true);
+        texts = GetComponentsInChildren<Text>(true);
+        foreach (Text tex in texts)
+        {
+            tex.gameObject.SetActive(true);
+        }
+
+        gameObject.transform.GetChild(0).GetComponent<Text>().text = title;
+        gameObject.transform.GetChild(1).GetComponent<Text>().text = desc;
+    }
+
     public void GenerateTooltip (Item item)
     {
         gameObject.GetComponent<Image>().enabled = true;
@@ -43,7 +57,7 @@ public class Tooltip : MonoBehaviour
         }
 
         gameObject.transform.GetChild(0).GetComponent<Text>().text = item.DisplayName;
-        string descriptor = item.Description + "\n \n";
+        string descriptor = item.Description + "\n \n Weight per Unit:" + item.Weight.ToString() + "\n \n";
         string tagList = "";
         string iconList = "";
         foreach (ItemTag tag in item.tags)

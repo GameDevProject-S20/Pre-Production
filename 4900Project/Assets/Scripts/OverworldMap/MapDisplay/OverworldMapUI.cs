@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Encounters;
 using SIEvents;
+using Assets.Scripts.EscapeMenu.Interfaces;
 
 public class OverworldMapUI : MonoBehaviour
 {
@@ -38,31 +39,26 @@ public class OverworldMapUI : MonoBehaviour
     [SerializeField]
     Transform PathsContainer;
 
-    [Header("Button")]
-    [SerializeField]
-    Button enterNodeButton;
-
-    // Canvases
+    // Canvases & Windows
     [Header("Canvases")]
     [SerializeField]
     GameObject TownMenuGameObject;
-    [SerializeField]
-    GameObject EnterNodeButtonCanvas;
     [SerializeField]
     public GameObject QuestJournalCanvas;
     [SerializeField]
     Canvas TravelPanelCanvas;
     [SerializeField]
     public GameObject InventoryCanvas;
+    [SerializeField]
+    SidePanel SidePanel;
 
     //sounds
     [SerializeField]
     AudioClip Vroom;
 
-
-
     //Movement variables
     bool isActive = true;
+    int FreezeCount = 0; 
     bool isTravelling = false;
     float translateSmoothTime = 1f;
     Vector3 translatSmoothVelocity;
@@ -81,6 +77,15 @@ public class OverworldMapUI : MonoBehaviour
     Material pathDefaultMaterial;
     [SerializeField]
     Material pathHighlightMaterial;
+
+    [Header("Colours")]
+    [SerializeField]
+    public Vector4 color1;
+    [SerializeField]
+    public Vector4 color2;
+
+    enum ColourModes {Default, Probability}
+    ColourModes colourMode = ColourModes.Default;
 
     // Start is called before the first frame update
     void Start()
@@ -105,8 +110,21 @@ public class OverworldMapUI : MonoBehaviour
         EventManager.Instance.OnTravelStart.AddListener(onTravelStart);
         EventManager.Instance.OnEnterTownButtonClick.AddListener(OnButtonClick);
     
-        EventManager.Instance.FreezeMap.AddListener(() => {isActive = false;});
-        EventManager.Instance.UnfreezeMap.AddListener(() => {isActive = true;});
+        EventManager.Instance.FreezeMap.AddListener(() => {
+            isActive = false;
+            FreezeCount++;
+        });
+
+        EventManager.Instance.UnfreezeMap.AddListener(() => {
+            //if (!TownMenuGameObject.activeInHierarchy) isActive = true;
+            FreezeCount--;
+            if (FreezeCount <= 0)
+            {
+                FreezeCount = 0;
+                isActive = true;
+            } 
+        });
+        EventManager.Instance.OnDialogueEnd.AddListener(ShowSidePanel);
 
     }
 
@@ -114,6 +132,15 @@ public class OverworldMapUI : MonoBehaviour
     {
         Clear();
         DrawGraph();
+    }
+
+    void ShowSidePanel(){
+        if (!TownMenuGameObject.activeInHierarchy){
+        OverworldMap.LocationNode node;
+        DataTracker.Current.WorldMap.GetNode(DataTracker.Current.currentLocationId, out node);
+        if (node.Type == OverworldMap.LocationType.POI || node.Type == OverworldMap.LocationType.TOWN){
+            SidePanel.Open();
+        }}
     }
 
     private void Clear()
@@ -141,8 +168,7 @@ public class OverworldMapUI : MonoBehaviour
             nodeObj.transform.SetParent(NodesContainer, true);
             nodeObj.name = node.Name;
             MapNode mn = nodeObj.GetComponent<MapNode>();
-            mn.NodeId = node.Id;
-            mn.Type = node.Type;
+            mn.Init(node);
 
             // Move the player to the starting node
             if (node.Id == currentId)
@@ -170,12 +196,28 @@ public class OverworldMapUI : MonoBehaviour
             lineEnds[1] = b;
             lr.SetPositions(lineEnds);
             line.transform.SetParent(PathsContainer, true);
+            line.GetComponent<Edge>().init(
+                NodesContainer.Find(edge.Item1.Name).GetComponent<MapNode>(),
+                NodesContainer.Find(edge.Item2.Name).GetComponent<MapNode>()
+            );
             if (edge.Item1.Id == DataTracker.Current.currentLocationId || edge.Item2.Id == DataTracker.Current.currentLocationId)
             {
                 lr.material = pathHighlightMaterial;
             }
         }
 
+    }
+
+    public void ToggleColourMode(){
+        if (colourMode == ColourModes.Default){
+            EventManager.Instance.SetViewProbability.Invoke();
+            colourMode = ColourModes.Probability;
+        }
+        else if (colourMode == ColourModes.Probability){
+            EventManager.Instance.SetViewDefault.Invoke();
+            colourMode = ColourModes.Default;
+        }
+        EventManager.Instance.OnColourChange.Invoke();
     }
 
     /// <summary>
@@ -200,9 +242,9 @@ public class OverworldMapUI : MonoBehaviour
     /// <param name="node"></param>
     void onNodeMouseEnter(MapNode node)
     {
-        if (!isTravelling && isActive)
+        if (!isTravelling && isActive && node.NodeData.Id != DataTracker.Current.currentLocationId)
         {
-            node.setPanel(GetTravelPanel(), false);
+            node.setPanel(GetTravelPanel());
         }
     }
 
@@ -223,12 +265,12 @@ public class OverworldMapUI : MonoBehaviour
     /// </summary>
     void onTravelStart()
     {
-        if (MapTravel.Travel(selectedNode)) {
+        float volume = 2.0F * DataTracker.Current.SettingsManager.VolumeMultiplier;
+
             AudioSource audioSource = GameObject.Find("Audio Source").GetComponent<AudioSource>();
-            audioSource.PlayOneShot(Vroom, 2.0F);
+            audioSource.PlayOneShot(Vroom, volume);
             targetPos = selectedNode.gameObject.transform.position;
             isTravelling = true;
-        }
     }
 
     private void Update()
@@ -237,7 +279,8 @@ public class OverworldMapUI : MonoBehaviour
         // Move the player
         if (isTravelling)
         {
-            playerMarker.transform.position = Vector3.SmoothDamp(playerMarker.transform.position, targetPos, ref translatSmoothVelocity, translateSmoothTime);
+            // Divides by the VehicleSpeed multiplier - eg. If we want to double the speed, then we want to divide it by 2x (so it takes 0.5 seconds)
+            playerMarker.transform.position = Vector3.SmoothDamp(playerMarker.transform.position, targetPos, ref translatSmoothVelocity, translateSmoothTime / DataTracker.Current.SettingsManager.VehicleSpeed);
             if (Vector3.Distance(playerMarker.transform.position, targetPos) > 0.2f)
             {
                 Vector3 dir = ((targetPos - playerMarker.transform.position).normalized);
@@ -248,7 +291,6 @@ public class OverworldMapUI : MonoBehaviour
             else
             {
                 OnNodeArrival();
-                isTravelling = false;
             }
         }
     }
@@ -261,41 +303,55 @@ public class OverworldMapUI : MonoBehaviour
     /// </summary>
     void OnNodeArrival()
     {
-        OverworldMap.LocationNode node;
-        if (DataTracker.Current.WorldMap.GetNode(selectedNode.NodeId, out node))
+        isTravelling = false;
+        foreach (Transform path in PathsContainer.transform)
         {
-
-            foreach (Transform path in PathsContainer.transform)
+            if (path.gameObject.name.Contains("_" + DataTracker.Current.currentLocationId.ToString() + "_"))
             {
-                if (path.gameObject.name.Contains("_" + DataTracker.Current.currentLocationId.ToString() + "_"))
-                {
-                    path.GetComponent<LineRenderer>().material = pathDefaultMaterial;
-                }
-                if (path.gameObject.name.Contains("_" + node.Id.ToString() + "_"))
-                {
-                    path.GetComponent<LineRenderer>().material = pathHighlightMaterial;
-                }
+                path.GetComponent<LineRenderer>().material = pathDefaultMaterial;
             }
-
-            if (node.Type == OverworldMap.LocationType.TOWN || node.Type == OverworldMap.LocationType.POI)
+            if (path.gameObject.name.Contains("_" + selectedNode.NodeData.Id.ToString() + "_"))
             {
-                selectedNode.setPanel(GetTravelPanel(), true);
+                path.GetComponent<LineRenderer>().material = pathHighlightMaterial;
             }
-            else
-            {
-                enterNodeButton.gameObject.SetActive(false);
-            }
-
-            DataTracker.Current.currentLocationId = node.Id;
-            DataTracker.Current.EventManager.OnNodeArrive.Invoke(node);
         }
+
+        if (selectedNode.NodeData.Type == OverworldMap.LocationType.TOWN)
+        {
+            SidePanel.OpenTown(selectedNode.NodeData.LocationId);
+        }
+        else if (selectedNode.NodeData.Type == OverworldMap.LocationType.POI){
+            SidePanel.OpenPOI(selectedNode.NodeData.LocationId);
+        }
+       
+        // Trigger encounters on empty nodes
+        if (selectedNode.NodeData.Type == OverworldMap.LocationType.NONE){
+            if (selectedNode.NodeData.LocationId != -1 || selectedNode.RollEncounter()){
+                EventManager.Instance.OnEncounterTrigger.Invoke(selectedNode.NodeData.LocationId);
+            }
+        }
+
+        DataTracker.Current.currentLocationId = selectedNode.NodeData.Id;
+        EventManager.Instance.OnNodeArrive.Invoke(selectedNode.NodeData);
+        
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, 1000)){
+            MapNode mn = hit.transform.gameObject.GetComponent<MapNode>();
+            if (mn) {
+                Debug.Log(hit.transform.gameObject.name);
+                mn.OnMouseEnter();
+            }
+        }
+        DataTracker.Current.IncrementTime(MapTravel.timeRate);
     }
 
     public void OnButtonClick(int i)
     {
         TownMenuGameObject.GetComponent<TownWindow>().UpdatePrefab();
         TownMenuGameObject.SetActive(true);
-        EnterNodeButtonCanvas.SetActive(false);
         EventManager.Instance.FreezeMap.Invoke();
     }
 
@@ -303,7 +359,7 @@ public class OverworldMapUI : MonoBehaviour
     public void TownMapClosed()
     {
         TownMenuGameObject.SetActive(false);
-        EnterNodeButtonCanvas.SetActive(true);
+        SidePanel.Open();
         EventManager.Instance.UnfreezeMap.Invoke();
     }
 }

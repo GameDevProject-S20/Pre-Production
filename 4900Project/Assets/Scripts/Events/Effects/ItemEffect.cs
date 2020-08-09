@@ -7,7 +7,7 @@ using Extentions;
 public abstract class ItemEffect : IEffect
 {
     protected readonly string itemName;
-    protected readonly int amount;
+    protected int amount;
 
     private ItemEffect() { }
 
@@ -48,9 +48,10 @@ public class TakeItem : ItemEffect
     public override bool Apply()
     {
         int numRemoved = Player.Instance.Inventory.RemoveItem(itemName, amount);
-        bool success = (numRemoved == amount);
+        bool success = (numRemoved <= amount);
         if (success)
         {
+            amount = numRemoved;
             EventManager.Instance.OnTakenFromPlayer.Invoke(itemName, amount);
         }
         else
@@ -71,7 +72,7 @@ public abstract class TaggedItemEffect : IEffect
 {
     protected static System.Random rand = new System.Random();
     protected readonly ItemTag itemTag;
-    protected readonly int amount;
+    protected int amount;
 
     private TaggedItemEffect() { }
 
@@ -120,9 +121,10 @@ public class TakeItemWithTag : TaggedItemEffect
 
 
         int numRemoved = Player.Instance.Inventory.RemoveItem(itemName, amount);
-        bool success = (numRemoved == amount);
+        bool success = (numRemoved <= amount);
         if (success)
         {
+            amount = numRemoved;
             EventManager.Instance.OnTakenFromPlayer.Invoke(itemName, amount);
         }
         else
@@ -138,4 +140,3 @@ public class TakeItemWithTag : TaggedItemEffect
         return string.Format("Take {0}x item with tag '{1}'", amount, itemTag);
     }
 }
-

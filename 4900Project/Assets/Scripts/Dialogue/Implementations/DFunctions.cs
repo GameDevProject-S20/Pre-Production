@@ -19,6 +19,7 @@ namespace Dialogue
         public static readonly Action CloseDialogue = () =>
         {
             DialogueManager.Instance.GetActiveDialogue().Hide();
+            EventManager.Instance.OnDialogueEnd.Invoke();
         };
 
         /// <summary>

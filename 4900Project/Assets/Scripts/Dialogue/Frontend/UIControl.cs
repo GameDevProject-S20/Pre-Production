@@ -1,11 +1,14 @@
-﻿using Dialogue;
+﻿using Assets.Scripts.EscapeMenu.Interfaces;
+using Dialogue;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -102,6 +105,11 @@ namespace Assets.Scripts.Dialogue.Frontend
         {
             button.onClick.AddListener(() =>
             {
+                if (button.GetComponentInChildren<Text>().text == "")
+                {
+                    return;
+                }
+
                 DialogueManager.Instance.GetActiveDialogue().PressButton(index);
             });
         }
@@ -129,10 +137,9 @@ namespace Assets.Scripts.Dialogue.Frontend
                 Debug.Log(string.Format("Active Page\n\n{0}", activePage));
 
                 // Update all the data
-                UpdateButtons(activePage.Buttons);
                 UpdateAvatarDisplay(activePage.Avatar);
                 UpdatePageTextDisplay(history, activePage);
-
+                 
             }
         }
 
@@ -177,8 +184,55 @@ namespace Assets.Scripts.Dialogue.Frontend
         /// <param name="currentPage"></param>
         protected void UpdatePageTextDisplay(IEnumerable<IDHistory> history, IDPage currentPage)
         {
-            textDisplay.GetComponent<TextMeshProUGUI>().text = BuildPageString(history, currentPage);
+
+            var textMeshPro = textDisplay.GetComponent<TextMeshProUGUI>();
+            var nextPageText = BuildPageString(history, currentPage);
+            if (history.Count() == 0)
+            {
+                textMeshPro.maxVisibleCharacters = 0;
+                textMeshPro.text = "";
+            }
+
+            textMeshPro.text = nextPageText;
             UpdatePageScrolling();
+            StartCoroutine(UpdatePage(currentPage.Buttons));
+        }
+
+        protected IEnumerator UpdatePage(IEnumerable<IDButton> buttons)
+        {
+            UpdateButtons(new List<IDButton>());
+            yield return StartCoroutine(PlayTextTypingAnimation());
+            UpdateButtons(buttons);
+            UpdatePageScrolling();
+        }
+
+        /// <summary>
+        /// Plays an animation of each character being typed out one-by-one.
+        /// Animates from the currently displayed text to the next page.
+        /// </summary>
+        /// <returns></returns>
+        protected IEnumerator PlayTextTypingAnimation()
+        {
+            var textMeshPro = textDisplay.GetComponent<TextMeshProUGUI>();
+            int charCount = System.Text.RegularExpressions.Regex.Replace(textMeshPro.text, "<.*?>", String.Empty).Length;
+            for (var i = textMeshPro.maxVisibleCharacters; i < charCount; i++)
+            {
+                textMeshPro.maxVisibleCharacters = i;
+
+                // Typing Speed goes from 10 to 100, where 10 is the slowest and 100 is the fastest.
+                // The fastest speed we can go is 0.01, which is 1/100.
+                // The slowest speed we want to go is 0.10, which is 1/10. So use 1/TypingSpeed
+                float speed = 100f;
+                try
+                {
+                    speed = DataTracker.Current.SettingsManager.DialogueSpeed;
+                }
+                catch { } 
+
+                yield return new WaitForSeconds(1 / speed);
+
+            }
+            textMeshPro.maxVisibleCharacters = charCount;
         }
 
         /// <summary>
@@ -204,11 +258,11 @@ namespace Assets.Scripts.Dialogue.Frontend
             }
             else
             {
-                // Based on that, we need to decide on alignment & positioning of the text.
-                // If we don't yet have a full Dialogue, we want everything displaying to the bottom (in which case we need to position it to the bottom);
-                //  otherwise, we want it to be displaying from the top, so that everything will be displayed. In this case, it positions to the top.
-                var alignment = (textHeight < scrollHeight) ? TextAlignmentOptions.Bottom : TextAlignmentOptions.Top;
-                var textPosition = (textHeight < scrollHeight) ? -scrollHeight : 0;
+                // The height of the Dialogue is determined by whether or not we have started scrolling yet.
+                // If textHeight >= scrollingHeight, then text is scrolling & we need to determine the size by -textHeight.
+                // Otherwise, if scrollHeight > textHeight, scrolling hasn't started yet & the size is determined by the height of the scroll box.
+                var alignment = TextAlignmentOptions.Bottom;
+                var textPosition = (textHeight < scrollHeight) ? -scrollHeight : -textHeight;
 
                 // Now that we have the variables stored, we can just go through and update:
                 // The contentRect displays the content of the frame. It needs to be sized to newHeight.

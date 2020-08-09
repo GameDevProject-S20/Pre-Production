@@ -392,7 +392,7 @@ GameObject:
   - component: {fileID: 5835942729663053716}
   m_Layer: 0
   m_Name: InventoryWindow
-  m_TagString: Untagged
+  m_TagString: InventoryWindow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -491,7 +491,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 50
+  m_SortingOrder: 101
   m_TargetDisplay: 0
 --- !u!114 &5835942729898509268
 MonoBehaviour:
