@@ -253,7 +253,7 @@ public class TravelPanel : InfoPanel
         }
     }
 
-    public void EnableButton(){
+    /*public void EnableButton(){
         EnterButton.SetActive(true);
     }
 
@@ -267,7 +267,7 @@ public class TravelPanel : InfoPanel
             EventManager.Instance.OnEnterPOIButtonClick.Invoke(node.LocationId);
         }
     }
-
+    */
     public void onNodeClick()
     {
         if (state == States.Open){
