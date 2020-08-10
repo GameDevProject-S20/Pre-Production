@@ -13,16 +13,16 @@ public class DeveloperCheats : MonoBehaviour
 
     void Start()
     {
-        // Load Dev Mode Button
+        loadDevModeButton();
+    }
+
+    private void loadDevModeButton(){
         var DevModeButton = Resources.Load("Prefabs/General/DeveloperModeButton");
         GameObject devmode = (GameObject)GameObject.Instantiate(DevModeButton);
 
-        // Subscribe to Button onClick Event
         devModeEvent = devmode.GetComponentInChildren<UnityEngine.UI.Button>().onClick;
-
         devModeEvent.AddListener(devModeEnable);
         devModeEvent.AddListener(() => {GameObject.Find("Initializer").GetComponent<Initializer>().OnEnterGameClick();});
-
     }
 
     public void devModeEnable()
@@ -39,7 +39,6 @@ public class DeveloperCheats : MonoBehaviour
         OverworldMap.LocationGraph map = DataTracker.Current.WorldMap;
         if (map.HasEdge(tempEdge[0], tempEdge[1]))
             map.RemoveEdge(tempEdge[0], tempEdge[1]);
-
 
         int current = DataTracker.Current.GetCurrentNode().Id;
         int target = node.NodeData.Id;
