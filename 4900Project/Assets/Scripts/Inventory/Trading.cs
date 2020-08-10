@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 using SIEvents;
 using System;
 using UnityEngine.Events;
+using DG.Tweening;
 
 public class Trading : MonoBehaviour
 {
@@ -66,6 +67,10 @@ public class Trading : MonoBehaviour
     [SerializeField]
     public Tooltip tooltip;
 
+    bool helpPanelOpened = false;
+    [SerializeField]
+    GameObject helpPanel;
+
     [SerializeField]
     TextMeshProUGUI valueText;
 
@@ -115,7 +120,9 @@ public class Trading : MonoBehaviour
         var item = ItemManager.Current.itemsMaster[itemName];
         var listItem = GameObject.Instantiate(inventoryListItem, Vector3.zero, Quaternion.identity);
         listItem.GetComponentInChildren<TextMeshProUGUI>().text = item.DisplayName + " (" + quantity + ") ";
-        listItem.transform.Find("Text").Find("Rarity").GetComponent<Image>().sprite = getValueString(item.Value);
+        Image i = listItem.transform.Find("Text").Find("Rarity").GetComponent<Image>();
+        i.sprite = getValueString(item.Value);
+        i.preserveAspect = true;
         listItem.transform.Find("Icon").GetComponent<Image>().sprite = item.Icon;
         listItem.transform.SetParent(parent, false);
         listItem.GetComponent<Button>().onClick.AddListener(onClick);
@@ -138,19 +145,19 @@ public class Trading : MonoBehaviour
             if (mod < 1.0f){
                 PriceIcon.transform.rotation = Quaternion.Euler(0,0,90);
                 if (isPlayerItem) {
-                    PriceIcon.GetComponent<Image>().color = Color.red;
+                    PriceIcon.GetComponent<Image>().color = new Vector4(213,94,0,255)/255;
                 }
                 else {
-                    PriceIcon.GetComponent<Image>().color = Color.green;
+                    PriceIcon.GetComponent<Image>().color = new Vector4(43,159,120,255)/255;
                 }
             }
             else {
                 PriceIcon.transform.rotation = Quaternion.Euler(0,0,-90);
                 if (isPlayerItem) {
-                    PriceIcon.GetComponent<Image>().color = Color.green;
+                    PriceIcon.GetComponent<Image>().color = new Vector4(43,159,120,255)/255;
                 }
                 else {
-                    PriceIcon.GetComponent<Image>().color = Color.red;
+                    PriceIcon.GetComponent<Image>().color = new Vector4(213,94,0,255)/255;
                 }
             }
         }
@@ -410,6 +417,18 @@ public class Trading : MonoBehaviour
     public void leave(){
         //SceneManager.LoadScene("Town");
         SceneManager.UnloadSceneAsync("ShopScene"); 
+    }
+
+    public void ToggleHelpPanel(){
+        if (helpPanelOpened) {
+            helpPanel.GetComponent<RectTransform>().DOScale(0, 0.5f).OnComplete(()=>{helpPanel.SetActive(false);});
+            helpPanelOpened = false;
+        }
+        else {
+            helpPanel.SetActive(true);
+            helpPanel.GetComponent<RectTransform>().DOScale(1.2f, 0.5f);
+            helpPanelOpened = true;
+        }
     }
 
 }
