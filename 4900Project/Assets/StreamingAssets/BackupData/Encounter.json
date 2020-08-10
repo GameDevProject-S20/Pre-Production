@@ -806,7 +806,7 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "[You are led to a louge. Though you and Alex are the only ones here, you feel as if you are being watched.]\nWhat do you want?",
+					"text": "[You are led to a lounge. Though you and Alex are the only ones here, you feel as if you are being watched.]\nWhat do you want?",
 					"buttons": [
 						{
 							"text": "What should I trade here?",
@@ -867,7 +867,7 @@
 				},
 				{
 					"id": 2,
-					"text": "We're a simple farming town. We could use materials, parts, and machinery.",
+					"text": "We're a simple farming town. We sell food to the big cities, and in turn they sell us materials and parts.",
 					"buttons": [
 						{
 							"text": "[Return]",
@@ -1477,31 +1477,220 @@
 		},
 		{
 			"valid": true,
-			"encounter_id": 200,
+			"encounter_id": 210,
 			"tags": [],
-			"encounter_name": "Astronomical Observation",
+			"encounter_name": "Job Notice",
 			"conditions": [],
 			"town_name": null,
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": ".",
+					"text": "[As you browse the town's bulletin board, you notice somebody is looking to hire a merchant caravan.]",
 					"buttons": [
 						{
-							"text": "[Tricorder] Take measurements.",
-							"conditions": [
-								"!has Tricorder 1"
-							],
-							"effects": [
-								"@give Mineral_Data 1"
-							],
+							"text": "Contact the poster.",
 							"next_page_id":2
+						},
+						{
+							"text": "[Leave]"
 						}
 					]
 				},
 				{
 					"id": 2,
-					"text": "You grab a bit of soil and insert it into your tricorder's sample tray. The screen lights up with data on mineral composition and moisture levels."
+					"text": "Hello! Thanks for coming to help. I'm from Steelton, not too far east of here. We make all the steel around these parts.",
+					"buttons": [
+						{
+							"text": "What's the problem?",
+							"next_page_id":3
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "I came here to buy a replacement for a machine which broke down. I brought a lot of steel to sell for it, but I lost my cargo on the way here.",
+					"buttons": [
+						{
+							"text": "You lost it?",
+							"next_page_id":4
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "Landslide. Cliff came down on top of me. Not too uncommon nowadays. I was lucky to get out alive.",
+					"buttons": [
+						{
+							"text": "How can I help?",
+							"next_page_id":5
+						}
+					]
+				},
+				{
+					"id": 5,
+					"text": "If you buy the replacement <color=#d9ae21>machinery</color> and bring it me in Steelton, I'll reward you. Will you help me?",
+					"buttons": [
+						{
+							"text": "Yes.",
+							"effects":[
+								"@start_quest Machine_Merchant",
+								"@give Scrap_Metal 5"
+							],
+							"next_page_id":7
+						},
+						{
+							"text": "No.",
+							"next_page_id":6
+						}
+					]
+				},
+				{
+					"id": 6,
+					"text": "Very well. I will have to find someone else."
+				},
+				{
+					"id": 7,
+					"text": "Thank you. Take this scrap - it was all I could salvage from the wreckage. It should help you buy the <color=#d9ae21>machinery</color>. Do you have any questions?",
+					"buttons": [
+						{
+							"text": "How can I afford the machinery?",
+							"next_page_id":8
+						},
+						{
+							"text": "How can I get to Steelton?",
+							"next_page_id":9
+						},
+						{
+							"text": "What is the machinery for?",
+							"next_page_id":10
+						},
+						{
+							"text": "No.",
+							"next_page_id":11
+						}
+					]
+				},
+				{
+					"id": 12,
+					"text": "What do you need?",
+					"buttons": [
+						{
+							"text": "How can I afford the machinery?",
+							"next_page_id":8
+						},
+						{
+							"text": "How can I get to Steelton?",
+							"next_page_id":9
+						},
+						{
+							"text": "What is the machinery for?",
+							"next_page_id":10
+						},
+						{
+							"text": "Nevermind.",
+							"next_page_id":11
+						}
+					]
+				},
+				{
+					"id": 8,
+					"text": "I wish I could give you more to trade. You'll have to find out what the store values and gather a lot of it.",
+					"buttons": [
+						{
+							"text": "I have more questions.",
+							"next_page_id":12
+						},
+						{
+							"text": "Thanks.",
+							"next_page_id":11
+						}
+					]
+				},
+				{
+					"id": 9,
+					"text": "Steelton is a medium town to the east of here. You'll find it just off the main road to Alabaster.",
+					"buttons": [
+						{
+							"text": "I have more questions.",
+							"next_page_id":12
+						},
+						{
+							"text": "Thanks.",
+							"next_page_id":11
+						}
+					]
+				},
+				{
+					"id": 10,
+					"text": "It's a large engine for carrying buckets of molten steel. Which, as you can imagine, is quite a weight to lift.",
+					"buttons": [
+						{
+							"text": "I have more questions.",
+							"next_page_id":12
+						},
+						{
+							"text": "Thanks.",
+							"next_page_id":11
+						}
+					]
+				},
+				{
+					"id": 11,
+					"text": "Alright. I'll be waiting for you in Steelton.",
+					"buttons": [
+						{
+							"text": "I'll be on my way.",
+							"effects":[
+								"@resident remove steelQuest1 Frakton",
+								"@resident add steelQuest2 Steelton"
+							]
+						}
+					]
+				}
+				
+			]
+		},
+		{
+			"encounter_id": 211,
+			"NOTE": "Appears in Steelton after 2",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Do you have that new <color=#d9ae21>machinery</color>?",
+					"buttons": [
+						{
+							"text": "[Give machinery] Yes, I have it here.",
+							"conditions": [
+								"!has Heavy_Machinery 1"
+							],
+							"effects": [
+								"@take Heavy_Machinery 1"
+							],
+							"next_page_id": 2
+						},
+						{
+							"text": "Not yet.",
+							"next_page_id": 3
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "You're a life-saver. We'll pay you in steel, of course.",
+					"buttons": [
+						{
+							"effects": [
+								"@give steel 6",
+								"@resident remove steelQuest2 Steelton",
+								"@resolve"
+							]
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Alright. It's not vital... yet. Please bring the new <color=#d9ae21>machinery</color> soon."
 				}
 			]
 		}

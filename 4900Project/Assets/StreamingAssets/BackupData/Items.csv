@@ -1,8 +1,8 @@
 DisplayName,Tooltip,Description,Value,Weight,IconName,Tags
 Fuel,A neccesity for travel between colonies,"Fuel is the lifeblood of traders, never leave port without first checking your tank. ",1,1,Fuel.png,"Fuel,General"
 Rations,Unappetizing but cheap,The bare minimum to keep someone running for a day,3,1,Food.png,"Food,General,All"
-Fresh Fruit,"Tasty, but spoils without proper storage","A rarity in a good portion of the world, which makes is quite valuable to the right people.",11,3,FreshFruit.png,"Food, Luxury,All"
-Fresh Meat,A valuable delicacy.,Raising livestock is an expensive process. Meat is highly valued.,26,8,FreshMeat.png,"Food, Luxury,All"
+Fresh Fruit,"Tasty, but spoils without proper storage","A rarity in a good portion of the world, which makes is quite valuable to the right people.",11,3,FreshFruit.png,"Food,All"
+Fresh Meat,A valuable delicacy.,Raising livestock is an expensive process. Meat is highly valued.,26,8,FreshMeat.png,"Food,All"
 Wrench,An essential repair tool,Helps with maintaining machines. Wear and tear means you need a replacement once in a while.,10,1,Wrench.png,"Tools_And_Parts,General,All"
 Repair Patch,One use smart repair patch,"Uncommon tech allows these patches to conduct repairs autonomously, but burn out performing the job",15,4,RepairPatch.png,"Tools_And_Parts,General,All"
 Generator,Creates electricity,Consumes fuel to generate power. Vital for survival.,40,25,Generator.png,"Machinery,All"
@@ -27,3 +27,4 @@ Atmospheric Data,Data on atmospheric conditions.,"This scientific data is indeci
 Astronomical Data,Data on astronomical observations.,"This scientific data is indecipherable to you, but an expert may value it.",1,1,ScienceData4.png,"Scientific,All"
 Tricorder,Scientific tool for field recordings.,The Standard Model Field Tri-Recorder can measure a wide variety of environmental conditions.,30,2,tricorder.png,"Tools_And_Parts,Scientific,All"
 Family Heirloom,An old gift.,This locket has been in your family since before the Shattering. Along your long travels it remains a piece of home.,40,1,Heirloom.png,"Luxury,Unique"
+Heavy Machinery,Used in the steelmaking process.,"This large, expensive machine is used to lift large quantities of molten steel.",150,35,heavyMachine.png,Machinery

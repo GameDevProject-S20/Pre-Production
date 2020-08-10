@@ -35,6 +35,7 @@ public class TownManager
     {
 
         CreateTownTags();
+        CreateResidents();
 
         // Load in town data from CSV
         GameData.LoadCsv<TownData>(FileConstants.Files.Town, out IEnumerable<TownData> result);
@@ -111,13 +112,13 @@ public class TownManager
         tag.Summary = "- Produces food\n- Values Materials, Parts, Machinery";
 
         tag.shopSellModifiers.Add(ItemTag.Food, 0.6f);
-        tag.shopSellModifiers.Add(ItemTag.Building_Materials, 1.5f);
-        tag.shopSellModifiers.Add(ItemTag.Tools_And_Parts, 1.5f);
+        tag.shopSellModifiers.Add(ItemTag.Building_Materials, 1.25f);
+        tag.shopSellModifiers.Add(ItemTag.Tools_And_Parts, 1.25f);
         tag.shopSellModifiers.Add(ItemTag.Machinery, 1.5f);
 
         tag.playerSellModifiers.Add(ItemTag.Food, 0.6f);
-        tag.playerSellModifiers.Add(ItemTag.Building_Materials, 1.5f);
-        tag.playerSellModifiers.Add(ItemTag.Tools_And_Parts, 1.5f);
+        tag.playerSellModifiers.Add(ItemTag.Building_Materials, 1.25f);
+        tag.playerSellModifiers.Add(ItemTag.Tools_And_Parts, 1.25f);
         tag.playerSellModifiers.Add(ItemTag.Machinery, 1.5f);
 
         Tags.Add(tag.Name, tag);
@@ -149,10 +150,10 @@ public class TownManager
         tag.Colour = "#FFF5E0";
         tag.Summary = "- Sells a high variety of goods\n- Highly values food and luxuries";
 
-        tag.shopSellModifiers.Add(ItemTag.Food, 1.5f);
+        tag.shopSellModifiers.Add(ItemTag.Food, 1.3f);
         tag.shopSellModifiers.Add(ItemTag.Luxury, 1.3f);
 
-        tag.playerSellModifiers.Add(ItemTag.Food, 1.5f);
+        tag.playerSellModifiers.Add(ItemTag.Food, 1.3f);
         tag.playerSellModifiers.Add(ItemTag.Luxury, 1.3f);
 
         Tags.Add(tag.Name, tag);
@@ -266,6 +267,20 @@ public class TownManager
         return null;
     }
 
+    void CreateResidents(){
+        Residents.Add("hospital", new Resident("hospital", "Hospital", "Replenish your health.", "Icons/ItemIcons/MedicineTier2",12));
+        Residents.Add("steelQuest1", new Resident("steelQuest1","Steelmaker's Request", "A message on the job board catches your eye...", "Icons/CyberPunk Avatars/014",210));
+        Residents.Add("steelQuest2", new Resident("steelQuest2","Steelmaker", "The Steelmaker awaits your delivery.", "Icons/CyberPunk Avatars/014",211));
+
+    }
+
+    public Resident GetResident(string name){
+        Resident r;
+        if (Residents.TryGetValue(name, out r)){
+            return r;
+        }
+        return null;
+    }
 }
 
 public class TownTag
@@ -282,6 +297,8 @@ public class TownTag
 
     public TownTag(){}
 }
+
+
 
 public class Resident
 {

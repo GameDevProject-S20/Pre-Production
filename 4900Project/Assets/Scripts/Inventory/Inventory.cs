@@ -114,7 +114,7 @@ public class Inventory
                 {
                     if (itemTag == shopMod.Key)
                     {
-                        valueModifier += shopMod.Value;
+                        valueModifier *= shopMod.Value;
                     }
                 }
             }

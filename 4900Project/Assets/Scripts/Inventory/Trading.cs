@@ -115,7 +115,7 @@ public class Trading : MonoBehaviour
         var item = ItemManager.Current.itemsMaster[itemName];
         var listItem = GameObject.Instantiate(inventoryListItem, Vector3.zero, Quaternion.identity);
         listItem.GetComponentInChildren<TextMeshProUGUI>().text = item.DisplayName + " (" + quantity + ") ";
-        listItem.transform.Find("Text").Find("Rarity").GetComponent<Image>().sprite = getValueString(item.Value);
+        listItem.transform.Find("Text").Find("Rarity").GetComponent<Image>().sprite = getValueString(item.tier);
         listItem.transform.Find("Icon").GetComponent<Image>().sprite = item.Icon;
         listItem.transform.SetParent(parent, false);
         listItem.GetComponent<Button>().onClick.AddListener(onClick);
@@ -203,22 +203,28 @@ public class Trading : MonoBehaviour
         }
     }
 
-    Sprite getValueString(float value){
-        if (value < 5){
-                return AbundantImage;
-            }
-            else if (value < 15){
-                return CommonImage;
-            }
-            else if (value < 30){
-                return UncommonImage;
-            }
-            else if (value < 50){
-                return RareImage;
-            }
-            else{
-                return LegendaryImage;
-            }
+    Sprite getValueString(Rarity tier)
+    {
+        if (tier == Rarity.Abundant)
+        {
+            return AbundantImage;
+        }
+        else if (tier == Rarity.Common)
+        {
+            return CommonImage;
+        }
+        else if (tier == Rarity.Uncommon)
+        {
+            return UncommonImage;
+        }
+        else if (tier == Rarity.Rare)
+        {
+            return RareImage;
+        }
+        else
+        {
+            return LegendaryImage;
+        }
     }
 
     void addToCart(string item){
@@ -348,6 +354,8 @@ public class Trading : MonoBehaviour
             float totalCartValue = cart.TotalValueAfterModifiers(shop.shopSellModifiers);
             float totalOfferValue = offer.TotalValueAfterModifiers(shop.playerSellModifiers);
             float difference = totalOfferValue - totalCartValue;
+
+            Debug.Log($"Offer:{totalOfferValue} vs Cart:{totalCartValue}");
             if (difference > totalCartValue * shop.acceptedPriceDifference)
             {
                 return 1;

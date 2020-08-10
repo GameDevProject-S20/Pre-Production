@@ -44,7 +44,7 @@ public class Shop
         bool valid = false;
         while (!valid)
         {
-            iconId = Mathf.FloorToInt(Random.Range(0, 31));
+            iconId = Mathf.FloorToInt(Random.Range(1, 31));
             if (iconId != 10
             && iconId != 12
             && iconId != 15
@@ -84,8 +84,8 @@ public class Shop
         // Base min & max quantity of items per tier
         Dictionary<Rarity,(int,int)> ItemRanges = new Dictionary<Rarity, (int, int)>(){
             {Rarity.Abundant, (15, 30)},
-            {Rarity.Common, (8, 18)},
-            {Rarity.Uncommon, (6, 12)},
+            {Rarity.Common, (8, 15)},
+            {Rarity.Uncommon, (4, 8)},
             {Rarity.Rare, (1,4)},
             {Rarity.Unique, (1,1)}
         };
