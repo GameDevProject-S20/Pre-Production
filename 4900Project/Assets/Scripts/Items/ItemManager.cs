@@ -39,6 +39,24 @@ public class Item
     public bool IsConsumable;
     public Sprite Icon;
 
+    public int GetHealthCured()
+    {
+        int health = 0;
+        switch (DisplayName)
+        {
+            case "Medicine":
+                health = 25;
+                break;
+            case "Medical Kit":
+                health = 50;
+                break;
+            case "Bandages":
+                health = 10;
+                break;
+        }
+        return health;
+    }
+
     protected static Rarity CalculateTier(float Value)
     {
         //create Rarity based on value

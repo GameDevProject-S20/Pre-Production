@@ -42,20 +42,7 @@ public class HoverBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnter
             {
                 if (temp.IsConsumable)
                 {
-                    int health = 0;
-                    switch (temp.DisplayName)
-                    {
-                        case "Medicine":
-                            health = 25;
-                            break;
-                        case "Medical Kit":
-                            health = 50;
-                            break;
-                        case "Bandages":
-                            health = 10;
-                            break;
-                    }
-
+                    int health = temp.GetHealthCured();
                     Debug.Log($"Adding {health} hp");
                     Player.Instance.AddHealth(health);
                     Player.Instance.Inventory.RemoveItem(temp.DisplayName, 1);
