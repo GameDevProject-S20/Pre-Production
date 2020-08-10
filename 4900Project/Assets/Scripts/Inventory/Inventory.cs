@@ -14,7 +14,7 @@ public class Inventory
     float weightOverflowModifier = 1.0f; // for now this does nothing. might be used later if we allow the player to overfill their inventory at a cost
 
     public Inventory(){
-        WeightLimit = 1000;
+        WeightLimit = 750f;
     }
 
     // Copy Constructor
