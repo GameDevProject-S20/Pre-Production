@@ -14,7 +14,7 @@ Scrap Metal,General purpose parts,Good for making something new or fixing someth
 Steel,High-quality forged metal.,Durable material for building more than a shack.,15,25,steel.png,Building_Materials,no
 Hunting Rifle,Enough for animals.,"A low calibre firearm, useful for defence Not very effective against armoured targets.",15,2,rifle.png,"Combat,General",no
 Body Armor,Keeps you intact,Armour meant to protect from the typical bandit raid.,4,5,BodyArmor.png,Combat,no
-RPG,Sends a message,Let anyone who intends to raid you severely regret their choices,45,2,RPG.png,Combat,no
+Rpg,Sends a message,Let anyone who intends to raid you severely regret their choices,45,2,RPG.png,Combat,no
 Medicine,Patches up wounds.,General purpose bandages and medicine to treat injuries and illnesses,6,3,Medicine.png,"Medical,General",yes
 Medical Kit,Quality First Aid Kit for dangerous work,"Not only stocked with the best medical supplies on hand, but even contain stimulants and boosters to avoid injury in the first place",20,2,MedicalKit.png,Medical,yes
 Surgical Equipment,Used in hospitals.,Advanced equipment used in hospitals to operate on patients.,45,10,surgicalEquipment.png,"Medical,Advanced",no
