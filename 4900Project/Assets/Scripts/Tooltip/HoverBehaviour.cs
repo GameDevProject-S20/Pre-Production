@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +12,12 @@ public class HoverBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnter
 
     void Awake()
     {
-        //tooltip = InventoryWindow.Instance.tooltip;
+        try
+        {
+            tooltip = InventoryWindow.Instance.tooltip;
+        }
+        catch (Exception e)
+        { }
     }
 
     public void OnPointerClick(PointerEventData eventData)

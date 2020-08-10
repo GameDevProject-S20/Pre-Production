@@ -9,6 +9,11 @@ public class CapacityHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 {
     public Tooltip tooltip;
 
+    void Start()
+    {
+        tooltip = transform.parent.parent.Find("Tooltip").gameObject.GetComponent<Tooltip>();
+    }
+
     void Awake()
     {
         
