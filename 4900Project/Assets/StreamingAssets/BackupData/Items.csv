@@ -1,24 +1,26 @@
 DisplayName,Tooltip,Description,Value,Weight,IconName,Tags,IsConsumable
 Bandit Token,A symbol of alliance.,"A Greek 'Omega', roughly fashioned from metal. Bandits will not hassle you.",5,1,banditToken.png,"Luxury,Bandit,All",no
-Fuel,A necessity for travel between colonies,"Fuel is the lifeblood of traders, never leave port without first checking your tank. ",1,1,Fuel.png,"Fuel,General",no
-Rations,Unappetizing but cheap,The bare minimum to keep someone running for a day,3,1,Food.png,"Food,General",no
-Fresh Fruit,"Tasty, but spoils without proper storage","A rarity in a good portion of the world, which makes is quite valuable to the right people.",7,1,FreshFruit.png,"Food,Luxury",no
-Fresh Meat,A valuable delicacy.,Raising livestock is an expensive process. Meat is highly valued.,13,1,FreshMeat.png,"Food,Luxury",no
-Wrench,An essential repair tool,Helps with maintaining machines. Wear and tear means you need a replacement once in a while.,5,1,Wrench.png,"Tools_And_Parts,General",no
-Repair Patch,One use smart repair patch,"Uncommon tech allows these patches to conduct repairs autonomously, but burn out performing the job",15,4,RepairPatch.png,"Tools_And_Parts,General",no
-Generator,Creates electricity,Consumes fuel to generate power. Vital for survival.,40,25,Generator.png,"Tools_And_Parts, Advanced",no
-2000's Painting,Collectors love this stuff,Art from before the world ended. Nostalgic.,19,3,Painting.png,"Luxury,Antique",no
-Jewelry,"A valuable, if frivolous, accessory",Goes nice with a finely tailored outfit. Good luck finding one,12,1,Jewlery.png,Luxury,no
+Fuel,A neccesity for travel between colonies,"Fuel is the lifeblood of traders, never leave port without first checking your tank. ",1,1,Fuel.png,"Fuel,General"
+Rations,Unappetizing but cheap,The bare minimum to keep someone running for a day,3,1,Food.png,"Food,General,All"
+Fresh Fruit,"Tasty, but spoils without proper storage","A rarity in a good portion of the world, which makes is quite valuable to the right people.",11,3,FreshFruit.png,"Food,All"
+Fresh Meat,A valuable delicacy.,Raising livestock is an expensive process. Meat is highly valued.,26,8,FreshMeat.png,"Food,All"
+Wrench,An essential repair tool,Helps with maintaining machines. Wear and tear means you need a replacement once in a while.,10,1,Wrench.png,"Tools_And_Parts,General,All"
+Repair Patch,One use smart repair patch,"Uncommon tech allows these patches to conduct repairs autonomously, but burn out performing the job",15,4,RepairPatch.png,"Tools_And_Parts,General,All"
+Generator,Creates electricity,Consumes fuel to generate power. Vital for survival.,40,25,Generator.png,"Machinery,All"
+2000's Painting,Collectors love this stuff,Art from before the world ended. Nostalgic.,11,3,Painting.png,"Luxury,Antique,All"
+Jewelry,"A valuable, if nonfunctional, accessory",Goes nice with a finely tailored outfit. Good luck finding one,15,1,Jewlery.png,"Luxury,All"
 Concrete,Basic building material,What most things are built out of these days,3,10,Concrete.png,"Building_Materials,General",no
-Scrap Metal,General purpose parts,Good for making something new or fixing something old,5,10,ScrapMetal.png,"Building_Materials,General",no
-Steel,High-quality forged metal.,Durable material for building more than a shack.,15,25,steel.png,Building_Materials,no
-Hunting Rifle,Enough for animals.,"A low calibre firearm, useful for defence Not very effective against armoured targets.",15,2,rifle.png,"Combat,General",no
-Body Armor,Keeps you intact,Armour meant to protect from the typical bandit raid.,4,5,BodyArmor.png,Combat,no
-Rpg,Sends a message,Let anyone who intends to raid you severely regret their choices,45,2,RPG.png,Combat,no
-Medicine,Patches up wounds.,General purpose bandages and medicine to treat injuries and illnesses,6,3,Medicine.png,"Medical,General",yes
-Medical Kit,Quality First Aid Kit for dangerous work,"Not only stocked with the best medical supplies on hand, but even contain stimulants and boosters to avoid injury in the first place",20,2,MedicalKit.png,Medical,yes
-Surgical Equipment,Used in hospitals.,Advanced equipment used in hospitals to operate on patients.,45,10,surgicalEquipment.png,"Medical,Advanced",no
-Iron Ore,Raw ore used in steel production.,"With the right amount of carbon content, raw iron can be refined in a Steel Mill.",12,3,iron.png,Mineral,no
+Scrap Metal,General purpose parts,Good for making something new or fixing something old,4,8,ScrapMetal.png,"Building_Materials,General,All"
+Steel,High-quality forged metal.,Durable material for building more than a shack.,11,15,steel.png,"Building_Materials,Steel,All"
+Hunting Rifle,Enough for animals.,"A low caliber firearm, useful for defense. Not very effective against armoured targets.",25,8,rifleTier1.png,"Combat,All"
+High Caliber Rifle,Powerful firearm.,A high-powered weapon manufactured before the Shattering.,49,10,rifleTier2.png,"Combat,All"
+Body Armor,Keeps you intact,Armor meant to protect from the typical bandit raid.,30,10,BodyArmor.png,"Combat,All"
+Rpg,Sends a message.,Let anyone who intends to raid you severely regret their choices for a whole second.,80,15,RPG.png,"Combat,All"
+Herbal Medicine,Simple medical aid.,"When it comes to healing, simple herbs and some cloth are better than nothing.",10,3,MedicineTier1.png,"Medical,General,All"
+Medicine,Patches up wounds.,"Bandages, medicine and a suture kit to treat injury and illness.",20,6,MedicineTier2.png,"Medical,General,All"
+Medical Kit,Hospital-grade first aid kit.,"Stocked with the best medical supplies and drugs, easily applied by even an unskilled user.",30,8,MedicineTier3.png,"Medical, All"
+Surgical Equipment,Used in hospitals.,Advanced equipment used in hospitals to operate on patients.,100,20,surgicalEquipment.png,"Medical,All"
+Iron Ore,Raw ore used in steel production.,"With the right amount of carbon content, raw iron can be refined in a Steel Mill.",11,4,iron.png,"Mineral,All"
 Purified Water,One of life's essentials.,It's wet.,10,1,PurifiedWater.png,"Food,General",no
 Can Opener,Used to open canned foods.,"Knives are fine, but avoiding metal flakes in your soup is better.",1,1,CanOpener.png,Junk,no
 Pocket Watch,It tells time.,"Excellent collector's piece, for the right buyer.",15,1,PocketWatch.png,"Luxury,Antique",no
@@ -49,3 +51,11 @@ Survival Guide,Surely helpful to someone?,A book with a plethora of survival kno
 Shovel,Useful for digging up treasure.,"Useful for digging, and can double as an impromptu weapon",2,5,Shovel.png,"Tools_And_Parts,General,Combat",no
 Combat Knife,It's very sharp.,An effective weapon in close-combat.,5,3,CombatKnife.png,"Tools_And_Parts,Combat",no
 Butane,"Used for starting fires, and refilling lighters.","Extremely flammable, but very effective at quickly starting fires.",2,2,Butane.png,"Tools_And_Parts,General",no
+Motor,Converts electricity to mechanical power.,"Motors are used in farming equipment, mining machines and vehicles.",25,15,motor.png,"Machinery,All"
+Seismic Data,Data on regional seismic activity.,"This scientific data is indecipherable to you, but an expert may value it.",1,1,ScienceData1.png,"Scientific,All"
+Mineral Data,Data on soil mineral composition.,"This scientific data is indecipherable to you, but an expert may value it.",1,1,ScienceData2.png,"Scientific,All"
+Atmospheric Data,Data on atmospheric conditions.,"This scientific data is indecipherable to you, but an expert may value it.",1,1,ScienceData3.png,"Scientific,All"
+Astronomical Data,Data on astronomical observations.,"This scientific data is indecipherable to you, but an expert may value it.",1,1,ScienceData4.png,"Scientific,All"
+Tricorder,Scientific tool for field recordings.,The Standard Model Field Tri-Recorder can measure a wide variety of environmental conditions.,30,2,tricorder.png,"Tools_And_Parts,Scientific,All"
+Family Heirloom,An old gift.,This locket has been in your family since before the Shattering. Along your long travels it remains a piece of home.,40,1,Heirloom.png,"Luxury,Unique"
+Heavy Machinery,Used in the steelmaking process.,"This large, expensive machine is used to lift large quantities of molten steel.",150,35,heavyMachine.png,Machinery

@@ -225,12 +225,19 @@ public class TownWindow : MonoBehaviour
             });
         }
 
-        // And add the Hospital if the town has one
+       /* // And add the Hospital if the town has one
         if (townData.HasHospital)
         {
             CreateActionButton(HospitalIcon, null, hospitalData.Name, hospitalData.Description, () =>
             {
                 DataTracker.Current.EventManager.OnOpenDialogueClick.Invoke(hospitalData.EncounterId);
+            });
+        }*/
+
+        foreach (Resident resident in townData.Residents){
+            CreateActionButton(Resources.Load<Sprite>(resident.Icon), null, resident.DisplayName, resident.Description, () =>
+            {
+                DataTracker.Current.EventManager.OnOpenDialogueClick.Invoke(resident.EncounterId);
             });
         }
 

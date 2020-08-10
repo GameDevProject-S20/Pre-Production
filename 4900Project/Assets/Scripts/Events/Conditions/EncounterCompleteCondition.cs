@@ -39,7 +39,7 @@ namespace SIEvents
 
         public override string ToString()
         {
-            return string.Format("Encounter {0}", encounterId);
+            return Description;
         }
     }
 }
