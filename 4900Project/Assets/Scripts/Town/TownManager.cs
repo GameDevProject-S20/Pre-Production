@@ -25,7 +25,7 @@ public class TownManager
 
     private Dictionary<int, Town> towns = new Dictionary<int, Town>();
     private Dictionary<string, TownTag> Tags = new Dictionary<string, TownTag>();
-
+    private Dictionary<string, Resident> Residents = new Dictionary<string, Resident>();
     private TownManager()
     {
         
@@ -281,4 +281,21 @@ public class TownTag
     public Dictionary<ItemTag, float> AbundancyModifiers = new Dictionary<ItemTag, float>();
 
     public TownTag(){}
+}
+
+public class Resident
+{
+    public string ShortName;
+    public string DisplayName;
+    public string Description;
+    public string Icon;
+    public int EncounterId;
+
+    public Resident(string ShortName, string DisplayName, string Description, string Icon, int EncounterId){
+        this.ShortName = ShortName;
+        this.DisplayName = DisplayName;
+        this.Description = Description;
+        this.Icon = Icon;
+        this.EncounterId = EncounterId;
+    }
 }

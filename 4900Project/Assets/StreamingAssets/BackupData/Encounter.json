@@ -1414,6 +1414,96 @@
 					]
 				}
 			]
+		},
+		{
+			"valid": true,
+			"encounter_id": 200,
+			"tags": [],
+			"encounter_name": "Soil Sampling",
+			"conditions": [],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "The locals give you puzzled stares as you dig at the soil on the outskirts of town. Ignoring them, you keep digging until you reach the right depth.",
+					"buttons": [
+						{
+							"text": "[Tricorder] Take measurements.",
+							"conditions": [
+								"!has Tricorder 1"
+							],
+							"effects": [
+								"@give Mineral_Data 1"
+							],
+							"next_page_id":2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "You grab a bit of soil and insert it into your tricorder's sample tray. The screen lights up with data on mineral composition and moisture levels."
+				}
+			]
+		},
+		{
+			"valid": true,
+			"encounter_id": 201,
+			"tags": [],
+			"encounter_name": "Atmospheric Sample",
+			"conditions": [],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "You arrive at the given coordinates.",
+					"buttons": [
+						{
+							"text": "[Tricorder] Take measurements.",
+							"conditions": [
+								"!has Tricorder 1"
+							],
+							"effects": [
+								"@give Atmospheric_Data 1"
+							],
+							"next_page_id":2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "You hold your tricorder in the air and collect data on chemical composition, atmospheric pressure and wind currents."
+				}
+			]
+		},
+		{
+			"valid": true,
+			"encounter_id": 200,
+			"tags": [],
+			"encounter_name": "Astronomical Observation",
+			"conditions": [],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": ".",
+					"buttons": [
+						{
+							"text": "[Tricorder] Take measurements.",
+							"conditions": [
+								"!has Tricorder 1"
+							],
+							"effects": [
+								"@give Mineral_Data 1"
+							],
+							"next_page_id":2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "You grab a bit of soil and insert it into your tricorder's sample tray. The screen lights up with data on mineral composition and moisture levels."
+				}
+			]
 		}
 	],
 	"random_encounters": [
@@ -2539,6 +2629,45 @@
 				{
 					"id": 2,
 					"text": "You find a strange metal symbol. It doesn't seem to be worth much, but perhaps it has another use."
+				}
+			]
+		},
+		{
+			"valid": true,
+			"encounter_id": 1200,
+			"tags": [],
+			"encounter_name": "Earthquake",
+			"conditions": [],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "You're driving through an unremarkable plain when a you hear a faint rumbling, steadily getting louder. Soon, your entire vehicle is violently shaking.",
+					"buttons": [
+						{
+							"text": "[Tricorder] Take measurements.",
+							"conditions": [
+								"!has Tricorder 1"
+							],
+							"effects": [
+								"@give Seismic_Data 1"
+							],
+							"next_page_id":2
+						},
+						{
+							"text": "Wait out the earthquake.",
+							"next_page_id":3
+
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Using your tricorder, you measure the seismic force and wave patterns."
+				},
+				{
+					"id": 3,
+					"text": "Luckily, you always wear your seatbelt, and the earthquake passes without causing any damage."
 				}
 			]
 		}
