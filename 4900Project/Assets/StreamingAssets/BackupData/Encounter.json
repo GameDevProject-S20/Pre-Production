@@ -718,7 +718,7 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "[Your request for a meeting with a representative of the Union was denied. Your inquiries are directed to an automated system.]",
+					"text": "[Your request for a meeting with a representative of the Coalition was denied. Your inquiries are directed to an automated system.]",
 					"buttons": [
 						{
 							"text": "What should I trade here?",
@@ -901,7 +901,7 @@
 							"next_page_id": 2
 						},
 						{
-							"text": "...wan you tell me about Carrot Farm?",
+							"text": "...can you tell me about Carrot Farm?",
 							"next_page_id": 3
 						},
 						{
