@@ -24,6 +24,7 @@ public struct ItemCsvData
     public float Weight { get; set; }
     public string Tags { get; set; }
     public string IconName { get; set; }
+    public string IsConsumable { get; set; }
 }
 
 public class Item
@@ -35,6 +36,7 @@ public class Item
     public float Weight;
     public Rarity tier;
     public List<ItemTag> tags;
+    public bool IsConsumable;
     public Sprite Icon;
 
     protected static Rarity CalculateTier(float Value)
@@ -73,7 +75,7 @@ public class Item
     /// <param name="value_"></param>
     /// <param name="weight_"></param>
     /// <param name="_tags"></param>
-    public Item(string name_, string tooltip_, string description_, float value_, float weight_, List<ItemTag> _tags)
+    public Item(string name_, string tooltip_, string description_, float value_, float weight_, List<ItemTag> _tags, bool isConsumable = false)
     {
         DisplayName = name_;
         Tooltip = tooltip_;
@@ -81,6 +83,7 @@ public class Item
         Value = value_;
         Weight = weight_;
         tags = _tags;
+        IsConsumable = isConsumable;
         tier = CalculateTier(Value);
     }
 
@@ -97,6 +100,7 @@ public class Item
         Value = itemData.Value;
         Weight = itemData.Weight;
         tags = UnityHelperMethods.ParseCommaSeparatedList<ItemTag>(itemData.Tags, UnityHelperMethods.ParseEnum<ItemTag>);
+        IsConsumable = (itemData.IsConsumable == "yes");
         tier = CalculateTier(Value);
         Icon = Resources.Load<Sprite>($"Icons/ItemIcons/{itemData.IconName}".Replace(".png", ""));
     }
@@ -124,6 +128,7 @@ public class ItemManager : MonoBehaviour
 
         //create item list
         GameData.LoadCsv(Files.Items, out IEnumerable<ItemCsvData> itemsData);
+        Debug.Log(itemsData);
         foreach (var itemData in itemsData)
         {
             var item = new Item(itemData);
