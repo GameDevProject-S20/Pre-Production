@@ -2098,7 +2098,7 @@
 					"buttons": [
 						{
 							"text": "[Vigilance] Listen closer.",
-							"next_page_id":2
+							"next_page_id": 2
 						}
 					]
 				},
@@ -2109,14 +2109,15 @@
 						{
 							"text": "[Adrenaline] Fight them off with your fists, Gain 3 Fresh Meat, Lose 25 hp.",
 							"effects": [
-								"@health -25"
+								"@health -25",
+								"@give Fresh_Meat 3"
 							],
 							"next_page_id":3
 						},
 						{
 							"text": "[Carnage] Fight them off with your Hunting Rifle, Gain 3 Fresh Meat, Lose 10 hp.",
 							"conditions":[
-								"!has Hunting_Rifle"
+								"!has Hunting_Rifle 1"
 							],
 							"effects": [
 								"@take Hunting_Rifle 1",
@@ -2128,7 +2129,7 @@
 						{
 							"text": "[Brutality] Fight them off with an RPG.",
 							"conditions":[
-								"!has RPG"
+								"!has RPG 1"
 							],
 							"effects": [
 								"@take RPG 1"
