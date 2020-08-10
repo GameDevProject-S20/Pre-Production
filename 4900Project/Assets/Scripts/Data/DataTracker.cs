@@ -44,7 +44,7 @@ public class DataTracker : MonoBehaviour
         Player.Inventory.WeightLimit = 750f;
         Player.Inventory.AddItem("Rations", 12);
         Player.Inventory.AddItem("Fuel", 30);
-        Player.Inventory.AddItem("Scrap Metal", 9);
+        Player.Inventory.AddItem("Scrap Metal", 2);
         Player.Inventory.AddItem("Family Heirloom", 1);
         ShopManager.LoadData();
         TownManager.LoadData();

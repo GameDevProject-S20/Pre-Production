@@ -15,7 +15,7 @@ public class TownData
     public string Colour { get; set; } //hex code
     public string Size { get; set; } //hex code
     public string Tags { get; set; }
-    public bool HasHospital { get; set; }
+    public string Residents { get; set; }
     public int LeaderEncounterId { get; set; }
 }
 
@@ -40,6 +40,7 @@ public class Town
     public string LeaderBlurb = "No Blurb Set";
     public int leaderDialogueEncounterId = 11;
     public List<int> shops;
+    public List<Resident> Residents;
 
     int ShopResetTimer = 0;
     int ShopResetTimerMax = 24;
@@ -48,7 +49,7 @@ public class Town
     /// Constructor for loading in from a TownData class
     /// </summary>
     /// <param name="data"></param>
-    public Town(TownData data) : this(data.Id, data.Name, data.Leader, data.Colour, data.Size, data.Tags, data.HasHospital, data.LeaderEncounterId)
+    public Town(TownData data) : this(data.Id, data.Name, data.Leader, data.Colour, data.Size, data.Tags, data.Residents, data.LeaderEncounterId)
     {
 
     }
@@ -61,7 +62,7 @@ public class Town
     /// <param name="Leader"></param>
     /// <param name="Colour"></param>
 
-    public Town(int Id, string Name, string Leader, string Colour = "#FFFF5E0", string Size = "Medium", string Tags = "", bool HasHospital = false, int LeaderEncounterId = 11)
+    public Town(int Id, string Name, string Leader, string Colour = "#FFFF5E0", string Size = "Medium", string Tags = "", string Residents = "", int LeaderEncounterId = 11)
     {
         this.Id = Id;
         this.Name = Name;
@@ -73,7 +74,7 @@ public class Town
 
         shops = new List<int>();
         this.Tags = new List<TownTag>();
-
+        this.Residents = new List<Resident>();
 
         // Fetch town leader avatar
         {
@@ -114,6 +115,15 @@ public class Town
             }
         }
 
+        string[] rs = Residents.Replace("\"", string.Empty).Split(',');
+        foreach (string r in rs)
+        {
+            if (r.Length > 0)
+            {
+                this.Residents.Add(TownManager.Instance.GetResident(r));
+            }
+        }
+
         SetDescription();
         SetLeaderBlurb();
     }
@@ -143,6 +153,10 @@ public class Town
         if (this.Name.Equals("York"))
         {
             ShopManager.Instance.GetShopById(TownManager.Instance.GetTownByName("York").shops[0]).inventory.AddItem("Generator", 1);
+        }
+        if (this.Name.Equals("Frakton"))
+        {
+            ShopManager.Instance.GetShopById(TownManager.Instance.GetTownByName("Frakton").shops[0]).inventory.AddItem("Heavy Machinery", 1);
         }
         if (this.Tags.Contains(TownManager.Instance.GetTag("Bandit")))
         {
@@ -203,6 +217,17 @@ public class Town
         }
         return false;
     }
+
+    public void AddResident(Resident r){
+        Residents.Add(r);
+        FireUpdatedEvent();
+    }
+
+    public void RemoveResident(Resident r){
+        Residents.Remove(r);
+        FireUpdatedEvent();
+    }
+
 
     private void SetDescription()
     {

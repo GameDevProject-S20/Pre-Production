@@ -63,7 +63,7 @@ public class InventoryWindow : MonoBehaviour
             var listItem = GameObject.Instantiate(inventoryListItem, Vector3.zero, Quaternion.identity);
             listItem.GetComponentInChildren<TextMeshProUGUI>().text = ItemManager.Current.itemsMaster[item.Key].DisplayName + " (" + item.Value + ") ";
             Image i = listItem.transform.Find("Text").Find("Rarity").GetComponent<Image>();
-            i.sprite = getValueString(ItemManager.Current.itemsMaster[item.Key].Value);
+            i.sprite = getValueString(ItemManager.Current.itemsMaster[item.Key].tier);
             i.preserveAspect = true;
             listItem.transform.Find("Icon").GetComponent<Image>().sprite = ItemManager.Current.itemsMaster[item.Key].Icon;
             
@@ -84,21 +84,21 @@ public class InventoryWindow : MonoBehaviour
         itemObjects.Clear();
     }
 
-    Sprite getValueString(float value)
+    Sprite getValueString(Rarity tier)
     {
-        if (value < 5)
+        if (tier == Rarity.Abundant)
         {
             return AbundantImage;
         }
-        else if (value < 15)
+        else if (tier == Rarity.Common)
         {
             return CommonImage;
         }
-        else if (value < 30)
+        else if (tier == Rarity.Uncommon)
         {
             return UncommonImage;
         }
-        else if (value < 50)
+        else if (tier == Rarity.Rare)
         {
             return RareImage;
         }
