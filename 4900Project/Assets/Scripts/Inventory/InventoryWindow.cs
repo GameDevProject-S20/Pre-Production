@@ -38,7 +38,9 @@ public class InventoryWindow : MonoBehaviour
     {
         if (instance != null) Destroy(instance);
         instance = this;
-        tooltip = GameObject.Find("Tooltip").GetComponent<Tooltip>();
+
+        tooltip = transform.parent.Find("InventoryWindow/Tooltip").gameObject.GetComponent<Tooltip>();
+
         itemObjects = new List<GameObject>();
         Populate();
 
@@ -60,8 +62,11 @@ public class InventoryWindow : MonoBehaviour
         foreach(var item in DataTracker.Current.Player.Inventory.Contents){
             var listItem = GameObject.Instantiate(inventoryListItem, Vector3.zero, Quaternion.identity);
             listItem.GetComponentInChildren<TextMeshProUGUI>().text = ItemManager.Current.itemsMaster[item.Key].DisplayName + " (" + item.Value + ") ";
-            listItem.transform.Find("Text").Find("Rarity").GetComponent<Image>().sprite = getValueString(ItemManager.Current.itemsMaster[item.Key].tier);
+            Image i = listItem.transform.Find("Text").Find("Rarity").GetComponent<Image>();
+            i.sprite = getValueString(ItemManager.Current.itemsMaster[item.Key].tier);
+            i.preserveAspect = true;
             listItem.transform.Find("Icon").GetComponent<Image>().sprite = ItemManager.Current.itemsMaster[item.Key].Icon;
+            
             listItem.transform.SetParent(playerInventoryObject, false);
             listItem.name = ItemManager.Current.itemsMaster[item.Key].DisplayName + "_button";
             listItem.GetComponent<HoverBehaviour>().tooltip = tooltip;
