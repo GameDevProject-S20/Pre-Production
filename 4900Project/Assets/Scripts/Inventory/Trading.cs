@@ -85,6 +85,7 @@ public class Trading : MonoBehaviour
         float value = DataTracker.Current.Player.Inventory.TotalValue();
         valueText.text = "Approx. Total Value: " + Round((int)value);
 
+        tooltip = GameObject.Find("/Canvas/Panel/Tooltip").GetComponent<Tooltip>();
     }
 
     /// <summary>

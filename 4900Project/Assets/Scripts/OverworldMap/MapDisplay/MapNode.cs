@@ -230,6 +230,8 @@ public class MapNode : MonoBehaviour
                     break;
             }
             panel.SetDetails(details);
+            //THIS PLUS GIVING THE DETAILS TEXT IN THE PREFAB THE TOOLTIP SPRITESHEET SHOWS THE BUY/SELL DIFFS IN TOOLTIP
+            //panel.AddTownTags(t.Tags);
         }
 
         // Empty nodes show chance of event
