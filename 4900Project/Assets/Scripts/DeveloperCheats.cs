@@ -25,17 +25,18 @@ public class DeveloperCheats : MonoBehaviour
         devModeEvent.AddListener(() => {GameObject.Find("Initializer").GetComponent<Initializer>().OnEnterGameClick();});
     }
 
-    public void devModeEnable()
+    private void devModeEnable()
     {
         hoverNodeEvent = DataTracker.Current.EventManager.OnNodeMouseEnter;
-        hoverNodeEvent.AddListener(TemporaryDevEdge);
+        hoverNodeEvent.AddListener(travelAnywhere);
     }
 
-    void devModeDisable(){
-        hoverNodeEvent.RemoveListener(TemporaryDevEdge);
+    private void devModeDisable(){
+        hoverNodeEvent.RemoveListener(travelAnywhere);
     }
 
-    void TemporaryDevEdge(MapNode node){
+
+    private void travelAnywhere(MapNode node){
         OverworldMap.LocationGraph map = DataTracker.Current.WorldMap;
         if (map.HasEdge(tempEdge[0], tempEdge[1]))
             map.RemoveEdge(tempEdge[0], tempEdge[1]);
