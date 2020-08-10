@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityUtility;
+using SIEvents;
 
 /// <summary>
 /// Used for reading town data from a CSV
@@ -40,6 +41,9 @@ public class Town
     public int leaderDialogueEncounterId = 11;
     public List<int> shops;
 
+    int ShopResetTimer = 0;
+    int ShopResetTimerMax = 24;
+
     /// <summary>
     /// Constructor for loading in from a TownData class
     /// </summary>
@@ -70,9 +74,6 @@ public class Town
         shops = new List<int>();
         this.Tags = new List<TownTag>();
 
-
-        SetDescription();
-        SetLeaderBlurb();
 
         // Fetch town leader avatar
         {
@@ -113,7 +114,8 @@ public class Town
             }
         }
 
-
+        SetDescription();
+        SetLeaderBlurb();
     }
 
     /// <summary>
@@ -149,6 +151,7 @@ public class Town
 
         // Notify that the town has changed
         FireUpdatedEvent();
+        EventManager.Instance.OnTransaction.AddListener(BeginRestockTimer);
     }
 
     /// <summary>
@@ -160,24 +163,29 @@ public class Town
         HasHospital = true;
     }
 
+    // Shop restocking
+    void BeginRestockTimer(Events.TransactionEvents.Details details){
+        if (shops.Contains(details.SystemId)) {
+            ShopResetTimer = 0;
+            EventManager.Instance.OnTimeAdvance.AddListener(AdvanceRestockTimer);
+            EventManager.Instance.OnTransaction.RemoveListener(BeginRestockTimer);
+        }
+    }
 
+    void AdvanceRestockTimer(int i){
+        ShopResetTimer += i;
+        if (ShopResetTimer >= ShopResetTimerMax){
+            RestockShops();
+        }
+    }
 
-    /* public void AddShop(int i)
-     {
-         shops.Add(i);
-     }
-
-     public void RemoveShop(int i)
-     {
-         for(int j = 0; j < shops.Count; j++)
-         {
-             if(shops[j] == i)
-             {
-                 shops.Remove(j);
-                 break;
-             }
-         }
-     }*/
+    void RestockShops(){
+        foreach(var shop in shops){
+            ShopManager.Instance.GetShopById(shop).Restock(this);
+        }
+        EventManager.Instance.OnTransaction.AddListener(BeginRestockTimer);
+        EventManager.Instance.OnTimeAdvance.RemoveListener(AdvanceRestockTimer);
+    }
 
     public void AddTag(TownTag tag)
     {
@@ -205,18 +213,22 @@ They are lead by {this.Leader}. ";
         List<string> s = new List<string>();
         for(int i = 0; i<Tags.Count; i++){
             if (Tags[i].Specialization == ItemTag.None) continue;
-            s.Add(Tags[i].Specialization.ToString());
+            s.Add(Tags[i].SpecializationDesc);
         }
 
         if (s.Count >0){
             desc += "They specialize in ";
             for(int i = 0; i<s.Count; i++){
-                string t = Tags[i].Specialization.ToString().Replace("_", " ");
-                if (i < s.Count -1){
-                    desc += t +", ";
+                if (s.Count == 1){
+                    desc += s[i] + ".\n\n";
                 }
                 else {
-                    desc += "and " + t +".\n\n";
+                    if (i < s.Count -1){
+                        desc += s[i] +", ";
+                    }
+                    else {
+                        desc += "and " + s[i] +".\n\n";
+                    }
                 }
             }
         }

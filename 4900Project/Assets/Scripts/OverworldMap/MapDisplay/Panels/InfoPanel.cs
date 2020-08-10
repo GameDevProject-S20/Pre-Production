@@ -48,7 +48,7 @@ public class InfoPanel : MonoBehaviour
         s.Play();
     }
 
-    protected void Close()
+    protected virtual void Close()
     {
         state = States.Closed;
         Sequence s = DOTween.Sequence();

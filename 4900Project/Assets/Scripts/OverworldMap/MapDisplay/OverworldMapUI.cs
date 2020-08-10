@@ -228,12 +228,12 @@ public class OverworldMapUI : MonoBehaviour
     {
         foreach (var item in travelPanelPool)
         {
-            if (!item.activeInHierarchy)
+            if (!item.activeInHierarchy && !item.GetComponent<TravelPanel>().IsOpen())
             {
                 return item;
             }
         }
-        return travelPanelPool[0];
+        return null;
     }
 
     /// <summary>
