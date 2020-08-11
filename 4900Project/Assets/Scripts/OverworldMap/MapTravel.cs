@@ -1,4 +1,5 @@
-﻿using SIEvents;
+﻿using Encounters;
+using SIEvents;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -24,7 +25,8 @@ public class MapTravel : MonoBehaviour
         {1.45f, 3.0f}
     };
 
-    public static int timeRate { get; set; } = 1;
+    public static int CaravanTravelRate { get; private set; } = 1;
+    public static int WalkingTravelRate { get; private set; } = 3 * CaravanTravelRate;
 
 
     public static int GetFuelCost(MapNode destination){
@@ -63,29 +65,37 @@ public class MapTravel : MonoBehaviour
         // If the player has enough fuel to travel: Go ahead & travel
         if (currentFuel >= cost) { 
             DataTracker.Current.Player.Inventory.RemoveItem("Fuel", cost);
-            DataTracker.Current.dayCount += timeRate;
+            DataTracker.Current.dayCount += CaravanTravelRate;
             isTravelling = false; // Remove the debounce
             DataTracker.Current.EventManager.OnTravelTypeChanged.Invoke(DataTracker.TravelType.TRUCK);
             onTravelReady();
         }
         else
         {
-            // Otherwise, we need to run a LowFuel encounter
-            DataTracker.Current.EncounterManager.RunRandomEncounter();
-
-            // Change Vehicle Travel Type
+            // Otherwise, we need to change vehicle type and run a LowFuel encounter
             DataTracker.Current.EventManager.OnTravelTypeChanged.Invoke(DataTracker.TravelType.WALK);
 
-            // Delay the progression of travel until they complete the encounter
-            EventManager.Instance.OnDialogueEnd.AddListener(() =>
+            if (EncounterManager.Instance.RandomEncountersOn)
             {
-                // Remove the debounce
-                isTravelling = false;
+                DataTracker.Current.EncounterManager.RunRandomEncounter();
 
-                // Travel
-                DataTracker.Current.dayCount += timeRate;
+                // Delay the progression of travel until they complete the encounter
+                EventManager.Instance.OnDialogueEnd.AddListener(() =>
+                {
+                    // Remove the debounce
+                    isTravelling = false;
+
+                    // Travel
+                    DataTracker.Current.dayCount += WalkingTravelRate;
+                    onTravelReady();
+                });
+            } 
+            else
+            {
+                DataTracker.Current.dayCount += WalkingTravelRate;
+                isTravelling = false; // Remove the debounce
                 onTravelReady();
-            });
+            }
         }
     }
 

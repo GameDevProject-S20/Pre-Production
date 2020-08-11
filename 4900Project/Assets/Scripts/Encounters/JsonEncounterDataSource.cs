@@ -566,6 +566,11 @@ public class JsonEncounterDataSource : IEncounterDataSource
                 e = new RandomEffect(effect1, effect2, percentFirst);
                 UnityEngine.Debug.Log(e);
             }
+            else if (command == "toggle_random_encounters")
+            {
+                var on = (Int16.Parse(args[0]) == 0) ? false : true;
+                e = new ToggleRandomEncountersEffect(on);
+            }
         }
         catch (Exception exception)
         {

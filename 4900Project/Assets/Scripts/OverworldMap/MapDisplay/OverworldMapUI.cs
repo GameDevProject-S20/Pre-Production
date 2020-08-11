@@ -365,7 +365,7 @@ public class OverworldMapUI : MonoBehaviour
                 mn.OnMouseEnter();
             }
         }
-        DataTracker.Current.IncrementTime(MapTravel.timeRate);
+        DataTracker.Current.IncrementTime(MapTravel.CaravanTravelRate);
     }
 
     public void OnButtonClick(int i)

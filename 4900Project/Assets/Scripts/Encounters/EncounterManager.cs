@@ -45,13 +45,15 @@ namespace Encounters
 
         private Queue<RandomEncounter> randomEncounterQueue;
 
+        public bool RandomEncountersOn { get; private set; }
+
         private EncounterManager()
         {
             random = new Random();
             randomEncounterQueue = reloadRandomEncounters();
             EventManager.Instance.OnEncounterTrigger.AddListener((int id) =>
             {
-                if (id == -1)
+                if (id == -1 && RandomEncountersOn)
                 {
                     RunRandomEncounter();
                 }
@@ -90,6 +92,12 @@ namespace Encounters
         /// </summary>
         public void RunRandomEncounter(string tag = null)
         {
+            if (!RandomEncountersOn)
+            {
+                Debug.LogWarning("Random Encounters not on, yet an attempt was made to run them.");
+                return;
+            }
+
             Encounter next = randomEncounter(tag);
             Debug.Log(next);
             next.RunEncounter();
@@ -117,6 +125,13 @@ namespace Encounters
         private Encounter randomEncounter(string tag = null)
         {
             Encounter enc = null;
+
+            if (!RandomEncountersOn)
+            {
+                Debug.LogWarning("Random Encounters not on, yet an attempt was made to fetch one.");
+                return enc;
+            }
+
             if (tag != null)
             {
                 List<RandomEncounter> tagged = randomEncounterQueue.Where(e => e.Tags.Contains(tag)).ToList();
@@ -158,9 +173,20 @@ namespace Encounters
             }
             else
             {
+                if (!RandomEncountersOn)
+                {
+                    Debug.LogWarning("Random Encounters not on, yet an attempt was made to fetch one.");
+                    return null;
+                }
+
                 EncounterCollection.Instance.RandomEncounters.TryGetValue(id, out RandomEncounter rvalue);
                 return rvalue;
             }
+        }
+
+        public void ToggleRandomEncounters(bool on)
+        {
+            RandomEncountersOn = on;
         }
 
         public override string ToString()

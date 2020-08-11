@@ -54,15 +54,12 @@ public class DataTracker : MonoBehaviour
         } else {
             _current = this;
         }
+
         ItemManager.Current.Init();
         WorldMap = OverworldMapLoader.LoadMap();
-        Player.Inventory.WeightLimit = 750f;
-        Player.Inventory.AddItem("Rations", 12);
-        Player.Inventory.AddItem("Fuel", 30);
-        Player.Inventory.AddItem("Scrap Metal", 2);
-        Player.Inventory.AddItem("Family Heirloom", 1);
         ShopManager.LoadData();
         TownManager.LoadData();
+      
         DontDestroyOnLoad(gameObject);
         EventManager.onDataTrackerLoad.Invoke();
     }
