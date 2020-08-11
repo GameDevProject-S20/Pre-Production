@@ -379,12 +379,12 @@ PrefabInstance:
     - target: {fileID: 3071225595010136232, guid: 0de380d83aa49b45c81ba504a8f25b17,
         type: 3}
       propertyPath: m_Value
-      value: 1.0000002
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3071225595010136232, guid: 0de380d83aa49b45c81ba504a8f25b17,
         type: 3}
       propertyPath: m_Size
-      value: 0.38095233
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3071225595010136233, guid: 0de380d83aa49b45c81ba504a8f25b17,
         type: 3}
@@ -608,6 +608,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -8
       objectReference: {fileID: 0}
+    - target: {fileID: 3071225595779767161, guid: 0de380d83aa49b45c81ba504a8f25b17,
+        type: 3}
+      propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3071225595779767162, guid: 0de380d83aa49b45c81ba504a8f25b17,
         type: 3}
       propertyPath: m_Color.r
@@ -673,10 +678,20 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 271.70245
       objectReference: {fileID: 0}
+    - target: {fileID: 3071225596348655697, guid: 0de380d83aa49b45c81ba504a8f25b17,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3071225596348655697, guid: 0de380d83aa49b45c81ba504a8f25b17,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 174.48157
+      objectReference: {fileID: 0}
     - target: {fileID: 3071225596412672003, guid: 0de380d83aa49b45c81ba504a8f25b17,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -209.02156
+      value: -364.74786
       objectReference: {fileID: 0}
     - target: {fileID: 3071225596412672004, guid: 0de380d83aa49b45c81ba504a8f25b17,
         type: 3}
@@ -697,6 +712,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.b
       value: 0.8784314
+      objectReference: {fileID: 0}
+    - target: {fileID: 3071225596471067679, guid: 0de380d83aa49b45c81ba504a8f25b17,
+        type: 3}
+      propertyPath: m_Name
+      value: Quest Description
       objectReference: {fileID: 0}
     - target: {fileID: 3071225596496597989, guid: 0de380d83aa49b45c81ba504a8f25b17,
         type: 3}
