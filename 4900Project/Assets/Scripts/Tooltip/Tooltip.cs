@@ -7,6 +7,7 @@ using TMPro;
 public class Tooltip : MonoBehaviour
 {
     private Component[] texts;
+    public int rightClickStage = 0;
 
     void Awake()
     {
@@ -57,7 +58,18 @@ public class Tooltip : MonoBehaviour
         }
 
         gameObject.transform.GetChild(0).GetComponent<Text>().text = item.DisplayName;
-        string descriptor = item.Description + "\n \n Weight per Unit:" + item.Weight.ToString() + "\n \n";
+        string descriptor = item.Description;
+
+        // Only if in Inventory
+        if (this == InventoryWindow.Instance.tooltip && item.IsConsumable)
+        {
+            int health = item.GetHealthCured();
+            descriptor += $"\n\nRestores {health} health";
+            descriptor += "\n\nRight click to consume";
+        }
+        
+        descriptor += "\n\nWeight per Unit:" + item.Weight.ToString() + "\n \n";
+
         string tagList = "";
         string iconList = "";
         foreach (ItemTag tag in item.tags)

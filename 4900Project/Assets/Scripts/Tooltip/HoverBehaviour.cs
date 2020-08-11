@@ -32,7 +32,27 @@ public class HoverBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnter
             }
             Item temp;
             ItemManager.Current.itemsMaster.TryGetValue(name, out temp);
-            tooltip.GenerateDetailedTooltip(temp);
+
+            if (tooltip.rightClickStage == 0)
+            {
+                tooltip.GenerateDetailedTooltip(temp);
+                tooltip.rightClickStage++;
+            }
+            else
+            {
+                if (temp.IsConsumable)
+                {
+                    int health = temp.GetHealthCured();
+                    Debug.Log($"Adding {health} hp");
+                    Player.Instance.AddHealth(health);
+                    Player.Instance.Inventory.RemoveItem(temp.DisplayName, 1);
+                }
+                else
+                {
+                    tooltip.GenerateTooltip(temp);
+                    tooltip.rightClickStage = 0;
+                }
+            }
         }
         else
         {
@@ -56,5 +76,6 @@ public class HoverBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnter
     public void OnPointerExit(PointerEventData eventData)
     {
         tooltip.gameObject.SetActive(false);
+        tooltip.rightClickStage = 0;
     }
 }

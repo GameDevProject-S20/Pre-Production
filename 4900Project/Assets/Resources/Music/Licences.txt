@@ -1,9 +1,224 @@
-"Sincerely" Kevin MacLeod (incompetech.com)
-Licensed under Creative Commons: By Attribution 4.0 License
-http://creativecommons.org/licenses/by/4.0/
+Title: "A cup of tea"
+Creator: TAD
+Source: https://opengameart.org/content/lofi-compilation
+Licence: CC0 (https://creativecommons.org/publicdomain/zero/1.0/)
 
-"EPHEMERA" Scott Buckley (https://www.scottbuckley.com.au/library/ephemera/)
-This work is licensed under a Creative Commons Attribution 4.0 International License; meaning it’s free for use in any project (including commercial) as long as I’m credited.
+Title: "A Dessert World (Orchestral Version)"
+Creator: StGerGer
+Source: https://opengameart.org/content/cyberpunkorchestral-music-full-album-journey
+Licence: CC-BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/)
 
-"SIGNAL TO NOISE" Scott Buckley (https://www.scottbuckley.com.au/library/ephemera/)
-This work is licensed under a Creative Commons Attribution 4.0 International License; meaning it’s free for use in any project (including commercial) as long as I’m credited.
+Title: "Another August"
+Creator: The Cynic Project / pixelsphere.org / cynicmusic.com
+Source: https://opengameart.org/content/another-august
+Licence: CC0 (https://creativecommons.org/publicdomain/zero/1.0/)
+
+Title: "Approaching The Green Grass"
+Creator: Ove Melaa  
+Source: https://opengameart.org/content/oves-essential-game-audio-pack-collection-160-files-updated
+Licence: CC-BY 3.0 (https://creativecommons.org/licenses/by/3.0/)
+
+Title: "At Night"
+Creator: Music by Stefan Grossmann https://soundcloud.com/stefan-grossmann-1
+Source: https://opengameart.org/content/free-music-pack-one-of-three
+Licence: CC-BY 4.0 (https://creativecommons.org/licenses/by/4.0/)
+
+Title: "Beautiful Day"
+Creator: Music by Stefan Grossmann https://soundcloud.com/stefan-grossmann-1
+Source: https://opengameart.org/content/free-music-pack-one-of-three
+Licence: CC-BY 4.0 (https://creativecommons.org/licenses/by/4.0/)
+
+Title: "Carefree"
+Creator: Music by Stefan Grossmann https://soundcloud.com/stefan-grossmann-1
+Source: https://opengameart.org/content/free-music-pack-two-of-three
+Licence: CC-BY 4.0 (https://creativecommons.org/licenses/by/4.0/)
+
+Title: "Chillwave Nightdrive"
+Creator: Bogasrt VGM (https://www.facebook.com/BogartVGM/)
+Source: https://opengameart.org/content/chillwave-nightdrive
+Licence: CC-BY 3.0 (https://creativecommons.org/licenses/by/3.0/)
+
+Title: "Continuum"
+Creator: Music by Stefan Grossmann https://soundcloud.com/stefan-grossmann-1
+Source: https://opengameart.org/content/free-music-pack-one-of-three
+Licence: CC-BY 4.0 (https://creativecommons.org/licenses/by/4.0/)
+
+Title: "Countryside"
+Creator: TAD
+Source: https://opengameart.org/content/lofi-compilation
+Licence: CC0 (https://creativecommons.org/publicdomain/zero/1.0/)
+
+Title: "Crime Scene 21XX"
+Creator: Spring/Spring Enterprises
+Source: https://opengameart.org/content/crime-scene-21xx
+Licence: CC-BY 4.0 (https://creativecommons.org/licenses/by/4.0/), CC-BY 3.0 (https://creativecommons.org/licenses/by/3.0/), CC-BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/) (https://creativecommons.org/licenses/by-sa/4.0/), CC-BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/)
+
+Title: "Dark Blue"
+Creator: Ove Melaa  
+Source: https://opengameart.org/content/oves-essential-game-audio-pack-collection-160-files-updated
+Licence: CC-BY 3.0 (https://creativecommons.org/licenses/by/3.0/)
+
+Title: "Dreamscape"
+Creator: Music by Stefan Grossmann https://soundcloud.com/stefan-grossmann-1
+Source: https://opengameart.org/content/free-music-pack-one-of-three
+Licence: CC-BY 4.0 (https://creativecommons.org/licenses/by/4.0/)
+
+Title: "Dusk"
+Creator: syncopika
+Source: https://opengameart.org/content/dusk
+Licence: CC-BY 3.0 (https://creativecommons.org/licenses/by/3.0/)
+
+Title: "Earth Is All We Have"
+Creator: Ove Melaa  
+Source: https://opengameart.org/content/oves-essential-game-audio-pack-collection-160-files-updated
+Licence: CC-BY 3.0 (https://creativecommons.org/licenses/by/3.0/)
+
+Title: "EPHEMERA" 
+Creator: Scott Buckley 
+Source: https://www.scottbuckley.com.au/library/ephemera/
+Licence: CC-BY 4.0 (https://creativecommons.org/licenses/by/4.0/)
+
+Title: "Fantasy Night"
+Creator: Angus Macnaughton 2014
+Source: https://opengameart.org/content/fantasy-music-night-town
+Licence: CC-BY 3.0 (https://creativecommons.org/licenses/by/3.0/)
+
+Title: "Flew"
+Creator: bbatv1
+Source: https://opengameart.org/content/peace-is-king-here
+Licence: CC-BY 3.0 (https://creativecommons.org/licenses/by/3.0/)
+
+Title: "Fracture of the universe will happen soon"
+Creator: Monplaisir/Komiku
+Source: https://opengameart.org/content/poupis-incredible-adventures-full-album
+Licence: CC0 (https://creativecommons.org/publicdomain/zero/1.0/)
+
+Title: "Future Travel"
+Creator: Zodik
+Source: https://opengameart.org/content/zodik-future-travel
+Licence: CC-BY 3.0 (https://creativecommons.org/licenses/by/3.0/)
+
+Title: "Home Sweet Home"
+Creator: Music by Stefan Grossmann https://soundcloud.com/stefan-grossmann-1
+Source: https://opengameart.org/content/free-music-pack-two-of-three
+Licence: CC-BY 4.0 (https://creativecommons.org/licenses/by/4.0/)
+
+Title: "I Dreamt of You Last Night"
+Creator: Alex McCulloch
+Source: https://opengameart.org/content/i-dreamed-of-you-last-night
+Licence: CC0 (https://creativecommons.org/publicdomain/zero/1.0/)
+
+Title: "Intervals"
+Creator: Fabian | Of Far Different Nature
+Source: https://opengameart.org/content/intervals
+Licence: CC-BY 4.0 (https://creativecommons.org/licenses/by/4.0/)
+
+Title: "Leaves"
+Creator: Music by Stefan Grossmann https://soundcloud.com/stefan-grossmann-1
+Source: https://opengameart.org/content/free-music-pack-two-of-three
+Licence: CC-BY 4.0 (https://creativecommons.org/licenses/by/4.0/)
+
+Title: "Levitate"
+Creator: Music by Stefan Grossmann https://soundcloud.com/stefan-grossmann-1
+Source: https://opengameart.org/content/free-music-pack-two-of-three
+Licence: CC-BY 4.0 (https://creativecommons.org/licenses/by/4.0/)
+
+Title: "Lost and Faltering"
+Creator: Eric Matyas (soundimage.org)
+Source: https://opengameart.org/content/lost-and-faltering
+Licence: CC-BY 4.0 (https://creativecommons.org/licenses/by/4.0/)
+
+Title: "Magic Moment"
+Creator: Music by Stefan Grossmann https://soundcloud.com/stefan-grossmann-1
+Source: https://opengameart.org/content/free-music-pack-two-of-three
+Licence: CC-BY 4.0 (https://creativecommons.org/licenses/by/4.0/)
+
+Title: "Merfolk Music Box"
+Creator: Monplaisir/Komiku
+Source: https://opengameart.org/content/poupis-incredible-adventures-full-album
+Licence: CC0 (https://creativecommons.org/publicdomain/zero/1.0/)
+
+Title: "Merfolk's Song"
+Creator: Monplaisir/Komiku
+Source: https://opengameart.org/content/poupis-incredible-adventures-full-album
+Licence: CC0 (https://creativecommons.org/publicdomain/zero/1.0/)
+
+Title: "Night Realm"
+Creator: DJ Uchuu
+Source: https://opengameart.org/content/night-realm
+Licence: CC-BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/), CC-BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/)
+
+Title: "Oceanside"
+Creator: TAD
+Source: https://opengameart.org/content/lofi-compilation
+Licence: CC0 (https://creativecommons.org/publicdomain/zero/1.0/)
+
+Title: "Princess Cheese Burger"
+Creator: Monplaisir/Komiku
+Source: https://opengameart.org/content/poupis-incredible-adventures-full-album
+Licence: CC0 (https://creativecommons.org/publicdomain/zero/1.0/)
+
+Title: "Rainy Forest"
+Creator: TAD
+Source: https://opengameart.org/content/lofi-compilation
+Licence: CC0 (https://creativecommons.org/publicdomain/zero/1.0/)
+
+Title: "Rising Moon"
+Creator: RandomMind
+Source: https://opengameart.org/content/fantasy-rising-moon
+Licence: CC0 (https://creativecommons.org/publicdomain/zero/1.0/)
+
+Title: "RPG Ambient 2"
+Creator: HitCtrl
+Source: https://opengameart.org/content/rpgambient2
+Licence: CC-BY 3.0 (https://creativecommons.org/licenses/by/3.0/)
+
+Title: "SIGNAL TO NOISE" 
+Creator: Scott Buckley 
+Source: https://www.scottbuckley.com.au/library/ephemera/
+Licence: CC-BY 4.0 (https://creativecommons.org/licenses/by/4.0/)
+
+Title: "Sincerely" 
+Creator: Kevin MacLeod (incompetech.com)
+Source: https://incompetech.com/wordpress/2019/07/2263/
+Licence: CC-BY 4.0 (https://creativecommons.org/licenses/by/4.0/)
+
+Title: "Space MTV"
+Creator: Monplaisir/Komiku
+Source: https://opengameart.org/content/poupis-incredible-adventures-full-album
+Licence: CC0 (https://creativecommons.org/publicdomain/zero/1.0/)
+
+Title: "Sunset on the beach"
+Creator: Monplaisir/Komiku
+Source: https://opengameart.org/content/poupis-incredible-adventures-full-album
+Licence: CC0 (https://creativecommons.org/publicdomain/zero/1.0/)
+
+Title: "Synthwave 4k"
+Creator: The Cynic Project / cynicmusic.com / pixelsphere.org
+Source: https://opengameart.org/content/calm-ambient-1-synthwave-4k
+Licence: CC0 (https://creativecommons.org/publicdomain/zero/1.0/)
+
+Title: "Synthwave 15k"
+Creator: The Cynic Project / cynicmusic.com / pixelsphere.org
+Source: https://opengameart.org/content/calm-ambient-2-synthwave-15k
+Licence: CC0 (https://creativecommons.org/publicdomain/zero/1.0/)
+
+Title: "Tetros Arcade Cabinet"
+Creator: Monplaisir/Komiku
+Source: https://opengameart.org/content/poupis-incredible-adventures-full-album
+Licence: CC0 (https://creativecommons.org/publicdomain/zero/1.0/)
+
+Title: "That Feeling You Give Me"
+Creator: bbatv1
+Source: https://opengameart.org/content/peace-is-king-here
+Licence: CC-BY 3.0 (https://creativecommons.org/licenses/by/3.0/)
+
+Title: "Together we are stronger"
+Creator: Monplaisir/Komiku
+Source: https://opengameart.org/content/poupis-incredible-adventures-full-album
+Licence: CC0 (https://creativecommons.org/publicdomain/zero/1.0/)
+
+Title: "Vaporware"
+Creator: The Cynic Project / cynicmusic.com / pixelsphere.org
+Source: https://opengameart.org/content/calm-piano-1-vaporware
+Licence: CC0 (https://creativecommons.org/publicdomain/zero/1.0/)

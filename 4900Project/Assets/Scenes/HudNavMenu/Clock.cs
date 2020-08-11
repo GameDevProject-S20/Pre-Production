@@ -17,8 +17,16 @@ public class Clock : MonoBehaviour
         gameTime = gameTime.AddDays(DataTracker.Current.dayCount);
         gameTime = gameTime.AddHours(DataTracker.Current.hourCount);
 
-        EventManager.Instance.OnTimeAdvance.AddListener((int i) => {
+        EventManager.Instance.OnTimeAdvance.AddListener((int i) =>
+        {
             gameTime = gameTime.AddHours(i);
+            UpdateText();
+        });
+
+        EventManager.Instance.OnCampfireEnded.AddListener(() =>
+        {
+            TimeSpan ts = new TimeSpan(6, 0, 0);
+            gameTime = gameTime.AddDays(1).Date + ts;
             UpdateText();
         });
 
