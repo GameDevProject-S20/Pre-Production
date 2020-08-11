@@ -214,10 +214,12 @@ namespace Assets.Scripts.Dialogue.Frontend
         protected IEnumerator PlayTextTypingAnimation()
         {
             var textMeshPro = textDisplay.GetComponent<TextMeshProUGUI>();
-            textMeshPro.ForceMeshUpdate();
 
-            int charCount = textMeshPro.textInfo.characterCount;
-            for (var i = textMeshPro.maxVisibleCharacters; i < charCount; i++)
+            int charCount = System.Text.RegularExpressions.Regex.Replace(textMeshPro.text, "<.*?>", String.Empty).Length;
+            int charactersPerUpdate = (int)Math.Floor(DataTracker.Current.SettingsManager.DialogueCharacters);
+            textMeshPro.ForceMeshUpdate();
+            for (var i = textMeshPro.maxVisibleCharacters; i < charCount; i+=charactersPerUpdate)
+
             {
                 textMeshPro.maxVisibleCharacters = i;
 
