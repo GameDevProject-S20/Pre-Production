@@ -214,16 +214,11 @@ namespace Assets.Scripts.Dialogue.Frontend
         protected IEnumerator PlayTextTypingAnimation()
         {
             var textMeshPro = textDisplay.GetComponent<TextMeshProUGUI>();
-<<<<<<< HEAD
             textMeshPro.ForceMeshUpdate();
 
             int charCount = textMeshPro.textInfo.characterCount;
-            for (var i = textMeshPro.maxVisibleCharacters; i < charCount; i++)
-=======
-            int charCount = System.Text.RegularExpressions.Regex.Replace(textMeshPro.text, "<.*?>", String.Empty).Length;
             int charactersPerUpdate = (int)Math.Floor(DataTracker.Current.SettingsManager.DialogueCharacters);
             for (var i = textMeshPro.maxVisibleCharacters; i < charCount; i+=charactersPerUpdate)
->>>>>>> Add a setting for how many keys update in each Dialogue typing cycle. Defaults to 1, can be increased up to 5
             {
                 textMeshPro.maxVisibleCharacters = i;
 
