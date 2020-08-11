@@ -35,7 +35,7 @@ public class QuestJournalWindow : MonoBehaviour
         // Grab text fields from SceneGraph (THESE ARE Erroneous. too ambigious)
         NameField = GameObject.Find("Quest Name").GetComponent<UnityEngine.UI.Text>();
         NameField.text = "";
-        DescriptionField = GameObject.Find("Quest Description").GetComponent<UnityEngine.UI.Text>();
+        DescriptionField = GameObject.Find("Description").GetComponent<UnityEngine.UI.Text>();
         DescriptionField.text = "";
         TaskField = GameObject.Find("Task Text").GetComponent<UnityEngine.UI.Text>();
         TaskField.text = "";
