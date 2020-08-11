@@ -524,6 +524,7 @@ public class JsonEncounterDataSource : IEncounterDataSource
                 var townId = Int16.Parse(args[0]);
                 var encId = Int16.Parse(args[1]);
                 e = new SetDialogueEncounterEffect(townId, encId);
+                UnityEngine.Debug.Log("Townid:" + townId + " EncID:" + encId); 
             }
             else if (command == "add_edge")
             {

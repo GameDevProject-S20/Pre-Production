@@ -136,7 +136,8 @@
 					"buttons": [
 						{
 							"effects": [
-								"@add_edge 124 125"
+								"@add_edge 124 125",
+								"@set_dialogue_encounter 0 2"
 							],
 							"next_page_id": 4
 					 	}
@@ -146,7 +147,6 @@
 					"id": 4,
 					"text": "Feel free to visit our local hospital if you need a little assistance. That bullet wound of yours looks like it could use some tending to.",
 					"effects": [
-						"@set_dialogue_encounter 0 2",
 						"@resolve"
 					]
 				}
