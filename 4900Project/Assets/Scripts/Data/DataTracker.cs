@@ -34,7 +34,7 @@ public class DataTracker : MonoBehaviour
     public int currentShopId = 0; // Needed if we want store to be their own scene. If we make the store window a prefab, we don't need this.
     public int currentLocationId = 1;
     public int dayCount = 0;
-    public int hourCount = 19; //ARL modified for testing. Return to 6
+    public int hourCount = 6;
     private void Awake() {
         if (_current != null && _current != this)
         {
