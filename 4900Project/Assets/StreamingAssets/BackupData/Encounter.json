@@ -276,21 +276,43 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "A lone gas station on the side of the road. The owner is offering fuel at a standard price.",
+					"text": "A lone gas station on the side of the road. The owner is offering fuel at various prices.",
 					"buttons": [
 						{
-							"text": "[Trade] Offer 1 scrap for 5 Fuel.",
+							"text": "[Trade] Offer 1 scrap for 7 Fuel.",
 							"conditions": [
 								"!has Scrap_Metal 1"
 							],
 							"effects": [
 								"@take Scrap_Metal 1",
-								"@give Fuel 5"
+								"@give Fuel 7"
 							],
 							"next_page_id": 2
 						},
 						{
-							"text": "[Leave]"
+							"text": "[Trade] Offer 4 Rations for 7 Fuel.",
+							"conditions": [
+								"!has Rations 4"
+							],
+							"effects": [
+								"@take Rations 4",
+								"@give Fuel 7"
+							],
+							"next_page_id": 2
+						},
+						{
+							"text": "[Trade] Offer 1 Medicine for 10 Fuel.",
+							"conditions": [
+								"!has Medicine 1"
+							],
+							"effects": [
+								"@take Medicine 1",
+								"@give Fuel 10"
+							],
+							"next_page_id": 2
+						},
+						{
+							"text": "[Leave] Nothing happens"
 						}
 					]
 				},
@@ -310,7 +332,29 @@
 							"next_page_id": 2
 						},
 						{
-							"text": "[Leave]"
+							"text": "[Trade] Offer 4 Rations for 7 Fuel.",
+							"conditions": [
+								"!has Rations 4"
+							],
+							"effects": [
+								"@take Rations 4",
+								"@give Fuel 7"
+							],
+							"next_page_id": 2
+						},
+						{
+							"text": "[Trade] Offer 1 Medicine for 10 Fuel.",
+							"conditions": [
+								"!has Medicine 1"
+							],
+							"effects": [
+								"@take Medicine 1",
+								"@give Fuel 10"
+							],
+							"next_page_id": 2
+						},
+						{
+							"text": "[Leave] Nothing happens"
 						}
 					]
 				}
@@ -1647,7 +1691,7 @@
 						}
 					]
 				}
-				
+
 			]
 		},
 		{
@@ -1918,8 +1962,8 @@
 			]
 		},
 		{
-			"valid": false,
-			"COMMENT": "currently can block, need or conditions or a third option",
+			"valid": true,
+			"COMMENT": "",
 			"encounter_id": 1003,
 			"tags": [],
 			"encounter_name": "Roadside repairs",
@@ -1928,11 +1972,11 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "As you're driving you hear a loud bang and a plume of black smoke comes from the engine. The damages are beyond you. Luckily an elderly mechanic crosses your path; \"You look like you're in a spot of trouble eh? I can help ya out if you make it worth my while.\"",
+					"text": "As you're driving you hear a loud bang and you notice fuel beginning to leak from your vehicle. The damages are beyond you. Luckily an elderly mechanic crosses your path; \"You look like you're in a spot of trouble eh? I can help ya out if you make it worth my while.\"",
 					"avatar_name": "Mechanic",
 					"buttons": [
 						{
-							"text": "[Trade] Repair your ship for 20 Scrap Metal and 15 Fuel",
+							"text": "[Trade] Repair your vehicle for 20 Scrap Metal and 15 Fuel",
 							"conditions": [
 								"!has Fuel 15",
 								"!has Scrap_Metal 20"
@@ -1944,13 +1988,24 @@
 							"next_page_id": 3
 						},
 						{
-							"text": "[Threaten with Hunting Rifle] Repair your ship, take 20 damage",
+							"text": "[Threaten with Hunting Rifle] Repair your vehicle, take 20 damage",
 							"conditions": [
 								"!has Hunting_Rifle 1"
 							],
 							"next_page_id": 4
+						},
+						{
+							"text": "[Stubborn] Get out and push, Lose all Fuel",
+							"effects": [
+								"@take Fuel 10000"
+							],
+							"next_page_id": 2
 						}
 					]
+				},
+				{
+					"id": 2,
+					"text": "You know a price gouge when you see one. You'll get back to town on your own terms."
 				},
 				{
 					"id": 3,
@@ -1961,7 +2016,7 @@
 					"text": "Seeing an opportunity, you pull out your weapon and tell the mechanic to get to work, they oblige. After the work is complete you leave without a second thought.",
 					"buttons": [
 						{
-							"text": "[Examine engine]",
+							"text": "[Examine repairs]",
 							"effects": [
 								"@health -20"
 							],
@@ -1971,7 +2026,7 @@
 				},
 				{
 					"id": 5,
-					"text": "You open the engine to inspect the work but trigger a small explosion. Pieces of shrapnel litter your arm; it seems the mechanic thought you deserving of a little surprise..."
+					"text": "You open the hood to inspect the work but trigger a small explosion. Pieces of shrapnel litter your arm; it seems the mechanic thought you deserving of a little surprise..."
 				}
 			]
 		},
@@ -2041,7 +2096,7 @@
 		},
 		{
 			"valid": true,
-			"COMMENT": "if we get random next page change the text for the outcome avatar name something like 'unwell merchant'",
+			"COMMENT": "avatar name something like 'unwell merchant'",
 			"encounter_id": 1006,
 			"tags": [],
 			"encounter_name": "Loot Crate",
@@ -2132,8 +2187,8 @@
 			"dialogue_tree": []
 		},
 		{
-			"valid": false,
-			"COMMENT": "Aaron will add stuff to let this be added. Also requires ship/crew upgrades don't exist yet, unfortunately cannot give a lot of flavor text for each outcome",
+			"valid": true,
+			"COMMENT": "hacked together since we lacked random_page, unfortunately deterministic",
 			"encounter_id": 1008,
 			"tags": [],
 			"encounter_name": "Gameshow",
@@ -2149,25 +2204,21 @@
 							"next_page_id": 2
 						},
 						{
-							"text": "[Aggressive] Threaten your captors",
+							"text": "[Indignation] Threaten your captors",
 							"next_page_id": 2
 						},
 						{
-							"text": "[Shrewed] Quitely observe the situation",
+							"text": "[Tactician] Quitely observe the situation",
 							"next_page_id": 2
 						}
 					]
 				},
 				{
 					"id": 2,
-					"text": "Blinding spotlights flash to life revealing a cheering crowd, with armed guards and cameras everywhere. Next to you is a large game wheel. The restraints release and the crowd begins chanting ever louder “Spin! Spin! Spin!”",
+					"text": "Nothing happens for awhile, then suddenly blinding spotlights flash to life revealing a cheering crowd, with armed guards and cameras everywhere. Next to you is a large game wheel. The restraints release and the crowd begins chanting ever louder “Spin! Spin! Spin!”",
 					"buttons": [
 						{
 							"text": "[Spin Wheel] Unknown outcome",
-							"effects": [
-								"@take Medicine 4",
-								"@random 0.5 (@random 0.5 (@health_max% -10) (@health% -20)) (@random 0.5 (@random 0.5 (@give Jewelry 3) (@give Jewelry 4)) (@give Jewelry 5))"
-							],
 							"next_page_id": 3
 						},
 						{
@@ -2176,17 +2227,57 @@
 								"@health% 100",
 								"@health% -100"
 							],
-							"next_page_id": 2
+							"next_page_id": 8
 						}
 					]
 				},
 				{
-					"id": 2,
-					"text": ""
+					"id": 8,
+					"text": "\"What is bravery without a dash of recklessness\" you ask yourself. You'd soon learn the answer. Before you can even make it 10 yards you're jabbed in the neck with a cattle prod and beaten unconscious by the guards. You're surprised when you somehow to wake up next to your ship, still barely alive."
 				},
 				{
 					"id": 3,
-					"text": ""
+					"text": "The wheel lands on a symbol with no meaning to you, and before appears you a panel of four buttons with words you cannot decipher",
+					"buttons": [
+						{
+							"text": "[Option 1] ???",
+							"effects": [
+								"@health% 100"
+							],
+							"next_page_id": 5
+						},
+						{
+							"text": "[Option 2] ???",
+							"next_page_id": 7
+						},
+						{
+							"text": "[Option 3] ???",
+							"next_page_id": 6
+						},
+						{
+							"text": "[Option 4] ???",
+							"effects": [
+								"@health_max% -20"
+							],
+							"next_page_id": 4
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "The crowd cheers and you’re knocked out again. When you wake up you’re in your ship, immediately you feel pain and notice the heavy bandages around your chest. Still confused you take them off and find a large scar sealed with stitches. Alarmed but thankful to still be alive, you quickly continue on your way."
+				},
+				{
+					"id": 5,
+					"text": "The crowd cheers and you’re knocked out again, when you wake up you’re in your ship, you notice quickly however all your wounds have been treated. Hell, even the tears in your clothes were mended. Unsure if you should be thankful or scared and head still pounding, you quickly fly your ship away."
+				},
+				{
+					"id": 6,
+					"text": "The crowd cheers and you’re knocked out again, when you wake up you’re in your ship, nothing is missing or damaged, but there’s no sign of your first mate, your other crew are confused when you ask and insist that the person you're referring to has never existed. Unsure if you're losing it, head still pounding, you quickly fly your ship away."
+				},
+				{
+					"id": 7,
+					"text": "The crowd cheers and you’re knocked out again, when you wake up you’re in your ship, to your shock there is a dishevelled stranger next to you. Terrified, they beg you to take them and the ship far away from this place, before the troupe decides to return. You could use the help and don't want to stay here any longer either."
 				}
 			]
 		},
@@ -2240,9 +2331,9 @@
 					"text": "You find an old military barracks while travelling, seemingly still stocked with some supplies.",
 					"buttons": [
 						{
-							"text": "[Raid Infirmary] Heal 30% hp",
+							"text": "[Raid Infirmary] Heal 50% hp",
 							"effects": [
-								"@health% 30"
+								"@health% 50"
 							],
 							"next_page_id": 3
 						},
@@ -2300,27 +2391,21 @@
 					"text": "Greed gets the better of you and you grab the RPG - then something starts beeping. Your gut was right and the trap is sprung.",
 					"buttons": [
 						{
-							"text": "[Graze] Take 20% damage",
+							"text": "[Graze] Take 25% damage",
 							"effects": [
-								"@health% -20"
+								"@health% -25"
 							],
 							"next_page_id": 4
 						},
 						{
-							"text": "[Full Impact] Lose 10% max hp",
+							"text": "[Full Impact] Lose 7% max hp",
 							"effects": [
-								"@health_max% -10"
+								"@health_max% -7"
 							],
 							"next_page_id": 5
 						},
 						{
 							"text": "[Sacrifice] <<WIP>> Lose a random crew member",
-							"conditions": [
-								"!has fuel 10000"
-							],
-							"effects": [
-								"@health 1"
-							],
 							"next_page_id": 6
 						}
 					]
@@ -2363,18 +2448,18 @@
 					"text": "You gather that each vial contains a variant of nanobots. One will heal you at the cost of reducing your life expectancy, the other will temporarily cripple you but make your body behave as if you were a decade younger in the long term.",
 					"buttons": [
 						{
-							"text": "[Vigor] Heal 30% hp, lose 5% max hp",
+							"text": "[Vigor] Heal 30% hp, lose 6% max hp",
 							"effects": [
 								"@health% 30",
-								"@health_max% -5"
+								"@health_max% -6"
 							],
 							"next_page_id": 2
 						},
 						{
-							"text": "[Longevity] Gain 5% max hp, lose 30% hp",
+							"text": "[Longevity] Gain 6% max hp, lose 30% hp",
 							"effects": [
 								"@health% -30",
-								"@health_max% 5"
+								"@health_max% 6"
 							],
 							"next_page_id": 3
 						}
@@ -2392,7 +2477,7 @@
 		},
 		{
 			"valid": false,
-			"COMMENT": "max hp, upgrades",
+			"COMMENT": "requires upgrades",
 			"encounter_id": 1013,
 			"tags": [],
 			"encounter_name": "No Pain, No Gain",
@@ -2445,15 +2530,73 @@
 			]
 		},
 		{
-			"valid": false,
-			"COMMENT": "quest support",
+			"valid": true,
+			"COMMENT": "could have a quest as an option to get help from their town, talk to town leader",
 			"encounter_id": 1015,
 			"tags": [],
 			"encounter_name": "Fasting",
 			"conditions": [],
 			"town_name": null,
 			"dialogue_tree": [
-				"stuff"
+				{
+					"id": 1,
+					"text": "You come across a group of stranded travellers, you don’t have enough room in your ship to transport them all. Not wanting to leave anyone behind they ask if you’ve any food or fuel to spare, they have a doctor who could heal your wounds in exchange.",
+					"buttons": [
+						{
+							"text": "[Offer Fuel] Give 25 Fuel, gain 25% health.",
+							"conditions": [
+								"!has Fuel 25"
+							],
+							"effects": [
+								"@health% 30",
+								"@take Fuel 25"
+							],
+							"next_page_id": 3
+						},
+						{
+							"text": "[Offer Rations] Give 15 Rations, gain 15% health.",
+							"conditions": [
+								"!has Rations 15"
+							],
+							"effects": [
+								"@health% 15",
+								"@take Rations 15"
+							],
+							"next_page_id": 4
+						},
+						{
+							"text": "[Malevolence] Threaten with Hunting Rifle, gain 20% health, lose reputation.",
+							"conditions": [
+								"!has Hunting_Rifle 1"
+							],
+							"effects": [
+								"@take Hunting_Rifle 1",
+								"@health% 20"
+							],
+							"next_page_id": 5
+						},
+						{
+							"text": "[Abandon] Leave them to die.",
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "You apologize saying you don’t have anything to spare. When they ask you to tell their sheriff what’s happened to them you say yes to avoid confrontation, but unfortunately for them you have neither the time nor desire to help these people."
+				},
+				{
+					"id": 3,
+					"text": "Grateful that they can finally escape with the fuel you’ve given them, the doctor gets to work mending your wounds with what little supplies they had left. When they’re done you feel noticeably better. Happy with the exchange you both set out to continue your journeys."
+				},
+				{
+					"id": 4,
+					"text": "While they would have preferred to be able to escape, they’re grateful that you’ve given them enough food to survive hopefully long enough for another vessel to find them. The doctor gets to work mending your wounds with what little supplies they had left. When they’re done you feel noticeably better and continue on your way."
+				},
+				{
+					"id": 5,
+					"text": "You draw your gun and threaten take everything they have unless the doctor heals you. One of the men steps forward to challenge you but regrets it after you pull the trigger. The doctor agrees to heal you on the condition you don't shoot anyone else. When they’re done you feel noticeably better and continue on your way, though looking back you fear stories may spread if they survive somehow."
+				}
 			]
 		},
 		{
@@ -2472,10 +2615,10 @@
 					"text": "You spot a cluster of scrap in some turbulent looking space, feeling lucky you decide to go for it. Unfortunately you got more than you bargained for and now have to choose between taking some asteroid hits to get the loot or dropping some weight to escape.",
 					"buttons": [
 						{
-							"text": "[Collect] Gain 30 Scrap Metal, lose 10 health",
+							"text": "[Collect] Gain 7 Iron Ore, lose 15 health",
 							"effects": [
-								"@give Scrap_Metal 30",
-								"@health -10"
+								"@give Iron_Ore 7",
+								"@health -15"
 							],
 							"next_page_id": 2
 						},
@@ -2512,33 +2655,33 @@
 					"text": "You come across a somewhat sketchy looking lab; so of course you decide to dock and see what you can find. The bay doors close behind you and you are greeted by an enigmatic figure who offers to grant various requests in exchange for \"Samples\"",
 					"buttons": [
 						{
-							"text": "[Sustenance] Gain 20 Rations or Fuel, lose 15% health",
+							"text": "[Sustenance] Gain 20 Rations or Fuel, lose 12% health",
 							"effects": [
 								"@random 0.5 (@give Rations 20) (@give Fuel 20)",
-								"@health% -15"
+								"@health% -12"
 							],
 							"next_page_id": 3
 						},
 						{
-							"text": "[Greed] Gain a random Luxury item, lose 15% health",
+							"text": "[Greed] Gain a random Luxury item, lose 12% health",
 							"effects": [
 								"@give_tag Luxury 1",
-								"@health% -15"
+								"@health% -12"
 							],
 							"next_page_id": 4
 						},
 						{
-							"text": "[Longevity] Gain 3% max hp, lose 15% health",
+							"text": "[Longevity] Gain 3% max hp, lose 12% health",
 							"effects": [
 								"@health_max% 3",
-								"@health% -15"
+								"@health% -12"
 							],
 							"next_page_id": 5
 						},
 						{
-							"text": "[Escape] Ask to leave, lose 15% health",
+							"text": "[Escape] Ask to leave, lose 12% health",
 							"effects": [
-								"@health% -15"
+								"@health% -12"
 							],
 							"next_page_id": 6
 						}
@@ -2549,33 +2692,33 @@
 					"text": "Well? What is it?",
 					"buttons": [
 						{
-							"text": "[Sustenance] Gain 20 Rations or Fuel, lose 15% health",
+							"text": "[Sustenance] Gain 20 Rations or Fuel, lose 12% health",
 							"effects": [
 								"@random 0.5 (@give Rations 20) (@give Fuel 20)",
-								"@health% -15"
+								"@health% -12"
 							],
 							"next_page_id": 3
 						},
 						{
-							"text": "[Greed] Gain a random Luxury item, lose 15% health",
+							"text": "[Greed] Gain a random Luxury item, lose 12% health",
 							"effects": [
 								"@give_tag Luxury 1",
-								"@health% -15"
+								"@health% -12"
 							],
 							"next_page_id": 4
 						},
 						{
-							"text": "[Longevity] Gain 3% max hp, lose 15% health",
+							"text": "[Longevity] Gain 3% max hp, lose 12% health",
 							"effects": [
 								"@health_max% 3",
-								"@health% -15"
+								"@health% -12"
 							],
 							"next_page_id": 5
 						},
 						{
-							"text": "[Escape] Ask to leave, lose 15% health",
+							"text": "[Escape] Ask to leave, lose 12% health",
 							"effects": [
-								"@health% -15"
+								"@health% -12"
 							],
 							"next_page_id": 6
 						}
@@ -2795,23 +2938,138 @@
 		},
 		{
 			"valid": false,
-			"COMMENT": "would losing %s of resources and tags in conditions",
+			"COMMENT": "requires has_tag should work otherwise",
 			"encounter_id": 1021,
 			"tags": [],
 			"encounter_name": "Unlucky decision",
 			"conditions": [],
 			"town_name": null,
-			"dialogue_tree": []
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Tired of your relatively uneventful journey thus far, you decided to take a shortcut through some more questionable territory. Considering the ambush you find yourself in now that may have been a mistake.",
+					"buttons": [
+						{
+							"text": "[Pay the toll] lose 100% of a random Luxury good",
+							"conditions": [
+								"!has_tag Luxury"
+							],
+							"effects": [
+								"@take_tag Luxury 10000"
+							],
+							"next_page_id": 2
+						},
+						{
+							"text": "[Pay the toll] lose 100% of a random Combat resource",
+							"conditions": [
+								"!has_tag Combat"
+							],
+							"effects": [
+								"@take_tag Combat 10000"
+							],
+							"next_page_id": 2
+						},
+						{
+							"text": "[Pay the toll] lose 100% of a random Medical resource",
+							"conditions": [
+								"!has_tag Medical"
+							],
+							"effects": [
+								"@take_tag Medical 10000"
+							],
+							"next_page_id": 2
+						},
+						{
+							"text": "[Pay the toll] lose 100% of your Fuel",
+							"effects": [
+								"@take Fuel 10000"
+							],
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "You meekly pay the toll for trespassing and leave with your life."
+				}
+			]
 		},
 		{
-			"valid": false,
-			"COMMENT": "upgrades, crew, resource %s, would losing %s of resources and tags in conditions, special effects like 'all healing recieved reduced by 70%' or something. unlikely to happen",
+			"valid": true,
+			"COMMENT": "",
 			"encounter_id": 1022,
 			"tags": [],
-			"encounter_name": "Lottery",
+			"encounter_name": "Deal with the Devil",
 			"conditions": [],
 			"town_name": null,
-			"dialogue_tree": []
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "As you continue down the road you notice you’ve repeatedly passed the same dishevelled looking traveller. You stop to investigate and the stranger asks you to make a deal.",
+					"buttons": [
+						{
+							"text": "[Hasty Bargain] Gain 100% max hp, set your current hp to 1",
+							"effects": [
+								"@health_max% 100",
+								"@health% 100"
+							],
+							"next_page_id": 2
+						},
+						{
+							"text": "[Panacea] Gain 45 Medical supplies, Lose 50% max hp",
+							"effects": [
+								"@give Medicine 15",
+								"@give Medical_Kit 15",
+								"@give Surgical_Equipment 15",
+								"@health_max% -50"
+							],
+							"next_page_id": 4
+						},
+						{
+							"text": "[Doppelganger] <<WIP>> Gain a crew member, Lose 50% max hp",
+							"effects": [
+								"@health_max% -50"
+							],
+							"next_page_id": 5
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "The stranger grabs your hand and at first you feel a surge of vitality course through. \"Pleasure doing business with you.\" the stranger chuckles.",
+					"buttons": [
+						{
+							"text": "[Reckoning] Pay the price",
+							"effects": [
+								"@health% -100"
+							],
+							"next_page_id": 3
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Immediately, you fall to the ground and writhe in inconceivable anguish, it feels like fire surging through your veins while every nerve is stabbed with a thousand needles. The pain lasted only seconds but it felt like an eternity. Gasping for air as the pain recedes, you watch the stranger - appearing considerably younger - cackle as they walk away."
+				},
+				{
+					"id": 4,
+					"text": "The stranger grabs your hand and you fall to the ground feeling like you've just been run through by a jagged blade, gasping through the pain you find no wound and a stack of medical supplies next to you. \"Pleasure doing business with you.\" the stranger cackles, you can't tell for sure but somehow they appear considerably younger walking away."
+				},
+				{
+					"id": 5,
+					"text": "The stranger grabs your hand and you fall to the ground feeling like you've just been run through by a jagged blade. The stranger's grip tightens, wheezing through the pain you watch in horror as their face melds and shifts until it is your own face looking back at you.",
+					"buttons": [
+						{
+							"text": "[Bewilderment] Do nothing.",
+							"next_page_id": 6
+						}
+					]
+				},
+				{
+					"id": 6,
+					"text": "The pain disappears as stranger pulls you to your feet cackling, \"Pleasure doing business with you, Captain\". Afriad of what might happen if you try to go back on the deal, you bring them to your ship and continue on your way"
+				}
+			]
 		},
 		{
 			"valid": false,
@@ -2825,7 +3083,7 @@
 		},
 		{
 			"valid": false,
-			"COMMENT": "crew",
+			"COMMENT": "crew --- VERB LIST: terror, tactician, setup, vigilance, foresight, indignation, deus ex machina, apotheosis, judgement, discovery, panacea, doubt, decay, malaise, symbiote, courier",
 			"encounter_id": 1024,
 			"tags": [],
 			"encounter_name": "Recruitment Office",
@@ -2865,6 +3123,103 @@
 		},
 		{
 			"valid": true,
+			"encounter_id": 1026,
+			"COMMENT": "out of fuel",
+			"tags": [],
+			"encounter_name": "Oof",
+			"conditions": [],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "After pushing your vehicle for hours you trip and hit your teeth against your rear bumper on the way down",
+					"buttons": [
+						{
+							"text": "[Ow] lose 5 hp.",
+							"effects": [
+								"@health -5"
+							],
+							"next_page_id":2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "You lay face down in the dirt for a few minutes before finding the motivation to get up and continue pushing."
+				}
+			]
+		},
+		{
+			"valid": true,
+			"encounter_id": 1027,
+			"COMMENT": "out of fuel",
+			"tags": [],
+			"encounter_name": "Coyotes",
+			"conditions": [],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "After pushing your vehicle for hours you stop to take a small break when you hear a twig snap",
+					"buttons": [
+						{
+							"text": "[Vigilance] Listen closer.",
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "you hear the bushes rustle and rise to your feet. You hear a low growl as 3 Coyotes begin to charge you from the darkness.",
+					"buttons": [
+						{
+							"text": "[Adrenaline] Fight them off with your fists, Gain 3 Fresh Meat, Lose 25 hp.",
+							"effects": [
+								"@health -25",
+								"@give Fresh_Meat 3"
+							],
+							"next_page_id":3
+						},
+						{
+							"text": "[Carnage] Fight them off with your Hunting Rifle, Gain 3 Fresh Meat, Lose 10 hp.",
+							"conditions":[
+								"!has Hunting_Rifle 1"
+							],
+							"effects": [
+								"@take Hunting_Rifle 1",
+								"@give Fresh_Meat 3",
+								"@health -10"
+							],
+							"next_page_id":4
+						},
+						{
+							"text": "[Brutality] Fight them off with an RPG.",
+							"conditions":[
+								"!has RPG 1"
+							],
+							"effects": [
+								"@take RPG 1"
+							],
+							"next_page_id":5
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "You smash the bottle you were drinking from and fight for your life. Once the dust settles you're covered in blood, not all of it yours. You harvest the meat from the corpses, might as well get a meal for your efforts."
+				},
+				{
+					"id": 4,
+					"text": "You bolt for your gun and shoot the first two before they reach you, the third sinks its teeth into your exposed leg. Ignoring the pain you finish the fight. You harvest the meat from the corpses, might as well get a meal for your efforts."
+				},
+				{
+					"id": 5,
+					"text": "You bolt for your RPG and fire. The blast singes off your eyebrows and splatters you with viscera. As if you didn't need a shower before, today is just not your day."
+				}
+			]
+		},
+		{
+			"valid": true,
 			"encounter_id": 1200,
 			"tags": [],
 			"encounter_name": "Earthquake",
@@ -2876,7 +3231,7 @@
 					"text": "You're driving through an unremarkable plain when a you hear a faint rumbling, steadily getting louder. Soon, your entire vehicle is violently shaking.",
 					"buttons": [
 						{
-							"text": "[Tricorder] Take measurements.",
+							"text": "[Discovery] Take measurements via Tricorder.",
 							"conditions": [
 								"!has Tricorder 1"
 							],
@@ -2886,9 +3241,8 @@
 							"next_page_id":2
 						},
 						{
-							"text": "Wait out the earthquake.",
+							"text": "[Terror] Wait out the earthquake.",
 							"next_page_id":3
-
 						}
 					]
 				},

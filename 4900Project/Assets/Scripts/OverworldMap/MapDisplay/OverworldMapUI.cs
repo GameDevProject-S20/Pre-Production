@@ -87,6 +87,8 @@ public class OverworldMapUI : MonoBehaviour
     enum ColourModes {Default, Probability}
     ColourModes colourMode = ColourModes.Default;
 
+    bool CRRunning = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -128,10 +130,17 @@ public class OverworldMapUI : MonoBehaviour
 
     }
 
-    private void RedrawMap()
+    public void RedrawMap()
     {
         Clear();
+        if(!CRRunning)StartCoroutine(RedrawCoroutine());
+    }
+
+    IEnumerator RedrawCoroutine(){
+        CRRunning = true;
+        yield return 0;
         DrawGraph();
+        CRRunning = false;
     }
 
     void ShowSidePanel(){
@@ -145,14 +154,15 @@ public class OverworldMapUI : MonoBehaviour
 
     private void Clear()
     {
-        foreach (Transform child in NodesContainer.transform)
+        foreach (Transform child in PathsContainer)
         {
-            GameObject.Destroy(child.gameObject);
+            Destroy(child.gameObject);
         }
-        foreach (Transform child in PathsContainer.transform)
+        foreach (Transform child in NodesContainer)
         {
-            GameObject.Destroy(child.gameObject);
+            Destroy(child.gameObject);
         }
+
     }
 
     private void DrawGraph()
@@ -196,16 +206,23 @@ public class OverworldMapUI : MonoBehaviour
             lineEnds[1] = b;
             lr.SetPositions(lineEnds);
             line.transform.SetParent(PathsContainer, true);
-            line.GetComponent<Edge>().init(
-                NodesContainer.Find(edge.Item1.Name).GetComponent<MapNode>(),
-                NodesContainer.Find(edge.Item2.Name).GetComponent<MapNode>()
-            );
+            MapNode mn1 = NodesContainer.Find(edge.Item1.Name).GetComponent<MapNode>();
+            MapNode mn2 = NodesContainer.Find(edge.Item2.Name).GetComponent<MapNode>();
+
+            Edge e = line.GetComponent<Edge>();
+            e.init(mn1, mn2);
             if (edge.Item1.Id == DataTracker.Current.currentLocationId || edge.Item2.Id == DataTracker.Current.currentLocationId)
             {
                 lr.material = pathHighlightMaterial;
             }
         }
-
+        if (colourMode == ColourModes.Probability){
+            EventManager.Instance.SetViewProbability.Invoke();
+        }
+        else if (colourMode == ColourModes.Default){
+            EventManager.Instance.SetViewDefault.Invoke();
+        }
+        EventManager.Instance.OnColourChange.Invoke(); 
     }
 
     public void ToggleColourMode(){

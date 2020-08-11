@@ -215,9 +215,10 @@ namespace Assets.Scripts.Dialogue.Frontend
         {
             var textMeshPro = textDisplay.GetComponent<TextMeshProUGUI>();
             textMeshPro.ForceMeshUpdate();
-
             int charCount = textMeshPro.textInfo.characterCount;
-            for (var i = textMeshPro.maxVisibleCharacters; i < charCount; i++)
+            int charactersPerUpdate = (int)Math.Floor(DataTracker.Current.SettingsManager.DialogueCharacters);
+            for (var i = textMeshPro.maxVisibleCharacters; i < charCount; i+=charactersPerUpdate)
+
             {
                 textMeshPro.maxVisibleCharacters = i;
 
