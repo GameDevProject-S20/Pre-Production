@@ -38,7 +38,7 @@ public class SimpleCameraController : MonoBehaviour
     float panBorderSize = 80;
 
     bool active = true;
-
+    int FreezeCount = 0;
     float zoom;
 
     [SerializeField]
@@ -46,8 +46,18 @@ public class SimpleCameraController : MonoBehaviour
 
     private void Awake()
     {
-        EventManager.Instance.FreezeMap.AddListener(() => { active = false; });
-        EventManager.Instance.UnfreezeMap.AddListener(() => { active = true; });
+        EventManager.Instance.FreezeMap.AddListener(() => {
+            active = false;
+            FreezeCount++;
+        });
+        EventManager.Instance.UnfreezeMap.AddListener(() => {
+            FreezeCount--;
+            if (FreezeCount <= 0)
+            {
+                FreezeCount = 0;
+                active = true;
+            }
+        });
         zoom = transform.position.y;
     }
 
@@ -59,10 +69,8 @@ public class SimpleCameraController : MonoBehaviour
             GeneralPurposeControl(); //WSAD! 
             MouseScrollControl();
             MouseDragControl();
+            transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, zoom, transform.position.z), Time.deltaTime * zoomTimeMultiplier);
         }
-
-        transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, zoom, transform.position.z), Time.deltaTime * zoomTimeMultiplier);
-
     }
 
     // WSAD controls

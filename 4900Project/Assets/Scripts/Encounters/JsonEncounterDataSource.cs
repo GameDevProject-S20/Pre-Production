@@ -544,6 +544,14 @@ public class JsonEncounterDataSource : IEncounterDataSource
                 var name = args[0];
                 e = new TriggerEventEffect(name);
             }
+            else if (command == "resident")
+            {
+                var addOrRemove = args[0];
+                var residentName = args[1];
+                var townName = args[2];
+
+                e = new ResidentEffect(addOrRemove, residentName, townName);
+            }
             else if (command == "random")
             {
                 // Parsing works differently, so args must be overhauled

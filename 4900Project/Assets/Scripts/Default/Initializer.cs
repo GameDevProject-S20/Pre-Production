@@ -66,7 +66,22 @@ public class Initializer : MonoBehaviour
             )
 
             .AddStage(new Stage.Builder("Bring generator to Smithsville.")
-                .AddCondition(new EncounterCompleteCondition("Deliver the generator to the sheriff of Smithsville.", 2)
+                .AddCondition(new EncounterCompleteCondition("Talk to the sheriff of Smithsville.", 2)
+                )
+            )
+
+            .Build();
+
+        quest = new Quest.Builder("Machine Merchant")
+            .SetDescription("Steelton needs a replacement for some machinery.")
+
+            .AddStage(new Stage.Builder("Purchase heavy machinery in Frakton.")
+                .AddCondition(new TransactionCondition("Purchase heavy machinery.", "Heavy Machinery", 1, TransactionCondition.TransactionTypeEnum.BUY, TownManager.Instance.GetTownByName("Frakton").Id)
+                )
+            )
+
+            .AddStage(new Stage.Builder("Bring the machinery to Steelton.")
+                .AddCondition(new EncounterCompleteCondition("Talk to the Steelmaker in Steelton.", 211)
                 )
             )
 

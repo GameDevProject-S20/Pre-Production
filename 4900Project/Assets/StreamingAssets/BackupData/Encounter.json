@@ -521,9 +521,17 @@
 					"text": "Thanks for getting us that generator!",
 					"buttons": [
 						{
-							"text": "You're welcome!"
+							"text": "Can you tell me about Smithsville?",
+							"next_page_id": 2
+						},
+						{
+							"text": "[Leave] You're welcome!"
 						}
 					]
+				},
+				{
+					"id":2,
+					"text":"Smithsville's seen better days. Coastal collapse is leading more folks to move inland every day."
 				}
 			]
 		},
@@ -534,7 +542,40 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "Welcome to York! We don't specialize here, so feel free to trade us for anything!"
+					"text": "Welcome to York, traveller.",
+					"buttons": [
+						{
+							"text": "What should I trade here?",
+							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about York?",
+							"next_page_id": 3
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "We deal with all manner of goods. We have a medicine shortage at the moment.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Not many people make the trek out this far to visit. Not that I mind the peace and quiet.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
 				}
 			]
 		},
@@ -545,7 +586,40 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "Welcome to Frakton! We're a large city with no specialties. Feel free to trade us for anything you like!"
+					"text": "Greetings, merchant. How can I help you?",
+					"buttons": [
+						{
+							"text": "What should I trade here?",
+							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about Frakton?",
+							"next_page_id": 3
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "A city this size is always in need of food. We've got a small group of residents who value luxuries.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Frakton's been here since before the breaking. 'Course, it was a lot smaller back then.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
 				}
 			]
 		},
@@ -556,7 +630,40 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "Welcome to Alabaster! We're a large town. Make us any trades you'd like!"
+					"text": "Welcome to Alabaster. Are you here for medical aid?",
+					"buttons": [
+						{
+							"text": "What should I trade here?",
+							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about Alabaster?",
+							"next_page_id": 3
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Our patients are always in need of medical supplies and food.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Alabaster was built around the old world Alabaster Medical Center. In those days, the center was used to handle a pandemic.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
 				}
 			]
 		},
@@ -567,17 +674,40 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "Hello there! Welcome to New Ottawa. We're a large city with a hospital!",
+					"text": "Welcome to New Ottawa. Always great to see a caravan drive in!",
 					"buttons": [
 						{
-							"text": "Hello",
+							"text": "What should I trade here?",
 							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about New Ottawa?",
+							"next_page_id": 3
+						},
+						{
+							"text": "[Leave]"
 						}
 					]
 				},
 				{
 					"id": 2,
-					"text": "We don't need medicine. But we can always use advanced goods!"
+					"text": "New Ottawa has the largest factory in Laurentia. We can always use raw materials. We'll pay extra for steel.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "New Ottawa was built by refugees from the old Canadian capital. We're not quite sure how far away that was.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
 				}
 			]
 		},
@@ -588,7 +718,40 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "Hello there! Welcome to Rocket City! We're a large city with no specialties."
+					"text": "Greetings. We don't get many travellers out here.",
+					"buttons": [
+						{
+							"text": "What should I trade here?",
+							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about Rocket City?",
+							"next_page_id": 3
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "We don't get much food out here. Anything you bring will be highly valued.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Every day, I pass by the old spaceship hangers and hope. If only we could get them working...",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
 				}
 			]
 		},
@@ -599,29 +762,84 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "Welcome to Steelton! As our name would suggest, we specialize in steel. We're always looking for more minerals!"
+					"text": "[Your request for a meeting with a representative of the Coalition was denied. Your inquiries are directed to an automated system.]",
+					"buttons": [
+						{
+							"text": "What should I trade here?",
+							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about Steelton?",
+							"next_page_id": 3
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Answer: Steelton needs iron ore.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Answer: Steelton was built around an old steel mill. As the only mill on the fragment, it remains highly important.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
 				}
 			]
 		},
 		{
 			"encounter_id": 77,
-			"NOTE": "Said by the town leader for Big Rock",
-			"valid": true,
-			"dialogue_tree": [
-				{
-					"id": 1,
-					"text": "Hi there, welcome to Big Rock! We're a very general town. Make us any offers you'd like!"
-				}
-			]
-		},
-		{
-			"encounter_id": 78,
 			"NOTE": "Said by the town leader for Lombard",
 			"valid": true,
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "Welcome to Lombard! We are a town with no specialties. Feel free to trade us anything you'd like!"
+					"text": "Greetings, merchant. The pleasure is mine.",
+					"buttons": [
+						{
+							"text": "What should I trade here?",
+							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about Lombard?",
+							"next_page_id": 3
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Anything you can give to help our goal of Old World preservation would be appreciated.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Lombard is the oldest settlement on this fragment. Our museum holds artifacts from thousands of years ago. A history rapidly being forgotten, I'm afraid.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
 				}
 			]
 		},
@@ -632,17 +850,40 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "This is a bandit camp. You'd best be careful around here.",
+					"text": "[You are led to a lounge. Though you and Alex are the only ones here, you feel as if you are being watched.]\nWhat do you want?",
 					"buttons": [
 						{
-							"text": "I'm here to trade.",
+							"text": "What should I trade here?",
 							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about Skull?",
+							"next_page_id": 3
+						},
+						{
+							"text": "[Leave]"
 						}
 					]
 				},
 				{
 					"id": 2,
-					"text": "Here to trade, eh? We sell weapons. We'll give you them in exchange for food, building materials, or tools."
+					"text": "Food, materials, parts. All things we can't get with the big cities sanctioning us.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "No.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
 				}
 			]
 		},
@@ -653,17 +894,40 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "Welcome to the Fields! We're a small farming community.",
+					"text": "Welcome to Fields!",
 					"buttons": [
 						{
-							"text": "Want to make some trades?",
+							"text": "What should I trade here?",
 							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about Fields?",
+							"next_page_id": 3
+						},
+						{
+							"text": "[Leave]"
 						}
 					]
 				},
 				{
 					"id": 2,
-					"text": "We're always up for a good trade. We'll give you some food in exchange for materials and parts."
+					"text": "We're a simple farming town. We sell food to the big cities, and in turn they sell us materials and parts.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "There's nothing much to say, I'm afraid. We're just a group of people trying to get by.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
 				}
 			]
 		},
@@ -674,17 +938,40 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "Hi there, welcome to the carrot farm! We're a farming community.",
+					"text": "[A representative of the enigmatic Green Pact approaches]\n\n...",
 					"buttons": [
 						{
-							"text": "I'm here to trade.",
+							"text": "...what should I trade here?",
 							"next_page_id": 2
+						},
+						{
+							"text": "...can you tell me about Carrot Farm?",
+							"next_page_id": 3
+						},
+						{
+							"text": "[Leave]"
 						}
 					]
 				},
 				{
 					"id": 2,
-					"text": "Trade, hmm? That's great! We'll give you food in exchange for materials and parts!"
+					"text": "Machines. Tools. Materials. Parts.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "No. We do not have carrots. What is a carrot?",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
 				}
 			]
 		},
@@ -695,7 +982,40 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "Welcome to Sherbrooke! We're a farming town. We'll give you food in exchange for your materials and parts!"
+					"text": "Hello there. Welcome to Sherbrooke.",
+					"buttons": [
+						{
+							"text": "What should I trade here?",
+							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about Sherbrooke?",
+							"next_page_id": 3
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "We can always use materials, tools and parts for our farming equipment.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Sherbrooke's one of many farming communities that's sprung up to feed the people of Frakton.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
 				}
 			]
 		},
@@ -706,7 +1026,40 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "Welcome to the Riverbed! We're a small farming town. We'll trade you food in exchange for materials & parts!"
+					"text": "Welcome to Riverbed.",
+					"buttons": [
+						{
+							"text": "What should I trade here?",
+							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about Riverbed?",
+							"next_page_id": 3
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "We produce food, and we'll trade for materials, machinery and parts.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "'Course, the river's all dried up. Ain't nobody seen a river since the old days.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
 				}
 			]
 		},
@@ -717,7 +1070,40 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "Welcome to Bordevide! We sell food. We'll trade you for your materials and parts!"
+					"text": "Greetings. What brings you to Bordevide?",
+					"buttons": [
+						{
+							"text": "What should I trade here?",
+							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about Bordevide?",
+							"next_page_id": 3
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "There's always a demand for parts and building materials around here.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Why settle so close to the edge? I don't know. When you stand close, watching the other fragments float by... it's almost like there's no gap at all.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
 				}
 			]
 		},
@@ -728,7 +1114,40 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "Welcome to Respite! We're a farming town. We welcome materials & parts in exchange for our food!"
+					"text": "Take a seat, traveller. Catch your breath. You're in Respite.",
+					"buttons": [
+						{
+							"text": "What should I trade here?",
+							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about Respite?",
+							"next_page_id": 3
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Folks are always needing tools and materials. Scrap, nails, motor parts, that kind of stuff.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "The calm breeze, the gentle climate... You won't find anywhere nicer.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
 				}
 			]
 		},
@@ -739,20 +1158,40 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "Welcome to our small town! We're always looking for some good trades.",
+					"text": "Welcome to our small town. Here to see the sights?",
 					"buttons": [
 						{
-							"text": "[Sociable] What do you sell?",
+							"text": "What should I trade here?",
 							"next_page_id": 2
 						},
 						{
-							"text": "[Leave] Nothing happens."
+							"text": "Can you tell me about Farm-By-The-Island?",
+							"next_page_id": 3
+						},
+						{
+							"text": "[Leave]"
 						}
 					]
 				},
 				{
 					"id": 2,
-					"text": "We produce and sell food! We'll trade you in exchange for your building materials and parts."
+					"text": "We'll buy any machinery, parts or materials you might have.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Isn't it beautiful? The large island floating by? So close you could almost jump. I wonder if I'll ever get to stand on it.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
 				}
 			]
 		},
@@ -763,7 +1202,40 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "Welcome to Green Greens! We're a farming town. Feel free to trade us for our food!"
+					"text": "Kevin: Always a pleasure to see a visitor in our town. How can we help?",
+					"buttons": [
+						{
+							"text": "What should I trade here?",
+							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about Green Greens?",
+							"next_page_id": 3
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Do-yun: We'll buy materials and parts at a good price.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Kevin: You may think it strange that two people share the mayorship, but Do-yun's logistical skills and my farming experience are both invaluable.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
 				}
 			]
 		},
@@ -774,20 +1246,38 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "I'm Mayor X, welcome to the Dustbowl!",
+					"text": "Hello, merchant. You are welcomed here.",
 					"buttons": [
 						{
-							"text": "Hi Mayor X!",
+							"text": "What should I trade here?",
 							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about Dustbowl?",
+							"next_page_id": 3
+						},
+						{
+							"text": "[Leave]"
 						}
 					]
 				},
 				{
 					"id": 2,
-					"text": "We're farmers, so we sell food. We'll give you good deals for your materials & parts!",
+					"text": "Despite our name, we are a farming community. We'll buy any parts or materials you have.",
 					"buttons": [
 						{
-							"text": "Thanks!"
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "The settlers must have had a sense of humour. The soil here's as good as you'll find this side of Alabaster.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
 						}
 					]
 				}
@@ -800,20 +1290,38 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "Welcome to my town! We're all farmers here.",
+					"text": "Please, Jebediah was my father. Call me Jeb.",
 					"buttons": [
 						{
-							"text": "Hello there!",
+							"text": "What should I trade here?",
 							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about Jeb's Town?",
+							"next_page_id": 3
+						},
+						{
+							"text": "[Leave]"
 						}
 					]
 				},
 				{
 					"id": 2,
-					"text": "We sell food. We'll give you good deals for your materials & parts!",
+					"text": "Farms need parts and materials to keep running. And we all need farms to keep running, ha!",
 					"buttons": [
 						{
-							"text": "Thanks!"
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "This town was founded by my grandfather. Can you guess his name?",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
 						}
 					]
 				}
@@ -826,7 +1334,40 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "Welcome to Lanark Mine! We're a farming town. Feel free to trade us for some food!"
+					"text": "I'm afraid I'm quite busy, so this will have to be quick.",
+					"buttons": [
+						{
+							"text": "What should I trade here?",
+							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about Lanark Mine?",
+							"next_page_id": 3
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "We'll buy anything we need to keep the mine running. Be it food, machinery, or parts, we'll take it.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Lanark's been operating for nigh on 50 years, and it's got a good few decades left in it. Hopefully...",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
 				}
 			]
 		},
@@ -837,7 +1378,40 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "Welcome to Irony! We're a farming town. Feel free to trade us for some food!"
+					"text": "Hello there, merchant! Here to pick up?",
+					"buttons": [
+						{
+							"text": "What should I trade here?",
+							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about Irony?",
+							"next_page_id": 3
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "We need machinery, parts, food, medicine. Any general good, we could use.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Well, it's like rain on your wedding day.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
 				}
 			]
 		},
@@ -848,7 +1422,319 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "Welcome to Fin! We're a farming town. Feel free to trade us for some food!"
+					"text": "You actually made it to the end. Did we even program this part in?",
+					"buttons": [
+						{
+							"text": "What should I trade here?",
+							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about Fin?",
+							"next_page_id": 3
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Nothing. Or anything, I guess. You've won!",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Sure. Fin is what happpens when you hit the Escape key.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				}
+			]
+		},
+		{
+			"valid": true,
+			"encounter_id": 200,
+			"tags": [],
+			"encounter_name": "Soil Sampling",
+			"conditions": [],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "The locals give you puzzled stares as you dig at the soil on the outskirts of town. Ignoring them, you keep digging until you reach the right depth.",
+					"buttons": [
+						{
+							"text": "[Tricorder] Take measurements.",
+							"conditions": [
+								"!has Tricorder 1"
+							],
+							"effects": [
+								"@give Mineral_Data 1"
+							],
+							"next_page_id":2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "You grab a bit of soil and insert it into your tricorder's sample tray. The screen lights up with data on mineral composition and moisture levels."
+				}
+			]
+		},
+		{
+			"valid": true,
+			"encounter_id": 201,
+			"tags": [],
+			"encounter_name": "Atmospheric Sample",
+			"conditions": [],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "You arrive at the given coordinates.",
+					"buttons": [
+						{
+							"text": "[Tricorder] Take measurements.",
+							"conditions": [
+								"!has Tricorder 1"
+							],
+							"effects": [
+								"@give Atmospheric_Data 1"
+							],
+							"next_page_id":2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "You hold your tricorder in the air and collect data on chemical composition, atmospheric pressure and wind currents."
+				}
+			]
+		},
+		{
+			"valid": true,
+			"encounter_id": 210,
+			"tags": [],
+			"encounter_name": "Job Notice",
+			"conditions": [],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "[As you browse the town's bulletin board, you notice somebody is looking to hire a merchant caravan.]",
+					"buttons": [
+						{
+							"text": "Contact the poster.",
+							"next_page_id":2
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Hello! Thanks for coming to help. I'm from Steelton, not too far east of here. We make all the steel around these parts.",
+					"buttons": [
+						{
+							"text": "What's the problem?",
+							"next_page_id":3
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "I came here to buy a replacement for a machine which broke down. I brought a lot of steel to sell for it, but I lost my cargo on the way here.",
+					"buttons": [
+						{
+							"text": "You lost it?",
+							"next_page_id":4
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "Landslide. Cliff came down on top of me. Not too uncommon nowadays. I was lucky to get out alive.",
+					"buttons": [
+						{
+							"text": "How can I help?",
+							"next_page_id":5
+						}
+					]
+				},
+				{
+					"id": 5,
+					"text": "If you buy the replacement <color=#d9ae21>machinery</color> and bring it me in Steelton, I'll reward you. Will you help me?",
+					"buttons": [
+						{
+							"text": "Yes.",
+							"effects":[
+								"@start_quest Machine_Merchant",
+								"@give Scrap_Metal 5"
+							],
+							"next_page_id":7
+						},
+						{
+							"text": "No.",
+							"next_page_id":6
+						}
+					]
+				},
+				{
+					"id": 6,
+					"text": "Very well. I will have to find someone else."
+				},
+				{
+					"id": 7,
+					"text": "Thank you. Take this scrap - it was all I could salvage from the wreckage. It should help you buy the <color=#d9ae21>machinery</color>. Do you have any questions?",
+					"buttons": [
+						{
+							"text": "How can I afford the machinery?",
+							"next_page_id":8
+						},
+						{
+							"text": "How can I get to Steelton?",
+							"next_page_id":9
+						},
+						{
+							"text": "What is the machinery for?",
+							"next_page_id":10
+						},
+						{
+							"text": "No.",
+							"next_page_id":11
+						}
+					]
+				},
+				{
+					"id": 12,
+					"text": "What do you need?",
+					"buttons": [
+						{
+							"text": "How can I afford the machinery?",
+							"next_page_id":8
+						},
+						{
+							"text": "How can I get to Steelton?",
+							"next_page_id":9
+						},
+						{
+							"text": "What is the machinery for?",
+							"next_page_id":10
+						},
+						{
+							"text": "Nevermind.",
+							"next_page_id":11
+						}
+					]
+				},
+				{
+					"id": 8,
+					"text": "I wish I could give you more to trade. You'll have to find out what the store values and gather a lot of it.",
+					"buttons": [
+						{
+							"text": "I have more questions.",
+							"next_page_id":12
+						},
+						{
+							"text": "Thanks.",
+							"next_page_id":11
+						}
+					]
+				},
+				{
+					"id": 9,
+					"text": "Steelton is a medium town to the east of here. You'll find it just off the main road to Alabaster.",
+					"buttons": [
+						{
+							"text": "I have more questions.",
+							"next_page_id":12
+						},
+						{
+							"text": "Thanks.",
+							"next_page_id":11
+						}
+					]
+				},
+				{
+					"id": 10,
+					"text": "It's a large engine for carrying buckets of molten steel. Which, as you can imagine, is quite a weight to lift.",
+					"buttons": [
+						{
+							"text": "I have more questions.",
+							"next_page_id":12
+						},
+						{
+							"text": "Thanks.",
+							"next_page_id":11
+						}
+					]
+				},
+				{
+					"id": 11,
+					"text": "Alright. I'll be waiting for you in Steelton.",
+					"buttons": [
+						{
+							"text": "I'll be on my way.",
+							"effects":[
+								"@resident remove steelQuest1 Frakton",
+								"@resident add steelQuest2 Steelton"
+							]
+						}
+					]
+				}
+
+			]
+		},
+		{
+			"encounter_id": 211,
+			"NOTE": "Appears in Steelton after 2",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Do you have that new <color=#d9ae21>machinery</color>?",
+					"buttons": [
+						{
+							"text": "[Give machinery] Yes, I have it here.",
+							"conditions": [
+								"!has Heavy_Machinery 1"
+							],
+							"effects": [
+								"@take Heavy_Machinery 1"
+							],
+							"next_page_id": 2
+						},
+						{
+							"text": "Not yet.",
+							"next_page_id": 3
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "You're a life-saver. We'll pay you in steel, of course.",
+					"buttons": [
+						{
+							"effects": [
+								"@give steel 6",
+								"@resident remove steelQuest2 Steelton",
+								"@resolve"
+							]
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Alright. It's not vital... yet. Please bring the new <color=#d9ae21>machinery</color> soon."
 				}
 			]
 		}
@@ -2287,6 +3173,44 @@
 				{
 					"id": 5,
 					"text": "You bolt for your RPG and fire. The blast singes off your eyebrows and splatters you with viscera. As if you didn't need a shower before, today is just not your day."
+				}
+			]
+		},
+		{
+			"valid": true,
+			"encounter_id": 1200,
+			"tags": [],
+			"encounter_name": "Earthquake",
+			"conditions": [],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "You're driving through an unremarkable plain when a you hear a faint rumbling, steadily getting louder. Soon, your entire vehicle is violently shaking.",
+					"buttons": [
+						{
+							"text": "[Discovery] Take measurements via Tricorder.",
+							"conditions": [
+								"!has Tricorder 1"
+							],
+							"effects": [
+								"@give Seismic_Data 1"
+							],
+							"next_page_id":2
+						},
+						{
+							"text": "[Terror] Wait out the earthquake.",
+							"next_page_id":3
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Using your tricorder, you measure the seismic force and wave patterns."
+				},
+				{
+					"id": 3,
+					"text": "Luckily, you always wear your seatbelt, and the earthquake passes without causing any damage."
 				}
 			]
 		}
