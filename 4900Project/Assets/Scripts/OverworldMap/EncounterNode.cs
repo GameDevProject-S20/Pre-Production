@@ -74,6 +74,10 @@ public class EncounterNode
         return triggered;
     }
 
+    public void Delete(){
+        EventManager.Instance.OnTimeAdvance.RemoveListener(TimePass);
+    }
+
     public void SampleTexture(float x, float y)
     {
         int xMod = Mathf.RoundToInt(Mathf.Lerp(0, 800, (x + 1) / 2.0f));

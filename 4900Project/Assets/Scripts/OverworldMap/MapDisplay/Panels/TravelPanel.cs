@@ -10,7 +10,7 @@ public class TravelPanel : MonoBehaviour
 {
 
 
-    protected enum States { Closed, Open, Selected }
+    protected enum States { Closed, Open, Closing }
     protected States state;
 
     [SerializeField]
@@ -312,9 +312,6 @@ public class TravelPanel : MonoBehaviour
         }
     }
 
-    public void Select(){
-        state = States.Selected;
-    }
 
     private void Open()
     {
@@ -329,7 +326,7 @@ public class TravelPanel : MonoBehaviour
 
     private void Close()
     {
-        
+        state = States.Closing;
         Sequence s = DOTween.Sequence();
         s.Append(rt.DOScaleX(0, openTime));
         s.Insert(openTime / 2, pointerRt.DOScale(0, openTime));

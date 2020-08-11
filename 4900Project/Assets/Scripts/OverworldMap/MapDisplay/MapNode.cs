@@ -82,6 +82,13 @@ public class MapNode : MonoBehaviour
         EventManager.Instance.SetViewProbability.AddListener(ColourByProbability);
     }
 
+    private void OnDestroy() {
+        
+        EventManager.Instance.SetViewDefault.RemoveListener(ColourToBlack);
+        EventManager.Instance.SetViewProbability.RemoveListener(ColourByProbability);
+        if (encounterData != null) encounterData.Delete();
+    }
+
     void SetSprite(){
         if (NodeData.Type == OverworldMap.LocationType.NONE) {
             SpriteRenderer sprite =  transform.Find("Icon").GetComponent<SpriteRenderer>();

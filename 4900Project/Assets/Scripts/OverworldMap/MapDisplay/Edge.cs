@@ -14,6 +14,10 @@ public class Edge : MonoBehaviour
         lineRenderer = GetComponent<LineRenderer>();
         EventManager.Instance.OnColourChange.AddListener(Colour);
     }
+    private void OnDestroy() {
+        EventManager.Instance.OnColourChange.RemoveListener(Colour);
+    }
+
 
     void Colour(){
         Color color1 = Color.black;
