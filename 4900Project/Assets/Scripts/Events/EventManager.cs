@@ -73,6 +73,7 @@ namespace SIEvents
         public Events.MapEvents.LocationIdEvent OnEnterPOIButtonClick = new Events.MapEvents.LocationIdEvent();
         public UnityEvent FreezeMap = new UnityEvent();
         public UnityEvent UnfreezeMap = new UnityEvent();
+        public UnityEvent ForceUnfreezeMap = new UnityEvent(); 
         public Events.MapEvents.LocationIdEvent OnProbabilityChange = new Events.MapEvents.LocationIdEvent();
         public UnityEvent SetViewDefault = new UnityEvent();
         public UnityEvent SetViewProbability = new UnityEvent();
