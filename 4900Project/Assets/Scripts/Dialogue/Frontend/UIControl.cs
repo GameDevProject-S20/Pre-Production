@@ -193,10 +193,8 @@ namespace Assets.Scripts.Dialogue.Frontend
                 textMeshPro.text = "";
             }
 
-            // Resize the content based on what's already in the text
-            UpdatePageScrolling();
-
             textMeshPro.text = nextPageText;
+            UpdatePageScrolling();
             StartCoroutine(UpdatePage(currentPage.Buttons));
         }
 
@@ -216,8 +214,11 @@ namespace Assets.Scripts.Dialogue.Frontend
         protected IEnumerator PlayTextTypingAnimation()
         {
             var textMeshPro = textDisplay.GetComponent<TextMeshProUGUI>();
-            int charCount = System.Text.RegularExpressions.Regex.Replace(textMeshPro.text, "<.*?>", String.Empty).Length;
-            for (var i = textMeshPro.maxVisibleCharacters; i < charCount; i++)
+            textMeshPro.ForceMeshUpdate();
+            int charCount = textMeshPro.textInfo.characterCount;
+            int charactersPerUpdate = (int)Math.Floor(DataTracker.Current.SettingsManager.DialogueCharacters);
+            for (var i = textMeshPro.maxVisibleCharacters; i < charCount; i+=charactersPerUpdate)
+
             {
                 textMeshPro.maxVisibleCharacters = i;
 
@@ -260,11 +261,11 @@ namespace Assets.Scripts.Dialogue.Frontend
             }
             else
             {
-                // Based on that, we need to decide on alignment & positioning of the text.
-                // If we don't yet have a full Dialogue, we want everything displaying to the bottom (in which case we need to position it to the bottom);
-                //  otherwise, we want it to be displaying from the top, so that everything will be displayed. In this case, it positions to the top.
-                var alignment = (textHeight < scrollHeight) ? TextAlignmentOptions.Bottom : TextAlignmentOptions.Top;
-                var textPosition = (textHeight < scrollHeight) ? -scrollHeight : 0;
+                // The height of the Dialogue is determined by whether or not we have started scrolling yet.
+                // If textHeight >= scrollingHeight, then text is scrolling & we need to determine the size by -textHeight.
+                // Otherwise, if scrollHeight > textHeight, scrolling hasn't started yet & the size is determined by the height of the scroll box.
+                var alignment = TextAlignmentOptions.Bottom;
+                var textPosition = (textHeight < scrollHeight) ? -scrollHeight : -textHeight;
 
                 // Now that we have the variables stored, we can just go through and update:
                 // The contentRect displays the content of the frame. It needs to be sized to newHeight.

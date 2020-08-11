@@ -36,6 +36,11 @@ namespace Assets.Scripts.Settings
         public float DialogueSpeed { get; set; }
 
         /// <summary>
+        /// Number of characters to scroll by in the Dialogue. Defaults to 1, higher amount makes it go by faster.
+        /// </summary>
+        public float DialogueCharacters { get; set; }
+
+        /// <summary>
         /// Multiplier for the game volume. Lower value = lower volume.
         /// </summary>
         public float VolumeMultiplier { get; set; }

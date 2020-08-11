@@ -34,7 +34,7 @@ namespace Assets.Scripts.EscapeMenu.Interfaces
         /// Every Slider that the Escape Menu should be controlling, along with additional data
         /// </summary>
         public List<SettingsSliderData> sliders;
-
+        bool isOpen = false;
         // Public Methods
         /// <summary>
         /// Startup - Hook everything up
@@ -74,6 +74,7 @@ namespace Assets.Scripts.EscapeMenu.Interfaces
                 UnityEngine.Debug.Log($"The setting {setting} changed");
             });
             DataTracker.Current.EventManager.EscapeMenuRequested.AddListener(Toggle);
+            DataTracker.Current.EventManager.EscapeMenuCloseRequested.AddListener(Hide);
         }
 
         /// <summary>
@@ -101,6 +102,7 @@ namespace Assets.Scripts.EscapeMenu.Interfaces
         /// </summary>
         public void Show()
         {
+            isOpen = true;
             gameObject.GetComponent<Canvas>().enabled = true;
             DataTracker.Current.EventManager.FreezeMap.Invoke();
         }
@@ -110,8 +112,10 @@ namespace Assets.Scripts.EscapeMenu.Interfaces
         /// </summary>
         public void Hide()
         {
+            if(isOpen) {DataTracker.Current.EventManager.UnfreezeMap.Invoke();}
+
+            isOpen = false;
             gameObject.GetComponent<Canvas>().enabled = false;
-            DataTracker.Current.EventManager.UnfreezeMap.Invoke();
         }
 
         // Private Methods

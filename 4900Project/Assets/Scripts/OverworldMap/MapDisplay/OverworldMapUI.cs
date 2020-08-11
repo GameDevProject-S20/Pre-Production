@@ -58,6 +58,7 @@ public class OverworldMapUI : MonoBehaviour
 
     //Movement variables
     bool isActive = true;
+    int FreezeCount = 0; 
     bool isTravelling = false;
     float translateSmoothTime = 1f;
     Vector3 translatSmoothVelocity;
@@ -76,6 +77,17 @@ public class OverworldMapUI : MonoBehaviour
     Material pathDefaultMaterial;
     [SerializeField]
     Material pathHighlightMaterial;
+
+    [Header("Colours")]
+    [SerializeField]
+    public Vector4 color1;
+    [SerializeField]
+    public Vector4 color2;
+
+    enum ColourModes {Default, Probability}
+    ColourModes colourMode = ColourModes.Default;
+
+    bool CRRunning = false;
 
     // Start is called before the first frame update
     void Start()
@@ -100,16 +112,35 @@ public class OverworldMapUI : MonoBehaviour
         EventManager.Instance.OnTravelStart.AddListener(onTravelStart);
         EventManager.Instance.OnEnterTownButtonClick.AddListener(OnButtonClick);
     
-        EventManager.Instance.FreezeMap.AddListener(() => {isActive = false;});
-        EventManager.Instance.UnfreezeMap.AddListener(() => {if (!TownMenuGameObject.activeInHierarchy) isActive = true;});
+        EventManager.Instance.FreezeMap.AddListener(() => {
+            isActive = false;
+            FreezeCount++;
+        });
+
+        EventManager.Instance.UnfreezeMap.AddListener(() => {
+            //if (!TownMenuGameObject.activeInHierarchy) isActive = true;
+            FreezeCount--;
+            if (FreezeCount <= 0)
+            {
+                FreezeCount = 0;
+                isActive = true;
+            } 
+        });
         EventManager.Instance.OnDialogueEnd.AddListener(ShowSidePanel);
 
     }
 
-    private void RedrawMap()
+    public void RedrawMap()
     {
         Clear();
+        if(!CRRunning)StartCoroutine(RedrawCoroutine());
+    }
+
+    IEnumerator RedrawCoroutine(){
+        CRRunning = true;
+        yield return 0;
         DrawGraph();
+        CRRunning = false;
     }
 
     void ShowSidePanel(){
@@ -123,14 +154,15 @@ public class OverworldMapUI : MonoBehaviour
 
     private void Clear()
     {
-        foreach (Transform child in NodesContainer.transform)
+        foreach (Transform child in PathsContainer)
         {
-            GameObject.Destroy(child.gameObject);
+            Destroy(child.gameObject);
         }
-        foreach (Transform child in PathsContainer.transform)
+        foreach (Transform child in NodesContainer)
         {
-            GameObject.Destroy(child.gameObject);
+            Destroy(child.gameObject);
         }
+
     }
 
     private void DrawGraph()
@@ -146,8 +178,7 @@ public class OverworldMapUI : MonoBehaviour
             nodeObj.transform.SetParent(NodesContainer, true);
             nodeObj.name = node.Name;
             MapNode mn = nodeObj.GetComponent<MapNode>();
-            mn.NodeId = node.Id;
-            mn.Type = node.Type;
+            mn.Init(node);
 
             // Move the player to the starting node
             if (node.Id == currentId)
@@ -175,12 +206,35 @@ public class OverworldMapUI : MonoBehaviour
             lineEnds[1] = b;
             lr.SetPositions(lineEnds);
             line.transform.SetParent(PathsContainer, true);
+            MapNode mn1 = NodesContainer.Find(edge.Item1.Name).GetComponent<MapNode>();
+            MapNode mn2 = NodesContainer.Find(edge.Item2.Name).GetComponent<MapNode>();
+
+            Edge e = line.GetComponent<Edge>();
+            e.init(mn1, mn2);
             if (edge.Item1.Id == DataTracker.Current.currentLocationId || edge.Item2.Id == DataTracker.Current.currentLocationId)
             {
                 lr.material = pathHighlightMaterial;
             }
         }
+        if (colourMode == ColourModes.Probability){
+            EventManager.Instance.SetViewProbability.Invoke();
+        }
+        else if (colourMode == ColourModes.Default){
+            EventManager.Instance.SetViewDefault.Invoke();
+        }
+        EventManager.Instance.OnColourChange.Invoke(); 
+    }
 
+    public void ToggleColourMode(){
+        if (colourMode == ColourModes.Default){
+            EventManager.Instance.SetViewProbability.Invoke();
+            colourMode = ColourModes.Probability;
+        }
+        else if (colourMode == ColourModes.Probability){
+            EventManager.Instance.SetViewDefault.Invoke();
+            colourMode = ColourModes.Default;
+        }
+        EventManager.Instance.OnColourChange.Invoke();
     }
 
     /// <summary>
@@ -191,12 +245,12 @@ public class OverworldMapUI : MonoBehaviour
     {
         foreach (var item in travelPanelPool)
         {
-            if (!item.activeInHierarchy)
+            if (!item.activeInHierarchy && !item.GetComponent<TravelPanel>().IsOpen())
             {
                 return item;
             }
         }
-        return travelPanelPool[0];
+        return null;
     }
 
     /// <summary>
@@ -205,7 +259,7 @@ public class OverworldMapUI : MonoBehaviour
     /// <param name="node"></param>
     void onNodeMouseEnter(MapNode node)
     {
-        if (!isTravelling && isActive)
+        if (!isTravelling && isActive && node.NodeData.Id != DataTracker.Current.currentLocationId)
         {
             node.setPanel(GetTravelPanel());
         }
@@ -230,10 +284,9 @@ public class OverworldMapUI : MonoBehaviour
     {
         float volume = 2.0F * DataTracker.Current.SettingsManager.VolumeMultiplier;
 
-            AudioSource audioSource = GameObject.Find("Audio Source").GetComponent<AudioSource>();
-            audioSource.PlayOneShot(Vroom, volume);
-            targetPos = selectedNode.gameObject.transform.position;
-            isTravelling = true;
+        MusicManager.Instance.AudioSource.PlayOneShot(Vroom, volume);
+        targetPos = selectedNode.gameObject.transform.position;
+        isTravelling = true;
     }
 
     private void Update()
@@ -267,33 +320,36 @@ public class OverworldMapUI : MonoBehaviour
     void OnNodeArrival()
     {
         isTravelling = false;
-        OverworldMap.LocationNode node;
-        if (DataTracker.Current.WorldMap.GetNode(selectedNode.NodeId, out node))
+        foreach (Transform path in PathsContainer.transform)
         {
-
-            foreach (Transform path in PathsContainer.transform)
+            if (path.gameObject.name.Contains("_" + DataTracker.Current.currentLocationId.ToString() + "_"))
             {
-                if (path.gameObject.name.Contains("_" + DataTracker.Current.currentLocationId.ToString() + "_"))
-                {
-                    path.GetComponent<LineRenderer>().material = pathDefaultMaterial;
-                }
-                if (path.gameObject.name.Contains("_" + node.Id.ToString() + "_"))
-                {
-                    path.GetComponent<LineRenderer>().material = pathHighlightMaterial;
-                }
+                path.GetComponent<LineRenderer>().material = pathDefaultMaterial;
             }
-
-            if (node.Type == OverworldMap.LocationType.TOWN)
+            if (path.gameObject.name.Contains("_" + selectedNode.NodeData.Id.ToString() + "_"))
             {
-                SidePanel.OpenTown(node.LocationId);
+                path.GetComponent<LineRenderer>().material = pathHighlightMaterial;
             }
-            else if (node.Type == OverworldMap.LocationType.POI){
-                SidePanel.OpenPOI(node.LocationId);
-            }
-
-            DataTracker.Current.currentLocationId = node.Id;
-            DataTracker.Current.EventManager.OnNodeArrive.Invoke(node);
         }
+
+        if (selectedNode.NodeData.Type == OverworldMap.LocationType.TOWN)
+        {
+            SidePanel.OpenTown(selectedNode.NodeData.LocationId);
+        }
+        else if (selectedNode.NodeData.Type == OverworldMap.LocationType.POI){
+            SidePanel.OpenPOI(selectedNode.NodeData.LocationId);
+        }
+       
+        // Trigger encounters on empty nodes
+        if (selectedNode.NodeData.Type == OverworldMap.LocationType.NONE){
+            if (selectedNode.NodeData.LocationId != -1 || selectedNode.RollEncounter()){
+                EventManager.Instance.OnEncounterTrigger.Invoke(selectedNode.NodeData.LocationId);
+            }
+        }
+
+        DataTracker.Current.currentLocationId = selectedNode.NodeData.Id;
+        EventManager.Instance.OnNodeArrive.Invoke(selectedNode.NodeData);
+        
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -305,6 +361,7 @@ public class OverworldMapUI : MonoBehaviour
                 mn.OnMouseEnter();
             }
         }
+        DataTracker.Current.IncrementTime(MapTravel.timeRate);
     }
 
     public void OnButtonClick(int i)

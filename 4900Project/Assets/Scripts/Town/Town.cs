@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityUtility;
+using SIEvents;
 
 /// <summary>
 /// Used for reading town data from a CSV
@@ -14,7 +15,8 @@ public class TownData
     public string Colour { get; set; } //hex code
     public string Size { get; set; } //hex code
     public string Tags { get; set; }
-    public bool HasHospital { get; set; }
+    public string Residents { get; set; }
+    public int LeaderEncounterId { get; set; }
 }
 
 
@@ -38,12 +40,16 @@ public class Town
     public string LeaderBlurb = "No Blurb Set";
     public int leaderDialogueEncounterId = 11;
     public List<int> shops;
+    public List<Resident> Residents;
+
+    int ShopResetTimer = 0;
+    int ShopResetTimerMax = 24;
 
     /// <summary>
     /// Constructor for loading in from a TownData class
     /// </summary>
     /// <param name="data"></param>
-    public Town(TownData data) : this(data.Id, data.Name, data.Leader, data.Colour, data.Size, data.Tags, data.HasHospital)
+    public Town(TownData data) : this(data.Id, data.Name, data.Leader, data.Colour, data.Size, data.Tags, data.Residents, data.LeaderEncounterId)
     {
 
     }
@@ -56,7 +62,7 @@ public class Town
     /// <param name="Leader"></param>
     /// <param name="Colour"></param>
 
-    public Town(int Id, string Name, string Leader, string Colour = "#FFFF5E0", string Size = "Medium", string Tags = "", bool HasHospital = false)
+    public Town(int Id, string Name, string Leader, string Colour = "#FFFF5E0", string Size = "Medium", string Tags = "", string Residents = "", int LeaderEncounterId = 11)
     {
         this.Id = Id;
         this.Name = Name;
@@ -64,13 +70,11 @@ public class Town
         this.Colour = Colour;
         this.HasHospital = HasHospital;
         this.Size = (Sizes)System.Enum.Parse(typeof(Sizes), Size);
+        this.leaderDialogueEncounterId = LeaderEncounterId;
 
         shops = new List<int>();
         this.Tags = new List<TownTag>();
-
-
-        SetDescription();
-        SetLeaderBlurb();
+        this.Residents = new List<Resident>();
 
         // Fetch town leader avatar
         {
@@ -111,7 +115,17 @@ public class Town
             }
         }
 
+        string[] rs = Residents.Replace("\"", string.Empty).Split(',');
+        foreach (string r in rs)
+        {
+            if (r.Length > 0)
+            {
+                this.Residents.Add(TownManager.Instance.GetResident(r));
+            }
+        }
 
+        SetDescription();
+        SetLeaderBlurb();
     }
 
     /// <summary>
@@ -140,6 +154,10 @@ public class Town
         {
             ShopManager.Instance.GetShopById(TownManager.Instance.GetTownByName("York").shops[0]).inventory.AddItem("Generator", 1);
         }
+        if (this.Name.Equals("Frakton"))
+        {
+            ShopManager.Instance.GetShopById(TownManager.Instance.GetTownByName("Frakton").shops[0]).inventory.AddItem("Heavy Machinery", 1);
+        }
         if (this.Tags.Contains(TownManager.Instance.GetTag("Bandit")))
         {
             shop.inventory.AddItem("Bandit Token", 5);
@@ -147,6 +165,7 @@ public class Town
 
         // Notify that the town has changed
         FireUpdatedEvent();
+        EventManager.Instance.OnTransaction.AddListener(BeginRestockTimer);
     }
 
     /// <summary>
@@ -158,24 +177,29 @@ public class Town
         HasHospital = true;
     }
 
+    // Shop restocking
+    void BeginRestockTimer(Events.TransactionEvents.Details details){
+        if (shops.Contains(details.SystemId)) {
+            ShopResetTimer = 0;
+            EventManager.Instance.OnTimeAdvance.AddListener(AdvanceRestockTimer);
+            EventManager.Instance.OnTransaction.RemoveListener(BeginRestockTimer);
+        }
+    }
 
+    void AdvanceRestockTimer(int i){
+        ShopResetTimer += i;
+        if (ShopResetTimer >= ShopResetTimerMax){
+            RestockShops();
+        }
+    }
 
-    /* public void AddShop(int i)
-     {
-         shops.Add(i);
-     }
-
-     public void RemoveShop(int i)
-     {
-         for(int j = 0; j < shops.Count; j++)
-         {
-             if(shops[j] == i)
-             {
-                 shops.Remove(j);
-                 break;
-             }
-         }
-     }*/
+    void RestockShops(){
+        foreach(var shop in shops){
+            ShopManager.Instance.GetShopById(shop).Restock(this);
+        }
+        EventManager.Instance.OnTransaction.AddListener(BeginRestockTimer);
+        EventManager.Instance.OnTimeAdvance.RemoveListener(AdvanceRestockTimer);
+    }
 
     public void AddTag(TownTag tag)
     {
@@ -194,6 +218,17 @@ public class Town
         return false;
     }
 
+    public void AddResident(Resident r){
+        Residents.Add(r);
+        FireUpdatedEvent();
+    }
+
+    public void RemoveResident(Resident r){
+        Residents.Remove(r);
+        FireUpdatedEvent();
+    }
+
+
     private void SetDescription()
     {
         string desc = $@"{this.Name} is a {getWord((Size == Sizes.Small) ? "sizeSmall" : (Size == Sizes.Medium) ? "sizeMedium" : "sizeLarge")} situated in {getWord("region")} nearby a {getWord("adj")} {getWord("noun")}.
@@ -203,18 +238,22 @@ They are lead by {this.Leader}. ";
         List<string> s = new List<string>();
         for(int i = 0; i<Tags.Count; i++){
             if (Tags[i].Specialization == ItemTag.None) continue;
-            s.Add(Tags[i].Specialization.ToString());
+            s.Add(Tags[i].SpecializationDesc);
         }
 
         if (s.Count >0){
             desc += "They specialize in ";
             for(int i = 0; i<s.Count; i++){
-                string t = Tags[i].Specialization.ToString().Replace("_", " ");
-                if (i < s.Count -1){
-                    desc += t +", ";
+                if (s.Count == 1){
+                    desc += s[i] + ".\n\n";
                 }
                 else {
-                    desc += "and " + t +".\n\n";
+                    if (i < s.Count -1){
+                        desc += s[i] +", ";
+                    }
+                    else {
+                        desc += "and " + s[i] +".\n\n";
+                    }
                 }
             }
         }

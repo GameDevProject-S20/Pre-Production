@@ -42,6 +42,7 @@ namespace SIEvents
         //=== Encounters ============================================//
 
         public Events.EncounterEvents.EncounterComplete OnEncounterComplete = new Events.EncounterEvents.EncounterComplete();
+        public Events.EncounterEvents.EncounterTrigger OnEncounterTrigger = new Events.EncounterEvents.EncounterTrigger();
 
         //=== Effects ===============================================//
 
@@ -72,6 +73,10 @@ namespace SIEvents
         public Events.MapEvents.LocationIdEvent OnEnterPOIButtonClick = new Events.MapEvents.LocationIdEvent();
         public UnityEvent FreezeMap = new UnityEvent();
         public UnityEvent UnfreezeMap = new UnityEvent();
+        public Events.MapEvents.LocationIdEvent OnProbabilityChange = new Events.MapEvents.LocationIdEvent();
+        public UnityEvent SetViewDefault = new UnityEvent();
+        public UnityEvent SetViewProbability = new UnityEvent();
+        public UnityEvent OnColourChange = new UnityEvent();
 
         //=== Player =================================================//
 
@@ -79,11 +84,25 @@ namespace SIEvents
         public Events.PlayerEvents.TravelTypeChangeEvent OnTravelTypeChanged = new Events.PlayerEvents.TravelTypeChangeEvent();
 
         //=== Escape Menu ===========================================//
+
         public UnityEvent EscapeMenuRequested = new UnityEvent();
+        public UnityEvent EscapeMenuCloseRequested = new UnityEvent();
         public UnityEvent OnCreditsButtonClicked = new UnityEvent();
 
+        //=== Campfire ==============================================//
+
+        public UnityEvent OnCampfireStarted = new UnityEvent();
+        public UnityEvent OnCampfireEnded = new UnityEvent();
+
         //=== Settings ==============================================//
+
         public Events.SettingsEvents.SettingsChangedEvent OnSettingsChanged = new Events.SettingsEvents.SettingsChangedEvent();
+
+        //=== Time ==================================================//
+
+        public Events.MiscEvents.TimeEvent OnTimeAdvance = new Events.MiscEvents.TimeEvent();
+        public UnityEvent OnDayAdvance = new UnityEvent();
+        public UnityEvent OnEvening = new UnityEvent();
 
         //=== Misc ===================================================//
         public UnityEvent onDataTrackerLoad = new UnityEvent();

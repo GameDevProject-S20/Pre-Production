@@ -44,7 +44,7 @@ public class Shop
         bool valid = false;
         while (!valid)
         {
-            iconId = Mathf.FloorToInt(Random.Range(0, 31));
+            iconId = Mathf.FloorToInt(Random.Range(1, 31));
             if (iconId != 10
             && iconId != 12
             && iconId != 15
@@ -54,6 +54,11 @@ public class Shop
         }
         string path = "Icons/CyberPunk Avatars/" + iconId.ToString("D3");
         Portrait = Resources.Load<Sprite>(path);
+    }
+
+    public void Restock(Town t){
+        inventory.Contents.Clear();
+        InitializeInventory(t);
     }
 
     /// <summary>
@@ -71,22 +76,30 @@ public class Shop
         }
     }
 
-    int GetAmount(int i){
-        return Mathf.Max(1, Mathf.FloorToInt(i * Random.Range(0.75f, 1.25f)));
-    }
-
     public void InitializeInventory(Town town){
 
-        // The BASELINE probablity of seeing items of a certain rarity
-        List<float> RarityProbability = new List<float>(){ 1.0f, 0.75f, 0.4f, 0.1f, 0.5f};
+        // Base chance of seeing rare items
+        float RareItemChance = 0.50f;
 
-        // The BASELINE amount of items of a certain rari`ty
-        List<int> RarityAmount = new List<int>(){ 15, 6, 3, 1, 1};
+        // Base min & max quantity of items per tier
+        Dictionary<Rarity,(int,int)> ItemRanges = new Dictionary<Rarity, (int, int)>(){
+            {Rarity.Abundant, (15, 30)},
+            {Rarity.Common, (8, 15)},
+            {Rarity.Uncommon, (4, 8)},
+            {Rarity.Rare, (1,4)},
+            {Rarity.Unique, (1,1)}
+        };
 
-        // The probablity of seeing items of a certain rarity PER ITEM TYPE
-        Dictionary<ItemTag, List<float>> categoryProb = new Dictionary<ItemTag, List<float>>();
-        // The amount of seeing items of a certain rarity PER ITEM TYPE
-        Dictionary<ItemTag, List<float>> categoryQuant  = new Dictionary<ItemTag, List<float>>();
+        Dictionary<Rarity,(int,int)> GeneralItemRanges = new Dictionary<Rarity, (int, int)>(){
+            {Rarity.Abundant, (10, 20)},
+            {Rarity.Common, (5, 9)},
+            {Rarity.Uncommon, (2, 4)},
+            {Rarity.Rare, (1,1)},
+            {Rarity.Unique, (0,0)}
+        };
+
+        // Modifiers to above quantities per item type
+        Dictionary<ItemTag, float> QuantityModifiers  = new Dictionary<ItemTag, float>();
 
         // Step 1: Apply modifiers
         foreach (TownTag tag in town.Tags){
@@ -95,109 +108,89 @@ public class Shop
             AddModifers(shopSellModifiers, tag.shopSellModifiers);
             AddModifers(playerSellModifiers, tag.playerSellModifiers);
 
-            // Modify the BASELINE probablity and amounts
-            for (int i = 0; i < 5; i++)
-            {
-                RarityProbability[i] *= tag.BaseRarityModifier[i];
-                RarityAmount[i] =  Mathf.FloorToInt(RarityAmount[i] * tag.BaseAbundancyModifier[i]);
-            }
+            RareItemChance *= tag.RarityModifier;
 
-            // Modify the PER ITEM TYPE probablity 
-            foreach (var type in tag.RarityModifers){
-                List<float> l;
-                if (categoryProb.TryGetValue(type.Key, out l)){
-                    for (int i = 0; i < 5; i++)
-                    {
-                        l[i] *= type.Value[i];
-                    }
-                }
-                else {
-                    categoryProb.Add(type.Key, type.Value);
-                }
-            }
-
-            // Modify the PER ITEM TYPE amounts
+            // Modify the per type amounts
             foreach (var type in tag.AbundancyModifiers){
-                List<float> l;
-                if (categoryQuant.TryGetValue(type.Key, out l)){
-                    for (int i = 0; i < 5; i++)
-                    {
-                        l[i] *= type.Value[i];
-                    }
+                float mod;
+                if (QuantityModifiers.TryGetValue(type.Key, out mod)){
+                    mod *=  type.Value;
                 }
                 else {
-                    categoryQuant.Add(type.Key, type.Value);
+                    QuantityModifiers.Add(type.Key, type.Value);
                 }
             }
         }
 
-        // Step 2: Populate inventory
-        // A small town will only stock goods they specialize in
-        // A medium town will stock a small variety of goods
-        // A large town will stock a large amount of goods
+        // Step 2: Populate inventory with specialized goods
         foreach (var tag in town.Tags){
             if (tag.Specialization == ItemTag.None) continue;
-            List<Item> items = ItemManager.Current.GetAllItemsOfType(tag.Specialization);
-            if(town.Id== 0){
-                Debug.Log(items.Count);
-            }
-            List<float> probMod;
-            if (!categoryProb.TryGetValue(tag.Specialization, out probMod)){
-                probMod = new List<float>(){1.0f, 1.0f, 1.0f, 1.0f, 1.0f};
-            }
-            List<float> amountMod;
-            if (!categoryQuant.TryGetValue(tag.Specialization, out amountMod)){
-                amountMod = new List<float>(){1.0f, 1.0f, 1.0f, 1.0f, 1.0f}; 
-            }
+            List<Item> itemsOfType = ItemManager.Current.GetAllItemsOfType(tag.Specialization);
+            foreach (Item item in itemsOfType) {
+                if (item.tags.Contains(ItemTag.Unique)) continue;
+                float mod;
+                if (!QuantityModifiers.TryGetValue(tag.Specialization, out mod)) mod = 1;
+                    
 
-            foreach(var item in items){
-                int tier;
-                if (item.tier == Rarity.Abundant){
-                    tier = 0;
-                }
-                else if (item.tier == Rarity.Common){
-                    tier = 1;
-                }
-                else if (item.tier == Rarity.Uncommon){
-                    tier = 2;
-                }
-                else if (item.tier == Rarity.Rare){
-                    tier = 3;
-                }
-                else{
-                    tier = 4;
-                }
+                int amount = Mathf.RoundToInt(Mathf.Round(Random.Range(ItemRanges[item.tier].Item1, ItemRanges[item.tier].Item2)) * mod);
+                inventory.AddItem(item.DisplayName, amount);
 
-                if (Random.value < RarityProbability[tier] * probMod[tier]){
-                    inventory.AddItem(item.DisplayName, GetAmount(Mathf.FloorToInt(RarityAmount[tier] * amountMod[tier])));
-                }
             }
         }
 
-        // Fill medium and large towns with some general items
-        if (town.Size != Town.Sizes.Small){
-            List<Item> items = ItemManager.Current.GetAllItemsOfType(ItemTag.General);
-            foreach(var item in items){
-                int tier;
-                if (item.tier == Rarity.Abundant){
-                    tier = 0;
-                }
-                else if (item.tier == Rarity.Common){
-                    tier = 1;
-                }
-                else if (item.tier == Rarity.Uncommon){
-                    tier = 2;
-                }
-                else if (item.tier == Rarity.Rare){
-                    tier = 3;
-                }
-                else{
-                    tier = 4;
-                }
-                if (Random.value < RarityProbability[tier]){
-                    inventory.AddItem(item.DisplayName, GetAmount(Mathf.FloorToInt(RarityAmount[tier])));
-                }
+        // Step 2: Populate inventory with general goods
+        // Small Towns can have abundant and common items
+        // Medium & Large Towns can have any general item
+        List<Item> generalItems = ItemManager.Current.GetAllItemsOfType(ItemTag.General);
+        float SmallTownMod = 0.4f;
+        float MediumTownMod = 1.0f;
+        float LargeTownMod = 1.0f;
+
+        List<ItemTag> largeTownItems = new List<ItemTag>(){
+            ItemTag.Combat,
+            ItemTag.Machinery,
+            ItemTag.Tools_And_Parts,
+            ItemTag.Medical,
+            ItemTag.Building_Materials,
+            ItemTag.Luxury
+        };
+
+        if (town.Size == Town.Sizes.Small){
+            foreach(Item item in generalItems) {
+                if (item.tier != Rarity.Abundant && item.tier != Rarity.Common) continue;
+                int amount = Mathf.RoundToInt(Random.Range(GeneralItemRanges[item.tier].Item1, GeneralItemRanges[item.tier].Item2) * SmallTownMod);
+                inventory.AddItem(item.DisplayName, amount);
             }
+        }
+        else if (town.Size == Town.Sizes.Medium){
+            foreach(Item item in generalItems) {
+                int amount = Mathf.RoundToInt(Random.Range(GeneralItemRanges[item.tier].Item1, GeneralItemRanges[item.tier].Item2) * MediumTownMod);
+                inventory.AddItem(item.DisplayName, amount);
+            }
+        }
+
+        else if (town.Size == Town.Sizes.Large){
+            foreach(Item item in generalItems) {
+                int amount = Mathf.RoundToInt(Random.Range(GeneralItemRanges[item.tier].Item1, GeneralItemRanges[item.tier].Item2) * LargeTownMod);
+                inventory.AddItem(item.DisplayName, amount);
+            }
+
+            // Large towns can have items from a variety of tags
+            // Combat, Building Materials, Tools & Parts, Medical, Luxury
+            Dictionary<string, Item> variedGoods = ItemManager.Current.GetItemsByType(largeTownItems);
+            Dictionary<Rarity, float> probabilities = new Dictionary<Rarity, float>(){
+                {Rarity.Abundant, 1.0f},
+                {Rarity.Common, 0.7f},
+                {Rarity.Uncommon, 0.6f},
+                {Rarity.Rare, RareItemChance / 2.0f},
+                {Rarity.Unique, 0.0f}
+            };
+            foreach(Item item in variedGoods.Values){
+                if (item.tags.Contains(ItemTag.Unique) || Random.value > probabilities[item.tier] || item.tags.Contains(ItemTag.Food) ||inventory.Contains(item.DisplayName) > 0) continue;
+                int amount = Mathf.CeilToInt(Random.Range(GeneralItemRanges[item.tier].Item1, GeneralItemRanges[item.tier].Item2));
+                inventory.AddItem(item.DisplayName, amount);
+            }
+
         }
 
     }

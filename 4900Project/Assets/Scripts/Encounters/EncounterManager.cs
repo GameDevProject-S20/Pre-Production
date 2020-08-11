@@ -49,14 +49,14 @@ namespace Encounters
         {
             random = new Random();
             randomEncounterQueue = reloadRandomEncounters();
-            EventManager.Instance.OnNodeArrive.AddListener((OverworldMap.LocationNode node) =>
+            EventManager.Instance.OnEncounterTrigger.AddListener((int id) =>
             {
-                if (node.Type == OverworldMap.LocationType.EVENT)
+                if (id == -1)
                 {
                     RunRandomEncounter();
                 }
-                if (node.Type == OverworldMap.LocationType.NONE && node.LocationId != -1){
-                    RunEncounterById(node.LocationId);
+                else {
+                    RunEncounterById(id);
                 }
             });
             EventManager.Instance.OnEnterPOIButtonClick.AddListener(RunEncounterById);
@@ -116,7 +116,7 @@ namespace Encounters
         // If all events have been used, events will be shuffled again.
         private Encounter randomEncounter(string tag = null)
         {
-            Encounter enc;
+            Encounter enc = null;
             if (tag != null)
             {
                 List<RandomEncounter> tagged = randomEncounterQueue.Where(e => e.Tags.Contains(tag)).ToList();
@@ -133,7 +133,7 @@ namespace Encounters
                     }
                 }
             }
-            {
+            else {
                 if (randomEncounterQueue.Count > 0)
                 {
                     enc = randomEncounterQueue.Dequeue();

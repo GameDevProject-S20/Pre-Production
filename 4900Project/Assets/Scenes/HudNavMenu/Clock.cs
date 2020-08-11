@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
-
+using SIEvents;
 public class Clock : MonoBehaviour
 {
     private Text clockText;
@@ -13,14 +13,28 @@ public class Clock : MonoBehaviour
     void Awake()
     {
         clockText = GetComponent <Text>();
+        gameTime = new DateTime(2094, currTime.Month, currTime.Day, 0, 0, 0);
+        gameTime = gameTime.AddDays(DataTracker.Current.dayCount);
+        gameTime = gameTime.AddHours(DataTracker.Current.hourCount);
+
+        EventManager.Instance.OnTimeAdvance.AddListener((int i) =>
+        {
+            gameTime = gameTime.AddHours(i);
+            UpdateText();
+        });
+
+        EventManager.Instance.OnCampfireEnded.AddListener(() =>
+        {
+            TimeSpan ts = new TimeSpan(6, 0, 0);
+            gameTime = gameTime.AddDays(1).Date + ts;
+            UpdateText();
+        });
+
+        UpdateText();
     }
 
-    void Update()
-    {
-        DateTime gameTime = new DateTime(2094, currTime.Month, currTime.Day);
-        gameTime = gameTime.AddDays(DataTracker.Current.dayCount);
-
-        clockText.text = "Date: " + gameTime.ToShortDateString() +
-            "    Days Passed: " + DataTracker.Current.dayCount.ToString();
+    void UpdateText() {
+        clockText.text = "Date: " + gameTime.ToString("yyyy-mm-dd H:mm");
+        //"    Days Passed: " + DataTracker.Current.dayCount.ToString();
     }
 }

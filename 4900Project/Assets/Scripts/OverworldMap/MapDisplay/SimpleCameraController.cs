@@ -38,11 +38,27 @@ public class SimpleCameraController : MonoBehaviour
     float panBorderSize = 80;
 
     bool active = true;
+    int FreezeCount = 0;
+    float zoom;
+
+    [SerializeField]
+    float zoomTimeMultiplier = 2.0f;
 
     private void Awake()
     {
-        EventManager.Instance.FreezeMap.AddListener(() => { active = false; });
-        EventManager.Instance.UnfreezeMap.AddListener(() => { active = true; });
+        EventManager.Instance.FreezeMap.AddListener(() => {
+            active = false;
+            FreezeCount++;
+        });
+        EventManager.Instance.UnfreezeMap.AddListener(() => {
+            FreezeCount--;
+            if (FreezeCount <= 0)
+            {
+                FreezeCount = 0;
+                active = true;
+            }
+        });
+        zoom = transform.position.y;
     }
 
     private void Update()
@@ -51,10 +67,10 @@ public class SimpleCameraController : MonoBehaviour
         if (active)
         {
             GeneralPurposeControl(); //WSAD! 
-            transform.position = MouseScrollControl(transform.position);
+            MouseScrollControl();
             MouseDragControl();
+            transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, zoom, transform.position.z), Time.deltaTime * zoomTimeMultiplier);
         }
-
     }
 
     // WSAD controls
@@ -138,15 +154,17 @@ public class SimpleCameraController : MonoBehaviour
         return nextPosition;
     }
 
-    public Vector3 MouseScrollControl(Vector3 position)
+    public void MouseScrollControl()
     {
-        Vector3 nextPosition = position;
+        //Vector3 nextPosition = position;
 
-        nextPosition.y -= Input.mouseScrollDelta.y * zoomSpeed;
-        nextPosition.y = Mathf.Clamp(nextPosition.y, scrollMin, scrollMax);
+        zoom -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
+        zoom = Mathf.Clamp(zoom, scrollMin, scrollMax);
 
-        return nextPosition;
+        //return nextPosition;
     }
+
+    
 
     public void MouseDragControl()
     {

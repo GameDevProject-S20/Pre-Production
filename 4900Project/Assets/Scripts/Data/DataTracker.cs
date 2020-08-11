@@ -7,6 +7,7 @@ using SIEvents;
 using System.Linq;
 using Dialogue;
 using Assets.Scripts.Settings;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class DataTracker : MonoBehaviour
@@ -31,6 +32,8 @@ public class DataTracker : MonoBehaviour
     public TownManager TownManager = TownManager.Instance;
     public ShopManager ShopManager = ShopManager.Instance;
     public SettingsManager SettingsManager = SettingsManager.Instance;
+    public CampfireManager CampfireManager = CampfireManager.Instance;
+
     [SerializeField]
     public float MapSize;
     [SerializeField]
@@ -42,7 +45,7 @@ public class DataTracker : MonoBehaviour
     public TravelType CurrentTravelType { get; private set; }
 
     public int dayCount = 0;
-
+    public int hourCount = 6;
     private void Awake() {
 
         if (_current != null && _current != this)
@@ -51,21 +54,15 @@ public class DataTracker : MonoBehaviour
         } else {
             _current = this;
         }
-
+        ItemManager.Current.Init();
         WorldMap = OverworldMapLoader.LoadMap();
-        ShopManager.LoadData();
-        TownManager.LoadData();
-
-        Player.Inventory.WeightLimit = 10000f;
+        Player.Inventory.WeightLimit = 750f;
         Player.Inventory.AddItem("Rations", 12);
         Player.Inventory.AddItem("Fuel", 30);
-        Player.Inventory.AddItem("Fresh Fruit", 1);
-        Player.Inventory.AddItem("Scrap Metal", 9);
-        Player.Inventory.AddItem("Wrench", 1);
-
-        CurrentTravelType = TravelType.TRUCK;
-        EventManager.OnInventoryChange.AddListener(() => OnInventoryChangedHandler());
-
+        Player.Inventory.AddItem("Scrap Metal", 2);
+        Player.Inventory.AddItem("Family Heirloom", 1);
+        ShopManager.LoadData();
+        TownManager.LoadData();
         DontDestroyOnLoad(gameObject);
         EventManager.onDataTrackerLoad.Invoke();
     }
@@ -100,5 +97,20 @@ public class DataTracker : MonoBehaviour
     {
         Debug.Log(string.Format("[IN PROGRESS]\n\n{0}", string.Join("\n", QuestJournal.Instance.ActiveQuests.Select(q => q.ToString()))));
         Debug.Log(string.Format("[COMPLETE]\n\n{0}", string.Join("\n", QuestJournal.Instance.CompletedQuests.Select(q => q.ToString()))));
+    }
+
+    public void IncrementTime(int i){
+        hourCount += i;
+        EventManager.OnTimeAdvance.Invoke(i);
+        if (hourCount == 20) {
+            EventManager.OnEvening.Invoke();
+            CampfireManager.Instance.LoadCampfireScene();
+        }
+        if (hourCount >= 24){
+            EventManager.OnDayAdvance.Invoke();
+            hourCount = hourCount % 24;
+            dayCount += 1;
+        }
+
     }
 }
