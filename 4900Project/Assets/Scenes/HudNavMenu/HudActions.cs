@@ -130,6 +130,8 @@ public class HudActions : MonoBehaviour
 
         // Tell the Escape Menu to close
         DataTracker.Current.EventManager.EscapeMenuCloseRequested.Invoke();
+
+        EventManager.Instance.ForceUnfreezeMap.Invoke(); 
     }
 
     /// <summary>
