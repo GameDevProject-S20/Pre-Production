@@ -214,7 +214,9 @@ namespace Assets.Scripts.Dialogue.Frontend
         protected IEnumerator PlayTextTypingAnimation()
         {
             var textMeshPro = textDisplay.GetComponent<TextMeshProUGUI>();
-            int charCount = System.Text.RegularExpressions.Regex.Replace(textMeshPro.text, "<.*?>", String.Empty).Length;
+            textMeshPro.ForceMeshUpdate();
+
+            int charCount = textMeshPro.textInfo.characterCount;
             for (var i = textMeshPro.maxVisibleCharacters; i < charCount; i++)
             {
                 textMeshPro.maxVisibleCharacters = i;
