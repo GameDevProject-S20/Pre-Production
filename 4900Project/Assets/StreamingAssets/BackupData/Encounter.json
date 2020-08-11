@@ -1737,6 +1737,48 @@
 					"text": "Alright. It's not vital... yet. Please bring the new <color=#d9ae21>machinery</color> soon."
 				}
 			]
+		},
+		{
+			"encounter_id": 5000,
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "The night feels so peaceful.",
+					"buttons": [
+						{
+							"next_page_id": 3
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": ". . .",
+					"buttons": [
+						{
+							"next_page_id": 3
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "You curl up in your warm sleeping bag as the dreamy night air fills your lungs.",
+					"buttons": [
+						{
+								"next_page_id": 4
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "The quiet ambience of the crickets sooth your ears and gently lulls you off.",
+					"buttons": [
+						{
+							"text": "[Tranquility] Sleep."
+						}
+					]
+				}
+			]
 		}
 	],
 	"random_encounters": [

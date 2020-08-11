@@ -267,10 +267,9 @@ public class OverworldMapUI : MonoBehaviour
     {
         float volume = 2.0F * DataTracker.Current.SettingsManager.VolumeMultiplier;
 
-            AudioSource audioSource = GameObject.Find("Audio Source").GetComponent<AudioSource>();
-            audioSource.PlayOneShot(Vroom, volume);
-            targetPos = selectedNode.gameObject.transform.position;
-            isTravelling = true;
+        MusicManager.Instance.AudioSource.PlayOneShot(Vroom, volume);
+        targetPos = selectedNode.gameObject.transform.position;
+        isTravelling = true;
     }
 
     private void Update()
