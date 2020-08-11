@@ -7,6 +7,7 @@ using SIEvents;
 using System.Linq;
 using Dialogue;
 using Assets.Scripts.Settings;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class DataTracker : MonoBehaviour
@@ -25,6 +26,8 @@ public class DataTracker : MonoBehaviour
     public TownManager TownManager = TownManager.Instance;
     public ShopManager ShopManager = ShopManager.Instance;
     public SettingsManager SettingsManager = SettingsManager.Instance;
+    public CampfireManager CampfireManager = CampfireManager.Instance;
+
     [SerializeField]
     public float MapSize;
     [SerializeField]
@@ -73,6 +76,7 @@ public class DataTracker : MonoBehaviour
         EventManager.OnTimeAdvance.Invoke(i);
         if (hourCount == 20) {
             EventManager.OnEvening.Invoke();
+            CampfireManager.Instance.LoadCampfireScene();
         }
         if (hourCount >= 24){
             EventManager.OnDayAdvance.Invoke();
