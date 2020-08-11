@@ -10,13 +10,13 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class MusicManager : MonoBehaviour
 {
-    public static MusicManager instance { get; private set; }
+    public static MusicManager Instance { get; private set; }
 
     [SerializeField]
     public List<Song> Songs;
     public GameObject AudioGameObject;
 
-    private AudioSource AS;
+    public AudioSource AudioSource { get; private set; }
 
     private const float MAX_VOLUME = 0.5f;
     private const float FADE_STEP_TIME = 0.25f;
@@ -74,7 +74,7 @@ public class MusicManager : MonoBehaviour
         // Fades out current song and plays next song
         public static IEnumerator FadeOut(MusicManager manager, float fadeOutTime = DEFAULT_FADE_OUT)
         {
-            AudioSource source = manager.AS;
+            AudioSource source = manager.AudioSource;
             float startVolume = source.volume;
 
             while (source.volume > 0)
@@ -91,7 +91,7 @@ public class MusicManager : MonoBehaviour
         // Plays a new song with a fade in
         public static IEnumerator FadeIn(MusicManager manager, float targetVolume, float fadeInTime = DEFAULT_FADE_IN)
         {
-            AudioSource source = manager.AS;
+            AudioSource source = manager.AudioSource;
             float deltaVolume = targetVolume - source.volume;
 
             manager.PlayASong();
@@ -107,7 +107,7 @@ public class MusicManager : MonoBehaviour
         // Fades out current song and plays next song with fade in
         public static IEnumerator Crossfade(MusicManager manager, float fadeOutTime = DEFAULT_FADE_OUT, float fadeInTime = DEFAULT_FADE_IN)
         {
-            AudioSource source = manager.AS;
+            AudioSource source = manager.AudioSource;
             float startVolume = source.volume;
 
             while (source.volume > 0)
@@ -131,12 +131,12 @@ public class MusicManager : MonoBehaviour
 
     void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(this);
         }
-        else if (this != instance)
+        else if (this != Instance)
         {
             Destroy(this);
         }
@@ -145,7 +145,7 @@ public class MusicManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AS = GetComponent<AudioSource>(); 
+        AudioSource = GetComponent<AudioSource>(); 
 
         UnityEngine.Random.InitState((int)System.Environment.TickCount);
 
@@ -175,7 +175,7 @@ public class MusicManager : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (!AS.isPlaying) { PlayASong(); }
+        if (!AudioSource.isPlaying) { PlayASong(); }
 
         // Music & silence timers
         if (isFading)
@@ -227,7 +227,7 @@ public class MusicManager : MonoBehaviour
             unplayedSongsOfTag = songsOfTag.ForEach(s => s.Reset());
         }
 
-        unplayedSongsOfTag.ElementAt(UnityEngine.Random.Range(0, count)).Play(AS);
+        unplayedSongsOfTag.ElementAt(UnityEngine.Random.Range(0, count)).Play(AudioSource);
 
         if (playTime <= 0 && silenceTime <= 0)
         {
@@ -252,7 +252,7 @@ public class MusicManager : MonoBehaviour
         fadeTimeLeft = time;
         timeToNextFadeStep = FADE_STEP_TIME;
         float nSteps = time / timeToNextFadeStep;
-        volumeFadeStep = (finalVol - AS.volume) / nSteps;
+        volumeFadeStep = (finalVol - AudioSource.volume) / nSteps;
         isFading = true;
     }
 
@@ -269,20 +269,20 @@ public class MusicManager : MonoBehaviour
         fadeTimeLeft -= dTime;
         if (timeToNextFadeStep <= 0)
         {
-            AS.volume += volumeFadeStep;
+            AudioSource.volume += volumeFadeStep;
 
             // This accounds for the fact that timeToNextFadeStep is probably negative
             // Call this sooner on the next iteration
             timeToNextFadeStep = FADE_STEP_TIME + timeToNextFadeStep;
         }
 
-        if (AS.volume < 0)
+        if (AudioSource.volume < 0)
         {
-            AS.volume = 0;
+            AudioSource.volume = 0;
         }
-        else if (AS.volume > MAX_VOLUME * GetMultiplier())
+        else if (AudioSource.volume > MAX_VOLUME * GetMultiplier())
         {
-            AS.volume = MAX_VOLUME * GetMultiplier();
+            AudioSource.volume = MAX_VOLUME * GetMultiplier();
         }
 
         if (fadeTimeLeft <= 0)
@@ -308,7 +308,7 @@ public class MusicManager : MonoBehaviour
     /// </summary>
     private void UpdateVolume()
     {
-        AS.volume = MAX_VOLUME * GetMultiplier();
+        AudioSource.volume = MAX_VOLUME * GetMultiplier();
     }
 
     /// <summary>

@@ -237,7 +237,7 @@ public class Trading : MonoBehaviour
                     Scale.GetComponent<Image>().sprite = ShopTrade;
                     break;
             }
-            AudioSource audioSource = GameObject.Find("Audio Source").GetComponent<AudioSource>();
+            AudioSource audioSource = MusicManager.Instance.AudioSource;
             audioSource.PlayOneShot(ScaleChange, 1.0F);
             tradeFairness = validateTradeAfterModifiers();
         }
@@ -250,7 +250,7 @@ public class Trading : MonoBehaviour
             offerFeedback.GetComponent<TMPro.TextMeshProUGUI>().text = "";
             return;
         }
-        AudioSource audioSource = GameObject.Find("Audio Source").GetComponent<AudioSource>();
+        AudioSource audioSource = MusicManager.Instance.AudioSource;
         switch (validateTradeAfterModifiers())
         {
             case 0:
