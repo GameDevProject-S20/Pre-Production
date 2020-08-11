@@ -8,7 +8,7 @@ using UnityEngine.UI;
 using UnityUtility;
 
 public enum Rarity {None, Abundant, Common, Uncommon, Rare, Unique}
-public enum ItemTag {None,Unique,General,Fuel,Useable,Food,Luxury,Medical,Machinery,Steel,Building_Materials,Tools_And_Parts,Combat,Scientific,Mineral,Antique,Advanced,Bandit,All}
+public enum ItemTag {None,Unique,General,Fuel,Useable,Food,Luxury,Medical,Machinery,Steel,Building_Materials,Tools_And_Parts,Combat,Scientific,Mineral,Antique,Advanced,Bandit,All,Junk}
 
 /// <summary>
 /// Intermediate class for handling loading items from a CSV file.
