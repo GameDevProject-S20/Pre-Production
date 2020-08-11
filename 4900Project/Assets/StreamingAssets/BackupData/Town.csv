@@ -1,5 +1,5 @@
 Id,Name,Leader,Colour,Size,Tags,Residents,LeaderEncounterId
-0,Smithsville,Sheriff Smith,#3492eb,Medium,,,70
+0,Smithsville,Sheriff Smith,#3492eb,Medium,,hospital,70
 1,York,Mayor Li,#08b806,Medium,,,71
 2,Frakton,Sheriff Cailyn,#de8212,Large,,steelQuest1,72
 3,Alabaster,Dr David,#fc1e1e,Large,Hospital,hospital,73
