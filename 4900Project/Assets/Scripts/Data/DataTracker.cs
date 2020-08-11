@@ -42,7 +42,7 @@ public class DataTracker : MonoBehaviour
     public int currentShopId = 0; // Needed if we want store to be their own scene. If we make the store window a prefab, we don't need this. 
     public int currentLocationId = 1;
 
-    public TravelType CurrentTravelType { get; private set; }
+    public TravelType travelMode { get; private set; }
 
     public int dayCount = 0;
     public int hourCount = 6;
@@ -75,20 +75,9 @@ public class DataTracker : MonoBehaviour
         return null;
     }
 
-    private void OnInventoryChangedHandler()
+    private void OnTravelTypeChanged(TravelType type)
     {
-        int fuelAmount = Player.Instance.Inventory.Contains("Fuel");
-
-        if (CurrentTravelType == TravelType.TRUCK && fuelAmount <= 0)
-        {
-            CurrentTravelType = TravelType.WALK;
-            EventManager.Instance.OnTravelTypeChanged.Invoke(CurrentTravelType);
-        }
-        else if (CurrentTravelType == TravelType.WALK && fuelAmount > 0)
-        {
-            CurrentTravelType = TravelType.TRUCK;
-            EventManager.Instance.OnTravelTypeChanged.Invoke(CurrentTravelType);
-        }
+        this.travelMode = type;
     }
 
     // Useed for debugging

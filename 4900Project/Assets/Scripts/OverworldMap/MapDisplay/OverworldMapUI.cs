@@ -56,6 +56,8 @@ public class OverworldMapUI : MonoBehaviour
     [SerializeField]
     AudioClip Vroom;
 
+    private float travelSpeed = 1;
+
     //Movement variables
     bool isActive = true;
     int FreezeCount = 0; 
@@ -111,6 +113,7 @@ public class OverworldMapUI : MonoBehaviour
         EventManager.Instance.OnNodeMouseDown.AddListener(onNodeMouseDown);
         EventManager.Instance.OnTravelStart.AddListener(onTravelStart);
         EventManager.Instance.OnEnterTownButtonClick.AddListener(OnButtonClick);
+        EventManager.Instance.OnTravelTypeChanged.AddListener(onTravelTypeChanged);
     
         EventManager.Instance.FreezeMap.AddListener(() => {
             isActive = false;
@@ -282,6 +285,7 @@ public class OverworldMapUI : MonoBehaviour
     /// </summary>
     void onTravelStart()
     {
+        AudioSource audioSource = GameObject.Find("MusicManager").GetComponent<AudioSource>();
         float volume = 2.0F * DataTracker.Current.SettingsManager.VolumeMultiplier;
 
         MusicManager.Instance.AudioSource.PlayOneShot(Vroom, volume);
@@ -296,7 +300,7 @@ public class OverworldMapUI : MonoBehaviour
         if (isTravelling)
         {
             // Divides by the VehicleSpeed multiplier - eg. If we want to double the speed, then we want to divide it by 2x (so it takes 0.5 seconds)
-            playerMarker.transform.position = Vector3.SmoothDamp(playerMarker.transform.position, targetPos, ref translatSmoothVelocity, translateSmoothTime / DataTracker.Current.SettingsManager.VehicleSpeed);
+            playerMarker.transform.position = Vector3.SmoothDamp(playerMarker.transform.position, targetPos, ref translatSmoothVelocity, translateSmoothTime / travelSpeed * DataTracker.Current.SettingsManager.VehicleSpeed);
             if (Vector3.Distance(playerMarker.transform.position, targetPos) > 0.2f)
             {
                 Vector3 dir = ((targetPos - playerMarker.transform.position).normalized);
@@ -377,5 +381,23 @@ public class OverworldMapUI : MonoBehaviour
         TownMenuGameObject.SetActive(false);
         SidePanel.Open();
         EventManager.Instance.UnfreezeMap.Invoke();
+    }
+
+    public void onTravelTypeChanged(DataTracker.TravelType type)
+    {
+        if (type == DataTracker.TravelType.WALK)
+        {
+            this.Vroom = Resources.Load<AudioClip>("Music/Sound Effects/gruntsound-extended");
+            travelSpeed = 0.3f;
+
+            return;
+        }
+        if (type == DataTracker.TravelType.TRUCK)
+        {
+            this.Vroom = Resources.Load<AudioClip>("Music/Sound Effects/vroom");
+            travelSpeed = 1;
+
+            return;
+        }
     }
 }

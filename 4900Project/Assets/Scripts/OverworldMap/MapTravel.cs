@@ -65,12 +65,16 @@ public class MapTravel : MonoBehaviour
             DataTracker.Current.Player.Inventory.RemoveItem("Fuel", cost);
             DataTracker.Current.dayCount += timeRate;
             isTravelling = false; // Remove the debounce
+            DataTracker.Current.EventManager.OnTravelTypeChanged.Invoke(DataTracker.TravelType.TRUCK);
             onTravelReady();
         }
         else
         {
             // Otherwise, we need to run a LowFuel encounter
             DataTracker.Current.EncounterManager.RunRandomEncounter();
+
+            // Change Vehicle Travel Type
+            DataTracker.Current.EventManager.OnTravelTypeChanged.Invoke(DataTracker.TravelType.WALK);
 
             // Delay the progression of travel until they complete the encounter
             EventManager.Instance.OnDialogueEnd.AddListener(() =>
