@@ -17,7 +17,7 @@ High Caliber Rifle,Powerful firearm.,A high-powered weapon manufactured before t
 Body Armor,Keeps you intact,Armor meant to protect from the typical bandit raid.,30,10,BodyArmor.png,"Combat,All",no
 Rpg,Sends a message.,Let anyone who intends to raid you severely regret their choices for a whole second.,80,15,RPG.png,"Combat,All",no
 Herbal Medicine,Simple medical aid.,"When it comes to healing, simple herbs and some cloth are better than nothing.",10,3,MedicineTier1.png,"Medical,General,All",no
-Medicine,Patches up wounds.,"Bandages, medicine and a suture kit to treat injury and illness.",20,6,MedicineTier2.png,"Medical,General,All",no
+Medicine,Patches up wounds.,"Bandages, medicine and a suture kit to treat injury and illness.",20,6,MedicineTier2.png,"Medical,General,All",yes
 Medical Kit,Hospital-grade first aid kit.,"Stocked with the best medical supplies and drugs, easily applied by even an unskilled user.",30,8,MedicineTier3.png,"Medical,All",no
 Surgical Equipment,Used in hospitals.,Advanced equipment used in hospitals to operate on patients.,100,20,surgicalEquipment.png,"Medical,All",no
 Iron Ore,Raw ore used in steel production.,"With the right amount of carbon content, raw iron can be refined in a Steel Mill.",11,4,iron.png,"Mineral,All",no
