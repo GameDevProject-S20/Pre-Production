@@ -1,4 +1,5 @@
-﻿using UnityEngine.Events;
+﻿using System;
+using UnityEngine.Events;
 
 namespace SIEvents
 {
@@ -127,7 +128,7 @@ namespace SIEvents
         public partial class MiscEvents
         {
             [System.Serializable]
-            public class TimeEvent : UnityEvent <int> { };
+            public class TimeChangedEvent : UnityEvent<TimeSpan> { };
         }
     }
 }

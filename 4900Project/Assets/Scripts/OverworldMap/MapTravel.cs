@@ -24,8 +24,7 @@ public class MapTravel : MonoBehaviour
         {1.45f, 3.0f}
     };
 
-    public static int timeRate { get; set; } = 1;
-
+    public static int TravelTimeHours { get; private set; } = 1;
 
     public static int GetFuelCost(MapNode destination){
         float fill = DataTracker.Current.Player.Inventory.GetWeightRatio();
@@ -62,8 +61,7 @@ public class MapTravel : MonoBehaviour
 
         // If the player has enough fuel to travel: Go ahead & travel
         if (currentFuel >= cost) { 
-            DataTracker.Current.Player.Inventory.RemoveItem("Fuel", cost);
-            DataTracker.Current.dayCount += timeRate;
+            Player.Instance.Inventory.RemoveItem("Fuel", cost);
             isTravelling = false; // Remove the debounce
             onTravelReady();
         }
@@ -79,7 +77,6 @@ public class MapTravel : MonoBehaviour
                 isTravelling = false;
 
                 // Travel
-                DataTracker.Current.dayCount += timeRate;
                 onTravelReady();
             });
         }

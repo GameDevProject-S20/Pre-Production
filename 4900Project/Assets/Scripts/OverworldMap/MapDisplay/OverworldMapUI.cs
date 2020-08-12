@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using Encounters;
 using SIEvents;
 using Assets.Scripts.EscapeMenu.Interfaces;
+using UnityEngine.Events;
 
 public class OverworldMapUI : MonoBehaviour
 {
@@ -89,6 +90,8 @@ public class OverworldMapUI : MonoBehaviour
 
     bool CRRunning = false;
 
+    private UnityAction campfireEndListener;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -111,8 +114,9 @@ public class OverworldMapUI : MonoBehaviour
         EventManager.Instance.OnNodeMouseDown.AddListener(onNodeMouseDown);
         EventManager.Instance.OnTravelStart.AddListener(onTravelStart);
         EventManager.Instance.OnEnterTownButtonClick.AddListener(OnButtonClick);
-    
-        EventManager.Instance.FreezeMap.AddListener(() => {
+
+        EventManager.Instance.FreezeMap.AddListener(() =>
+        {
             isActive = false;
             FreezeCount++;
         });
@@ -121,19 +125,26 @@ public class OverworldMapUI : MonoBehaviour
         {
             isActive = true;
             FreezeCount = 0;
-        }); 
+        });
 
-        EventManager.Instance.UnfreezeMap.AddListener(() => {
+        EventManager.Instance.UnfreezeMap.AddListener(() =>
+        {
             //if (!TownMenuGameObject.activeInHierarchy) isActive = true;
             FreezeCount--;
             if (FreezeCount <= 0)
             {
                 FreezeCount = 0;
                 isActive = true;
-            } 
+            }
         });
+
         EventManager.Instance.OnDialogueEnd.AddListener(ShowSidePanel);
 
+        campfireEndListener = () =>
+        {
+            FinishOnNodeArrival();
+            RemoveCampfireEndListener();
+        };
     }
 
     public void RedrawMap()
@@ -326,6 +337,7 @@ public class OverworldMapUI : MonoBehaviour
     void OnNodeArrival()
     {
         isTravelling = false;
+
         foreach (Transform path in PathsContainer.transform)
         {
             if (path.gameObject.name.Contains("_" + DataTracker.Current.currentLocationId.ToString() + "_"))
@@ -338,36 +350,61 @@ public class OverworldMapUI : MonoBehaviour
             }
         }
 
+        int hour = Clock.Instance.Time.Hour;
+        if (hour >= 20)
+        {
+            EventManager.Instance.OnCampfireEnded.AddListener(campfireEndListener);
+            CampfireManager.Instance.LoadCampfireScene();
+
+            // Don't finish the OnNodeArrival until campfire finished.
+        }
+        else
+        {
+            // Trigger encounters on empty nodes
+            if (selectedNode.NodeData.Type == OverworldMap.LocationType.NONE)
+            {
+                if (selectedNode.NodeData.LocationId != -1 || selectedNode.RollEncounter())
+                {
+                    EventManager.Instance.OnEncounterTrigger.Invoke(selectedNode.NodeData.LocationId);
+                }
+            }
+
+            FinishOnNodeArrival();
+        }
+    }
+
+    void FinishOnNodeArrival()
+    {
         if (selectedNode.NodeData.Type == OverworldMap.LocationType.TOWN)
         {
             SidePanel.OpenTown(selectedNode.NodeData.LocationId);
         }
-        else if (selectedNode.NodeData.Type == OverworldMap.LocationType.POI){
+        else if (selectedNode.NodeData.Type == OverworldMap.LocationType.POI)
+        {
             SidePanel.OpenPOI(selectedNode.NodeData.LocationId);
-        }
-       
-        // Trigger encounters on empty nodes
-        if (selectedNode.NodeData.Type == OverworldMap.LocationType.NONE){
-            if (selectedNode.NodeData.LocationId != -1 || selectedNode.RollEncounter()){
-                EventManager.Instance.OnEncounterTrigger.Invoke(selectedNode.NodeData.LocationId);
-            }
         }
 
         DataTracker.Current.currentLocationId = selectedNode.NodeData.Id;
+        Clock.Instance.IncrementHour(MapTravel.TravelTimeHours);
         EventManager.Instance.OnNodeArrive.Invoke(selectedNode.NodeData);
-        
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 1000)){
+        if (Physics.Raycast(ray, out hit, 1000))
+        {
             MapNode mn = hit.transform.gameObject.GetComponent<MapNode>();
-            if (mn) {
+            if (mn)
+            {
                 Debug.Log(hit.transform.gameObject.name);
                 mn.OnMouseEnter();
             }
         }
-        DataTracker.Current.IncrementTime(MapTravel.timeRate);
+    }
+
+    private void RemoveCampfireEndListener()
+    {
+        EventManager.Instance.OnCampfireEnded.RemoveListener(campfireEndListener);
     }
 
     public void OnButtonClick(int i)
