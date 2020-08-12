@@ -1422,7 +1422,7 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "You actually made it to the end. Did we even program this part in?",
+					"text": "Wait you actually made it to the end? And you're still alive? That doesn't seem right.",
 					"buttons": [
 						{
 							"text": "What should I trade here?",
@@ -1529,7 +1529,7 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "[As you browse the town's bulletin board, you notice somebody is looking to hire a merchant caravan.]",
+					"text": "As you browse the town's bulletin board, you notice somebody is looking to hire a merchant caravan.",
 					"buttons": [
 						{
 							"text": "Contact the poster.",
@@ -1926,19 +1926,19 @@
 					"text": "You find an old alchemist's laboratory, in it a device with slots for two objects",
 					"buttons": [
 						{
-							"text": "[Transmute] Lose all of one random item, gain 20 Fuel",
+							"text": "[Transmute] Lose all of one random item, gain 50 Fuel",
 							"effects": [
 								"@take_tag All 10000",
-								"@give Fuel 20"
+								"@give Fuel 50"
 							],
 							"next_page_id": 3
 						},
 						{
-							"text": "[Double or Nothing] Lose all of two random items, gain 50 fuel",
+							"text": "[Double or Nothing] Lose all of two random items, gain 100 fuel",
 							"effects": [
 								"@take_tag All 10000",
 								"@take_tag All 10000",
-								"@give Fuel 50"
+								"@give Fuel 100"
 							],
 							"next_page_id": 3
 						},
