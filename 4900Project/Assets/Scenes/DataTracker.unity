@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 2065480052}
   - component: {fileID: 2065480056}
   - component: {fileID: 2065480051}
+  - component: {fileID: 2065480054}
   m_Layer: 0
   m_Name: DataTracker
   m_TagString: Untagged
@@ -147,7 +148,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2065480050}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 688b3ff11389aa229937018f0b4753ad, type: 3}
   m_Name: 
@@ -183,6 +184,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2065480054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2065480050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecda622f3a7406244adfcfe4429e1d51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2065480056
 MonoBehaviour:
   m_ObjectHideFlags: 0

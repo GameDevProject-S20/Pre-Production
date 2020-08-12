@@ -117,6 +117,12 @@ public class OverworldMapUI : MonoBehaviour
             FreezeCount++;
         });
 
+        EventManager.Instance.ForceUnfreezeMap.AddListener(() =>
+        {
+            isActive = true;
+            FreezeCount = 0;
+        }); 
+
         EventManager.Instance.UnfreezeMap.AddListener(() => {
             //if (!TownMenuGameObject.activeInHierarchy) isActive = true;
             FreezeCount--;

@@ -65,7 +65,7 @@ public class Tooltip : MonoBehaviour
         {
             int health = item.GetHealthCured();
             descriptor += $"\n\nRestores {health} health";
-            descriptor += "\n\nRight click to consume";
+            descriptor += "\n\n<color=#CB0A00>Right click to consume</color>";
         }
         
         descriptor += "\n\nWeight per Unit:" + item.Weight.ToString() + "\n \n";
