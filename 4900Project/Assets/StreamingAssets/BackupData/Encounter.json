@@ -1801,7 +1801,7 @@
 			"COMMENT": "",
 			"encounter_id": 1000,
 			"tags": [],
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -1867,7 +1867,7 @@
 			"encounter_id": 1001,
 			"tags": [],
 			"encounter_name": "Duplication Glitch",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -1917,7 +1917,7 @@
 			"encounter_id": 1002,
 			"tags": [],
 			"encounter_name": "Inequivalent Exchange",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -1966,7 +1966,7 @@
 			"encounter_id": 1003,
 			"tags": [],
 			"encounter_name": "Roadside repairs",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2035,7 +2035,7 @@
 			"encounter_id": 1004,
 			"tags": [],
 			"encounter_name": "Lightening the Load",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2063,7 +2063,7 @@
 			"encounter_id": 1005,
 			"tags": [],
 			"encounter_name": "Restoration Station",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2107,12 +2107,12 @@
 					"text": "You come across a sickly looking merchant. They show you a completely unmarked box, \"Trade?\"",
 					"buttons": [
 						{
-							"text": "[Make Offer] Give 1 Medicine",
+							"text": "[Make Offer] Give 2 Medicine",
 							"conditions": [
-								"!has Medicine 1"
+								"!has Medicine 2"
 							],
 							"effects": [
-								"@take Medicine 1",
+								"@take Medicine 2",
 								"@random 0.5 (@random 0.5 (@give Jewelry 1) (@give Jewelry 2)) (@random 0.5 (@random 0.5 (@give Jewelry 3) (@give Jewelry 4)) (@give Jewelry 5))"
 							],
 							"next_page_id": 3
@@ -2191,7 +2191,7 @@
 			"encounter_id": 1008,
 			"tags": [],
 			"encounter_name": "Gameshow",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2286,7 +2286,7 @@
 			"encounter_id": 1009,
 			"tags": [],
 			"encounter_name": "Geocache",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2322,7 +2322,7 @@
 			"encounter_id": 1010,
 			"tags": [],
 			"encounter_name": "Pick Me Up",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2429,7 +2429,7 @@
 			"encounter_id": 1012,
 			"tags": [],
 			"encounter_name": "Lazarus Station",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2492,9 +2492,7 @@
 			"encounter_id": 1014,
 			"tags": [],
 			"encounter_name": "Food For Thought",
-			"conditions": [
-				"!has Fuel 30"
-			],
+			"conditions": ["!has Fuel 30"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2534,7 +2532,7 @@
 			"encounter_id": 1015,
 			"tags": [],
 			"encounter_name": "Fasting",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2605,7 +2603,8 @@
 			"tags": [],
 			"encounter_name": "Turbulence",
 			"conditions": [
-				"!has Scrap_Metal 5"
+				"!has Scrap_Metal 5",
+				"!is_driving"
 			],
 			"town_name": null,
 			"dialogue_tree": [
@@ -2765,7 +2764,7 @@
 			"encounter_id": 1018,
 			"tags": [],
 			"encounter_name": "The Beggar",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2847,7 +2846,7 @@
 			"encounter_id": 1019,
 			"tags": [],
 			"encounter_name": "Feeling Lucky?",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2882,7 +2881,7 @@
 			"encounter_id": 1020,
 			"tags": [],
 			"encounter_name": "Free Samples",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2894,7 +2893,7 @@
 							"next_page_id": 3
 						},
 						{
-							"text": "[Clinic] Heal 15% health",
+							"text": "[Clinic] Gain 5% max health",
 							"next_page_id": 2
 						}
 					]
@@ -2923,7 +2922,7 @@
 						{
 							"text": "[Follow] Accept your fate",
 							"effects": [
-								"@health% 15"
+								"@health_max% 5"
 							],
 							"next_page_id": 4
 						}
@@ -2941,7 +2940,7 @@
 			"encounter_id": 1021,
 			"tags": [],
 			"encounter_name": "Unlucky decision",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2999,7 +2998,7 @@
 			"encounter_id": 1022,
 			"tags": [],
 			"encounter_name": "Deal with the Devil",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -3096,7 +3095,7 @@
 			"encounter_id": 1025,
 			"tags": [],
 			"encounter_name": "Unusual Find",
-			"conditions": [],
+			"conditions": ["!is_walking"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -3127,7 +3126,7 @@
 			"COMMENT": "out of fuel",
 			"tags": [],
 			"encounter_name": "Oof",
-			"conditions": [],
+			"conditions": ["!is_walking"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -3155,7 +3154,7 @@
 			"COMMENT": "out of fuel",
 			"tags": [],
 			"encounter_name": "Coyotes",
-			"conditions": [],
+			"conditions": ["!is_walking"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -3224,7 +3223,7 @@
 			"COMMENT": "out of fuel",
 			"tags": [],
 			"encounter_name": "The Arena",
-			"conditions": [],
+			"conditions": ["!is_walking"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -3395,7 +3394,7 @@
 			"encounter_id": 1200,
 			"tags": [],
 			"encounter_name": "Earthquake",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
