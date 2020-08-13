@@ -5,9 +5,11 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class CapacityHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class HudHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Tooltip tooltip;
+    public string title;
+    public string description;
 
     void Start()
     {
@@ -21,7 +23,8 @@ public class CapacityHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        tooltip.GenerateTooltip("Inventory Capacity","Current inventory space used. Higher weights require more fuel to transport. Max is 750 units.");
+        tooltip.GenerateTooltip(title, description);
+        //tooltip.GenerateTooltip("Inventory Capacity","Current inventory space used. Higher weights require more fuel to transport. Max is 750 units.");
     }
     public void OnPointerExit(PointerEventData eventData)
     {
