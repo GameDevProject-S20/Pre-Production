@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.Dialogue.Frontend
@@ -81,6 +82,20 @@ namespace Assets.Scripts.Dialogue.Frontend
         public Color interactableButtonTextColour = new Color(204, 196, 179, 255);
         public Color uninteractableButtonTextColour = new Color(145, 139, 126, 255);
 
+
+        /// <summary>
+        /// Controls Visibility of the game object
+        /// </summary>
+        public bool Visible
+        {
+            get {
+                return gameObject.GetComponent<Canvas>().enabled;
+            }
+            set {
+                gameObject.GetComponent<Canvas>().enabled = value;
+            }
+        }
+
         // Startup / constructor
         void Start()
         {
@@ -88,7 +103,7 @@ namespace Assets.Scripts.Dialogue.Frontend
             //  which will in turn press the button we're looking at
             for (var i = 0; i < buttons.Count; i++)
             {
-                SetupButton(buttons[i], i);
+                buttons[i].onClick.AddListener(() => PressButton(i));
             }
 
             // Listen for the DialogueManager to update, so that we can update our display
@@ -99,19 +114,43 @@ namespace Assets.Scripts.Dialogue.Frontend
             UpdateDisplay();
         }
 
-        // Protected Methods
-        // Initial Setup - This hooks in a single button to fire off its index to the DialogueManager
-        protected void SetupButton(Button button, int index)
+        void Update()
         {
-            button.onClick.AddListener(() =>
-            {
-                if (button.GetComponentInChildren<Text>().text == "")
-                {
-                    return;
-                }
+            if (!Visible) return;
 
-                DialogueManager.Instance.GetActiveDialogue().PressButton(index);
-            });
+            // Listen for 1,2,3,4 to invoke buttons
+            if (Input.GetKeyDown("1"))
+            {
+                PressButton(0);
+            }
+            else if (Input.GetKeyDown("2"))
+            {
+                PressButton(1);
+            }
+            else if (Input.GetKeyDown("3"))
+            {
+                PressButton(2);
+            }
+            else if (Input.GetKeyDown("4"))
+            {
+                PressButton(3);
+            }
+        }
+
+        // Protected Methods
+        /// <summary>
+        /// Press a button at the given index
+        /// </summary>
+        /// <param name="index"></param>
+        protected void PressButton(int index)
+        {
+            var button = buttons[index];
+            if (!button.interactable || buttons[index].GetComponentInChildren<Text>().text == "")
+            {
+                return;
+            }
+
+            DialogueManager.Instance.GetActiveDialogue().PressButton(index);
         }
 
         // Dialogue Data Updating
@@ -168,11 +207,17 @@ namespace Assets.Scripts.Dialogue.Frontend
                 Text text = physicalButton.GetComponentInChildren<Text>();
                 text.text = buttonData != null ? buttonData.Text : "";
 
+                var keyTag = physicalButton.transform.Find("KeyTag");
                 if (buttonData != null)
                 {
                     bool interactable = buttonData.Conditions.All(c => c.IsSatisfied());
                     physicalButton.interactable = interactable;
                     text.color = (interactable) ? interactableButtonTextColour : uninteractableButtonTextColour;
+                    keyTag.gameObject.SetActive(true);
+                }
+                else
+                {
+                    keyTag.gameObject.SetActive(false);
                 }
             }
         }
@@ -216,9 +261,8 @@ namespace Assets.Scripts.Dialogue.Frontend
             var textMeshPro = textDisplay.GetComponent<TextMeshProUGUI>();
             textMeshPro.ForceMeshUpdate();
             int charCount = textMeshPro.textInfo.characterCount;
-            int charactersPerUpdate = (int)Math.Floor(DataTracker.Current.SettingsManager.DialogueCharacters);
+            int charactersPerUpdate = DataTracker.Current != null ? (int)Math.Floor(DataTracker.Current.SettingsManager.DialogueCharacters) : 1;
             for (var i = textMeshPro.maxVisibleCharacters; i < charCount; i+=charactersPerUpdate)
-
             {
                 textMeshPro.maxVisibleCharacters = i;
 
@@ -308,22 +352,14 @@ namespace Assets.Scripts.Dialogue.Frontend
         /// </summary>
         protected void Hide()
         {
-            SetVisible(false);
+            Visible = false;
         }
         /// <summary>
         /// Shows the Dialog UI.
         /// </summary>
         protected void Show()
         {
-            SetVisible(true);
-        }
-        /// <summary>
-        /// Helper for Hiding & Showing. Makes it easy to adjust if need be.
-        /// </summary>
-        /// <param name="isVis"></param>
-        protected void SetVisible(bool isVis)
-        {
-            gameObject.GetComponent<Canvas>().enabled = isVis;
+            Visible = true;
         }
 
         // Misc
