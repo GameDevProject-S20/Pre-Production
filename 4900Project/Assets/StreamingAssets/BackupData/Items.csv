@@ -7,7 +7,7 @@ Fresh Meat,A valuable delicacy.,Raising livestock is an expensive process. Meat 
 Wrench,An essential repair tool,Helps with maintaining machines. Wear and tear means you need a replacement once in a while.,10,1,Wrench.png,"Tools_And_Parts,General,All",no
 Repair Patch,One use smart repair patch,"Uncommon tech allows these patches to conduct repairs autonomously, but burn out performing the job",15,4,RepairPatch.png,"Tools_And_Parts,General,All",no
 Generator,Creates electricity,Consumes fuel to generate power. Vital for survival.,40,25,Generator.png,"Machinery,All",no
-Jewelry,"A valuable, if nonfunctional, accessory",Goes nice with a finely tailored outfit. Good luck finding one,15,1,Jewlery.png,"Luxury,All",no
+Jewelry,"A valuable, if nonfunctional, accessory",Goes nice with a finely tailored outfit. Good luck finding one,30,1,Jewlery.png,"Luxury,All",no
 Concrete,Basic building material,What most things are built out of these days,3,10,Concrete.png,"Building_Materials,General",no
 Scrap Metal,General purpose parts,Good for making something new or fixing something old,4,8,ScrapMetal.png,"Building_Materials,General,All",no
 Steel,High-quality forged metal.,Durable material for building more than a shack.,11,15,steel.png,"Building_Materials,Steel,All",no
@@ -21,7 +21,7 @@ Surgical Equipment,Used in hospitals.,Advanced equipment used in hospitals to op
 Iron Ore,Raw ore used in steel production.,"With the right amount of carbon content, raw iron can be refined in a Steel Mill.",11,4,iron.png,"Mineral,All",no
 Purified Water,One of life's essentials.,It's wet.,10,1,PurifiedWater.png,"Food,General,All",no
 Can Opener,Used to open canned foods.,"Knives are fine, but avoiding metal flakes in your soup is better.",1,1,CanOpener.png,"Junk,All",no
-Pocket Watch,It tells time.,"Excellent collector's piece, for the right buyer.",15,1,PocketWatch.png,"Luxury,Antique,All",no
+Pocket Watch,It tells time.,"Excellent collector's piece, for the right buyer.",45,1,PocketWatch.png,"Luxury,Antique,All",no
 Soda,A tasty beverage.,"A tasty beverage, sure to give you an energy boost.",3,1,Soda.png,"Food,General,All",no
 Rope,A versatile utility.,"Useful for a variety of tasks, from securing items to tying up bandits.",2,1,Rope.png,"Tools_And_Parts,General,All",no
 Flashlight,Good for seeing in the dark.,"It's seen better days, but gets the job done.",2,1,Flashlight.png,"General,All",no
@@ -38,7 +38,7 @@ Tent,Will protect you from the elements.,Useful as a temporary shelter.,2,8,Tent
 Antibiotics,Effective at preventing infections.,Very rare and powerful medicine - quite valuable.,30,1,Antibiotics.png,"Medical,Advanced,All",no
 Cooking Pot,Useful for cooking.,Essential for cooking any sort of meal.,2,3,CookingPot.png,"Junk,All",no
 Battery,Good for powering small items.,"Useful for powering small items, such as flashlights.",1,1,Battery.png,"Junk,General,All",no
-Compass,"Follow ""N"" to go to the North Pole.","This likely had a use once, but is now a collector's item.",15,1,Compass.png,"Luxury,Antique,All",no
+Compass,"Follow ""N"" to go to the North Pole.","This likely had a use once, but is now a collector's item.",50,1,Compass.png,"Luxury,Antique,All",no
 Propane,The label says this is highly flammable.,"Came from a barbecue, should be handled with care.",10,10,Propane.png,"Tools_And_Parts,Miscellaneous,All",no
 Toolbox,Contains an assortment of tools.,This treasure chest has every tool you could ever need.,40,6,Toolbox.png,"Tools_And_Parts,Advanced,Miscellaneous,All",no
 Matches,Waterproof matches.,"Useful for starting fires, but has a limited number of uses.",2,1,Matches.png,"Junk,Miscellaneous,All",no
@@ -54,11 +54,11 @@ Mineral Data,Data on soil mineral composition.,"This scientific data is indeciph
 Atmospheric Data,Data on atmospheric conditions.,"This scientific data is indecipherable to you, but an expert may value it.",1,1,ScienceData3.png,"Scientific,All",no
 Astronomical Data,Data on astronomical observations.,"This scientific data is indecipherable to you, but an expert may value it.",1,1,ScienceData4.png,"Scientific,All",no
 Tricorder,Scientific tool for field recordings.,The Standard Model Field Tri-Recorder can measure a wide variety of environmental conditions.,30,2,tricorder.png,"Tools_And_Parts,Scientific,All",no
-Family Heirloom,An old gift.,This locket has been in your family since before the Shattering. Along your long travels it remains a piece of home.,40,1,Heirloom.png,"Luxury,Unique",no
+Family Heirloom,An old gift.,This locket has been in your family since before the Shattering. Along your long travels it remains a piece of home.,100,1,Heirloom.png,"Luxury,Unique",no
 Heavy Machinery,Used in the steelmaking process.,"This large, expensive machine is used to lift large quantities of molten steel.",150,35,heavyMachine.png,Machinery,no
-2000's Painting,Collectors love this stuff.,Art from before the world ended. Nostalgic.,5,3,Painting.png,"Antique,All",no
+2000's Painting,Collectors love this stuff.,Art from before the world ended. Nostalgic.,30,3,Painting.png,"Luxury,Antique,All",no
 Old Cellphone,Old World communication device.,No Signal' reads the screen. You aren't sure how it's still powered.,8,1,CellPhone.png,"Antique,All",no
 Antique Rifle,Doesn't fire anymore.,A rifle from an old war. You can't tell exactly which one.,10,1,OldRifle.png,"Antique,All",no
 NineTenTwo Swish,Old entertainment device.,A functioning entertainment console is a luxury indeed.,12,1,switch.png,"Antique,All",no
-Fashion Magainze,At least a century old.,"""The hair, the colours, the pants! People can’t afford to care about this anymore.""",8,1,magazine.png,"Antique,All",no
-Vinyl Record,"""I've been dreaming of White Christmas…""",You aren't sure if there's a working record player left on the planet.,18,1,vinyl.png,"Antique,All",no
+Fashion Magainze,At least a century old.,"""The hair, the colours, the pants! People canï¿½t afford to care about this anymore.""",8,1,magazine.png,"Antique,All",no
+Vinyl Record,"""I've been dreaming of White Christmasï¿½""",You aren't sure if there's a working record player left on the planet.,18,1,vinyl.png,"Antique,All",no

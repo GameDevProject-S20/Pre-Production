@@ -36,7 +36,7 @@
 					"text": "All of your scrap metal is back with the caravan. There's only one option at your disposal.",
 					"buttons": [
 						{
-							"text": "[Use Rifle]",
+							"text": "[Use Rifle] Lose 30% hp",
 							"conditions": [
 								"!has hunting_rifle 1"
 							],
@@ -485,7 +485,7 @@
 							"next_page_id": 2
 						},
 						{
-							"text": "[Ignore] Leave without paying, lose 20 health.",
+							"text": "[Ignore] Leave without paying, lose 20 hp.",
 							"next_page_id": 3
 						},
 						{
@@ -1891,7 +1891,7 @@
 	],
 	"random_encounters": [
 		{
-			"valid": false,
+			"valid": true,
 			"COMMENT": "",
 			"encounter_id": 1000,
 			"tags": [],
@@ -1977,7 +1977,7 @@
 							"next_page_id": 3
 						},
 						{
-							"text": "[Smash Device] Lose 15 health",
+							"text": "[Smash Device] Lose 15 hp",
 							"effects": [
 								"@health -15"
 							],
@@ -2036,7 +2036,7 @@
 							"next_page_id": 3
 						},
 						{
-							"text": "[Clumsy] Drop the device, lose 20 health",
+							"text": "[Clumsy] Drop the device, lose 20 hp",
 							"effects": [
 								"@health -20"
 							],
@@ -2232,7 +2232,7 @@
 							"next_page_id": 4
 						},
 						{
-							"text": "[Fight] Use hunting rifle, 50% chance to lose 40 health",
+							"text": "[Fight] Use hunting rifle, 50% chance to lose 40 hp",
 							"conditions": [
 								"!has Hunting_Rifle 1"
 							],
@@ -2243,7 +2243,7 @@
 							"next_page_id": 5
 						},
 						{
-							"text": "[Grovel] Beg for your life, lose 25 health",
+							"text": "[Grovel] Beg for your life, lose 25 hp",
 							"effects": [
 								"@health -25"
 							],
@@ -2315,7 +2315,7 @@
 							"next_page_id": 3
 						},
 						{
-							"text": "[Run] Make an example of yourself, drop to 1 health",
+							"text": "[Run] Make an example of yourself, drop to 1 hp",
 							"effects": [
 								"@health% 100",
 								"@health% -100"
@@ -2634,7 +2634,7 @@
 					"text": "You come across a group of stranded travellers, you don’t have enough room in your ship to transport them all. Not wanting to leave anyone behind they ask if you’ve any food or fuel to spare, they have a doctor who could heal your wounds in exchange.",
 					"buttons": [
 						{
-							"text": "[Offer Fuel] Give 25 Fuel, gain 25% health.",
+							"text": "[Offer Fuel] Give 25 Fuel, heal 25% hp.",
 							"conditions": [
 								"!has Fuel 25"
 							],
@@ -2645,7 +2645,7 @@
 							"next_page_id": 3
 						},
 						{
-							"text": "[Offer Rations] Give 15 Rations, gain 15% health.",
+							"text": "[Offer Rations] Give 15 Rations, heal 15% hp.",
 							"conditions": [
 								"!has Rations 15"
 							],
@@ -2656,7 +2656,7 @@
 							"next_page_id": 4
 						},
 						{
-							"text": "[Malevolence] Threaten with Hunting Rifle, gain 20% health, lose reputation.",
+							"text": "[Malevolence] Threaten with Hunting Rifle, heal 20% hp, lose reputation.",
 							"conditions": [
 								"!has Hunting_Rifle 1"
 							],
@@ -2707,7 +2707,7 @@
 					"text": "You spot a cluster of scrap in some turbulent looking space, feeling lucky you decide to go for it. Unfortunately you got more than you bargained for and now have to choose between taking some asteroid hits to get the loot or dropping some weight to escape.",
 					"buttons": [
 						{
-							"text": "[Collect] Gain 7 Iron Ore, lose 15 health",
+							"text": "[Collect] Gain 7 Iron Ore, lose 15 hp",
 							"effects": [
 								"@give Iron_Ore 7",
 								"@health -15"
@@ -2747,7 +2747,7 @@
 					"text": "You come across a somewhat sketchy looking lab; so of course you decide to dock and see what you can find. The bay doors close behind you and you are greeted by an enigmatic figure who offers to grant various requests in exchange for \"Samples\"",
 					"buttons": [
 						{
-							"text": "[Sustenance] Gain 30 Rations or Fuel, lose 12% health",
+							"text": "[Sustenance] Gain 30 Rations or Fuel, lose 12% hp",
 							"effects": [
 								"@random 0.5 (@give Rations 30) (@give Fuel 30)",
 								"@health% -12"
@@ -2755,7 +2755,7 @@
 							"next_page_id": 3
 						},
 						{
-							"text": "[Greed] Gain a random Combat item, lose 12% health",
+							"text": "[Greed] Gain a random Combat item, lose 12% hp",
 							"effects": [
 								"@give_tag Combat 1",
 								"@health% -12"
@@ -2763,7 +2763,7 @@
 							"next_page_id": 4
 						},
 						{
-							"text": "[Longevity] Gain 3% max hp, lose 12% health",
+							"text": "[Longevity] Gain 3% max hp, lose 12% hp",
 							"effects": [
 								"@health_max% 3",
 								"@health% -12"
@@ -2771,7 +2771,7 @@
 							"next_page_id": 5
 						},
 						{
-							"text": "[Escape] Ask to leave, lose 12% health",
+							"text": "[Escape] Ask to leave, lose 12% hp",
 							"effects": [
 								"@health% -12"
 							],
@@ -2784,7 +2784,7 @@
 					"text": "Well? What is it?",
 					"buttons": [
 						{
-							"text": "[Sustenance] Gain 30 Rations or Fuel, lose 12% health",
+							"text": "[Sustenance] Gain 30 Rations or Fuel, lose 12% hp",
 							"effects": [
 								"@random 0.5 (@give Rations 30) (@give Fuel 30)",
 								"@health% -12"
@@ -2792,7 +2792,7 @@
 							"next_page_id": 3
 						},
 						{
-							"text": "[Greed] Gain a random Combat item, lose 12% health",
+							"text": "[Greed] Gain a random Combat item, lose 12% hp",
 							"effects": [
 								"@give_tag Combat 1",
 								"@health% -12"
@@ -2800,7 +2800,7 @@
 							"next_page_id": 4
 						},
 						{
-							"text": "[Longevity] Gain 3% max hp, lose 12% health",
+							"text": "[Longevity] Gain 3% max hp, lose 12% hp",
 							"effects": [
 								"@health_max% 3",
 								"@health% -12"
@@ -2808,7 +2808,7 @@
 							"next_page_id": 5
 						},
 						{
-							"text": "[Escape] Ask to leave, lose 12% health",
+							"text": "[Escape] Ask to leave, lose 12% hp",
 							"effects": [
 								"@health% -12"
 							],
@@ -2987,7 +2987,7 @@
 							"next_page_id": 3
 						},
 						{
-							"text": "[Clinic] Gain 5% max health",
+							"text": "[Clinic] Gain 5% max hp",
 							"next_page_id": 2
 						}
 					]
@@ -3029,7 +3029,7 @@
 			]
 		},
 		{
-			"valid": false,
+			"valid": true,
 			"COMMENT": "requires has_tag should work otherwise",
 			"encounter_id": 1021,
 			"tags": [],
@@ -3393,42 +3393,42 @@
 					"text": "The gates open and your challenger approaches, They're far more intimidating than your last opponent but there's no backing out now.",
 					"buttons": [
 						{
-							"text": "[Outmaneuver] Fight with your bare hands, Lose 40% hp.",
+							"text": "[Outmaneuver] Fight with your bare hands, Lose 50% hp.",
 							"effects": [
-								"@health% -40"
+								"@health% -50"
 							],
 							"next_page_id":5
 						},
 						{
-							"text": "[Blade Dance] Fight with your Hatchet, Lose 30% hp.",
+							"text": "[Blade Dance] Fight with your Hatchet, Lose 35% hp.",
 							"conditions":[
 								"!has Hatchet 1"
 							],
 							"effects": [
 								"@take Hatchet 1",
-								"@health% -30"
+								"@health% -35"
 							],
 							"next_page_id":5
 						},
 						{
-							"text": "[Predator] Fight with your Hunting Rifle, Lose 20% hp.",
+							"text": "[Predator] Fight with your Hunting Rifle, Lose 25% hp.",
 							"conditions":[
 								"!has Hunting_Rifle 1"
 							],
 							"effects": [
 								"@take Hunting_Rifle 1",
-								"@health% -20"
+								"@health% -25"
 							],
 							"next_page_id":5
 						},
 						{
-							"text": "[Ragnarok] Fight with an RPG, lose 10% hp",
+							"text": "[Ragnarok] Fight with an RPG, lose 15% hp",
 							"conditions":[
 								"!has RPG 1"
 							],
 							"effects": [
 								"@take RPG 1",
-								"@health% -10"
+								"@health% -15"
 							],
 							"next_page_id":5
 						}
@@ -3439,25 +3439,25 @@
 					"text": "Victory! Their champion lies broken at your feet and the crowd goes wild. Time to claim your spoils.",
 					"buttons": [
 						{
-							"text": "[Apotheosis] Gain 10 of 10 random resouces.",
+							"text": "[Apotheosis] Gain 5 of 10 random resouces.",
 							"effects": [
-								"@give_tag All 10",
-								"@give_tag All 10",
-								"@give_tag All 10",
-								"@give_tag All 10",
-								"@give_tag All 10",
-								"@give_tag All 10",
-								"@give_tag All 10",
-								"@give_tag All 10",
-								"@give_tag All 10",
-								"@give_tag All 10"
+								"@give_tag All 5",
+								"@give_tag All 5",
+								"@give_tag All 5",
+								"@give_tag All 5",
+								"@give_tag All 5",
+								"@give_tag All 5",
+								"@give_tag All 5",
+								"@give_tag All 5",
+								"@give_tag All 5",
+								"@give_tag All 5"
 							],
 							"next_page_id":6
 						},
 						{
-							"text": "[Impervious] Gain 150 max hp and full heal.",
+							"text": "[Impervious] Gain 100 max hp and full heal.",
 							"effects": [
-								"@health_max 150",
+								"@health_max 100",
 								"@health% 100"
 							],
 							"next_page_id":6
