@@ -371,7 +371,7 @@ public class OverworldMapUI : MonoBehaviour
             }
         }
 
-        if (!Clock.Instance.IsDay())
+        if (!Clock.Instance.IsDay() && DataTracker.Current.TravelMode != DataTracker.TravelType.WALK)
         {
             EventManager.Instance.OnCampfireEnded.AddListener(campfireEndListener);
             CampfireManager.Instance.LoadCampfireScene();

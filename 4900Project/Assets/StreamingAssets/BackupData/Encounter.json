@@ -138,6 +138,7 @@
 							"effects": [
 								"@add_edge 124 125",
 								"@toggle_random_encounters 1",
+								"@toggle_driving 1",
 								"@set_dialogue_encounter 0 2"
 							],
 							"next_page_id": 4
@@ -394,13 +395,13 @@
 							"next_page_id": 2
 						},
 						{
-							"text": "[Trade] Offer 1 Medicine for 10 Fuel.",
+							"text": "[Trade] Offer 1 Medicine for 30 Fuel.",
 							"conditions": [
 								"!has Medicine 1"
 							],
 							"effects": [
 								"@take Medicine 1",
-								"@give Fuel 10"
+								"@give Fuel 30"
 							],
 							"next_page_id": 2
 						},
@@ -436,13 +437,13 @@
 							"next_page_id": 2
 						},
 						{
-							"text": "[Trade] Offer 1 Medicine for 10 Fuel.",
+							"text": "[Trade] Offer 1 Medicine for 30 Fuel.",
 							"conditions": [
 								"!has Medicine 1"
 							],
 							"effects": [
 								"@take Medicine 1",
-								"@give Fuel 10"
+								"@give Fuel 30"
 							],
 							"next_page_id": 2
 						},
@@ -1515,7 +1516,7 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "You actually made it to the end. Did we even program this part in?",
+					"text": "Wait you actually made it to the end? And you're still alive? That doesn't seem right.",
 					"buttons": [
 						{
 							"text": "What should I trade here?",
@@ -1622,7 +1623,7 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "[As you browse the town's bulletin board, you notice somebody is looking to hire a merchant caravan.]",
+					"text": "As you browse the town's bulletin board, you notice somebody is looking to hire a merchant caravan.",
 					"buttons": [
 						{
 							"text": "Contact the poster.",
@@ -1837,18 +1838,32 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "The night feels so peaceful.",
+					"text": "You and your crew settle in for the night and talk about the day's events and plan for your continued journey tomorrow.",
 					"buttons": [
 						{
-							"next_page_id": 3
+							"next_page_id": 2
 						}
 					]
 				},
 				{
 					"id": 2,
-					"text": ". . .",
+					"text": "After a long day it's always nice to laugh and share food with those you care about.",
 					"buttons": [
 						{
+							"text": "[Dinner] Consume 3 Rations",
+							"conditions":[
+								"!has Rations 3"
+							],
+							"effects":[
+								"@take Rations 3"
+							],
+							"next_page_id": 3
+						},
+						{
+							"text": "[Go Hungry] Lose 2% max hp",
+							"effects":[
+								"@health_max% -2"
+							],
 							"next_page_id": 3
 						}
 					]
@@ -1880,57 +1895,42 @@
 			"COMMENT": "",
 			"encounter_id": 1000,
 			"tags": [],
-			"conditions": [],
-			"town_name": "York",
+			"conditions": ["!is_driving"],
+			"town_name": null,
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "Welcome to these here parts",
-					"avatar_name": "Sheriff",
+					"text": "You come across a travelling merchant",
 					"buttons": [
 						{
-							"text": "[Greet] Howdy, Sheriff.",
+							"text": "[Courier] Can we trade?",
 							"next_page_id": 2
-						},
-						{
-							"text": "[Trade] Can we trade?",
-							"next_page_id": 3
 						}
 					]
 				},
 				{
 					"id": 2,
-					"text": "You should check out the store later.",
-					"buttons": [
-						{
-							"text": "[Leave] Will do!",
-							"next_page_id": 6
-						}
-					]
-				},
-				{
-					"id": 3,
 					"text": "Sure, but lets have a little fun. Make an offer and we'll flip a coin to pick between fuel or some spare wrenches.",
 					"buttons": [
 						{
-							"text": "[Sample] offer 10 rations for 5 fuel or 5 wrenches.",
+							"text": "[Sample] offer 5 rations for 10 fuel or 2 wrenches.",
 							"conditions": [
-								"!has rations 10"
+								"!has rations 5"
 							],
 							"effects": [
-								"@take rations 10",
-								"@random 0.5 (@give fuel 5) (@give wrench 5)"
+								"@take rations 5",
+								"@random 0.5 (@give fuel 15) (@give wrench 2)"
 							],
 							"next_page_id": 5
 						},
 						{
-							"text": "[Bulk] offer 30 rations for 20 fuel/wrenches.",
+							"text": "[Bulk] offer 15 rations for 40 fuel or 10 wrenches.",
 							"conditions": [
-								"!has rations 30"
+								"!has rations 15"
 							],
 							"effects": [
-								"@take rations 30",
-								"@random 0.5 (@give fuel 20) (@give wrench 20)"
+								"@take rations 15",
+								"@random 0.5 (@give fuel 40) (@give wrench 10)"
 							],
 							"next_page_id": 5
 						},
@@ -1961,7 +1961,7 @@
 			"encounter_id": 1001,
 			"tags": [],
 			"encounter_name": "Duplication Glitch",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2011,7 +2011,7 @@
 			"encounter_id": 1002,
 			"tags": [],
 			"encounter_name": "Inequivalent Exchange",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2019,19 +2019,19 @@
 					"text": "You find an old alchemist's laboratory, in it a device with slots for two objects",
 					"buttons": [
 						{
-							"text": "[Transmute] Lose all of one random item, gain 20 Fuel",
+							"text": "[Transmute] Lose all of one random item, gain 50 Fuel",
 							"effects": [
 								"@take_tag All 10000",
-								"@give Fuel 20"
+								"@give Fuel 50"
 							],
 							"next_page_id": 3
 						},
 						{
-							"text": "[Double or Nothing] Lose all of two random items, gain 50 fuel",
+							"text": "[Double or Nothing] Lose all of two random items, gain 100 fuel",
 							"effects": [
 								"@take_tag All 10000",
 								"@take_tag All 10000",
-								"@give Fuel 50"
+								"@give Fuel 100"
 							],
 							"next_page_id": 3
 						},
@@ -2060,7 +2060,7 @@
 			"encounter_id": 1003,
 			"tags": [],
 			"encounter_name": "Roadside repairs",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2129,7 +2129,7 @@
 			"encounter_id": 1004,
 			"tags": [],
 			"encounter_name": "Lightening the Load",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2157,7 +2157,7 @@
 			"encounter_id": 1005,
 			"tags": [],
 			"encounter_name": "Restoration Station",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2201,12 +2201,12 @@
 					"text": "You come across a sickly looking merchant. They show you a completely unmarked box, \"Trade?\"",
 					"buttons": [
 						{
-							"text": "[Make Offer] Give 4 Medicine",
+							"text": "[Make Offer] Give 2 Medicine",
 							"conditions": [
-								"!has Medicine 4"
+								"!has Medicine 2"
 							],
 							"effects": [
-								"@take Medicine 4",
+								"@take Medicine 2",
 								"@random 0.5 (@random 0.5 (@give Jewelry 1) (@give Jewelry 2)) (@random 0.5 (@random 0.5 (@give Jewelry 3) (@give Jewelry 4)) (@give Jewelry 5))"
 							],
 							"next_page_id": 3
@@ -2222,30 +2222,30 @@
 					"text": "You ignore them and are about to continue on your way when you hear them pull a gun, looks like they weren't asking.",
 					"buttons": [
 						{
-							"text": "[Apologize] Give 4 Medicine, gain nothing",
+							"text": "[Apologize] Give 2 Herbal Medicine, gain nothing",
 							"conditions": [
-								"!has Medicine 4"
+								"!has Herbal_Medicine 2"
 							],
 							"effects": [
-								"@take Medicine 4"
+								"@take Herbal_Medicine 2"
 							],
 							"next_page_id": 4
 						},
 						{
-							"text": "[Fight] Use hunting rifle, 50% chance to lose 50 health",
+							"text": "[Fight] Use hunting rifle, 50% chance to lose 40 health",
 							"conditions": [
 								"!has Hunting_Rifle 1"
 							],
 							"effects": [
-								"@random 0.5 (@health -50) (@health 0)",
+								"@random 0.5 (@health -40) (@health 0)",
 								"@take Hunting_Rifle 1"
 							],
 							"next_page_id": 5
 						},
 						{
-							"text": "[Grovel] Beg for your life, lose 30 health",
+							"text": "[Grovel] Beg for your life, lose 25 health",
 							"effects": [
-								"@health -30"
+								"@health -25"
 							],
 							"next_page_id": 6
 						}
@@ -2257,7 +2257,7 @@
 				},
 				{
 					"id": 4,
-					"text": "The stranger snatches the medicine from you and retreats."
+					"text": "The stranger snatches the Herbal Medicine from you and retreats."
 				},
 				{
 					"id": 5,
@@ -2285,7 +2285,7 @@
 			"encounter_id": 1008,
 			"tags": [],
 			"encounter_name": "Gameshow",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2380,7 +2380,7 @@
 			"encounter_id": 1009,
 			"tags": [],
 			"encounter_name": "Geocache",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2390,7 +2390,7 @@
 						{
 							"text": "[Steal] Take medical supplies",
 							"effects": [
-								"@random 0.8 (@random 0.25 (@give Surgical_Equipment 1) (@give Medicine 3)) (@give Medical_Kit 2)"
+								"@random 0.8 (@random 0.25 (@give Painkillers 3) (@give Herbal_Medicine 3)) (@give Medical_Kit 1)"
 							],
 							"next_page_id": 3
 						},
@@ -2416,7 +2416,7 @@
 			"encounter_id": 1010,
 			"tags": [],
 			"encounter_name": "Pick Me Up",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2523,7 +2523,7 @@
 			"encounter_id": 1012,
 			"tags": [],
 			"encounter_name": "Lazarus Station",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2586,9 +2586,7 @@
 			"encounter_id": 1014,
 			"tags": [],
 			"encounter_name": "Food For Thought",
-			"conditions": [
-				"!has Fuel 30"
-			],
+			"conditions": ["!has Fuel 30"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2596,7 +2594,7 @@
 					"text": "You pull up for a brief break at a rest stop, the sign for a nearby bakery catches your eye.",
 					"buttons": [
 						{
-							"text": "[Trade] Buy 30 rations for 20 Fuel",
+							"text": "[Ravenous] Buy 30 rations for 20 Fuel",
 							"conditions": [
 								"!has Fuel 20"
 							],
@@ -2628,7 +2626,7 @@
 			"encounter_id": 1015,
 			"tags": [],
 			"encounter_name": "Fasting",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2641,7 +2639,7 @@
 								"!has Fuel 25"
 							],
 							"effects": [
-								"@health% 30",
+								"@health% 25",
 								"@take Fuel 25"
 							],
 							"next_page_id": 3
@@ -2699,7 +2697,8 @@
 			"tags": [],
 			"encounter_name": "Turbulence",
 			"conditions": [
-				"!has Scrap_Metal 5"
+				"!has Scrap_Metal 5",
+				"!is_driving"
 			],
 			"town_name": null,
 			"dialogue_tree": [
@@ -2736,7 +2735,7 @@
 		},
 		{
 			"valid": true,
-			"COMMENT": "condition for hp to not kill, IF UPDATING REMEMBER TO CHANGE BOTH",
+			"COMMENT": "IF UPDATING REMEMBER TO CHANGE BOTH",
 			"encounter_id": 1017,
 			"tags": [],
 			"encounter_name": "The Hierophant",
@@ -2748,17 +2747,17 @@
 					"text": "You come across a somewhat sketchy looking lab; so of course you decide to dock and see what you can find. The bay doors close behind you and you are greeted by an enigmatic figure who offers to grant various requests in exchange for \"Samples\"",
 					"buttons": [
 						{
-							"text": "[Sustenance] Gain 20 Rations or Fuel, lose 12% health",
+							"text": "[Sustenance] Gain 30 Rations or Fuel, lose 12% health",
 							"effects": [
-								"@random 0.5 (@give Rations 20) (@give Fuel 20)",
+								"@random 0.5 (@give Rations 30) (@give Fuel 30)",
 								"@health% -12"
 							],
 							"next_page_id": 3
 						},
 						{
-							"text": "[Greed] Gain a random Luxury item, lose 12% health",
+							"text": "[Greed] Gain a random Combat item, lose 12% health",
 							"effects": [
-								"@give_tag Luxury 1",
+								"@give_tag Combat 1",
 								"@health% -12"
 							],
 							"next_page_id": 4
@@ -2785,17 +2784,17 @@
 					"text": "Well? What is it?",
 					"buttons": [
 						{
-							"text": "[Sustenance] Gain 20 Rations or Fuel, lose 12% health",
+							"text": "[Sustenance] Gain 30 Rations or Fuel, lose 12% health",
 							"effects": [
-								"@random 0.5 (@give Rations 20) (@give Fuel 20)",
+								"@random 0.5 (@give Rations 30) (@give Fuel 30)",
 								"@health% -12"
 							],
 							"next_page_id": 3
 						},
 						{
-							"text": "[Greed] Gain a random Luxury item, lose 12% health",
+							"text": "[Greed] Gain a random Combat item, lose 12% health",
 							"effects": [
-								"@give_tag Luxury 1",
+								"@give_tag Combat 1",
 								"@health% -12"
 							],
 							"next_page_id": 4
@@ -2859,7 +2858,7 @@
 			"encounter_id": 1018,
 			"tags": [],
 			"encounter_name": "The Beggar",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2867,12 +2866,12 @@
 					"text": "You’re approached by an elderly man draped in rags. He slowly brings out an unmarked box and pleads in a raspy voice, \"I don’t have much, but it's yours if you could spare some food\"",
 					"buttons": [
 						{
-							"text": "[Kindness] Give 15 Rations, take box",
+							"text": "[Kindness] Give 10 Rations, take box",
 							"conditions": [
-								"!has Rations 15"
+								"!has Rations 10"
 							],
 							"effects": [
-								"@take Rations 15",
+								"@take Rations 10",
 								"@give Jewelry 1"
 							],
 							"next_page_id": 3
@@ -2941,7 +2940,7 @@
 			"encounter_id": 1019,
 			"tags": [],
 			"encounter_name": "Feeling Lucky?",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2949,16 +2948,16 @@
 					"text": "\"You there!\", two men beckon you towards them. \"We need someone to bear witness to our duel, to make it worth your time you can place a bet on who’ll win\". Sounds like easy money.",
 					"buttons": [
 						{
-							"text": "[Safe Bet] 70% chance to win 7 Iron Ore",
+							"text": "[Safe Bet] 70% chance to win 3 Iron Ore",
 							"effects": [
-								"@random 0.7 (@give Iron_Ore 7) (@give Iron_Ore 0)"
+								"@random 0.7 (@give Iron_Ore 3) (@health 0)"
 							],
 							"next_page_id": 2
 						},
 						{
-							"text": "[Risky Bet] 30% chance to win 20 Iron Ore",
+							"text": "[Risky Bet] 30% chance to win 12 Iron Ore",
 							"effects": [
-								"@random 0.3 (@give Iron_Ore 20) (@give Iron_Ore 0)"
+								"@random 0.3 (@give Iron_Ore 12) (@health 0)"
 							],
 							"next_page_id": 2
 						}
@@ -2976,7 +2975,7 @@
 			"encounter_id": 1020,
 			"tags": [],
 			"encounter_name": "Free Samples",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2988,7 +2987,7 @@
 							"next_page_id": 3
 						},
 						{
-							"text": "[Clinic] Heal 15% health",
+							"text": "[Clinic] Gain 5% max health",
 							"next_page_id": 2
 						}
 					]
@@ -3017,7 +3016,7 @@
 						{
 							"text": "[Follow] Accept your fate",
 							"effects": [
-								"@health% 15"
+								"@health_max% 5"
 							],
 							"next_page_id": 4
 						}
@@ -3035,7 +3034,7 @@
 			"encounter_id": 1021,
 			"tags": [],
 			"encounter_name": "Unlucky decision",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -3093,7 +3092,7 @@
 			"encounter_id": 1022,
 			"tags": [],
 			"encounter_name": "Deal with the Devil",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -3101,7 +3100,7 @@
 					"text": "As you continue down the road you notice you’ve repeatedly passed the same dishevelled looking traveller. You stop to investigate and the stranger asks you to make a deal.",
 					"buttons": [
 						{
-							"text": "[Hasty Bargain] Gain 100% max hp, set your current hp to 1",
+							"text": "[Hasty Bargain] Gain 100% max hp, reduce your current hp to 1",
 							"effects": [
 								"@health_max% 100",
 								"@health% 100"
@@ -3109,19 +3108,20 @@
 							"next_page_id": 2
 						},
 						{
-							"text": "[Panacea] Gain 45 Medical supplies, Lose 50% max hp",
+							"text": "[Panacea] Gain numerious Medical supplies, Lose 40% max hp",
 							"effects": [
-								"@give Medicine 15",
-								"@give Medical_Kit 15",
-								"@give Surgical_Equipment 15",
-								"@health_max% -50"
+								"@give Painkillers 4",
+								"@give Herbal_Medicine 3",
+								"@give Medicine 2",
+								"@give Medical_Kit 1",
+								"@health_max% -40"
 							],
 							"next_page_id": 4
 						},
 						{
-							"text": "[Doppelganger] <<WIP>> Gain a crew member, Lose 50% max hp",
+							"text": "[Doppelganger] <<WIP>> Gain a crew member, Lose 33% max hp",
 							"effects": [
-								"@health_max% -50"
+								"@health_max% -33"
 							],
 							"next_page_id": 5
 						}
@@ -3189,7 +3189,7 @@
 			"encounter_id": 1025,
 			"tags": [],
 			"encounter_name": "Unusual Find",
-			"conditions": [],
+			"conditions": ["!is_walking"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -3220,7 +3220,7 @@
 			"COMMENT": "out of fuel",
 			"tags": [],
 			"encounter_name": "Oof",
-			"conditions": [],
+			"conditions": ["!is_walking"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -3248,7 +3248,7 @@
 			"COMMENT": "out of fuel",
 			"tags": [],
 			"encounter_name": "Coyotes",
-			"conditions": [],
+			"conditions": ["!is_walking"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -3313,10 +3313,182 @@
 		},
 		{
 			"valid": true,
+			"encounter_id": 1028,
+			"COMMENT": "out of fuel",
+			"tags": [],
+			"encounter_name": "The Arena",
+			"conditions": ["!is_walking"],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "While pushing your vehicle you're knocked unconscious. You awaken with a throbbing head to find yourself in the middle of a large arena surrounded by a cheering audience. Before you have time to fully take in your situation the ringleader bellows \"Let the battle begin!\"",
+					"buttons": [
+						{
+							"text": "[Fight] Prepare for battle.",
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "The gates open and your challenger approaches, From their weapons and the blood splattered around the arena it looks like only one of you will be surviving this match. Luckily for you they didn't remove any of your equipment.",
+					"buttons": [
+						{
+							"text": "[Reckless Charge] Fight with your bare hands, Lose 30 hp.",
+							"effects": [
+								"@health -30"
+							],
+							"next_page_id":3
+						},
+						{
+							"text": "[Rip and Tear] Fight with your Hatchet, Lose 20 hp.",
+							"conditions":[
+								"!has Hatchet 1"
+							],
+							"effects": [
+								"@take Hatchet 1",
+								"@health -20"
+							],
+							"next_page_id":3
+						},
+						{
+							"text": "[Rupture] Fight with your Hunting Rifle, Lose 15 hp.",
+							"conditions":[
+								"!has Hunting_Rifle 1"
+							],
+							"effects": [
+								"@take Hunting_Rifle 1",
+								"@health -15"
+							],
+							"next_page_id":3
+						},
+						{
+							"text": "[Reaper] Fight with an RPG, is that even fair?",
+							"conditions":[
+								"!has RPG 1"
+							],
+							"effects": [
+								"@take RPG 1"
+							],
+							"next_page_id":3
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Your opponent falls and the crowd goes wild. \"Seems you're tougher than you look!\" the ringleader howls, \"Time for a real challenge!\". While he riles up the crowd, you notice a crack in the wall you might be able to escape through while everyone is distracted. Though, the champion of the arena is likely well rewarded.",
+					"buttons": [
+						{
+							"text": "[Cowardice] Escape with your life."
+						},
+						{
+							"text": "[Berserker] A large fight with even larger rewards.",
+							"next_page_id":4
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "The gates open and your challenger approaches, They're far more intimidating than your last opponent but there's no backing out now.",
+					"buttons": [
+						{
+							"text": "[Outmaneuver] Fight with your bare hands, Lose 40% hp.",
+							"effects": [
+								"@health% -40"
+							],
+							"next_page_id":5
+						},
+						{
+							"text": "[Blade Dance] Fight with your Hatchet, Lose 30% hp.",
+							"conditions":[
+								"!has Hatchet 1"
+							],
+							"effects": [
+								"@take Hatchet 1",
+								"@health% -30"
+							],
+							"next_page_id":5
+						},
+						{
+							"text": "[Predator] Fight with your Hunting Rifle, Lose 20% hp.",
+							"conditions":[
+								"!has Hunting_Rifle 1"
+							],
+							"effects": [
+								"@take Hunting_Rifle 1",
+								"@health% -20"
+							],
+							"next_page_id":5
+						},
+						{
+							"text": "[Ragnarok] Fight with an RPG, lose 10% hp",
+							"conditions":[
+								"!has RPG 1"
+							],
+							"effects": [
+								"@take RPG 1",
+								"@health% -10"
+							],
+							"next_page_id":5
+						}
+					]
+				},
+				{
+					"id": 5,
+					"text": "Victory! Their champion lies broken at your feet and the crowd goes wild. Time to claim your spoils.",
+					"buttons": [
+						{
+							"text": "[Apotheosis] Gain 10 of 10 random resouces.",
+							"effects": [
+								"@give_tag All 10",
+								"@give_tag All 10",
+								"@give_tag All 10",
+								"@give_tag All 10",
+								"@give_tag All 10",
+								"@give_tag All 10",
+								"@give_tag All 10",
+								"@give_tag All 10",
+								"@give_tag All 10",
+								"@give_tag All 10"
+							],
+							"next_page_id":6
+						},
+						{
+							"text": "[Impervious] Gain 150 max hp and full heal.",
+							"effects": [
+								"@health_max 150",
+								"@health% 100"
+							],
+							"next_page_id":6
+						},
+						{
+							"text": "[Insatiable] Gain 100 Fuel, 100 Rations.",
+							"effects": [
+								"@give Fuel 100",
+								"@give Rations 100"
+							],
+							"next_page_id":6
+						}
+					]
+				},
+				{
+					"id": 6,
+					"text": "You're given your rewards and returned to your ship. Your escort informs you the ringleader was impressed and \"Looks forward to your next visit\".",
+					"buttons": [
+						{
+							"text": "[Leave] Escape, for now."
+						}
+					]
+				}
+			]
+		},
+		{
+			"valid": true,
 			"encounter_id": 1200,
 			"tags": [],
 			"encounter_name": "Earthquake",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{

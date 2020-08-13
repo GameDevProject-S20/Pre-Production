@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Extentions;
@@ -31,5 +32,24 @@ public class HasItemPresentConditon : IPresentCondition
             }
         }
         return false;
+    }
+}
+
+public class HasItemTagPresentConditon : IPresentCondition
+{
+    private readonly string tag;
+    public HasItemTagPresentConditon(string tag)
+    {
+        if (!string.IsNullOrEmpty(tag))
+        {
+            tag = tag.ToTitleCase();
+        }
+        this.tag = tag;
+    }
+    public bool IsSatisfied()
+    {
+        var inventory = Player.Instance.Inventory;
+        var validItemNames = ItemManager.Current.GetAllItemsOfType((ItemTag) Enum.Parse(typeof(ItemTag), tag)).Select(i => i.DisplayName);
+        return validItemNames.Any(i => inventory.Contains(i) > 0);
     }
 }

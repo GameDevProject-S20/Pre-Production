@@ -52,7 +52,7 @@ public class MapTravel : MonoBehaviour
     /// </summary>
     /// <param name="destination"></param>
     /// <param name="onTravelReady"></param>
-    public static void Travel(MapNode destination, Action onTravelReady){
+    public static void Travel(MapNode destination, Action onTravelReady) {
         // If we already have the player travelling (i.e. double clicks), exit out here
         if (isTravelling)
         {
@@ -65,47 +65,40 @@ public class MapTravel : MonoBehaviour
         int currentFuel = DataTracker.Current.Player.Inventory.Contains("Fuel");
 
         // If the player has enough fuel to travel: Go ahead & travel
-        if (currentFuel >= cost) { 
-
+        if (currentFuel >= cost) {
+            DataTracker.Current.SetTravelType(DataTracker.TravelType.TRUCK);
             Player.Instance.Inventory.RemoveItem("Fuel", cost);
 
             isTravelling = false; // Remove the debounce
-            DataTracker.Current.EventManager.OnTravelTypeChanged.Invoke(DataTracker.TravelType.TRUCK);
             onTravelReady();
         }
         else
         {
+            DataTracker.Current.SetTravelType(DataTracker.TravelType.WALK);
 
-            // Otherwise, we need to change vehicle type and run a LowFuel encounter
-            DataTracker.Current.EventManager.OnTravelTypeChanged.Invoke(DataTracker.TravelType.WALK);
-
-            
             //Should we run a random encounter now? We don't want to if it will become night soon. 
-            if (Clock.Instance.Time.Hour < Clock.NightStartHour - 1) // ARL -- part of the bypass mentioned below
+            // Otherwise, we need to run a LowFuel encounter
+            if (Clock.Instance.Time.Hour < Clock.NightStartHour - 1 && EncounterManager.Instance.RandomEncountersOn)
             {
-                // Otherwise, we need to run a LowFuel encounter
-                if (EncounterManager.Instance.RandomEncountersOn)
+                // Delay the progression of travel until they complete the encounter
+                EventManager.Instance.OnDialogueEnd.AddListener(() =>
                 {
-                    DataTracker.Current.EncounterManager.RunRandomEncounter();
-                    // Delay the progression of travel until they complete the encounter
-                    EventManager.Instance.OnDialogueEnd.AddListener(() =>
-                    {
-                        // Remove the debounce
-                        isTravelling = false;
+                    // Remove the debounce
+                    isTravelling = false;
 
-                        // Travel
-                        onTravelReady();
-                    });
-                } 
+                    // Travel
+                    onTravelReady();
+                });
+
+                EncounterManager.Instance.RunRandomEncounter();
             }
+            else
+            {
+                // ARL temporary -- bypass gas requirement if night about to fall. This has to do with a bug where the campfire will run twice if a low fuel encounter triggers as they leave the previous node
 
-            // ARL temporary -- bypass gas requirement if night about to fall. This has to do with a bug where the campfire will run twice if a low fuel encounter triggers as they leave the previous node
-
-            isTravelling = false;
-            onTravelReady();
-
+                isTravelling = false;
+                onTravelReady();
+            }
         }
     }
-    
-
 }

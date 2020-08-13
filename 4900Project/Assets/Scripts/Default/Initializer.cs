@@ -39,6 +39,7 @@ public class Initializer : MonoBehaviour
         SetStartingInventory();
         InitializeEncounters();
         BuildQuest();
+        DataTracker.Current.SetTravelType(DataTracker.TravelType.WALK);
         StartCoroutine(loader());
     }
 
@@ -55,7 +56,9 @@ public class Initializer : MonoBehaviour
             EncounterManager.Instance.AddEncounter(e);
         }
 
+
         EncounterManager.Instance.ToggleRandomEncounters(false);
+        EncounterManager.Instance.ReloadRandomEncounterQueue();
     }
 
     private void BuildQuest()

@@ -44,8 +44,13 @@ public class DataTracker : MonoBehaviour
     public int currentShopId = 0; // Needed if we want store to be their own scene. If we make the store window a prefab, we don't need this. 
     public int currentLocationId = 1;
 
-
-    public TravelType travelMode { get; private set; }
+    [SerializeField]
+    private TravelType _travelMode;
+    public TravelType TravelMode
+    { 
+        get => _travelMode; 
+        private set => _travelMode = value; 
+    }
 
     public int dayCount = 0;
     public int hourCount = 6;
@@ -78,9 +83,12 @@ public class DataTracker : MonoBehaviour
         return null;
     }
 
-    private void OnTravelTypeChanged(TravelType type)
+    public void SetTravelType(TravelType type)
     {
-        this.travelMode = type;
+        if (TravelMode == type) return;
+
+        TravelMode = type;
+        EventManager.Instance.OnTravelTypeChanged.Invoke(type);
     }
 
     // Useed for debugging
