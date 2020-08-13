@@ -25,8 +25,10 @@ public class MapTravel : MonoBehaviour
         {1.45f, 3.0f}
     };
 
+
     public static int CaravanTravelRate { get; private set; } = 1;
     public static int WalkingTravelRate { get; private set; } = 3 * CaravanTravelRate;
+    public static int TravelTimeHours { get; private set; } = 1;
 
 
     public static int GetFuelCost(MapNode destination){
@@ -50,53 +52,27 @@ public class MapTravel : MonoBehaviour
     /// </summary>
     /// <param name="destination"></param>
     /// <param name="onTravelReady"></param>
-    public static void Travel(MapNode destination, Action onTravelReady){
-        // If we already have the player travelling (i.e. double clicks), exit out here
+    public static void Travel(MapNode destination, Action onTravelReady) {
+       /* // If we already have the player travelling (i.e. double clicks), exit out here
         if (isTravelling)
         {
             return;
-        }
+        }*/
         // And track that they are already travelling
-        isTravelling = true;
+        //isTravelling = true;
 
         int cost = GetFuelCost(destination);
         int currentFuel = DataTracker.Current.Player.Inventory.Contains("Fuel");
-
         // If the player has enough fuel to travel: Go ahead & travel
         if (currentFuel >= cost) {
             DataTracker.Current.SetTravelType(DataTracker.TravelType.TRUCK);
-            DataTracker.Current.Player.Inventory.RemoveItem("Fuel", cost);
-            DataTracker.Current.dayCount += CaravanTravelRate;
-            isTravelling = false; // Remove the debounce
-            onTravelReady();
+            Player.Instance.Inventory.RemoveItem("Fuel", cost);
         }
         else
         {
             DataTracker.Current.SetTravelType(DataTracker.TravelType.WALK);
-
-            // Otherwise, we need to run a LowFuel encounter
-            if (EncounterManager.Instance.RandomEncountersOn)
-            {
-                DataTracker.Current.EncounterManager.RunRandomEncounter();
-
-                // Delay the progression of travel until they complete the encounter
-                EventManager.Instance.OnDialogueEnd.AddListener(() =>
-                {
-                    // Remove the debounce
-                    isTravelling = false;
-
-                    // Travel
-                    DataTracker.Current.dayCount += WalkingTravelRate;
-                    onTravelReady();
-                });
-            } 
-            else
-            {
-                DataTracker.Current.dayCount += WalkingTravelRate;
-                isTravelling = false; // Remove the debounce
-                onTravelReady();
-            }
         }
-    }
+        onTravelReady();
 
+    }
 }

@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.EscapeMenu.Frontend;
 using Assets.Scripts.ExitMenu;
+using ICSharpCode.NRefactory.Ast;
 using SIEvents;
 using System;
 using System.Collections.Generic;
@@ -134,14 +135,7 @@ namespace Assets.Scripts.EscapeMenu.Interfaces
             slider.onValueChanged.AddListener((float value) =>
             {
                 UpdateValueDisplay(sliderData);
-                UpdateSetting(sliderData.SettingName, value);
             });
-            /*
-            // When the player finishes changing a value, we want to update the setting
-            // Note that this is done after a value is changed, so that we don't call the method too often
-            customSlider.MouseReleased.AddListener((value) =>
-            {
-            });*/
         }
 
         /// <summary>
@@ -161,6 +155,37 @@ namespace Assets.Scripts.EscapeMenu.Interfaces
             var slider = sliderData.slider;
             var valueDisplay = slider.transform.Find("Background/ValueText").GetComponent<TMPro.TextMeshProUGUI>();
             valueDisplay.text = String.Format(sliderData.DisplayFormatPattern, slider.value).Replace(" ", "");
+
+            // Hack for the DialogueSpeed setting:
+            //  When we go below 100, it's affecting the DialogueSpeed setting. In this case, we want a percentage.
+            //  When we're above 100, we affect the DialogueCharacters setting. This one needs integers, so we take percentage/100.
+            // Because of that hack, we need to do some extra logic & alterations on the value display..
+            if (sliderData.SettingName == "DialogueSpeed")
+            {
+                if (slider.value > 100)
+                {
+                    // When we're above 100, we show the floor of the hundreds (i.e. 100, 200, 300) as a percentage
+                    valueDisplay.text = String.Format("{0:P0}", Math.Floor(slider.value/100)).Replace(" ", "");
+
+                    // Snap to the hundred
+                    slider.value = Convert.ToSingle(Math.Floor(slider.value / 100) * 100);
+                } else if (slider.value == 1)
+                {
+                    // Otherwise, we show the actual value, again as a percentage
+                    valueDisplay.text = String.Format("{0:N2}", slider.value).Replace(" ", "");
+                }
+
+                // Update the two settings - DialogueCharacters uses >= 1
+                UpdateSetting("DialogueCharacters", Math.Max(slider.value / 100, 1));
+
+                // DialogueSpeed needs to be <= 100%
+                UpdateSetting("DialogueSpeed", Math.Min(100f, slider.value));
+            }
+            else
+            {
+                // All other sliders are normal, so no special logic here
+                UpdateSetting(sliderData.SettingName, slider.value);
+            }
         }
     }
 }

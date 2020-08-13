@@ -97,6 +97,7 @@ namespace Quests
                 IsCompleted = true;
                 Debug.Log("Completed Quest: " + this.Name);
                 OnQuestComplete.Invoke(this);
+                EventManager.Instance.OnQuestComplete.Invoke(this);
             }
             else
             {
