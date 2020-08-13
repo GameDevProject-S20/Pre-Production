@@ -31,6 +31,8 @@ public class OverworldMapUI : MonoBehaviour
     GameObject playerMarker;
     [SerializeField]
     GameObject TruckObject;
+    [SerializeField]
+    GameObject FootObject;
 
     // Empty game objects to organize hierarchy
     [Header("Containers")]
@@ -130,6 +132,10 @@ public class OverworldMapUI : MonoBehaviour
             } 
         });
         EventManager.Instance.OnDialogueEnd.AddListener(ShowSidePanel);
+
+        //Set proper truck mode
+        TruckObject.GetComponent<MeshRenderer>().enabled = false;
+        FootObject.GetComponent<MeshRenderer>().enabled = true;
 
     }
 
@@ -389,6 +395,11 @@ public class OverworldMapUI : MonoBehaviour
         {
             this.Vroom = Resources.Load<AudioClip>("Music/Sound Effects/gruntsound-extended");
             travelSpeed = 0.3f;
+            FootObject.GetComponent<MeshRenderer>().enabled = true;
+            if (TruckObject.GetComponent<MeshRenderer>().enabled == true)
+            {
+                FootObject.transform.localPosition = new Vector3(0.07f, 0f, 0f);
+            }
 
             return;
         }
@@ -396,6 +407,8 @@ public class OverworldMapUI : MonoBehaviour
         {
             this.Vroom = Resources.Load<AudioClip>("Music/Sound Effects/vroom");
             travelSpeed = 1;
+            TruckObject.GetComponent<MeshRenderer>().enabled = true;
+            FootObject.GetComponent<MeshRenderer>().enabled = false;
 
             return;
         }
