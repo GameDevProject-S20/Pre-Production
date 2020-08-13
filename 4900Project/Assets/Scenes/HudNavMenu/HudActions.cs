@@ -12,13 +12,17 @@ public class HudActions : MonoBehaviour
 
     Events.QuestEvents.QuestManagerUpdated questChangedEvent;
     bool helpPanelOpened = false;
+
     [SerializeField]
     GameObject helpPanel;
+
+    private GameObject escapeMenu;
 
     void Start(){
         questChangedEvent = DataTracker.Current.EventManager.OnQuestManagerUpdated;
         questChangedEvent.AddListener(new UnityEngine.Events.UnityAction(() => { QuestChangedHandler();}));
 
+        escapeMenu = GameObject.Find("EscapeMenuCanvas");
     }
 
     bool JwasKeyDown = false;
@@ -94,20 +98,31 @@ public class HudActions : MonoBehaviour
 
     public void OnInventoryButtonClick()
     {
-        ActivateInterface(GameObject.Find("Map").GetComponent<OverworldMapUI>().InventoryCanvas);
+        ToggleInterface(GameObject.Find("Map").GetComponent<OverworldMapUI>().InventoryCanvas);
         EventManager.Instance.FreezeMap.Invoke();
 
     }
 
     public void OnMenuButtonClick()
     {
+        // Store if the interface is active -- have to do this before the Deactivate,
+        // because it'll always deactivate after that method call
+        var escapeMenuActive = escapeMenu.GetComponent<Canvas>().enabled;
+
+        // Deactivate every interface
         DeactivateInterface();
-        EventManager.Instance.EscapeMenuRequested.Invoke();
+
+        // If we were not already active, activate the escape menu
+        if (!escapeMenuActive)
+        {
+            EventManager.Instance.EscapeMenuRequested.Invoke();
+        }
+        activeObject = null;
     }
 
     public void OnJournalButtonClick()
     {
-        ActivateInterface(GameObject.Find("Map").GetComponent<OverworldMapUI>().QuestJournalCanvas);
+        ToggleInterface(GameObject.Find("Map").GetComponent<OverworldMapUI>().QuestJournalCanvas);
         GameObject.Find("questjournal").GetComponent<UnityEngine.UI.RawImage>().material = default;
         EventManager.Instance.FreezeMap.Invoke();
     }
@@ -138,12 +153,26 @@ public class HudActions : MonoBehaviour
     /// Activates a new interface. Closes the past one if one was open.
     /// </summary>
     /// <param name="interfaceCanvas"></param>
-    protected void ActivateInterface(GameObject interfaceCanvas)
+    protected void ToggleInterface(GameObject interfaceCanvas)
     {
+        // Store if the interface is already active
+        // Do this before deactivating, otherwise it'll always be inactive
+        var isActive = interfaceCanvas.activeInHierarchy;
+
+        // Deactivate every interface ...
         DeactivateInterface();
 
-        interfaceCanvas.SetActive(true);
-        activeObject = interfaceCanvas;
+        // If we were already active, we now have every interface closed;
+        // Otherwise, we want to open this interface & set it as active
+        if (isActive)
+        {
+            activeObject = null;
+        }
+        else
+        {
+            interfaceCanvas.SetActive(true);
+            activeObject = interfaceCanvas;
+        }
     }
 
     public void OnToggleView(){
