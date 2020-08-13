@@ -551,9 +551,36 @@
 					"text": "A landslide has blocked the road ahead.",
 					"buttons": [
 						{
+							"text": "Clear the way with your RPG.",
+							"conditions" : [
+								"!has Rpg 1"
+							],
+							"effects" : [
+								"@add_edge 203 206",
+								"@set_node_encounter 206 40"
+							],
+							"next_page_id": 2
+						},
+						{
 							"text": "[Leave]"
 						}
 					]
+				},
+				{
+					"id": 2,
+					"text": "You blast away the rock, clearing a path!"
+				}
+			]
+		},
+		{
+			"encounter_id": 40,
+			"NOTE": "",
+			"valid": true,
+			"encounter_name": "Unblocked Road",
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Where once the road was blocked, only rubble on the side of the road remains."
 				}
 			]
 		},
@@ -839,7 +866,7 @@
 				},
 				{
 					"id": 3,
-					"text": "Every day, I pass by the old spaceship hangers and hope. If only we could get them working...",
+					"text": "Every day, I pass by the old spaceship hangers and hope. If only we could get it working...",
 					"buttons": [
 						{
 							"text": "[Return]",
@@ -1571,15 +1598,24 @@
 								"!has Tricorder 1"
 							],
 							"effects": [
-								"@give Mineral_Data 1"
+								"@give Mineral_Data 1",
+								"@resident remove scienceQuest3 current"
 							],
 							"next_page_id":2
+						},
+						{
+							"text": "Do nothing.",
+							"next_page_id":3
 						}
 					]
 				},
 				{
 					"id": 2,
 					"text": "You grab a bit of soil and insert it into your tricorder's sample tray. The screen lights up with data on mineral composition and moisture levels."
+				},
+				{
+					"id": 3,
+					"text": "You remember that you lost your tricorder. Having dug a hole for nothing, you quickly run away from the gaze of the locals."
 				}
 			]
 		},
@@ -1623,7 +1659,7 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "As you browse the town's bulletin board, you notice somebody is looking to hire a merchant caravan.",
+					"text": "[As you browse the town's bulletin board, you notice somebody is looking to hire a merchant caravan.]",
 					"buttons": [
 						{
 							"text": "Contact the poster.",
@@ -1829,6 +1865,828 @@
 				{
 					"id": 3,
 					"text": "Alright. It's not vital... yet. Please bring the new <color=#d9ae21>machinery</color> soon."
+				}
+			]
+		},
+		{
+			"encounter_id": 212,
+			"NOTE": "Science Quest Part 1",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Hello there. Can I help you?",
+					"buttons": [
+						{
+							"text": "Who are you?",
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "My name is Penelope. I am a researcher from the Laurentian Institute.",
+					"buttons": [
+						{
+							"text": "What are you doing out here?",
+							"next_page_id": 3
+						},
+						{
+							"text": "Ok, bye!",
+							"next_page_id": 13
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "My fellow researchers and I are studying the fragment. We believe we're on the verge of a great discovery.",
+					"buttons": [
+						{
+							"text": "What do you mean?",
+							"next_page_id": 4
+						},
+						{
+							"text": "Ok, bye!",
+							"next_page_id": 13
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "That doesn't concern you... Unless you'd like to help us?",
+					"buttons": [
+						{
+							"text": "I'm listening.",
+							"next_page_id": 5
+						},
+						{
+							"text": "Not interested. Bye!",
+							"next_page_id": 13
+						}
+					]
+				},
+				{
+					"id": 5,
+					"text": "You are a travelling merchant, are you not? You can help us by gathering data along your travels.",
+					"buttons": [
+						{
+							"text": "But I'm not a scientist!",
+							"effects": [
+								"@give Tricorder 1"
+							],
+							"next_page_id": 6
+						}
+					]
+				},
+				{
+					"id": 6,
+					"text": "You don't have to be. Here, take this tricorder. You can use it to take measurements.",
+					"buttons": [
+						{
+							"text": "What kind of measurements do you need?",
+							"next_page_id": 7
+						}
+					]
+				},
+				{
+					"id": 7,
+					"text": "We need data on seismic activity and soil composition.",
+					"buttons": [
+						{
+							"text": "How can I get seismic data?",
+							"next_page_id": 8
+						},
+						{
+							"text": "Where can I take soil samples?",
+							"next_page_id": 9
+						},
+						{
+							"text": "What do I do with the data?",
+							"next_page_id": 10
+						},
+						{
+							"text": "Ok, I'm ready.",
+							"next_page_id": 12
+						}
+					]
+				},
+				{
+					"id": 8,
+					"text": "I'm sure you've noticed how common earthquakes are. Next time one happens, take some measurements.",
+					"buttons": [
+						{
+							"text": "I have other questions.",
+							"next_page_id": 11
+						}
+					]
+				},
+				{
+					"id": 9,
+					"text": "We don't want all our soil samples to be from the same place. If you travel to towns around the continent, you can get a good variety of data.",
+					"buttons": [
+						{
+							"text": "I have other questions.",
+							"next_page_id": 11
+						}
+					]
+				},
+				{
+					"id": 10,
+					"text": "My colleagues are all over the place. If you find one, you can give your data to them.",
+					"buttons": [
+						{
+							"text": "I have other questions.",
+							"next_page_id": 11
+						}
+					]
+				},
+				{
+					"id": 11,
+					"text": "Anything else?",
+					"buttons": [
+						{
+							"text": "How can I get seismic data?",
+							"next_page_id": 8
+						},
+						{
+							"text": "Where can I take soil samples?",
+							"next_page_id": 9
+						},
+						{
+							"text": "What do I do with the data?",
+							"next_page_id": 10
+						},
+						{
+							"text": "Ok, I'm ready.",
+							"next_page_id": 12
+						}
+					]
+				},
+				{
+					"id": 12,
+					"text": "Great! Thanks for helping us.",
+					"buttons": [
+						{
+							"text": "[Leave]",
+							"effects": [
+								"@start_quest Field_Work",
+								"@resident remove scienceQuest1 Fields",
+								"@resident add scienceQuest2A Fields",
+								"@resident add scienceQuest2B Alabaster",
+								"@resident add scienceQuest2C Rocket_City",
+								"@resident add scienceQuest2B Lombard",
+								"@resident add scienceQuest2B New_Ottawa",
+								"@resident add scienceQuest2C Jeb's_Town",
+								"@resident add scienceQuest3 Riverbed",
+								"@resident add scienceQuest3 Dustbowl",
+								"@resident add scienceQuest3 Sherbrooke",
+								"@resident add scienceQuest3 Skull",
+								"@resident add scienceQuest3 Bordevide",
+								"@resident add scienceQuest3 Farm-By-The-Island",
+								"@resident add scienceQuest3 Irony",
+								"@resident add scienceQuest3 Lanark_Mine",
+								"@resident add scienceQuest3 Respite",
+								"@resident add scienceQuest3 Green_Greens",
+								"@resident add scienceQuest3 Frakton",
+								"@resident add scienceQuest3 Steelton"
+							]
+						}
+					]
+				},
+				{
+					"id": 13,
+					"text": "Alright. Goodbye."
+				}
+			]
+		},
+		{
+			"encounter_id": 213,
+			"NOTE": "Science Quest Part 2A",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Hello there. Can I help you?",
+					"buttons": [
+						{
+							"text": "I have some data to hand in.",
+							"next_page_id": 2
+						},
+						{
+							"text": "I have some questions.",
+							"next_page_id": 7
+						},
+						{
+							"text": "Just saying hello.",
+							"next_page_id": 11
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Great! What do you have for us?",
+					"buttons": [
+						{
+							"text": "I have some seismic data.",
+							"conditions":[
+								"!has Seismic_Data 1"
+							],
+							"effects": [
+								"@take Seismic_Data 1",
+								"@give Scrap_Metal 5",
+								"@give Fuel 20",
+								"@trigger HandInSeismicData"
+
+							],
+							"next_page_id": 4
+						},
+						{
+							"text": "Here's some mineral data.",
+							"conditions":[
+								"!has Mineral_Data 1"
+							],
+							"effects": [
+								"@take Mineral_Data 1",
+								"@give Scrap_Metal 5",
+								"@give Fuel 20",
+								"@trigger HandInMineralData"
+							],
+							"next_page_id": 5
+						},
+						{
+							"text": "Nevermind.",
+							"next_page_id": 11
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Anything else?",
+					"buttons": [
+						{
+							"text": "I have some seismic data.",
+							"conditions":[
+								"!has Seismic_Data 1"
+							],
+							"effects": [
+								"@take Seismic_Data 1",
+								"@give Scrap_Metal 5",
+								"@give Fuel 20",
+								"@trigger HandInSeismicData"
+
+							],
+							"next_page_id": 4
+						},
+						{
+							"text": "Here's some mineral data.",
+							"conditions":[
+								"!has Mineral_Data 1"
+							],
+							"effects": [
+								"@take Mineral_Data 1",
+								"@give Scrap_Metal 5",
+								"@give Fuel 20",
+								"@trigger HandInMineralData"
+							],
+							"next_page_id": 5
+						},
+						{
+							"text": "That's all.",
+							"next_page_id": 6
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "Hmm... these stress patterns... Notice how the P and S waves propogate. This suggests... no, that can't be.",
+					"buttons": [
+						{
+							"text": "[Nod your head in vague agreement]",
+							"next_page_id": 3
+						}
+					]
+				},
+				{
+					"id": 5,
+					"text": "This sample is less healthy than our previous samples. The soil is drier, with fewer essential chemicals. That doesn't bode well for the farmers.",
+					"buttons": [
+						{
+							"text": "[Nod your head in vague agreement]",
+							"next_page_id": 3
+						}
+					]
+				},
+				{
+					"id": 6,
+					"text": "Thanks for your help, trader."
+				},
+				{
+					"id": 7,
+					"text": "How can I help?",
+					"buttons": [
+						{
+							"text": "How can I get seismic data?",
+							"next_page_id": 8
+						},
+						{
+							"text": "Where can I take soil samples?",
+							"next_page_id": 9
+						},
+						{
+							"text": "What's all this for?",
+							"next_page_id": 10
+						},
+						{
+							"text": "Nevermind.",
+							"next_page_id": 11
+						}
+					]
+				},
+				{
+					"id": 8,
+					"text": "Use your tricorder during an earthquake to measure its strength. They happen all the time.",
+					"buttons": [
+						{
+							"text": "I have other questions.",
+							"next_page_id": 7
+						}
+					]
+				},
+				{
+					"id": 9,
+					"text": "Visit towns across the fragment. If you sample soil at different towns, we'll have a large variety of samples.",
+					"buttons": [
+						{
+							"text": "I have other questions.",
+							"next_page_id": 7
+						}
+					]
+				},
+				{
+					"id": 10,
+					"text": "We're hoping to learn more about the nature of these fragments and what caused the Shattering.",
+					"buttons": [
+						{
+							"text": "I have other questions.",
+							"next_page_id": 7
+						}
+					]
+				},
+				{
+					"id": 11,
+					"text": "Alright, be seeing you!"
+				}
+			]
+		},
+		{
+			"encounter_id": 214,
+			"NOTE": "Said by the town leader for Lombard",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Greetings, merchant. The pleasure is mine.",
+					"buttons": [
+						{
+							"text": "What should I trade here?",
+							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about Lombard?",
+							"next_page_id": 3
+						},
+						{
+							"text": "Do you know anything about old spacecraft?",
+							"next_page_id": 4
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Anything you can give to help our goal of Old World preservation would be appreciated.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Lombard is the oldest settlement on this fragment. Our museum holds artifacts from thousands of years ago. A history rapidly being forgotten, I'm afraid.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "Spaceflight? Gemini, Vostok, Apollo, Soyuz, Artemis? A passion of mine. How can I help?",
+					"buttons": [
+						{
+							"text": "[Tell him about the fragment collapse]",
+							"next_page_id": 5
+						}
+					]
+				},
+				{
+					"id": 5,
+					"text": "I... see. I believe you. I have many friends at the Laurentian Institute. Here, take this.",
+					"buttons": [
+						{
+							"text": "[Next]",
+							"effects" :["@give Rocketry_Blueprint 1"],
+							"next_page_id": 6
+						}
+					]
+				},
+				{
+					"id": 6,
+					"text": "These are blueprints from the old Artemis program. Bring them to the factory in New Ottawa. They should be able to build this.",
+					"buttons": [
+						{
+							"text": "Thanks for your help.",
+							"effects": [
+								"@set_dialogue_encounter 7 77",
+								"@set_dialogue_encounter 4 215",
+								"@resolve"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"encounter_id": 215,
+			"NOTE": "Said by the town leader for New Ottawa",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Welcome to New Ottawa. Always great to see a caravan drive in!",
+					"buttons": [
+						{
+							"text": "What should I trade here?",
+							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about New Ottawa?",
+							"next_page_id": 3
+						},
+						{
+							"text": "Can you build this for me?",
+							"conditions" : [
+								"!has Rocketry_Blueprint 1"
+							],
+							"next_page_id": 4
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "New Ottawa has the largest factory in Laurentia. We can always use raw materials. We'll pay extra for steel.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "New Ottawa was built by refugees from the old Canadian capital. We're not quite sure how far away that was.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "I've never seen anything like this. But don't worry, we can build anything! You'll need to bring us 15 steel",
+					"buttons": [
+						{
+							"text": "Here you go!",
+							"conditions" : [
+								"!has Steel 15"
+							],
+							"effects": [
+								"@take Steel 15",
+								"@take Rocketry_Blueprint 1",
+								"@give Rocket_Engine 1"
+							],
+							"next_page_id": 5
+						},
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 5,
+					"text": "[Through the improbability of game logic, the factory workers build the engine instantly.]\nWhat a job! I've never seen an engine this big! Hope you're satisfied!",
+					"buttons":[
+						{
+							"text":"[Leave]",
+							"effects": [
+								"@set_dialogue_encounter 5 217",
+								"@set_dialogue_encounter 4 74",
+								"@resolve"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"encounter_id": 216,
+			"NOTE": "Said by the town leader for Rocket City",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Greetings. The Institute told me to expect you.",
+					"buttons": [
+						{
+							"text": "What should I trade here?",
+							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about Rocket City?",
+							"next_page_id": 3
+						},
+						{
+							"text": "How can I help?",
+							"next_page_id": 4
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "We don't get much food out here. Anything you bring will be highly valued.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Every day, I pass by the old spaceship hangers. Our only hope is to get it fixed.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "The Institute believes the fragment will collapse soon. They want us to rebuild the old spacecraft here so we can evacuate.",
+					"buttons": [
+						{
+							"text": "How can we do that?",
+							"next_page_id": 5
+						}
+					]
+				},
+				{
+					"id": 5,
+					"text": "We need a new engine. Unfortunately, no one's known how to build one since the old Artemis program over 50 years ago.",
+					"buttons": [
+						{
+							"text": "So, what's the plan?",
+							"next_page_id": 6
+						}
+					]
+				},
+				{
+					"id": 6,
+					"text": "We need to find records of the old space programs. Our best bet is to look where old world knowledge is found. Library ruins, old computers, something like that.",
+					"buttons": [
+						{
+							"text": "That doesn't seem very likely.",
+							"next_page_id": 7
+						}
+					]
+				},
+				{
+					"id": 7,
+					"text": "You'd be suprised. Pre-shattering artifacts are found all the time. Scavengers find books, storage devices, old electronics.",
+					"buttons": [
+						{
+							"text": "I'll see what I can find.",
+							"effects": [
+								"@set_dialogue_encounter 5 217",
+								"@set_dialogue_encounter 7 214",
+								"@resolve"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"encounter_id": 217,
+			"NOTE": "Said by the town leader for Rocket City",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Greetings. I hope you bring good news.",
+					"buttons": [
+						{
+							"text": "What should I trade here?",
+							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about Rocket City?",
+							"next_page_id": 3
+						},
+						{
+							"text": "I have some rocket parts.",
+							"conditions":[
+								"!has Rocket_Engine 1"
+							],
+							"next_page_id": 4
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "We don't get much food out here. Anything you bring will be highly valued.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Every day, I pass by the old spaceship hangers. Our only hope is to get it fixed.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "This... this is incredible! We can rebuild the spaceship with this! You've saved a lot of lives today, friend.",
+					"buttons": [
+						{
+							"text": "All in a day's work.",
+							"effects" : [
+								"@add_edge 203 207",
+								"@set_dialogue_encounter 5 218",
+								"@give Fuel 50",
+								"@resolve"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"encounter_id": 218,
+			"NOTE": "Said by the town leader for Rocket City",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Thanks for helping us rebuild the rocket.",
+					"buttons": [
+						{
+							"text": "What should I trade here?",
+							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about Rocket City?",
+							"next_page_id": 3
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "We don't get much food out here. Anything you bring will be highly valued.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Every day, I pass by the old spaceship hangers with pride. You've done a good thing.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				}
+			]
+		},
+		{
+			"encounter_id": 219,
+			"NOTE": "Said by the town leader for Rocket City",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "[You receive a call via radio].",
+					"buttons": [
+						{
+							"text": "[Answer]",
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Hello? It's Penelope, the researcher. We met in Fields, remember?",
+					"buttons": [
+						{
+							"text": "Yes, I totally remember you.",
+							"next_page_id": 3
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Thanks to the data you collected, we've been able to reach a... conclusion.",
+					"buttons": [
+						{
+							"text": "What is it?",
+							"next_page_id": 4
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "The earthquakes aren't just shaking the Earth. The entire fragment is being torn apart. That's why the soil's been getting worse every year.",
+					"buttons": [
+						{
+							"text": "That's not good.",
+							"next_page_id": 5
+						}
+					]
+				},
+				{
+					"id": 5,
+					"text": "We estimate that within 5 years, Laurentia will shatter again. All that will be left this time are dry chunks of rock.",
+					"buttons": [
+						{
+							"text": "Can we do anything about it?",
+							"next_page_id": 6
+						}
+					]
+				},
+				{
+					"id": 6,
+					"text": "We aren't sure. But we're preparing for the worse. Go to Rocket City. The Overseer there will fill you in on the details.",
+					"buttons": [
+						{
+							"text": "Should I keep collecting samples?",
+							"next_page_id": 7
+						}
+					]
+				},
+				{
+					"id": 7,
+					"text": "Yes. It might help us find a way to prevent the fragment collapse.",
+					"buttons": [
+						{
+							"text": "Okie dokie!",
+							"effects": [
+								"@set_dialogue_encounter 5 216",
+								"@start_quest The_Final_Frontier"
+							]
+						}
+					]
 				}
 			]
 		},
@@ -3518,6 +4376,44 @@
 				{
 					"id": 3,
 					"text": "Luckily, you always wear your seatbelt, and the earthquake passes without causing any damage."
+				}
+			]
+		},
+		{
+			"valid": true,
+			"encounter_id": 1201,
+			"tags": [],
+			"encounter_name": "Buried Treasure",
+			"conditions": [],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "For no apparent reason, you get the urge to stop and step outside. Something about this spot... you can feel it in your bones.",
+					"buttons": [
+						{
+							"text": "Dig with your shovel.",
+							"conditions": [
+								"!has Shovel 1"
+							],
+							"effects": [
+								"@give_tag Antique 1"
+							],
+							"next_page_id":2
+						},
+						{
+							"text": "Do nothing.",
+							"next_page_id":3
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "You dig at your feet and find an old artifact!"
+				},
+				{
+					"id": 3,
+					"text": "The feeling passes. It must have been nothing."
 				}
 			]
 		}

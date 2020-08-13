@@ -134,7 +134,7 @@ public class OverworldMapUI : MonoBehaviour
         {
             isActive = true;
             FreezeCount = 0;
-        });
+        }); 
 
         EventManager.Instance.UnfreezeMap.AddListener(() =>
         {
@@ -401,11 +401,11 @@ public class OverworldMapUI : MonoBehaviour
 
         if (selectedNode.NodeData.Type == OverworldMap.LocationType.TOWN)
         {
-            SidePanel.OpenTown(selectedNode.NodeData.LocationId);
+            SidePanel.OpenTown(selectedNode.NodeData.Id);
         }
         else if (selectedNode.NodeData.Type == OverworldMap.LocationType.POI)
         {
-            SidePanel.OpenPOI(selectedNode.NodeData.LocationId);
+            SidePanel.OpenPOI(selectedNode.NodeData.Id);
         }
 
         DataTracker.Current.currentLocationId = selectedNode.NodeData.Id;
@@ -445,6 +445,8 @@ public class OverworldMapUI : MonoBehaviour
         TownMenuGameObject.SetActive(false);
         SidePanel.Open();
         EventManager.Instance.UnfreezeMap.Invoke();
+        EventManager.Instance.OnTownLeave.Invoke();
+
     }
 
     public void onTravelTypeChanged(DataTracker.TravelType type)

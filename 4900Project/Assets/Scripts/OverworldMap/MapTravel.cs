@@ -63,7 +63,6 @@ public class MapTravel : MonoBehaviour
 
         int cost = GetFuelCost(destination);
         int currentFuel = DataTracker.Current.Player.Inventory.Contains("Fuel");
-
         // If the player has enough fuel to travel: Go ahead & travel
         if (currentFuel >= cost) {
             DataTracker.Current.SetTravelType(DataTracker.TravelType.TRUCK);
