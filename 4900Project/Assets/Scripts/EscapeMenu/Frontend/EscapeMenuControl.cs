@@ -166,6 +166,9 @@ namespace Assets.Scripts.EscapeMenu.Interfaces
                 {
                     // When we're above 100, we show the floor of the hundreds (i.e. 100, 200, 300) as a percentage
                     valueDisplay.text = String.Format("{0:P0}", Math.Floor(slider.value/100)).Replace(" ", "");
+
+                    // Snap to the hundred
+                    slider.value = Convert.ToSingle(Math.Floor(slider.value / 100) * 100);
                 } else if (slider.value == 1)
                 {
                     // Otherwise, we show the actual value, again as a percentage
