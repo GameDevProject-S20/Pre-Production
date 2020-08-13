@@ -201,5 +201,12 @@ public class Shop
             }
         }
 
+        // ARL -- quick fix to increase fuel per town
+        int fuel = inventory.Contains("Fuel");
+        if (fuel < 20)
+        {
+            inventory.AddItem("Fuel", 20 - fuel);
+        }
+
     }
 }
