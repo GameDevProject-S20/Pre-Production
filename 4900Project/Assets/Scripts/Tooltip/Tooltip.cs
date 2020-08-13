@@ -66,11 +66,19 @@ public class Tooltip : MonoBehaviour
             if (this == InventoryWindow.Instance.tooltip && item.IsConsumable)
             {
                 int health = item.GetHealthCured();
-                descriptor += $"\n\nRestores {health} health";
+                int maxhealth = item.GetMaxHealthGiven();
+                if(maxhealth!=0)
+                {
+                    descriptor += $"\n\nGrants {maxhealth} additional max health";
+                }
+                else if(health!=0)
+                {
+                    descriptor += $"\n\nRestores {health} health";
+                }
                 descriptor += "\n\n<color=#CB0A00>Right click to consume</color>";
             }
         }
-        
+
         descriptor += "\n\nWeight per Unit:" + item.Weight.ToString() + "\n \n";
 
         string tagList = "";

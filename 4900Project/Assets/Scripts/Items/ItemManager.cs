@@ -56,6 +56,32 @@ public class Item
             case "Herbal Medicine":
                 health = 10;
                 break;
+            case "Body Armor":
+                health = 5;
+                break;
+        }
+        return health;
+    }
+    public int GetMaxHealthGiven()
+    {
+        int health = 0;
+        switch (DisplayName)
+        {
+            case "Painkillers":
+                health = 0;
+                break;
+            case "Medicine":
+                health = 0;
+                break;
+            case "Medical Kit":
+                health = 0;
+                break;
+            case "Herbal Medicine":
+                health = 0;
+                break;
+            case "Body Armor":
+                health = 5;
+                break;
         }
         return health;
     }
@@ -146,8 +172,6 @@ public class ItemManager : MonoBehaviour
         {
             _current = this;
         }
-
-       
     }
 
     public void Init(){

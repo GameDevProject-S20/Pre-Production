@@ -43,7 +43,10 @@ public class HoverBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnter
                 if (temp.IsConsumable)
                 {
                     int health = temp.GetHealthCured();
+                    int maxhealth = temp.GetMaxHealthGiven();
                     Debug.Log($"Adding {health} hp");
+                    Debug.Log($"giving {maxhealth} maxhp");
+                    Player.Instance.ModifyCap(maxhealth);
                     Player.Instance.AddHealth(health);
                     Player.Instance.Inventory.RemoveItem(temp.DisplayName, 1);
                 }
