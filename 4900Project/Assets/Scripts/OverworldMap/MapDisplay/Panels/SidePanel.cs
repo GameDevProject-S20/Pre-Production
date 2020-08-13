@@ -36,10 +36,16 @@ public class SidePanel : MonoBehaviour
          * Enter hot key
          */
         var EisDown = Input.GetKey(KeyCode.E);
-        if (EisDown != EwasKeyDown && EisDown && isOpen)
+        if (EisDown != EwasKeyDown && EisDown)
         {
-            EwasKeyDown = EisDown;
-            OnButtonClick();
+            if (isOpen)
+            {
+                EwasKeyDown = EisDown;
+                OnButtonClick();
+            } else
+            {
+                GameObject.Find("Map").GetComponent<OverworldMapUI>().TownMapClosed(); 
+            }
         }
         EwasKeyDown = EisDown;
 
