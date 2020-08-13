@@ -103,7 +103,8 @@ namespace Assets.Scripts.Dialogue.Frontend
             //  which will in turn press the button we're looking at
             for (var i = 0; i < buttons.Count; i++)
             {
-                buttons[i].onClick.AddListener(() => PressButton(i));
+                int index = i;
+                buttons[i].onClick.AddListener(() => PressButton(index));
             }
 
             // Listen for the DialogueManager to update, so that we can update our display
@@ -208,15 +209,16 @@ namespace Assets.Scripts.Dialogue.Frontend
                 text.text = buttonData != null ? buttonData.Text : "";
 
                 var keyTag = physicalButton.transform.Find("KeyTag");
-                if (buttonData != null)
+                if (buttonData != null && buttonData.Conditions.All(c => c.IsSatisfied()))
                 {
-                    bool interactable = buttonData.Conditions.All(c => c.IsSatisfied());
-                    physicalButton.interactable = interactable;
-                    text.color = (interactable) ? interactableButtonTextColour : uninteractableButtonTextColour;
+                    physicalButton.interactable = true;
+                    text.color = interactableButtonTextColour;
                     keyTag.gameObject.SetActive(true);
                 }
                 else
                 {
+                    physicalButton.interactable = false;
+                    text.color = uninteractableButtonTextColour;
                     keyTag.gameObject.SetActive(false);
                 }
             }
