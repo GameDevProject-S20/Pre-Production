@@ -123,7 +123,7 @@
 						{
 							"effects": [
 								"@give fuel 60",
-								"@give medicine 8",
+								"@give Herbal_medicine 8",
 								"@start_quest Tutorial_Quest"
 							],
 							"next_page_id": 3
@@ -2946,9 +2946,9 @@
 							"next_page_id": 4
 						},
 						{
-							"text": "[Stubborn] Get out and push, Lose all Fuel",
+							"text": "[Stubborn] Get out and push, Lose 25 Fuel",
 							"effects": [
-								"@take Fuel 10000"
+								"@take Fuel 25"
 							],
 							"next_page_id": 2
 						}

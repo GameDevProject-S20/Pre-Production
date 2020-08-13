@@ -46,6 +46,9 @@ public class Initializer : MonoBehaviour
     private void SetStartingInventory()
     {
         Player.Instance.Inventory.AddItem("Hunting Rifle", 1);
+        Player.Instance.Inventory.AddItem("Family Heirloom", 1);
+        Player.Instance.Inventory.AddItem("Rations", 3);
+
     }
 
     private void InitializeEncounters()

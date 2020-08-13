@@ -47,6 +47,9 @@ public class Item
             case "Painkillers":
                 health = 5;
                 break;
+            case "Antibiotics":
+                health = 5;
+                break;
             case "Medicine":
                 health = 25;
                 break;
@@ -57,7 +60,7 @@ public class Item
                 health = 10;
                 break;
             case "Body Armor":
-                health = 5;
+                health = 10;
                 break;
         }
         return health;
@@ -70,6 +73,9 @@ public class Item
             case "Painkillers":
                 health = 0;
                 break;
+            case "Antibiotics":
+                health = 5;
+                break;
             case "Medicine":
                 health = 0;
                 break;
@@ -80,7 +86,7 @@ public class Item
                 health = 0;
                 break;
             case "Body Armor":
-                health = 5;
+                health = 10;
                 break;
         }
         return health;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using TMPro;
+//using TMPro;
 
 public class HudHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
