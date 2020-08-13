@@ -383,5 +383,7 @@ public class OverworldMapUI : MonoBehaviour
         TownMenuGameObject.SetActive(false);
         SidePanel.Open();
         EventManager.Instance.UnfreezeMap.Invoke();
+        EventManager.Instance.OnTownLeave.Invoke();
+
     }
 }

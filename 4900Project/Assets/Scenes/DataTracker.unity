@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 2065480056}
   - component: {fileID: 2065480051}
   - component: {fileID: 2065480054}
+  - component: {fileID: 2065480055}
   m_Layer: 0
   m_Name: DataTracker
   m_TagString: Untagged
@@ -194,6 +195,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ecda622f3a7406244adfcfe4429e1d51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2065480055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2065480050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8b42748ae174a04e8b13369b94fac5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &2065480056

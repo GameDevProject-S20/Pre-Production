@@ -7,11 +7,15 @@ namespace SIEvents
     public class DialogueCondition : Condition
     {
         string DialogueButtonId;
+        int Count;
+        int current;
 
-        public DialogueCondition(string _description, string _id)
+        public DialogueCondition(string _description, string _id, int _count=1)
          : base(_description)
         {
             DialogueButtonId = _id;
+            Count = _count;
+            current = 0;
 
             //Todo: Use EventManager
         }
@@ -32,14 +36,15 @@ namespace SIEvents
         {
             if (dialogueButtonId == this.DialogueButtonId)
             {
-                Satisfy();
+                current++;
+                if(current >= Count) Satisfy();
             }
         }
 
         //Todo
         public override string ToString()
         {
-            return "";
+            return Description;
             //throw new NotImplementedException();
         }
     }

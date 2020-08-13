@@ -772,7 +772,7 @@
 				},
 				{
 					"id": 3,
-					"text": "Every day, I pass by the old spaceship hangers and hope. If only we could get them working...",
+					"text": "Every day, I pass by the old spaceship hangers and hope. If only we could get it working...",
 					"buttons": [
 						{
 							"text": "[Return]",
@@ -1935,6 +1935,7 @@
 						{
 							"text": "[Leave]",
 							"effects": [
+								"@start_quest Field_Work",
 								"@resident remove scienceQuest1 Fields",
 								"@resident add scienceQuest2A Fields",
 								"@resident add scienceQuest2B Alabaster",
@@ -1999,7 +2000,9 @@
 							"effects": [
 								"@take Seismic_Data 1",
 								"@give Scrap_Metal 5",
-								"@give Fuel 20"
+								"@give Fuel 20",
+								"@trigger HandInSeismicData"
+
 							],
 							"next_page_id": 4
 						},
@@ -2011,7 +2014,8 @@
 							"effects": [
 								"@take Mineral_Data 1",
 								"@give Scrap_Metal 5",
-								"@give Fuel 20"
+								"@give Fuel 20",
+								"@trigger HandInMineralData"
 							],
 							"next_page_id": 5
 						},
@@ -2033,7 +2037,9 @@
 							"effects": [
 								"@take Seismic_Data 1",
 								"@give Scrap_Metal 5",
-								"@give Fuel 20"
+								"@give Fuel 20",
+								"@trigger HandInSeismicData"
+
 							],
 							"next_page_id": 4
 						},
@@ -2045,7 +2051,8 @@
 							"effects": [
 								"@take Mineral_Data 1",
 								"@give Scrap_Metal 5",
-								"@give Fuel 20"
+								"@give Fuel 20",
+								"@trigger HandInMineralData"
 							],
 							"next_page_id": 5
 						},
@@ -2134,6 +2141,458 @@
 				{
 					"id": 11,
 					"text": "Alright, be seeing you!"
+				}
+			]
+		},
+		{
+			"encounter_id": 214,
+			"NOTE": "Said by the town leader for Lombard",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Greetings, merchant. The pleasure is mine.",
+					"buttons": [
+						{
+							"text": "What should I trade here?",
+							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about Lombard?",
+							"next_page_id": 3
+						},
+						{
+							"text": "Do you know anything about old spacecraft?",
+							"next_page_id": 4
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Anything you can give to help our goal of Old World preservation would be appreciated.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Lombard is the oldest settlement on this fragment. Our museum holds artifacts from thousands of years ago. A history rapidly being forgotten, I'm afraid.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "Spaceflight? Gemini, Vostok, Apollo, Soyuz, Artemis? A passion of mine. How can I help?",
+					"buttons": [
+						{
+							"text": "[Tell him about the fragment collapse]",
+							"next_page_id": 5
+						}
+					]
+				},
+				{
+					"id": 5,
+					"text": "I... see. I believe you. I have many friends at the Laurentian Institute. Here, take this.",
+					"buttons": [
+						{
+							"text": "[Next]",
+							"effects" :["@give Rocketry_Blueprint 1"],
+							"next_page_id": 6
+						}
+					]
+				},
+				{
+					"id": 6,
+					"text": "These are blueprints from the old Artemis program. Bring them to the factory in New Ottawa. They should be able to build this.",
+					"buttons": [
+						{
+							"text": "Thanks for your help.",
+							"effects": [
+								"@set_dialogue_encounter 7 77",
+								"@set_dialogue_encounter 4 215",
+								"@resolve"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"encounter_id": 215,
+			"NOTE": "Said by the town leader for New Ottawa",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Welcome to New Ottawa. Always great to see a caravan drive in!",
+					"buttons": [
+						{
+							"text": "What should I trade here?",
+							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about New Ottawa?",
+							"next_page_id": 3
+						},
+						{
+							"text": "Can you build this for me?",
+							"conditions" : [
+								"!has Rocketry_Blueprint 1"
+							],
+							"next_page_id": 4
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "New Ottawa has the largest factory in Laurentia. We can always use raw materials. We'll pay extra for steel.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "New Ottawa was built by refugees from the old Canadian capital. We're not quite sure how far away that was.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "I've never seen anything like this. But don't worry, we can build anything! You'll need to bring us 15 steel",
+					"buttons": [
+						{
+							"text": "Here you go!",
+							"conditions" : [
+								"!has Steel 15"
+							],
+							"effects": [
+								"@take Steel 15",
+								"@take Rocketry_Blueprint 1",
+								"@give Rocket_Engine 1"
+							],
+							"next_page_id": 5
+						},
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 5,
+					"text": "[Through the improbability of game logic, the factory workers build the engine instantly.]\nWhat a job! I've never seen an engine this big! Hope you're satisfied!",
+					"buttons":[
+						{
+							"text":"[Leave]",
+							"effects": [
+								"@set_dialogue_encounter 5 217",
+								"@set_dialogue_encounter 4 74",
+								"@resolve"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"encounter_id": 216,
+			"NOTE": "Said by the town leader for Rocket City",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Greetings. The Institute told me to expect you.",
+					"buttons": [
+						{
+							"text": "What should I trade here?",
+							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about Rocket City?",
+							"next_page_id": 3
+						},
+						{
+							"text": "How can I help?",
+							"next_page_id": 4
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "We don't get much food out here. Anything you bring will be highly valued.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Every day, I pass by the old spaceship hangers. Our only hope is to get it fixed.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "The Institute believes the fragment will collapse soon. They want us to rebuild the old spacecraft here so we can evacuate.",
+					"buttons": [
+						{
+							"text": "How can we do that?",
+							"next_page_id": 5
+						}
+					]
+				},
+				{
+					"id": 5,
+					"text": "We need a new engine. Unfortunately, no one's known how to build one since the old Artemis program over 50 years ago.",
+					"buttons": [
+						{
+							"text": "So, what's the plan?",
+							"next_page_id": 6
+						}
+					]
+				},
+				{
+					"id": 6,
+					"text": "We need to find records of the old space programs. Our best bet is to look where old world knowledge is found. Library ruins, old computers, something like that.",
+					"buttons": [
+						{
+							"text": "That doesn't seem very likely.",
+							"next_page_id": 7
+						}
+					]
+				},
+				{
+					"id": 7,
+					"text": "You'd be suprised. Pre-shattering artifacts are found all the time. Scavengers find books, storage devices, old electronics.",
+					"buttons": [
+						{
+							"text": "I'll see what I can find.",
+							"effects": [
+								"@set_dialogue_encounter 5 217",
+								"@set_dialogue_encounter 7 214",
+								"@resolve"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"encounter_id": 217,
+			"NOTE": "Said by the town leader for Rocket City",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Greetings. I hope you bring good news.",
+					"buttons": [
+						{
+							"text": "What should I trade here?",
+							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about Rocket City?",
+							"next_page_id": 3
+						},
+						{
+							"text": "I have some rocket parts.",
+							"conditions":[
+								"!has Rocket_Engine 1"
+							],
+							"next_page_id": 4
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "We don't get much food out here. Anything you bring will be highly valued.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Every day, I pass by the old spaceship hangers. Our only hope is to get it fixed.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "This... this is incredible! We can rebuild the spaceship with this! You've saved a lot of lives today, friend.",
+					"buttons": [
+						{
+							"text": "All in a day's work.",
+							"effects" : [
+								"@add_edge 203 207",
+								"@set_dialogue_encounter 5 218",
+								"@give Fuel 50",
+								"@resolve"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"encounter_id": 218,
+			"NOTE": "Said by the town leader for Rocket City",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Thanks for helping us rebuild the rocket.",
+					"buttons": [
+						{
+							"text": "What should I trade here?",
+							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about Rocket City?",
+							"next_page_id": 3
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "We don't get much food out here. Anything you bring will be highly valued.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Every day, I pass by the old spaceship hangers with pride. You've done a good thing.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				}
+			]
+		},
+		{
+			"encounter_id": 219,
+			"NOTE": "Said by the town leader for Rocket City",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "[You receive a call via radio].",
+					"buttons": [
+						{
+							"text": "[Answer]",
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Hello? It's Penelope, the researcher. We met in Fields, remember?",
+					"buttons": [
+						{
+							"text": "Yes, I totally remember you.",
+							"next_page_id": 3
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Thanks to the data you collected, we've been able to reach a... conclusion.",
+					"buttons": [
+						{
+							"text": "What is it?",
+							"next_page_id": 4
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "The earthquakes aren't just shaking the Earth. The entire fragment is being torn apart. That's why the soil's been getting worse every year.",
+					"buttons": [
+						{
+							"text": "That's not good.",
+							"next_page_id": 5
+						}
+					]
+				},
+				{
+					"id": 5,
+					"text": "We estimate that within 5 years, Laurentia will shatter again. All that will be left this time are dry chunks of rock.",
+					"buttons": [
+						{
+							"text": "Can we do anything about it?",
+							"next_page_id": 6
+						}
+					]
+				},
+				{
+					"id": 6,
+					"text": "We aren't sure. But we're preparing for the worse. Go to Rocket City. The Overseer there will fill you in on the details.",
+					"buttons": [
+						{
+							"text": "Should I keep collecting samples?",
+							"next_page_id": 7
+						}
+					]
+				},
+				{
+					"id": 7,
+					"text": "Yes. It might help us find a way to prevent the fragment collapse.",
+					"buttons": [
+						{
+							"text": "Okie dokie!",
+							"effects": [
+								"@set_dialogue_encounter 5 216",
+								"@start_quest The_Final_Frontier"
+							]
+						}
+					]
 				}
 			]
 		},

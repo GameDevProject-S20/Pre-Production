@@ -86,6 +86,43 @@ public class Initializer : MonoBehaviour
             )
 
             .Build();
+
+        quest = new Quest.Builder("Field Work")
+        .SetDescription("Gather scientific data for the Laurentian Institute.")
+
+        .AddStage(new Stage.Builder("Gather data and hand it in to researchers.")
+            .AddCondition(new DialogueCondition("Hand in seismic data.", "HandInSeismicData",1)
+            )
+            .AddCondition(new DialogueCondition("Hand in mineral data.", "HandInMineralData",6)
+            )
+        )
+
+        .Build();
+
+        quest = new Quest.Builder("The Final Frontier")
+        .SetDescription("Find a solution to the fragment collapse.")
+
+        .AddStage(new Stage.Builder("Go to Rocket City.")
+            .AddCondition(new EncounterCompleteCondition("Talk to Overseer Zachary.", 216)
+            )
+        )
+
+        .AddStage(new Stage.Builder("Find information on spaceships.")
+            .AddCondition(new EncounterCompleteCondition("Obtain the rocketry blueprint.", 214)
+            )
+        )
+
+        .AddStage(new Stage.Builder("Build the rocket engine.")
+            .AddCondition(new EncounterCompleteCondition("Talk to the factory boss in New Ottawa.", 215)
+            )
+        )
+
+        .AddStage(new Stage.Builder("Repair the spaceship.")
+            .AddCondition(new EncounterCompleteCondition("Deliver the rocket engine.", 217)
+            )
+        )
+
+        .Build();
     }
 
 
