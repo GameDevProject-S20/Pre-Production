@@ -8,7 +8,7 @@ using UnityEngine.UI;
 using UnityUtility;
 
 public enum Rarity {None, Abundant, Common, Uncommon, Rare, Unique}
-public enum ItemTag {None,Unique,General,Fuel,Useable,Food,Luxury,Medical,Machinery,Steel,Building_Materials,Tools_And_Parts,Combat,Scientific,Mineral,Antique,Advanced,Bandit,All,Junk}
+public enum ItemTag {None,Miscellaneous,Unique,General,Fuel,Useable,Food,Luxury,Medical,Machinery,Steel,Building_Materials,Tools_And_Parts,Combat,Scientific,Mineral,Antique,Advanced,Bandit,All,Junk}
 
 /// <summary>
 /// Intermediate class for handling loading items from a CSV file.
@@ -44,13 +44,16 @@ public class Item
         int health = 0;
         switch (DisplayName)
         {
+            case "Painkillers":
+                health = 5;
+                break;
             case "Medicine":
                 health = 25;
                 break;
             case "Medical Kit":
                 health = 50;
                 break;
-            case "Bandages":
+            case "Herbal Medicine":
                 health = 10;
                 break;
         }

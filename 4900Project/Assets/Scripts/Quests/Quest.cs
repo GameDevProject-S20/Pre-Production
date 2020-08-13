@@ -51,6 +51,7 @@ namespace Quests
             {
                 OnStageCompleteListener = (Quest _, Stage s) =>
                     {
+                        if (_ != this) return;
                         if (stages[CurrentStage] == s) OnStageCompleteHandler(s);
                     };
             }
