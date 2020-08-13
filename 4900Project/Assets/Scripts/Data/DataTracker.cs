@@ -49,7 +49,6 @@ public class DataTracker : MonoBehaviour
         Player.Inventory.AddItem("Fuel", 30);
         Player.Inventory.AddItem("Scrap Metal", 2);
         Player.Inventory.AddItem("Family Heirloom", 1);
-        ShopManager.LoadData();
         TownManager.LoadData();
         DontDestroyOnLoad(gameObject);
         EventManager.onDataTrackerLoad.Invoke();
