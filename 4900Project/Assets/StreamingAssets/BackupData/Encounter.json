@@ -2545,7 +2545,7 @@
 								"!has Fuel 25"
 							],
 							"effects": [
-								"@health% 30",
+								"@health% 25",
 								"@take Fuel 25"
 							],
 							"next_page_id": 3
