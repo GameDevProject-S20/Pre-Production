@@ -37,7 +37,8 @@ public class CampfireManager
     {
         if (scene.name == "Campfire")
         {
-            DataTracker.Current.IncrementTime(8);
+            Clock.Instance.StartNewDay();
+            EventManager.Instance.OnCampfireEnded.Invoke();
         }
     }
 }

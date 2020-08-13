@@ -6,7 +6,7 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "You notice you are running low on gas.",
+					"text": "You see a caravan approach from ahead. You wave them down, hoping they might be able to assist you.",
 					"buttons": [
 						{
 							"next_page_id": 2
@@ -15,7 +15,80 @@
 				},
 				{
 					"id": 2,
-					"text": "Looks like there is a town up ahead. Maybe you can get fuel there.",
+					"text": "The caravan slows down, stopping just behind you. A man steps out, pointing a rifle at you.",
+					"buttons": [
+						{
+							"next_page_id": 3
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "\"Give me any scrap metal you have\", the man demands urgently.",
+					"buttons": [
+						{
+							"next_page_id": 4
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "All of your scrap metal is back with the caravan. There's only one option at your disposal.",
+					"buttons": [
+						{
+							"text": "[Use Rifle] Lose 30% hp",
+							"conditions": [
+								"!has hunting_rifle 1"
+							],
+							"effects": [
+								"@health% -30"
+							],
+							"next_page_id": 5
+						}
+					]
+				},
+				{
+					"id": 5,
+					"text": "You quickly raise your rifle and two shots ring out. You feel the bullet tear through your forearm with a sharp jolt of pain. The wound looks rough but managable.",
+					"buttons": [
+						{
+							"next_page_id": 6
+						}
+					]
+				},
+				{
+					"id": 6,
+					"text": "But it seems your aim was truer. The man falls forward into the dirt with a heavy slam.",
+					"buttons": [
+						{
+							"next_page_id": 7
+						}
+					]
+				},
+				{
+					"id": 7,
+					"text": "You examine your <color=#2675AD>rifle</color>, which appears to have cracked under the strain of the shot. After decades of wear and tear throughout the shattered colonies, weapons like these tend to be very fragile.",
+					"buttons": [
+						{
+						 	"effects": [
+								"@take hunting_rifle 1"
+							],
+							"next_page_id": 8
+						}
+					]
+				},
+				{
+					"id": 8,
+					"text": "You barely have time to discard the <color=#2675AD>rifle</color> to your side before you hear commotion from the back of the caravan and several scrappers who don't look very pleased with you.",
+					"buttons": [
+						{
+							"next_page_id": 9
+						}
+					]
+				},
+				{
+					"id": 9,
+					"text": "You pick your pace up to a run and continue toward the town off in the distance.",
 					"buttons": [
 						{
 							"effects": [
@@ -35,7 +108,7 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "Welcome to Smithsville! Our <color=#2675AD>generator</color> is out and we can't repair it. I will give you fuel if you help us.",
+					"text": "Welcome to Smithsville! Our <color=#2675AD>generator</color> is out and we can't repair it. We've got a spare vehicle but no one can leave town long enough to get to York and buy a new one. Can you help us out?",
 					"buttons": [
 						{
 							"text": "[Accept Quest] Yeah, for sure.",
@@ -50,12 +123,33 @@
 						{
 							"effects": [
 								"@give fuel 60",
-								"@give medicine 8",
-								"@start_quest Tutorial_Quest",
-								"@set_dialogue_encounter 0 2",
-								"@resolve"
-							]
+								"@give Herbal_medicine 8",
+								"@start_quest Tutorial_Quest"
+							],
+							"next_page_id": 3
 						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "I'll let the gatekeeper know to let you through so you can start travelling eastward.",
+					"buttons": [
+						{
+							"effects": [
+								"@add_edge 124 125",
+								"@toggle_random_encounters 1",
+								"@toggle_driving 1",
+								"@set_dialogue_encounter 0 2"
+							],
+							"next_page_id": 4
+					 	}
+					]
+				},
+				{
+					"id": 4,
+					"text": "Feel free to visit our local hospital if you need a little assistance. That bullet wound of yours looks like it could use some tending to.",
+					"effects": [
+						"@resolve"
 					]
 				}
 			]
@@ -90,7 +184,7 @@
 				},
 				{
 					"id": 2,
-					"text": "Thanks! Smithsville should be up and running again. Have some more fuel.",
+					"text": "Thanks! Smithsville should be up and running again. Without that generator, the northern bridges would be unusable and we'd be cut off from the rest of the towns. Tell you what, keep the vehicle, and take some extra fuel. Least we can do to thank you.",
 					"buttons": [
 						{
 							"effects": [
@@ -301,13 +395,13 @@
 							"next_page_id": 2
 						},
 						{
-							"text": "[Trade] Offer 1 Medicine for 10 Fuel.",
+							"text": "[Trade] Offer 1 Medicine for 30 Fuel.",
 							"conditions": [
 								"!has Medicine 1"
 							],
 							"effects": [
 								"@take Medicine 1",
-								"@give Fuel 10"
+								"@give Fuel 30"
 							],
 							"next_page_id": 2
 						},
@@ -343,13 +437,13 @@
 							"next_page_id": 2
 						},
 						{
-							"text": "[Trade] Offer 1 Medicine for 10 Fuel.",
+							"text": "[Trade] Offer 1 Medicine for 30 Fuel.",
 							"conditions": [
 								"!has Medicine 1"
 							],
 							"effects": [
 								"@take Medicine 1",
-								"@give Fuel 10"
+								"@give Fuel 30"
 							],
 							"next_page_id": 2
 						},
@@ -391,7 +485,7 @@
 							"next_page_id": 2
 						},
 						{
-							"text": "[Ignore] Leave without paying, lose 20 health.",
+							"text": "[Ignore] Leave without paying, lose 20 hp.",
 							"next_page_id": 3
 						},
 						{
@@ -457,9 +551,36 @@
 					"text": "A landslide has blocked the road ahead.",
 					"buttons": [
 						{
+							"text": "Clear the way with your RPG.",
+							"conditions" : [
+								"!has Rpg 1"
+							],
+							"effects" : [
+								"@add_edge 203 206",
+								"@set_node_encounter 206 40"
+							],
+							"next_page_id": 2
+						},
+						{
 							"text": "[Leave]"
 						}
 					]
+				},
+				{
+					"id": 2,
+					"text": "You blast away the rock, clearing a path!"
+				}
+			]
+		},
+		{
+			"encounter_id": 40,
+			"NOTE": "",
+			"valid": true,
+			"encounter_name": "Unblocked Road",
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Where once the road was blocked, only rubble on the side of the road remains."
 				}
 			]
 		},
@@ -745,7 +866,7 @@
 				},
 				{
 					"id": 3,
-					"text": "Every day, I pass by the old spaceship hangers and hope. If only we could get them working...",
+					"text": "Every day, I pass by the old spaceship hangers and hope. If only we could get it working...",
 					"buttons": [
 						{
 							"text": "[Return]",
@@ -1422,7 +1543,7 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "You actually made it to the end. Did we even program this part in?",
+					"text": "Wait you actually made it to the end? And you're still alive? That doesn't seem right.",
 					"buttons": [
 						{
 							"text": "What should I trade here?",
@@ -1477,15 +1598,24 @@
 								"!has Tricorder 1"
 							],
 							"effects": [
-								"@give Mineral_Data 1"
+								"@give Mineral_Data 1",
+								"@resident remove scienceQuest3 current"
 							],
 							"next_page_id":2
+						},
+						{
+							"text": "Do nothing.",
+							"next_page_id":3
 						}
 					]
 				},
 				{
 					"id": 2,
 					"text": "You grab a bit of soil and insert it into your tricorder's sample tray. The screen lights up with data on mineral composition and moisture levels."
+				},
+				{
+					"id": 3,
+					"text": "You remember that you lost your tricorder. Having dug a hole for nothing, you quickly run away from the gaze of the locals."
 				}
 			]
 		},
@@ -1739,23 +1869,859 @@
 			]
 		},
 		{
-			"encounter_id": 5000,
+			"encounter_id": 212,
+			"NOTE": "Science Quest Part 1",
 			"valid": true,
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "The night feels so peaceful.",
+					"text": "Hello there. Can I help you?",
 					"buttons": [
 						{
-							"next_page_id": 3
+							"text": "Who are you?",
+							"next_page_id": 2
 						}
 					]
 				},
 				{
 					"id": 2,
-					"text": ". . .",
+					"text": "My name is Penelope. I am a researcher from the Laurentian Institute.",
 					"buttons": [
 						{
+							"text": "What are you doing out here?",
+							"next_page_id": 3
+						},
+						{
+							"text": "Ok, bye!",
+							"next_page_id": 13
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "My fellow researchers and I are studying the fragment. We believe we're on the verge of a great discovery.",
+					"buttons": [
+						{
+							"text": "What do you mean?",
+							"next_page_id": 4
+						},
+						{
+							"text": "Ok, bye!",
+							"next_page_id": 13
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "That doesn't concern you... Unless you'd like to help us?",
+					"buttons": [
+						{
+							"text": "I'm listening.",
+							"next_page_id": 5
+						},
+						{
+							"text": "Not interested. Bye!",
+							"next_page_id": 13
+						}
+					]
+				},
+				{
+					"id": 5,
+					"text": "You are a travelling merchant, are you not? You can help us by gathering data along your travels.",
+					"buttons": [
+						{
+							"text": "But I'm not a scientist!",
+							"effects": [
+								"@give Tricorder 1"
+							],
+							"next_page_id": 6
+						}
+					]
+				},
+				{
+					"id": 6,
+					"text": "You don't have to be. Here, take this tricorder. You can use it to take measurements.",
+					"buttons": [
+						{
+							"text": "What kind of measurements do you need?",
+							"next_page_id": 7
+						}
+					]
+				},
+				{
+					"id": 7,
+					"text": "We need data on seismic activity and soil composition.",
+					"buttons": [
+						{
+							"text": "How can I get seismic data?",
+							"next_page_id": 8
+						},
+						{
+							"text": "Where can I take soil samples?",
+							"next_page_id": 9
+						},
+						{
+							"text": "What do I do with the data?",
+							"next_page_id": 10
+						},
+						{
+							"text": "Ok, I'm ready.",
+							"next_page_id": 12
+						}
+					]
+				},
+				{
+					"id": 8,
+					"text": "I'm sure you've noticed how common earthquakes are. Next time one happens, take some measurements.",
+					"buttons": [
+						{
+							"text": "I have other questions.",
+							"next_page_id": 11
+						}
+					]
+				},
+				{
+					"id": 9,
+					"text": "We don't want all our soil samples to be from the same place. If you travel to towns around the continent, you can get a good variety of data.",
+					"buttons": [
+						{
+							"text": "I have other questions.",
+							"next_page_id": 11
+						}
+					]
+				},
+				{
+					"id": 10,
+					"text": "My colleagues are all over the place. If you find one, you can give your data to them.",
+					"buttons": [
+						{
+							"text": "I have other questions.",
+							"next_page_id": 11
+						}
+					]
+				},
+				{
+					"id": 11,
+					"text": "Anything else?",
+					"buttons": [
+						{
+							"text": "How can I get seismic data?",
+							"next_page_id": 8
+						},
+						{
+							"text": "Where can I take soil samples?",
+							"next_page_id": 9
+						},
+						{
+							"text": "What do I do with the data?",
+							"next_page_id": 10
+						},
+						{
+							"text": "Ok, I'm ready.",
+							"next_page_id": 12
+						}
+					]
+				},
+				{
+					"id": 12,
+					"text": "Great! Thanks for helping us.",
+					"buttons": [
+						{
+							"text": "[Leave]",
+							"effects": [
+								"@start_quest Field_Work",
+								"@resident remove scienceQuest1 Fields",
+								"@resident add scienceQuest2A Fields",
+								"@resident add scienceQuest2B Alabaster",
+								"@resident add scienceQuest2C Rocket_City",
+								"@resident add scienceQuest2B Lombard",
+								"@resident add scienceQuest2B New_Ottawa",
+								"@resident add scienceQuest2C Jeb's_Town",
+								"@resident add scienceQuest3 Riverbed",
+								"@resident add scienceQuest3 Dustbowl",
+								"@resident add scienceQuest3 Sherbrooke",
+								"@resident add scienceQuest3 Skull",
+								"@resident add scienceQuest3 Bordevide",
+								"@resident add scienceQuest3 Farm-By-The-Island",
+								"@resident add scienceQuest3 Irony",
+								"@resident add scienceQuest3 Lanark_Mine",
+								"@resident add scienceQuest3 Respite",
+								"@resident add scienceQuest3 Green_Greens",
+								"@resident add scienceQuest3 Frakton",
+								"@resident add scienceQuest3 Steelton"
+							]
+						}
+					]
+				},
+				{
+					"id": 13,
+					"text": "Alright. Goodbye."
+				}
+			]
+		},
+		{
+			"encounter_id": 213,
+			"NOTE": "Science Quest Part 2A",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Hello there. Can I help you?",
+					"buttons": [
+						{
+							"text": "I have some data to hand in.",
+							"next_page_id": 2
+						},
+						{
+							"text": "I have some questions.",
+							"next_page_id": 7
+						},
+						{
+							"text": "Just saying hello.",
+							"next_page_id": 11
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Great! What do you have for us?",
+					"buttons": [
+						{
+							"text": "I have some seismic data.",
+							"conditions":[
+								"!has Seismic_Data 1"
+							],
+							"effects": [
+								"@take Seismic_Data 1",
+								"@give Scrap_Metal 5",
+								"@give Fuel 20",
+								"@trigger HandInSeismicData"
+
+							],
+							"next_page_id": 4
+						},
+						{
+							"text": "Here's some mineral data.",
+							"conditions":[
+								"!has Mineral_Data 1"
+							],
+							"effects": [
+								"@take Mineral_Data 1",
+								"@give Scrap_Metal 5",
+								"@give Fuel 20",
+								"@trigger HandInMineralData"
+							],
+							"next_page_id": 5
+						},
+						{
+							"text": "Nevermind.",
+							"next_page_id": 11
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Anything else?",
+					"buttons": [
+						{
+							"text": "I have some seismic data.",
+							"conditions":[
+								"!has Seismic_Data 1"
+							],
+							"effects": [
+								"@take Seismic_Data 1",
+								"@give Scrap_Metal 5",
+								"@give Fuel 20",
+								"@trigger HandInSeismicData"
+
+							],
+							"next_page_id": 4
+						},
+						{
+							"text": "Here's some mineral data.",
+							"conditions":[
+								"!has Mineral_Data 1"
+							],
+							"effects": [
+								"@take Mineral_Data 1",
+								"@give Scrap_Metal 5",
+								"@give Fuel 20",
+								"@trigger HandInMineralData"
+							],
+							"next_page_id": 5
+						},
+						{
+							"text": "That's all.",
+							"next_page_id": 6
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "Hmm... these stress patterns... Notice how the P and S waves propogate. This suggests... no, that can't be.",
+					"buttons": [
+						{
+							"text": "[Nod your head in vague agreement]",
+							"next_page_id": 3
+						}
+					]
+				},
+				{
+					"id": 5,
+					"text": "This sample is less healthy than our previous samples. The soil is drier, with fewer essential chemicals. That doesn't bode well for the farmers.",
+					"buttons": [
+						{
+							"text": "[Nod your head in vague agreement]",
+							"next_page_id": 3
+						}
+					]
+				},
+				{
+					"id": 6,
+					"text": "Thanks for your help, trader."
+				},
+				{
+					"id": 7,
+					"text": "How can I help?",
+					"buttons": [
+						{
+							"text": "How can I get seismic data?",
+							"next_page_id": 8
+						},
+						{
+							"text": "Where can I take soil samples?",
+							"next_page_id": 9
+						},
+						{
+							"text": "What's all this for?",
+							"next_page_id": 10
+						},
+						{
+							"text": "Nevermind.",
+							"next_page_id": 11
+						}
+					]
+				},
+				{
+					"id": 8,
+					"text": "Use your tricorder during an earthquake to measure its strength. They happen all the time.",
+					"buttons": [
+						{
+							"text": "I have other questions.",
+							"next_page_id": 7
+						}
+					]
+				},
+				{
+					"id": 9,
+					"text": "Visit towns across the fragment. If you sample soil at different towns, we'll have a large variety of samples.",
+					"buttons": [
+						{
+							"text": "I have other questions.",
+							"next_page_id": 7
+						}
+					]
+				},
+				{
+					"id": 10,
+					"text": "We're hoping to learn more about the nature of these fragments and what caused the Shattering.",
+					"buttons": [
+						{
+							"text": "I have other questions.",
+							"next_page_id": 7
+						}
+					]
+				},
+				{
+					"id": 11,
+					"text": "Alright, be seeing you!"
+				}
+			]
+		},
+		{
+			"encounter_id": 214,
+			"NOTE": "Said by the town leader for Lombard",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Greetings, merchant. The pleasure is mine.",
+					"buttons": [
+						{
+							"text": "What should I trade here?",
+							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about Lombard?",
+							"next_page_id": 3
+						},
+						{
+							"text": "Do you know anything about old spacecraft?",
+							"next_page_id": 4
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Anything you can give to help our goal of Old World preservation would be appreciated.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Lombard is the oldest settlement on this fragment. Our museum holds artifacts from thousands of years ago. A history rapidly being forgotten, I'm afraid.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "Spaceflight? Gemini, Vostok, Apollo, Soyuz, Artemis? A passion of mine. How can I help?",
+					"buttons": [
+						{
+							"text": "[Tell him about the fragment collapse]",
+							"next_page_id": 5
+						}
+					]
+				},
+				{
+					"id": 5,
+					"text": "I... see. I believe you. I have many friends at the Laurentian Institute. Here, take this.",
+					"buttons": [
+						{
+							"text": "[Next]",
+							"effects" :["@give Rocketry_Blueprint 1"],
+							"next_page_id": 6
+						}
+					]
+				},
+				{
+					"id": 6,
+					"text": "These are blueprints from the old Artemis program. Bring them to the factory in New Ottawa. They should be able to build this.",
+					"buttons": [
+						{
+							"text": "Thanks for your help.",
+							"effects": [
+								"@set_dialogue_encounter 7 77",
+								"@set_dialogue_encounter 4 215",
+								"@resolve"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"encounter_id": 215,
+			"NOTE": "Said by the town leader for New Ottawa",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Welcome to New Ottawa. Always great to see a caravan drive in!",
+					"buttons": [
+						{
+							"text": "What should I trade here?",
+							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about New Ottawa?",
+							"next_page_id": 3
+						},
+						{
+							"text": "Can you build this for me?",
+							"conditions" : [
+								"!has Rocketry_Blueprint 1"
+							],
+							"next_page_id": 4
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "New Ottawa has the largest factory in Laurentia. We can always use raw materials. We'll pay extra for steel.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "New Ottawa was built by refugees from the old Canadian capital. We're not quite sure how far away that was.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "I've never seen anything like this. But don't worry, we can build anything! You'll need to bring us 15 steel",
+					"buttons": [
+						{
+							"text": "Here you go!",
+							"conditions" : [
+								"!has Steel 15"
+							],
+							"effects": [
+								"@take Steel 15",
+								"@take Rocketry_Blueprint 1",
+								"@give Rocket_Engine 1"
+							],
+							"next_page_id": 5
+						},
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 5,
+					"text": "[Through the improbability of game logic, the factory workers build the engine instantly.]\nWhat a job! I've never seen an engine this big! Hope you're satisfied!",
+					"buttons":[
+						{
+							"text":"[Leave]",
+							"effects": [
+								"@set_dialogue_encounter 5 217",
+								"@set_dialogue_encounter 4 74",
+								"@resolve"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"encounter_id": 216,
+			"NOTE": "Said by the town leader for Rocket City",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Greetings. The Institute told me to expect you.",
+					"buttons": [
+						{
+							"text": "What should I trade here?",
+							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about Rocket City?",
+							"next_page_id": 3
+						},
+						{
+							"text": "How can I help?",
+							"next_page_id": 4
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "We don't get much food out here. Anything you bring will be highly valued.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Every day, I pass by the old spaceship hangers. Our only hope is to get it fixed.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "The Institute believes the fragment will collapse soon. They want us to rebuild the old spacecraft here so we can evacuate.",
+					"buttons": [
+						{
+							"text": "How can we do that?",
+							"next_page_id": 5
+						}
+					]
+				},
+				{
+					"id": 5,
+					"text": "We need a new engine. Unfortunately, no one's known how to build one since the old Artemis program over 50 years ago.",
+					"buttons": [
+						{
+							"text": "So, what's the plan?",
+							"next_page_id": 6
+						}
+					]
+				},
+				{
+					"id": 6,
+					"text": "We need to find records of the old space programs. Our best bet is to look where old world knowledge is found. Library ruins, old computers, something like that.",
+					"buttons": [
+						{
+							"text": "That doesn't seem very likely.",
+							"next_page_id": 7
+						}
+					]
+				},
+				{
+					"id": 7,
+					"text": "You'd be suprised. Pre-shattering artifacts are found all the time. Scavengers find books, storage devices, old electronics.",
+					"buttons": [
+						{
+							"text": "I'll see what I can find.",
+							"effects": [
+								"@set_dialogue_encounter 5 217",
+								"@set_dialogue_encounter 7 214",
+								"@resolve"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"encounter_id": 217,
+			"NOTE": "Said by the town leader for Rocket City",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Greetings. I hope you bring good news.",
+					"buttons": [
+						{
+							"text": "What should I trade here?",
+							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about Rocket City?",
+							"next_page_id": 3
+						},
+						{
+							"text": "I have some rocket parts.",
+							"conditions":[
+								"!has Rocket_Engine 1"
+							],
+							"next_page_id": 4
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "We don't get much food out here. Anything you bring will be highly valued.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Every day, I pass by the old spaceship hangers. Our only hope is to get it fixed.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "This... this is incredible! We can rebuild the spaceship with this! You've saved a lot of lives today, friend.",
+					"buttons": [
+						{
+							"text": "All in a day's work.",
+							"effects" : [
+								"@add_edge 203 207",
+								"@set_dialogue_encounter 5 218",
+								"@give Fuel 50",
+								"@resolve"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"encounter_id": 218,
+			"NOTE": "Said by the town leader for Rocket City",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "Thanks for helping us rebuild the rocket.",
+					"buttons": [
+						{
+							"text": "What should I trade here?",
+							"next_page_id": 2
+						},
+						{
+							"text": "Can you tell me about Rocket City?",
+							"next_page_id": 3
+						},
+						{
+							"text": "[Leave]"
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "We don't get much food out here. Anything you bring will be highly valued.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Every day, I pass by the old spaceship hangers with pride. You've done a good thing.",
+					"buttons": [
+						{
+							"text": "[Return]",
+							"next_page_id": 1
+						}
+					]
+				}
+			]
+		},
+		{
+			"encounter_id": 219,
+			"NOTE": "Said by the town leader for Rocket City",
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "[You receive a call via radio].",
+					"buttons": [
+						{
+							"text": "[Answer]",
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "Hello? It's Penelope, the researcher. We met in Fields, remember?",
+					"buttons": [
+						{
+							"text": "Yes, I totally remember you.",
+							"next_page_id": 3
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Thanks to the data you collected, we've been able to reach a... conclusion.",
+					"buttons": [
+						{
+							"text": "What is it?",
+							"next_page_id": 4
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "The earthquakes aren't just shaking the Earth. The entire fragment is being torn apart. That's why the soil's been getting worse every year.",
+					"buttons": [
+						{
+							"text": "That's not good.",
+							"next_page_id": 5
+						}
+					]
+				},
+				{
+					"id": 5,
+					"text": "We estimate that within 5 years, Laurentia will shatter again. All that will be left this time are dry chunks of rock.",
+					"buttons": [
+						{
+							"text": "Can we do anything about it?",
+							"next_page_id": 6
+						}
+					]
+				},
+				{
+					"id": 6,
+					"text": "We aren't sure. But we're preparing for the worse. Go to Rocket City. The Overseer there will fill you in on the details.",
+					"buttons": [
+						{
+							"text": "Should I keep collecting samples?",
+							"next_page_id": 7
+						}
+					]
+				},
+				{
+					"id": 7,
+					"text": "Yes. It might help us find a way to prevent the fragment collapse.",
+					"buttons": [
+						{
+							"text": "Okie dokie!",
+							"effects": [
+								"@set_dialogue_encounter 5 216",
+								"@start_quest The_Final_Frontier"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"encounter_id": 5000,
+			"valid": true,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "You and your crew settle in for the night and talk about the day's events and plan for your continued journey tomorrow.",
+					"buttons": [
+						{
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "After a long day it's always nice to laugh and share food with those you care about.",
+					"buttons": [
+						{
+							"text": "[Dinner] Consume 3 Rations",
+							"conditions":[
+								"!has Rations 3"
+							],
+							"effects":[
+								"@take Rations 3"
+							],
+							"next_page_id": 3
+						},
+						{
+							"text": "[Go Hungry] Lose 2% max hp",
+							"effects":[
+								"@health_max% -2"
+							],
 							"next_page_id": 3
 						}
 					]
@@ -1787,57 +2753,42 @@
 			"COMMENT": "",
 			"encounter_id": 1000,
 			"tags": [],
-			"conditions": [],
-			"town_name": "York",
+			"conditions": ["!is_driving"],
+			"town_name": null,
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "Welcome to these here parts",
-					"avatar_name": "Sheriff",
+					"text": "You come across a travelling merchant",
 					"buttons": [
 						{
-							"text": "[Greet] Howdy, Sheriff.",
+							"text": "[Courier] Can we trade?",
 							"next_page_id": 2
-						},
-						{
-							"text": "[Trade] Can we trade?",
-							"next_page_id": 3
 						}
 					]
 				},
 				{
 					"id": 2,
-					"text": "You should check out the store later.",
-					"buttons": [
-						{
-							"text": "[Leave] Will do!",
-							"next_page_id": 6
-						}
-					]
-				},
-				{
-					"id": 3,
 					"text": "Sure, but lets have a little fun. Make an offer and we'll flip a coin to pick between fuel or some spare wrenches.",
 					"buttons": [
 						{
-							"text": "[Sample] offer 10 rations for 5 fuel or 5 wrenches.",
+							"text": "[Sample] offer 5 rations for 10 fuel or 2 wrenches.",
 							"conditions": [
-								"!has rations 10"
+								"!has rations 5"
 							],
 							"effects": [
-								"@take rations 10",
-								"@random 0.5 (@give fuel 5) (@give wrench 5)"
+								"@take rations 5",
+								"@random 0.5 (@give fuel 15) (@give wrench 2)"
 							],
 							"next_page_id": 5
 						},
 						{
-							"text": "[Bulk] offer 30 rations for 20 fuel/wrenches.",
+							"text": "[Bulk] offer 15 rations for 40 fuel or 10 wrenches.",
 							"conditions": [
-								"!has rations 30"
+								"!has rations 15"
 							],
 							"effects": [
-								"@take rations 30",
-								"@random 0.5 (@give fuel 20) (@give wrench 20)"
+								"@take rations 15",
+								"@random 0.5 (@give fuel 40) (@give wrench 10)"
 							],
 							"next_page_id": 5
 						},
@@ -1868,7 +2819,7 @@
 			"encounter_id": 1001,
 			"tags": [],
 			"encounter_name": "Duplication Glitch",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -1884,7 +2835,7 @@
 							"next_page_id": 3
 						},
 						{
-							"text": "[Smash Device] Lose 15 health",
+							"text": "[Smash Device] Lose 15 hp",
 							"effects": [
 								"@health -15"
 							],
@@ -1918,7 +2869,7 @@
 			"encounter_id": 1002,
 			"tags": [],
 			"encounter_name": "Inequivalent Exchange",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -1926,24 +2877,24 @@
 					"text": "You find an old alchemist's laboratory, in it a device with slots for two objects",
 					"buttons": [
 						{
-							"text": "[Transmute] Lose all of one random item, gain 20 Fuel",
+							"text": "[Transmute] Lose all of one random item, gain 50 Fuel",
 							"effects": [
-								"@take_tag All 10000",
-								"@give Fuel 20"
-							],
-							"next_page_id": 3
-						},
-						{
-							"text": "[Double or Nothing] Lose all of two random items, gain 50 fuel",
-							"effects": [
-								"@take_tag All 10000",
 								"@take_tag All 10000",
 								"@give Fuel 50"
 							],
 							"next_page_id": 3
 						},
 						{
-							"text": "[Clumsy] Drop the device, lose 20 health",
+							"text": "[Double or Nothing] Lose all of two random items, gain 100 fuel",
+							"effects": [
+								"@take_tag All 10000",
+								"@take_tag All 10000",
+								"@give Fuel 100"
+							],
+							"next_page_id": 3
+						},
+						{
+							"text": "[Clumsy] Drop the device, lose 20 hp",
 							"effects": [
 								"@health -20"
 							],
@@ -1967,7 +2918,7 @@
 			"encounter_id": 1003,
 			"tags": [],
 			"encounter_name": "Roadside repairs",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -1995,9 +2946,9 @@
 							"next_page_id": 4
 						},
 						{
-							"text": "[Stubborn] Get out and push, Lose all Fuel",
+							"text": "[Stubborn] Get out and push, Lose 25 Fuel",
 							"effects": [
-								"@take Fuel 10000"
+								"@take Fuel 25"
 							],
 							"next_page_id": 2
 						}
@@ -2036,7 +2987,7 @@
 			"encounter_id": 1004,
 			"tags": [],
 			"encounter_name": "Lightening the Load",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2064,7 +3015,7 @@
 			"encounter_id": 1005,
 			"tags": [],
 			"encounter_name": "Restoration Station",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2108,12 +3059,12 @@
 					"text": "You come across a sickly looking merchant. They show you a completely unmarked box, \"Trade?\"",
 					"buttons": [
 						{
-							"text": "[Make Offer] Give 4 Medicine",
+							"text": "[Make Offer] Give 2 Medicine",
 							"conditions": [
-								"!has Medicine 4"
+								"!has Medicine 2"
 							],
 							"effects": [
-								"@take Medicine 4",
+								"@take Medicine 2",
 								"@random 0.5 (@random 0.5 (@give Jewelry 1) (@give Jewelry 2)) (@random 0.5 (@random 0.5 (@give Jewelry 3) (@give Jewelry 4)) (@give Jewelry 5))"
 							],
 							"next_page_id": 3
@@ -2129,30 +3080,30 @@
 					"text": "You ignore them and are about to continue on your way when you hear them pull a gun, looks like they weren't asking.",
 					"buttons": [
 						{
-							"text": "[Apologize] Give 4 Medicine, gain nothing",
+							"text": "[Apologize] Give 2 Herbal Medicine, gain nothing",
 							"conditions": [
-								"!has Medicine 4"
+								"!has Herbal_Medicine 2"
 							],
 							"effects": [
-								"@take Medicine 4"
+								"@take Herbal_Medicine 2"
 							],
 							"next_page_id": 4
 						},
 						{
-							"text": "[Fight] Use hunting rifle, 50% chance to lose 50 health",
+							"text": "[Fight] Use hunting rifle, 50% chance to lose 40 hp",
 							"conditions": [
 								"!has Hunting_Rifle 1"
 							],
 							"effects": [
-								"@random 0.5 (@health -50) (@health 0)",
+								"@random 0.5 (@health -40) (@health 0)",
 								"@take Hunting_Rifle 1"
 							],
 							"next_page_id": 5
 						},
 						{
-							"text": "[Grovel] Beg for your life, lose 30 health",
+							"text": "[Grovel] Beg for your life, lose 25 hp",
 							"effects": [
-								"@health -30"
+								"@health -25"
 							],
 							"next_page_id": 6
 						}
@@ -2164,7 +3115,7 @@
 				},
 				{
 					"id": 4,
-					"text": "The stranger snatches the medicine from you and retreats."
+					"text": "The stranger snatches the Herbal Medicine from you and retreats."
 				},
 				{
 					"id": 5,
@@ -2192,7 +3143,7 @@
 			"encounter_id": 1008,
 			"tags": [],
 			"encounter_name": "Gameshow",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2222,7 +3173,7 @@
 							"next_page_id": 3
 						},
 						{
-							"text": "[Run] Make an example of yourself, drop to 1 health",
+							"text": "[Run] Make an example of yourself, drop to 1 hp",
 							"effects": [
 								"@health% 100",
 								"@health% -100"
@@ -2287,7 +3238,7 @@
 			"encounter_id": 1009,
 			"tags": [],
 			"encounter_name": "Geocache",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2297,7 +3248,7 @@
 						{
 							"text": "[Steal] Take medical supplies",
 							"effects": [
-								"@random 0.8 (@random 0.25 (@give Surgical_Equipment 1) (@give Medicine 3)) (@give Medical_Kit 2)"
+								"@random 0.8 (@random 0.25 (@give Painkillers 3) (@give Herbal_Medicine 3)) (@give Medical_Kit 1)"
 							],
 							"next_page_id": 3
 						},
@@ -2323,7 +3274,7 @@
 			"encounter_id": 1010,
 			"tags": [],
 			"encounter_name": "Pick Me Up",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2430,7 +3381,7 @@
 			"encounter_id": 1012,
 			"tags": [],
 			"encounter_name": "Lazarus Station",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2493,9 +3444,7 @@
 			"encounter_id": 1014,
 			"tags": [],
 			"encounter_name": "Food For Thought",
-			"conditions": [
-				"!has Fuel 30"
-			],
+			"conditions": ["!has Fuel 30"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2503,7 +3452,7 @@
 					"text": "You pull up for a brief break at a rest stop, the sign for a nearby bakery catches your eye.",
 					"buttons": [
 						{
-							"text": "[Trade] Buy 30 rations for 20 Fuel",
+							"text": "[Ravenous] Buy 30 rations for 20 Fuel",
 							"conditions": [
 								"!has Fuel 20"
 							],
@@ -2535,7 +3484,7 @@
 			"encounter_id": 1015,
 			"tags": [],
 			"encounter_name": "Fasting",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2543,18 +3492,18 @@
 					"text": "You come across a group of stranded travellers, you don’t have enough room in your ship to transport them all. Not wanting to leave anyone behind they ask if you’ve any food or fuel to spare, they have a doctor who could heal your wounds in exchange.",
 					"buttons": [
 						{
-							"text": "[Offer Fuel] Give 25 Fuel, gain 25% health.",
+							"text": "[Offer Fuel] Give 25 Fuel, heal 25% hp.",
 							"conditions": [
 								"!has Fuel 25"
 							],
 							"effects": [
-								"@health% 30",
+								"@health% 25",
 								"@take Fuel 25"
 							],
 							"next_page_id": 3
 						},
 						{
-							"text": "[Offer Rations] Give 15 Rations, gain 15% health.",
+							"text": "[Offer Rations] Give 15 Rations, heal 15% hp.",
 							"conditions": [
 								"!has Rations 15"
 							],
@@ -2565,7 +3514,7 @@
 							"next_page_id": 4
 						},
 						{
-							"text": "[Malevolence] Threaten with Hunting Rifle, gain 20% health, lose reputation.",
+							"text": "[Malevolence] Threaten with Hunting Rifle, heal 20% hp, lose reputation.",
 							"conditions": [
 								"!has Hunting_Rifle 1"
 							],
@@ -2606,7 +3555,8 @@
 			"tags": [],
 			"encounter_name": "Turbulence",
 			"conditions": [
-				"!has Scrap_Metal 5"
+				"!has Scrap_Metal 5",
+				"!is_driving"
 			],
 			"town_name": null,
 			"dialogue_tree": [
@@ -2615,7 +3565,7 @@
 					"text": "You spot a cluster of scrap in some turbulent looking space, feeling lucky you decide to go for it. Unfortunately you got more than you bargained for and now have to choose between taking some asteroid hits to get the loot or dropping some weight to escape.",
 					"buttons": [
 						{
-							"text": "[Collect] Gain 7 Iron Ore, lose 15 health",
+							"text": "[Collect] Gain 7 Iron Ore, lose 15 hp",
 							"effects": [
 								"@give Iron_Ore 7",
 								"@health -15"
@@ -2643,7 +3593,7 @@
 		},
 		{
 			"valid": true,
-			"COMMENT": "condition for hp to not kill, IF UPDATING REMEMBER TO CHANGE BOTH",
+			"COMMENT": "IF UPDATING REMEMBER TO CHANGE BOTH",
 			"encounter_id": 1017,
 			"tags": [],
 			"encounter_name": "The Hierophant",
@@ -2655,23 +3605,23 @@
 					"text": "You come across a somewhat sketchy looking lab; so of course you decide to dock and see what you can find. The bay doors close behind you and you are greeted by an enigmatic figure who offers to grant various requests in exchange for \"Samples\"",
 					"buttons": [
 						{
-							"text": "[Sustenance] Gain 20 Rations or Fuel, lose 12% health",
+							"text": "[Sustenance] Gain 30 Rations or Fuel, lose 12% hp",
 							"effects": [
-								"@random 0.5 (@give Rations 20) (@give Fuel 20)",
+								"@random 0.5 (@give Rations 30) (@give Fuel 30)",
 								"@health% -12"
 							],
 							"next_page_id": 3
 						},
 						{
-							"text": "[Greed] Gain a random Luxury item, lose 12% health",
+							"text": "[Greed] Gain a random Combat item, lose 12% hp",
 							"effects": [
-								"@give_tag Luxury 1",
+								"@give_tag Combat 1",
 								"@health% -12"
 							],
 							"next_page_id": 4
 						},
 						{
-							"text": "[Longevity] Gain 3% max hp, lose 12% health",
+							"text": "[Longevity] Gain 3% max hp, lose 12% hp",
 							"effects": [
 								"@health_max% 3",
 								"@health% -12"
@@ -2679,7 +3629,7 @@
 							"next_page_id": 5
 						},
 						{
-							"text": "[Escape] Ask to leave, lose 12% health",
+							"text": "[Escape] Ask to leave, lose 12% hp",
 							"effects": [
 								"@health% -12"
 							],
@@ -2692,23 +3642,23 @@
 					"text": "Well? What is it?",
 					"buttons": [
 						{
-							"text": "[Sustenance] Gain 20 Rations or Fuel, lose 12% health",
+							"text": "[Sustenance] Gain 30 Rations or Fuel, lose 12% hp",
 							"effects": [
-								"@random 0.5 (@give Rations 20) (@give Fuel 20)",
+								"@random 0.5 (@give Rations 30) (@give Fuel 30)",
 								"@health% -12"
 							],
 							"next_page_id": 3
 						},
 						{
-							"text": "[Greed] Gain a random Luxury item, lose 12% health",
+							"text": "[Greed] Gain a random Combat item, lose 12% hp",
 							"effects": [
-								"@give_tag Luxury 1",
+								"@give_tag Combat 1",
 								"@health% -12"
 							],
 							"next_page_id": 4
 						},
 						{
-							"text": "[Longevity] Gain 3% max hp, lose 12% health",
+							"text": "[Longevity] Gain 3% max hp, lose 12% hp",
 							"effects": [
 								"@health_max% 3",
 								"@health% -12"
@@ -2716,7 +3666,7 @@
 							"next_page_id": 5
 						},
 						{
-							"text": "[Escape] Ask to leave, lose 12% health",
+							"text": "[Escape] Ask to leave, lose 12% hp",
 							"effects": [
 								"@health% -12"
 							],
@@ -2766,7 +3716,7 @@
 			"encounter_id": 1018,
 			"tags": [],
 			"encounter_name": "The Beggar",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2774,12 +3724,12 @@
 					"text": "You’re approached by an elderly man draped in rags. He slowly brings out an unmarked box and pleads in a raspy voice, \"I don’t have much, but it's yours if you could spare some food\"",
 					"buttons": [
 						{
-							"text": "[Kindness] Give 15 Rations, take box",
+							"text": "[Kindness] Give 10 Rations, take box",
 							"conditions": [
-								"!has Rations 15"
+								"!has Rations 10"
 							],
 							"effects": [
-								"@take Rations 15",
+								"@take Rations 10",
 								"@give Jewelry 1"
 							],
 							"next_page_id": 3
@@ -2848,7 +3798,7 @@
 			"encounter_id": 1019,
 			"tags": [],
 			"encounter_name": "Feeling Lucky?",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2856,16 +3806,16 @@
 					"text": "\"You there!\", two men beckon you towards them. \"We need someone to bear witness to our duel, to make it worth your time you can place a bet on who’ll win\". Sounds like easy money.",
 					"buttons": [
 						{
-							"text": "[Safe Bet] 70% chance to win 7 Iron Ore",
+							"text": "[Safe Bet] 70% chance to win 3 Iron Ore",
 							"effects": [
-								"@random 0.7 (@give Iron_Ore 7) (@give Iron_Ore 0)"
+								"@random 0.7 (@give Iron_Ore 3) (@health 0)"
 							],
 							"next_page_id": 2
 						},
 						{
-							"text": "[Risky Bet] 30% chance to win 20 Iron Ore",
+							"text": "[Risky Bet] 30% chance to win 12 Iron Ore",
 							"effects": [
-								"@random 0.3 (@give Iron_Ore 20) (@give Iron_Ore 0)"
+								"@random 0.3 (@give Iron_Ore 12) (@health 0)"
 							],
 							"next_page_id": 2
 						}
@@ -2883,7 +3833,7 @@
 			"encounter_id": 1020,
 			"tags": [],
 			"encounter_name": "Free Samples",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -2895,7 +3845,7 @@
 							"next_page_id": 3
 						},
 						{
-							"text": "[Clinic] Heal 15% health",
+							"text": "[Clinic] Gain 5% max hp",
 							"next_page_id": 2
 						}
 					]
@@ -2924,7 +3874,7 @@
 						{
 							"text": "[Follow] Accept your fate",
 							"effects": [
-								"@health% 15"
+								"@health_max% 5"
 							],
 							"next_page_id": 4
 						}
@@ -2937,12 +3887,12 @@
 			]
 		},
 		{
-			"valid": false,
+			"valid": true,
 			"COMMENT": "requires has_tag should work otherwise",
 			"encounter_id": 1021,
 			"tags": [],
 			"encounter_name": "Unlucky decision",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -3000,7 +3950,7 @@
 			"encounter_id": 1022,
 			"tags": [],
 			"encounter_name": "Deal with the Devil",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -3008,7 +3958,7 @@
 					"text": "As you continue down the road you notice you’ve repeatedly passed the same dishevelled looking traveller. You stop to investigate and the stranger asks you to make a deal.",
 					"buttons": [
 						{
-							"text": "[Hasty Bargain] Gain 100% max hp, set your current hp to 1",
+							"text": "[Hasty Bargain] Gain 100% max hp, reduce your current hp to 1",
 							"effects": [
 								"@health_max% 100",
 								"@health% 100"
@@ -3016,19 +3966,20 @@
 							"next_page_id": 2
 						},
 						{
-							"text": "[Panacea] Gain 45 Medical supplies, Lose 50% max hp",
+							"text": "[Panacea] Gain numerious Medical supplies, Lose 40% max hp",
 							"effects": [
-								"@give Medicine 15",
-								"@give Medical_Kit 15",
-								"@give Surgical_Equipment 15",
-								"@health_max% -50"
+								"@give Painkillers 4",
+								"@give Herbal_Medicine 3",
+								"@give Medicine 2",
+								"@give Medical_Kit 1",
+								"@health_max% -40"
 							],
 							"next_page_id": 4
 						},
 						{
-							"text": "[Doppelganger] <<WIP>> Gain a crew member, Lose 50% max hp",
+							"text": "[Doppelganger] <<WIP>> Gain a crew member, Lose 33% max hp",
 							"effects": [
-								"@health_max% -50"
+								"@health_max% -33"
 							],
 							"next_page_id": 5
 						}
@@ -3096,7 +4047,7 @@
 			"encounter_id": 1025,
 			"tags": [],
 			"encounter_name": "Unusual Find",
-			"conditions": [],
+			"conditions": ["!is_walking"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -3127,7 +4078,7 @@
 			"COMMENT": "out of fuel",
 			"tags": [],
 			"encounter_name": "Oof",
-			"conditions": [],
+			"conditions": ["!is_walking"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -3155,7 +4106,7 @@
 			"COMMENT": "out of fuel",
 			"tags": [],
 			"encounter_name": "Coyotes",
-			"conditions": [],
+			"conditions": ["!is_walking"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -3220,10 +4171,182 @@
 		},
 		{
 			"valid": true,
+			"encounter_id": 1028,
+			"COMMENT": "out of fuel",
+			"tags": [],
+			"encounter_name": "The Arena",
+			"conditions": ["!is_walking"],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "While pushing your vehicle you're knocked unconscious. You awaken with a throbbing head to find yourself in the middle of a large arena surrounded by a cheering audience. Before you have time to fully take in your situation the ringleader bellows \"Let the battle begin!\"",
+					"buttons": [
+						{
+							"text": "[Fight] Prepare for battle.",
+							"next_page_id": 2
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "The gates open and your challenger approaches, From their weapons and the blood splattered around the arena it looks like only one of you will be surviving this match. Luckily for you they didn't remove any of your equipment.",
+					"buttons": [
+						{
+							"text": "[Reckless Charge] Fight with your bare hands, Lose 30 hp.",
+							"effects": [
+								"@health -30"
+							],
+							"next_page_id":3
+						},
+						{
+							"text": "[Rip and Tear] Fight with your Hatchet, Lose 20 hp.",
+							"conditions":[
+								"!has Hatchet 1"
+							],
+							"effects": [
+								"@take Hatchet 1",
+								"@health -20"
+							],
+							"next_page_id":3
+						},
+						{
+							"text": "[Rupture] Fight with your Hunting Rifle, Lose 15 hp.",
+							"conditions":[
+								"!has Hunting_Rifle 1"
+							],
+							"effects": [
+								"@take Hunting_Rifle 1",
+								"@health -15"
+							],
+							"next_page_id":3
+						},
+						{
+							"text": "[Reaper] Fight with an RPG, is that even fair?",
+							"conditions":[
+								"!has RPG 1"
+							],
+							"effects": [
+								"@take RPG 1"
+							],
+							"next_page_id":3
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "Your opponent falls and the crowd goes wild. \"Seems you're tougher than you look!\" the ringleader howls, \"Time for a real challenge!\". While he riles up the crowd, you notice a crack in the wall you might be able to escape through while everyone is distracted. Though, the champion of the arena is likely well rewarded.",
+					"buttons": [
+						{
+							"text": "[Cowardice] Escape with your life."
+						},
+						{
+							"text": "[Berserker] A large fight with even larger rewards.",
+							"next_page_id":4
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "The gates open and your challenger approaches, They're far more intimidating than your last opponent but there's no backing out now.",
+					"buttons": [
+						{
+							"text": "[Outmaneuver] Fight with your bare hands, Lose 50% hp.",
+							"effects": [
+								"@health% -50"
+							],
+							"next_page_id":5
+						},
+						{
+							"text": "[Blade Dance] Fight with your Hatchet, Lose 35% hp.",
+							"conditions":[
+								"!has Hatchet 1"
+							],
+							"effects": [
+								"@take Hatchet 1",
+								"@health% -35"
+							],
+							"next_page_id":5
+						},
+						{
+							"text": "[Predator] Fight with your Hunting Rifle, Lose 25% hp.",
+							"conditions":[
+								"!has Hunting_Rifle 1"
+							],
+							"effects": [
+								"@take Hunting_Rifle 1",
+								"@health% -25"
+							],
+							"next_page_id":5
+						},
+						{
+							"text": "[Ragnarok] Fight with an RPG, lose 15% hp",
+							"conditions":[
+								"!has RPG 1"
+							],
+							"effects": [
+								"@take RPG 1",
+								"@health% -15"
+							],
+							"next_page_id":5
+						}
+					]
+				},
+				{
+					"id": 5,
+					"text": "Victory! Their champion lies broken at your feet and the crowd goes wild. Time to claim your spoils.",
+					"buttons": [
+						{
+							"text": "[Apotheosis] Gain 5 of 10 random resouces.",
+							"effects": [
+								"@give_tag All 5",
+								"@give_tag All 5",
+								"@give_tag All 5",
+								"@give_tag All 5",
+								"@give_tag All 5",
+								"@give_tag All 5",
+								"@give_tag All 5",
+								"@give_tag All 5",
+								"@give_tag All 5",
+								"@give_tag All 5"
+							],
+							"next_page_id":6
+						},
+						{
+							"text": "[Impervious] Gain 100 max hp and full heal.",
+							"effects": [
+								"@health_max 100",
+								"@health% 100"
+							],
+							"next_page_id":6
+						},
+						{
+							"text": "[Insatiable] Gain 100 Fuel, 100 Rations.",
+							"effects": [
+								"@give Fuel 100",
+								"@give Rations 100"
+							],
+							"next_page_id":6
+						}
+					]
+				},
+				{
+					"id": 6,
+					"text": "You're given your rewards and returned to your ship. Your escort informs you the ringleader was impressed and \"Looks forward to your next visit\".",
+					"buttons": [
+						{
+							"text": "[Leave] Escape, for now."
+						}
+					]
+				}
+			]
+		},
+		{
+			"valid": true,
 			"encounter_id": 1200,
 			"tags": [],
 			"encounter_name": "Earthquake",
-			"conditions": [],
+			"conditions": ["!is_driving"],
 			"town_name": null,
 			"dialogue_tree": [
 				{
@@ -3253,6 +4376,44 @@
 				{
 					"id": 3,
 					"text": "Luckily, you always wear your seatbelt, and the earthquake passes without causing any damage."
+				}
+			]
+		},
+		{
+			"valid": true,
+			"encounter_id": 1201,
+			"tags": [],
+			"encounter_name": "Buried Treasure",
+			"conditions": [],
+			"town_name": null,
+			"dialogue_tree": [
+				{
+					"id": 1,
+					"text": "For no apparent reason, you get the urge to stop and step outside. Something about this spot... you can feel it in your bones.",
+					"buttons": [
+						{
+							"text": "Dig with your shovel.",
+							"conditions": [
+								"!has Shovel 1"
+							],
+							"effects": [
+								"@give_tag Antique 1"
+							],
+							"next_page_id":2
+						},
+						{
+							"text": "Do nothing.",
+							"next_page_id":3
+						}
+					]
+				},
+				{
+					"id": 2,
+					"text": "You dig at your feet and find an old artifact!"
+				},
+				{
+					"id": 3,
+					"text": "The feeling passes. It must have been nothing."
 				}
 			]
 		}

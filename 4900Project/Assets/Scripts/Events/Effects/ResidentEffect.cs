@@ -15,12 +15,20 @@ public class ResidentEffect : IEffect
     {
         this.addOrRemove = addOrRemove;
         this.residentName = residentName;
-        this.townName = townName;
+        this.townName = townName.Replace("_", " ");
     }
 
     public bool Apply()
     {
-        Town t = TownManager.Instance.GetTownByName(townName);
+        Town t = null;
+        if (townName == "current"){
+            OverworldMap.LocationNode node;
+            DataTracker.Current.WorldMap.GetNode(DataTracker.Current.currentLocationId, out node);
+            t = TownManager.Instance.GetTownById(node.LocationId);
+        }
+        else{
+            t = TownManager.Instance.GetTownByName(townName);
+        }
         Resident r = TownManager.Instance.GetResident(residentName);
         if (addOrRemove.ToLower() == "add"){
             t.AddResident(r);

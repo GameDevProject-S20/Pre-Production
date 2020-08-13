@@ -6,7 +6,7 @@ using System;
 using Encounters;
 using Quests;
 using SIEvents;
-
+using System.Xml.Serialization;
 
 public class Initializer : MonoBehaviour
 {
@@ -36,12 +36,19 @@ public class Initializer : MonoBehaviour
     }
 
     void finishLoading(){
-        // ARL -- cleanup
-        // This is just so I can get something....
-        //DataTracker.Current.currentLocationId = 0;
+        SetStartingInventory();
         InitializeEncounters();
         BuildQuest();
+        DataTracker.Current.SetTravelType(DataTracker.TravelType.WALK);
         StartCoroutine(loader());
+    }
+
+    private void SetStartingInventory()
+    {
+        Player.Instance.Inventory.AddItem("Hunting Rifle", 1);
+        Player.Instance.Inventory.AddItem("Family Heirloom", 1);
+        Player.Instance.Inventory.AddItem("Rations", 3);
+
     }
 
     private void InitializeEncounters()
@@ -52,7 +59,9 @@ public class Initializer : MonoBehaviour
             EncounterManager.Instance.AddEncounter(e);
         }
 
-        //EncounterManager.Instance.RunRandomEncounter("tutorial");
+
+        EncounterManager.Instance.ToggleRandomEncounters(false);
+        EncounterManager.Instance.ReloadRandomEncounterQueue();
     }
 
     private void BuildQuest()
@@ -86,6 +95,43 @@ public class Initializer : MonoBehaviour
             )
 
             .Build();
+
+        quest = new Quest.Builder("Field Work")
+        .SetDescription("Gather scientific data for the Laurentian Institute.")
+
+        .AddStage(new Stage.Builder("Gather data and hand it in to researchers.")
+            .AddCondition(new DialogueCondition("Hand in seismic data.", "HandInSeismicData",1)
+            )
+            .AddCondition(new DialogueCondition("Hand in mineral data.", "HandInMineralData",6)
+            )
+        )
+
+        .Build();
+
+        quest = new Quest.Builder("The Final Frontier")
+        .SetDescription("Find a solution to the fragment collapse.")
+
+        .AddStage(new Stage.Builder("Go to Rocket City.")
+            .AddCondition(new EncounterCompleteCondition("Talk to Overseer Zachary.", 216)
+            )
+        )
+
+        .AddStage(new Stage.Builder("Find information on spaceships.")
+            .AddCondition(new EncounterCompleteCondition("Obtain the rocketry blueprint.", 214)
+            )
+        )
+
+        .AddStage(new Stage.Builder("Build the rocket engine.")
+            .AddCondition(new EncounterCompleteCondition("Talk to the factory boss in New Ottawa.", 215)
+            )
+        )
+
+        .AddStage(new Stage.Builder("Repair the spaceship.")
+            .AddCondition(new EncounterCompleteCondition("Deliver the rocket engine.", 217)
+            )
+        )
+
+        .Build();
     }
 
 

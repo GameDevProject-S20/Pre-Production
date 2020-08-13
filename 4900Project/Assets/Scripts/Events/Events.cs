@@ -1,4 +1,5 @@
-﻿using UnityEngine.Events;
+﻿using System;
+using UnityEngine.Events;
 
 namespace SIEvents
 {
@@ -115,6 +116,7 @@ namespace SIEvents
         {
             [System.Serializable]
             public class HealthEvent : UnityEvent<int, int, int, string> { };
+            public class TravelTypeChangeEvent : UnityEvent<DataTracker.TravelType> { };
 
         }
 
@@ -127,7 +129,7 @@ namespace SIEvents
         public partial class MiscEvents
         {
             [System.Serializable]
-            public class TimeEvent : UnityEvent <int> { };
+            public class TimeChangedEvent : UnityEvent<TimeSpan> { };
         }
     }
 }

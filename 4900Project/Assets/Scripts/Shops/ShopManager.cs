@@ -36,6 +36,7 @@ public class ShopManager
         yorkShop.inventory.AddItem("Rations", 14);
         yorkShop.inventory.AddItem("Generator", 1);
         yorkShop.inventory.AddItem("Motor", 3);
+        yorkShop.playerSellModifiers.Add(ItemTag.Medical, 1.1f);
 
         return yorkShop;
     }

@@ -38,7 +38,7 @@ namespace SIEvents
         public Events.TownEvents.EnterEvent OnTownEnter = new Events.TownEvents.EnterEvent();
         public Events.TownEvents.ClickDialogueEvent OnOpenDialogueClick = new Events.TownEvents.ClickDialogueEvent();
         public Events.TownEvents.UpdatedEvent OnTownUpdated = new Events.TownEvents.UpdatedEvent();
-
+        public UnityEvent OnTownLeave = new UnityEvent();
         //=== Encounters ============================================//
 
         public Events.EncounterEvents.EncounterComplete OnEncounterComplete = new Events.EncounterEvents.EncounterComplete();
@@ -82,6 +82,7 @@ namespace SIEvents
         //=== Player =================================================//
 
         public Events.PlayerEvents.HealthEvent OnHealthChange = new Events.PlayerEvents.HealthEvent();
+        public Events.PlayerEvents.TravelTypeChangeEvent OnTravelTypeChanged = new Events.PlayerEvents.TravelTypeChangeEvent();
 
         //=== Escape Menu ===========================================//
 
@@ -100,9 +101,7 @@ namespace SIEvents
 
         //=== Time ==================================================//
 
-        public Events.MiscEvents.TimeEvent OnTimeAdvance = new Events.MiscEvents.TimeEvent();
-        public UnityEvent OnDayAdvance = new UnityEvent();
-        public UnityEvent OnEvening = new UnityEvent();
+        public Events.MiscEvents.TimeChangedEvent OnTimeChanged = new Events.MiscEvents.TimeChangedEvent();
 
         //=== Misc ===================================================//
         public UnityEvent onDataTrackerLoad = new UnityEvent();

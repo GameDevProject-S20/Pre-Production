@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityUtility;
 using SIEvents;
 
 /// <summary>
@@ -181,27 +179,33 @@ public class Town
     }
 
     // Shop restocking
-    void BeginRestockTimer(Events.TransactionEvents.Details details){
-        if (shops.Contains(details.SystemId)) {
+    void BeginRestockTimer(Events.TransactionEvents.Details details)
+    {
+        if (shops.Contains(details.SystemId)) 
+        {
             ShopResetTimer = 0;
-            EventManager.Instance.OnTimeAdvance.AddListener(AdvanceRestockTimer);
+            EventManager.Instance.OnTimeChanged.AddListener(AdvanceRestockTimer);
             EventManager.Instance.OnTransaction.RemoveListener(BeginRestockTimer);
         }
     }
 
-    void AdvanceRestockTimer(int i){
-        ShopResetTimer += i;
-        if (ShopResetTimer >= ShopResetTimerMax){
+    void AdvanceRestockTimer(System.TimeSpan ts)
+    {
+        ShopResetTimer += (int) ts.TotalHours;
+        if (ShopResetTimer >= ShopResetTimerMax)
+        {
             RestockShops();
         }
     }
 
-    void RestockShops(){
-        foreach(var shop in shops){
+    void RestockShops()
+    {
+        foreach(var shop in shops)
+        {
             ShopManager.Instance.GetShopById(shop).Restock(this);
         }
         EventManager.Instance.OnTransaction.AddListener(BeginRestockTimer);
-        EventManager.Instance.OnTimeAdvance.RemoveListener(AdvanceRestockTimer);
+        EventManager.Instance.OnTimeChanged.RemoveListener(AdvanceRestockTimer);
     }
 
     public void AddTag(TownTag tag)
@@ -221,12 +225,14 @@ public class Town
         return false;
     }
 
-    public void AddResident(Resident r){
+    public void AddResident(Resident r)
+    {
         Residents.Add(r);
         FireUpdatedEvent();
     }
 
-    public void RemoveResident(Resident r){
+    public void RemoveResident(Resident r)
+    {
         Residents.Remove(r);
         FireUpdatedEvent();
     }
