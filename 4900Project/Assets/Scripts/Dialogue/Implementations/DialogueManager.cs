@@ -163,16 +163,22 @@ namespace Dialogue
         {
             Dialogue dialogue = (Dialogue) GetActiveDialogue();
 
+            // Pads the text with a space only if necessary
+            if (flatmax.Length > 0)
+            {
+                flatmax = " " + flatmax;
+            }
+
             if (dialogue != null)
             {
                 string notification = "";
                 if(diff>0)
                 {
-                  notification = string.Format("Gained {0} {1} health!", diff, flatmax);
+                  notification = string.Format("Gained {0}{1} health!", diff, flatmax);
                 }
                 else if(diff<0)
                 {
-                  notification = string.Format("Lost {0} {1} health!", diff, flatmax);
+                  notification = string.Format("Lost {0}{1} health!", Math.Abs(diff), flatmax);
                 }
                 IDPage proxyPage = new DPage();
                 dialogue.AddToHistory(proxyPage, notification);
