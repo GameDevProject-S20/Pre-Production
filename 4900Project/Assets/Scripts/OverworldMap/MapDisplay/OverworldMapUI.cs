@@ -154,7 +154,9 @@ public class OverworldMapUI : MonoBehaviour
         FootObject.SetActive(false);
         TruckObject.GetComponent<MeshRenderer>().enabled = false;
         HumanObject.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
-        
+        this.Vroom = Resources.Load<AudioClip>("Music/Sound Effects/gruntsound-extended");
+        travelSpeed = 0.3f;
+
 
 
         campfireEndListener = () =>
@@ -345,6 +347,7 @@ public class OverworldMapUI : MonoBehaviour
                 OnNodeArrival();
             }
         }
+        Debug.Log(DataTracker.Current.TravelMode);
     }
 
     /// <summary>
