@@ -1,7 +1,7 @@
 DisplayName,Tooltip,Description,Value,Weight,IconName,Tags,IsConsumable
 Bandit Token,A symbol of alliance.,"A Greek 'Omega', roughly fashioned from metal. Bandits will not hassle you.",5,1,banditToken.png,"Bandit,All",no
 Fuel,A neccesity for travel between colonies,"Fuel is the lifeblood of traders, never leave port without first checking your tank. ",1,1,Fuel.png,"Fuel,General",no
-Rations,Unappetizing but cheap,The bare minimum to keep someone running for a day,3,1,Food.png,"Food,General",no
+Rations,Unappetizing but cheap,The bare minimum to keep someone running for a day,2,1,Food.png,"Food,General",no
 Fresh Fruit,"Tasty, but spoils without proper storage","A rarity in a good portion of the world, which makes is quite valuable to the right people.",11,3,FreshFruit.png,"Food,All",no
 Fresh Meat,A valuable delicacy.,Raising livestock is an expensive process. Meat is highly valued.,26,8,FreshMeat.png,"Food,All",no
 Wrench,An essential repair tool,Helps with maintaining machines. Wear and tear means you need a replacement once in a while.,10,1,Wrench.png,"Tools_And_Parts,Miscellaneous,All",no
@@ -45,7 +45,7 @@ Motor,Converts electricity to mechanical power.,"Motors are used in farming equi
 Seismic Data,Data on regional seismic activity.,"This scientific data is indecipherable to you, but an expert may value it.",1,1,ScienceData1.png,"Scientific,All",no
 Mineral Data,Data on soil mineral composition.,"This scientific data is indecipherable to you, but an expert may value it.",1,1,ScienceData2.png,"Scientific,All",no
 Rocketry Blueprint,Blueprints for an old rocket engine.,Bring this to a factory and they may be able to build it.,1,1,ScienceData3.png,Unique,no
-Tricorder,Scientific tool for field recordings.,The Standard Model Field Tri-Recorder can measure a wide variety of environmental conditions.,30,2,tricorder.png,"Tools_And_Parts,Scientific,All",no
+Tricorder,Scientific tool for field recordings.,The Standard Model Field Tri-Recorder can measure a wide variety of environmental conditions.,30,2,tricorder.png,"Tools_And_Parts,Scientific",no
 Family Heirloom,An old gift.,This locket has been in your family since before the Shattering. Along your long travels it remains a piece of home.,35,1,Heirloom.png,"Luxury,Unique",no
 Heavy Machinery,Used in the steelmaking process.,"This large, expensive machine is used to lift large quantities of molten steel.",150,35,heavyMachine.png,Machinery,no
 Rocket Engine,Powerful enough to blast to the stars.,A new engine built from century-old blueprints.,1,15,rocketParts.png,Unique,no
