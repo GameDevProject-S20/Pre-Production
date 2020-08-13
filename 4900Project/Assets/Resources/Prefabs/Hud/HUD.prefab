@@ -627,6 +627,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tooltip: {fileID: 7535620344024647575}
+  title: Inventory Capacity
+  description: Current inventory space used. Higher weights require more fuel to
+    transport. Max is 750 units.
 --- !u!1 &2078277570548981645
 GameObject:
   m_ObjectHideFlags: 0
@@ -1626,6 +1629,7 @@ GameObject:
   - component: {fileID: 5971513800320063288}
   - component: {fileID: 5971513800320063291}
   - component: {fileID: 5971513800320063290}
+  - component: {fileID: 9194763513284722641}
   m_Layer: 5
   m_Name: health
   m_TagString: Untagged
@@ -1710,6 +1714,22 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &9194763513284722641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5971513800320063295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe619982db767f1498036bb413917f1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltip: {fileID: 7535620344024647575}
+  title: Health
+  description: The health that your crew has. Your crew will die if their health
+    reaches 0.
 --- !u!1 &5971513800399471695
 GameObject:
   m_ObjectHideFlags: 0
@@ -1817,6 +1837,7 @@ GameObject:
   - component: {fileID: 5971513800688901932}
   - component: {fileID: 5971513800688901935}
   - component: {fileID: 5971513800688901934}
+  - component: {fileID: 3660385813312568037}
   m_Layer: 5
   m_Name: fuel
   m_TagString: Untagged
@@ -1901,6 +1922,22 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &3660385813312568037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5971513800688901923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe619982db767f1498036bb413917f1b, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  tooltip: {fileID: 7535620344024647575}
+  title: Fuel
+  description: The fuel that you have for your ship. You'll be stuck walking if
+    you run out of fuel!
 --- !u!1 &5971513800694635578
 GameObject:
   m_ObjectHideFlags: 0
