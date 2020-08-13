@@ -115,6 +115,7 @@ namespace SIEvents
         {
             [System.Serializable]
             public class HealthEvent : UnityEvent<int, int, int, string> { };
+            public class TravelTypeChangeEvent : UnityEvent<DataTracker.TravelType> { };
 
         }
 

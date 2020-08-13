@@ -23,13 +23,6 @@ public class Clock : MonoBehaviour
             UpdateText();
         });
 
-        EventManager.Instance.OnCampfireEnded.AddListener(() =>
-        {
-            TimeSpan ts = new TimeSpan(6, 0, 0);
-            gameTime = gameTime.AddDays(1).Date + ts;
-            UpdateText();
-        });
-
         UpdateText();
     }
 

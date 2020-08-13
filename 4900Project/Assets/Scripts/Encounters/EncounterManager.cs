@@ -1,3 +1,4 @@
+using Extentions;
 using SIEvents;
 using System;
 using System.Collections.Generic;
@@ -43,15 +44,17 @@ namespace Encounters
             get => EncounterCollection.Instance.RandomEncounters;
         }
 
-        private Queue<RandomEncounter> randomEncounterQueue;
+        private List<RandomEncounter> randomEncounterQueue = new List<RandomEncounter>();
+
+        public bool RandomEncountersOn { get; private set; }
 
         private EncounterManager()
         {
             random = new Random();
-            randomEncounterQueue = reloadRandomEncounters();
+            //ReloadRandomEncounterQueue();
             EventManager.Instance.OnEncounterTrigger.AddListener((int id) =>
             {
-                if (id == -1)
+                if (id == -1 && RandomEncountersOn)
                 {
                     RunRandomEncounter();
                 }
@@ -90,6 +93,12 @@ namespace Encounters
         /// </summary>
         public void RunRandomEncounter(string tag = null)
         {
+            if (!RandomEncountersOn)
+            {
+                Debug.LogWarning("Random Encounters not on, yet an attempt was made to run them.");
+                return;
+            }
+
             Encounter next = randomEncounter(tag);
             Debug.Log(next);
             next.RunEncounter();
@@ -103,47 +112,68 @@ namespace Encounters
 
         // Load from csv or wherever in the future...
         // For now this demonstrates how to create an encounter object.
-        private Queue<RandomEncounter> reloadRandomEncounters()
+        public void ReloadRandomEncounterQueue(string tag = null)
         {
-            // hard coded for now
-            var nextEncounters = new List<RandomEncounter>(randomEncounters.Values);
+            IEnumerable<RandomEncounter> encounters = randomEncounters.Values;
 
-            // Shuffle the list and return as a queue
-            return new Queue<RandomEncounter>(nextEncounters.OrderBy(randomEncounterQueue => random.Next()));
+            if (tag != null)
+            {
+                encounters = encounters.Where(e => e.Tags.Contains(tag));
+            }
+
+            // Reintroduce encounters to queue
+            randomEncounterQueue.AddRange(encounters.Except(randomEncounterQueue));
+
+            // Reorder queue
+            randomEncounterQueue = randomEncounterQueue.OrderBy(randomEncounterQueue => random.Next()).ToList();
         }
 
         // Return the next random encounter in the shuffled queue
         // If all events have been used, events will be shuffled again.
-        private Encounter randomEncounter(string tag = null)
+        private RandomEncounter randomEncounter(string tag = null)
         {
-            Encounter enc = null;
-            if (tag != null)
+            RandomEncounter enc = null;
+
+            if (!RandomEncountersOn)
             {
-                List<RandomEncounter> tagged = randomEncounterQueue.Where(e => e.Tags.Contains(tag)).ToList();
-                if (tagged.Count == 0)
+                Debug.LogWarning("Random Encounters not on, yet an attempt was made to fetch one.");
+                return enc;
+            }
+
+            bool reloaded = false;
+            IEnumerable<RandomEncounter> conditionsMetEncounters = randomEncounterQueue.Where(e => e.IsRunnable());
+
+            while (enc == null)
+            {
+                IEnumerable<RandomEncounter> valid = randomEncounterQueue.Where(e => e.IsRunnable());
+
+                if (tag != null)
                 {
-                    tagged = randomEncounters.Values.Where(e => e.Tags.Contains(tag)).ToList();
-                    if (tagged.Count > 0)
-                    {
-                        enc = tagged[random.Next(tagged.Count)];
-                    }
-                    else
-                    {
-                        throw new Exception(string.Format("Encounter with tag '{0}' not found", tag));
-                    }
+                    valid = randomEncounterQueue.Where(e => e.Tags.Contains(tag));  
+                }
+
+                enc = valid.FirstOrDefault();
+
+                // Reload if none found
+                if (enc == null)
+                {
+                    ReloadRandomEncounterQueue(tag);
+                    reloaded = true;
+                    continue;
+                }
+
+                if (reloaded == true)
+                {
+                    break;
                 }
             }
-            else {
-                if (randomEncounterQueue.Count > 0)
-                {
-                    enc = randomEncounterQueue.Dequeue();
-                }
-                else
-                {
-                    randomEncounterQueue = reloadRandomEncounters();
-                    enc = randomEncounterQueue.Dequeue();
-                }
+            
+            if (enc == null)
+            {
+                throw new Exception("No Random Encounter found");
             }
+
+            randomEncounterQueue.Remove(enc);
 
             return enc;
         }
@@ -158,9 +188,20 @@ namespace Encounters
             }
             else
             {
+                if (!RandomEncountersOn)
+                {
+                    Debug.LogWarning("Random Encounters not on, yet an attempt was made to fetch one.");
+                    return null;
+                }
+
                 EncounterCollection.Instance.RandomEncounters.TryGetValue(id, out RandomEncounter rvalue);
                 return rvalue;
             }
+        }
+
+        public void ToggleRandomEncounters(bool on)
+        {
+            RandomEncountersOn = on;
         }
 
         public override string ToString()

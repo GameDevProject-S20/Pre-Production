@@ -12,6 +12,12 @@ using UnityEngine.SceneManagement;
 [System.Serializable]
 public class DataTracker : MonoBehaviour
 {
+    public enum TravelType
+    {
+        TRUCK,
+        WALK
+    }
+
     private static DataTracker _current;
     public static DataTracker Current {get {return _current;}}
 
@@ -31,26 +37,37 @@ public class DataTracker : MonoBehaviour
     [SerializeField]
     public float MapSize;
     [SerializeField]
-    public int currentShopId = 0; // Needed if we want store to be their own scene. If we make the store window a prefab, we don't need this.
+    //ARL Any of these "currents" should probably belong to Player
+    //ARL Need to be capitalized
+    public int currentShopId = 0; // Needed if we want store to be their own scene. If we make the store window a prefab, we don't need this. 
     public int currentLocationId = 1;
+
+    [SerializeField]
+    private TravelType _travelMode;
+    public TravelType TravelMode
+    { 
+        get => _travelMode; 
+        private set => _travelMode = value; 
+    }
+
     public int dayCount = 0;
     public int hourCount = 6;
     private void Awake() {
+
         if (_current != null && _current != this)
         {
             Destroy(this.gameObject);
         } else {
             _current = this;
         }
+
         ItemManager.Current.Init();
         WorldMap = OverworldMapLoader.LoadMap();
+
         Player.Inventory.WeightLimit = 750f;
-        Player.Inventory.AddItem("Rations", 12);
-        Player.Inventory.AddItem("Fuel", 30);
-        Player.Inventory.AddItem("Scrap Metal", 2);
-        Player.Inventory.AddItem("Family Heirloom", 1);
-        ShopManager.LoadData();
+
         TownManager.LoadData();
+      
         DontDestroyOnLoad(gameObject);
         EventManager.onDataTrackerLoad.Invoke();
     }
@@ -61,6 +78,12 @@ public class DataTracker : MonoBehaviour
             return node;
         }
         return null;
+    }
+
+    public void SetTravelType(TravelType type)
+    {
+        this.TravelMode = type;
+        EventManager.Instance.OnTravelTypeChanged.Invoke(type);
     }
 
     // Useed for debugging

@@ -6,7 +6,7 @@ using System;
 using Encounters;
 using Quests;
 using SIEvents;
-
+using System.Xml.Serialization;
 
 public class Initializer : MonoBehaviour
 {
@@ -36,12 +36,16 @@ public class Initializer : MonoBehaviour
     }
 
     void finishLoading(){
-        // ARL -- cleanup
-        // This is just so I can get something....
-        //DataTracker.Current.currentLocationId = 0;
+        SetStartingInventory();
         InitializeEncounters();
         BuildQuest();
+        DataTracker.Current.SetTravelType(DataTracker.TravelType.WALK);
         StartCoroutine(loader());
+    }
+
+    private void SetStartingInventory()
+    {
+        Player.Instance.Inventory.AddItem("Hunting Rifle", 1);
     }
 
     private void InitializeEncounters()
@@ -52,7 +56,9 @@ public class Initializer : MonoBehaviour
             EncounterManager.Instance.AddEncounter(e);
         }
 
-        //EncounterManager.Instance.RunRandomEncounter("tutorial");
+
+        EncounterManager.Instance.ToggleRandomEncounters(false);
+        EncounterManager.Instance.ReloadRandomEncounterQueue();
     }
 
     private void BuildQuest()

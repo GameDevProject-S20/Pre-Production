@@ -232,7 +232,7 @@ PrefabInstance:
     - target: {fileID: 6906200729376914471, guid: c6f30cc65c0ce474eb20aa2ad42c9d31,
         type: 3}
       propertyPath: m_Text
-      value: Main Menu
+      value: Exit
       objectReference: {fileID: 0}
     - target: {fileID: 6906200729376914471, guid: c6f30cc65c0ce474eb20aa2ad42c9d31,
         type: 3}
@@ -327,7 +327,7 @@ PrefabInstance:
     - target: {fileID: 6906200729670447226, guid: c6f30cc65c0ce474eb20aa2ad42c9d31,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6906200729670447226, guid: c6f30cc65c0ce474eb20aa2ad42c9d31,
         type: 3}
@@ -451,6 +451,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6f30cc65c0ce474eb20aa2ad42c9d31, type: 3}
+--- !u!114 &454146598 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6906200729670447226, guid: c6f30cc65c0ce474eb20aa2ad42c9d31,
+    type: 3}
+  m_PrefabInstance: {fileID: 454146597}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &703477918
 GameObject:
   m_ObjectHideFlags: 0
@@ -617,6 +629,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RestartButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 6906200729670447224, guid: c6f30cc65c0ce474eb20aa2ad42c9d31,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6906200729670447226, guid: c6f30cc65c0ce474eb20aa2ad42c9d31,
         type: 3}
@@ -834,6 +851,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa2f1c63340f4ee18c687068126d805, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  quitButton: {fileID: 454146598}
   Background: {fileID: 994510609}
 --- !u!4 &1300069983
 Transform:

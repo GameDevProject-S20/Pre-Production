@@ -35,16 +35,15 @@ namespace Encounters
     public class FixedEncounter : Encounter, IProgressor
     {
         /// <summary>
-        /// Conditions that must be satisfied before the encounter will occur
-        /// Intended for Fixed Encounters only
-        /// </summary>
-        public List<Condition> Conditions = null;
-
-        /// <summary>
         /// The town to be entered in order to trigger the encounter
         /// Intended for Fixed Encounters only
         /// </summary>
         public int FixedEncounterTownId;
+
+        /// <summary>
+        /// Conditions that must be satisfied before the encounter can occur
+        /// </summary>
+        public List<Condition> Conditions = null;
 
         private UnityAction<Condition> onConditionCompleteListener;
         private UnityAction<Town> onTownEnterListener;
@@ -142,10 +141,24 @@ namespace Encounters
     /// </summary>
     public class RandomEncounter : Encounter
     {
+        /// <summary>
+        /// This encounter should only be run if all conditions are met
+        /// </summary>
+        public List<IPresentCondition> Conditions = null;
+
         public string[] Tags;
+
+        public bool IsRunnable()
+        {
+            return Conditions == null || Conditions.All(c => c.IsSatisfied());
+        }
 
         public override void RunEncounter()
         {
+            if (!IsRunnable())
+            {
+                throw new Exception(string.Format("Random Encounter with id {0} is not ready to run.", Id));
+            }
             Dialogue.Show();
         }
     }

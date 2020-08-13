@@ -61,11 +61,14 @@ public class Tooltip : MonoBehaviour
         string descriptor = item.Description;
 
         // Only if in Inventory
-        if (this == InventoryWindow.Instance.tooltip && item.IsConsumable)
-        {
-            int health = item.GetHealthCured();
-            descriptor += $"\n\nRestores {health} health";
-            descriptor += "\n\n<color=#CB0A00>Right click to consume</color>";
+
+        if (InventoryWindow.Instance){
+            if (this == InventoryWindow.Instance.tooltip && item.IsConsumable)
+            {
+                int health = item.GetHealthCured();
+                descriptor += $"\n\nRestores {health} health";
+                descriptor += "\n\n<color=#CB0A00>Right click to consume</color>";
+            }
         }
         
         descriptor += "\n\nWeight per Unit:" + item.Weight.ToString() + "\n \n";
