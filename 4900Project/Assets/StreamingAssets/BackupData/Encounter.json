@@ -108,7 +108,7 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "Welcome to Smithsville! Our <color=#2675AD>generator</color> is out and we can't repair it. I will give you fuel if you help us.",
+					"text": "Welcome to Smithsville! Our <color=#2675AD>generator</color> is out and we can't repair it. We've got a spare vehicle but no one can leave town long enough to get to York and buy a new one. Can you help us out?",
 					"buttons": [
 						{
 							"text": "[Accept Quest] Yeah, for sure.",
@@ -183,7 +183,7 @@
 				},
 				{
 					"id": 2,
-					"text": "Thanks! Smithsville should be up and running again. Have some more fuel.",
+					"text": "Thanks! Smithsville should be up and running again. Without that generator, the northern bridges would be unusable and we'd be cut off from the rest of the towns. Tell you what, keep the vehicle, and take some extra fuel. Least we can do to thank you.",
 					"buttons": [
 						{
 							"effects": [

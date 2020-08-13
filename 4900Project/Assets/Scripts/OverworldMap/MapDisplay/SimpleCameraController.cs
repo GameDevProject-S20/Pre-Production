@@ -15,9 +15,9 @@ public class SimpleCameraController : MonoBehaviour
     [SerializeField]
     float zoomSpeed; // 4
     [SerializeField]
-    float scrollMax; // 10
+    float scrollMax; // 28
     [SerializeField]
-    float scrollMin; // 4
+    float scrollMin; // 10
 
     [Header("Settings for mouse dragging")]
     [SerializeField]
@@ -30,6 +30,10 @@ public class SimpleCameraController : MonoBehaviour
     public float outerUp; // 41
     [SerializeField]
     public float outerDown; // -45
+
+    [Header("Far Zoom Player Indicator")]
+    [SerializeField]
+    public GameObject Indicator;
 
     private Vector3 dragOrigin;
 
@@ -66,6 +70,7 @@ public class SimpleCameraController : MonoBehaviour
             }
         });
         zoom = transform.position.y;
+        Indicator.GetComponent<MeshRenderer>().enabled = false;
     }
 
     private void Update()
@@ -167,6 +172,14 @@ public class SimpleCameraController : MonoBehaviour
 
         zoom -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
         zoom = Mathf.Clamp(zoom, scrollMin, scrollMax);
+        if(zoom > 19)
+        {
+            Indicator.GetComponent<MeshRenderer>().enabled = true;
+        }
+        else
+        {
+            Indicator.GetComponent<MeshRenderer>().enabled = false;
+        }
 
         //return nextPosition;
     }

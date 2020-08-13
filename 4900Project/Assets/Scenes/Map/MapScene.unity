@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -121,6 +121,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &53505433 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7705935759889217116, guid: 49355b590cbe93047b993c169b9d7021,
+    type: 3}
+  m_PrefabInstance: {fileID: 198410444}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &105134820
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -514,6 +520,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1790766288353361340, guid: 49355b590cbe93047b993c169b9d7021,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6014602389961459721, guid: 49355b590cbe93047b993c169b9d7021,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -610,6 +621,12 @@ GameObject:
 --- !u!1 &198410446 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9130555960443347318, guid: 49355b590cbe93047b993c169b9d7021,
+    type: 3}
+  m_PrefabInstance: {fileID: 198410444}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &198410447 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1306190325879281589, guid: 49355b590cbe93047b993c169b9d7021,
     type: 3}
   m_PrefabInstance: {fileID: 198410444}
   m_PrefabAsset: {fileID: 0}
@@ -940,6 +957,7 @@ MonoBehaviour:
   outerRight: 30
   outerUp: 41
   outerDown: -45
+  Indicator: {fileID: 198410447}
   zoomTimeMultiplier: 2
 --- !u!1001 &442956046
 PrefabInstance:
@@ -2095,6 +2113,7 @@ MonoBehaviour:
   playerMarker: {fileID: 198410445}
   TruckObject: {fileID: 1287829675}
   FootObject: {fileID: 198410446}
+  HumanObject: {fileID: 53505433}
   NodesContainer: {fileID: 1057473041}
   PathsContainer: {fileID: 2092142779}
   TownMenuGameObject: {fileID: 1316328939}
@@ -4273,7 +4292,7 @@ PrefabInstance:
     - target: {fileID: 7864621161261145241, guid: e8e0713c01c44684db4ab4c34a0a47e2,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -5715
+      value: -7500
       objectReference: {fileID: 0}
     - target: {fileID: 7864621161312667345, guid: e8e0713c01c44684db4ab4c34a0a47e2,
         type: 3}
