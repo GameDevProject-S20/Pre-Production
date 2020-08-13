@@ -143,7 +143,7 @@ namespace Encounters
             bool reloaded = false;
             IEnumerable<RandomEncounter> conditionsMetEncounters = randomEncounterQueue.Where(e => e.IsRunnable());
 
-            while (enc == null && reloaded == false)
+            while (enc == null)
             {
                 IEnumerable<RandomEncounter> valid = randomEncounterQueue.Where(e => e.IsRunnable());
 
@@ -159,6 +159,12 @@ namespace Encounters
                 {
                     ReloadRandomEncounterQueue(tag);
                     reloaded = true;
+                    continue;
+                }
+
+                if (reloaded == true)
+                {
+                    break;
                 }
             }
             

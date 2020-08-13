@@ -430,6 +430,14 @@ public class JsonEncounterDataSource : IEncounterDataSource
             var itag = args[0];
             c = new HasItemTagPresentConditon(itag);
         }
+        else if (command == "is_walking")
+        {
+            c = new IsDrivingCondition(false);
+        }
+        else if (command == "is_driving")
+        {
+            c = new IsDrivingCondition(true);
+        }
 
         return c;
     }
@@ -580,6 +588,11 @@ public class JsonEncounterDataSource : IEncounterDataSource
             {
                 var on = (Int16.Parse(args[0]) == 0) ? false : true;
                 e = new ToggleRandomEncountersEffect(on);
+            }
+            else if (command == "toggle_driving")
+            {
+                var on = (Int16.Parse(args[0]) == 0) ? false : true;
+                e = new ToggleDrivingEffect(on);
             }
         }
         catch (Exception exception)
