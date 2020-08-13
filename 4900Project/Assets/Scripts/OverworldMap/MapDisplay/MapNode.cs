@@ -201,7 +201,7 @@ public class MapNode : MonoBehaviour
 
         // Show travel costs for adjacent panels
         if (adjacent){
-            panel.SetTravelInfo(MapTravel.GetFuelCost(this), MapTravel.timeRate);
+            panel.SetTravelInfo(MapTravel.GetFuelCost(this), MapTravel.CaravanTravelRate);
         }
 
         // For towns, the info panel shows the town's tags

@@ -68,7 +68,7 @@ public class TravelPanel : MonoBehaviour
         int fuelCount = DataTracker.Current.Player.Inventory.Contains("Fuel");
 
         if (fuelCount < fuelCost) {
-            fuelText.text = "<color=#F91509>" + fuelCost + " Fuel</color>";
+            fuelText.text = "<color=#F91509> On Foot</color>";
 
         } 
         else if (fuelCount == fuelCost) {

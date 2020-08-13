@@ -524,6 +524,7 @@ public class JsonEncounterDataSource : IEncounterDataSource
                 var townId = Int16.Parse(args[0]);
                 var encId = Int16.Parse(args[1]);
                 e = new SetDialogueEncounterEffect(townId, encId);
+                UnityEngine.Debug.Log("Townid:" + townId + " EncID:" + encId); 
             }
             else if (command == "add_edge")
             {
@@ -565,6 +566,11 @@ public class JsonEncounterDataSource : IEncounterDataSource
 
                 e = new RandomEffect(effect1, effect2, percentFirst);
                 UnityEngine.Debug.Log(e);
+            }
+            else if (command == "toggle_random_encounters")
+            {
+                var on = (Int16.Parse(args[0]) == 0) ? false : true;
+                e = new ToggleRandomEncountersEffect(on);
             }
         }
         catch (Exception exception)

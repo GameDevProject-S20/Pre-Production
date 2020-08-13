@@ -61,6 +61,7 @@ public class Tooltip : MonoBehaviour
         string descriptor = item.Description;
 
         // Only if in Inventory
+
         if (InventoryWindow.Instance){
             if (this == InventoryWindow.Instance.tooltip && item.IsConsumable)
             {

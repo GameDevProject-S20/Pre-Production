@@ -82,6 +82,7 @@ namespace SIEvents
         //=== Player =================================================//
 
         public Events.PlayerEvents.HealthEvent OnHealthChange = new Events.PlayerEvents.HealthEvent();
+        public Events.PlayerEvents.TravelTypeChangeEvent OnTravelTypeChanged = new Events.PlayerEvents.TravelTypeChangeEvent();
 
         //=== Escape Menu ===========================================//
 

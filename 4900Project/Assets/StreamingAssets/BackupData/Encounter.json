@@ -6,7 +6,7 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "You notice you are running low on gas.",
+					"text": "You see a caravan approach from ahead. You wave them down, hoping they might be able to assist you.",
 					"buttons": [
 						{
 							"next_page_id": 2
@@ -15,7 +15,80 @@
 				},
 				{
 					"id": 2,
-					"text": "Looks like there is a town up ahead. Maybe you can get fuel there.",
+					"text": "The caravan slows down, stopping just behind you. A man steps out, pointing a rifle at you.",
+					"buttons": [
+						{
+							"next_page_id": 3
+						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "\"Give me any scrap metal you have\", the man demands urgently.",
+					"buttons": [
+						{
+							"next_page_id": 4
+						}
+					]
+				},
+				{
+					"id": 4,
+					"text": "All of your scrap metal is back with the caravan. There's only one option at your disposal.",
+					"buttons": [
+						{
+							"text": "[Use Rifle]",
+							"conditions": [
+								"!has hunting_rifle 1"
+							],
+							"effects": [
+								"@health% -30"
+							],
+							"next_page_id": 5
+						}
+					]
+				},
+				{
+					"id": 5,
+					"text": "You quickly raise your rifle and two shots ring out. You feel the bullet tear through your forearm with a sharp jolt of pain. The wound looks rough but managable.",
+					"buttons": [
+						{
+							"next_page_id": 6
+						}
+					]
+				},
+				{
+					"id": 6,
+					"text": "But it seems your aim was truer. The man falls forward into the dirt with a heavy slam.",
+					"buttons": [
+						{
+							"next_page_id": 7
+						}
+					]
+				},
+				{
+					"id": 7,
+					"text": "You examine your <color=#2675AD>rifle</color>, which appears to have cracked under the strain of the shot. After decades of wear and tear throughout the shattered colonies, weapons like these tend to be very fragile.",
+					"buttons": [
+						{
+						 	"effects": [
+								"@take hunting_rifle 1"
+							],
+							"next_page_id": 8
+						}
+					]
+				},
+				{
+					"id": 8,
+					"text": "You barely have time to discard the <color=#2675AD>rifle</color> to your side before you hear commotion from the back of the caravan and several scrappers who don't look very pleased with you.",
+					"buttons": [
+						{
+							"next_page_id": 9
+						}
+					]
+				},
+				{
+					"id": 9,
+					"text": "You pick your pace up to a run and continue toward the town off in the distance.",
 					"buttons": [
 						{
 							"effects": [
@@ -51,11 +124,31 @@
 							"effects": [
 								"@give fuel 60",
 								"@give medicine 8",
-								"@start_quest Tutorial_Quest",
-								"@set_dialogue_encounter 0 2",
-								"@resolve"
-							]
+								"@start_quest Tutorial_Quest"
+							],
+							"next_page_id": 3
 						}
+					]
+				},
+				{
+					"id": 3,
+					"text": "I'll let the gatekeeper know to let you through so you can start travelling eastward.",
+					"buttons": [
+						{
+							"effects": [
+								"@add_edge 124 125",
+								"@toggle_random_encounters 1",
+								"@set_dialogue_encounter 0 2"
+							],
+							"next_page_id": 4
+					 	}
+					]
+				},
+				{
+					"id": 4,
+					"text": "Feel free to visit our local hospital if you need a little assistance. That bullet wound of yours looks like it could use some tending to.",
+					"effects": [
+						"@resolve"
 					]
 				}
 			]
@@ -1783,7 +1876,7 @@
 	],
 	"random_encounters": [
 		{
-			"valid": true,
+			"valid": false,
 			"COMMENT": "",
 			"encounter_id": 1000,
 			"tags": [],
