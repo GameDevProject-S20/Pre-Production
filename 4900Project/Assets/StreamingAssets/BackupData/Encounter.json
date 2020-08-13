@@ -368,7 +368,7 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "A group of rough looking people stop your caravan. \"This here's our road. Gotta pay to use it.\"",
+					"text": "A group of rough looking people stop you on the road. \"This here's our road. Gotta pay to use it.\"",
 					"buttons": [
 						{
 							"text": "[Offer Food] Lose 15 Rations",
@@ -674,7 +674,7 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "Welcome to New Ottawa. Always great to see a caravan drive in!",
+					"text": "Welcome to New Ottawa. Always great to see a a new face!",
 					"buttons": [
 						{
 							"text": "What should I trade here?",
@@ -1529,7 +1529,7 @@
 			"dialogue_tree": [
 				{
 					"id": 1,
-					"text": "[As you browse the town's bulletin board, you notice somebody is looking to hire a merchant caravan.]",
+					"text": "[As you browse the town's bulletin board, you notice somebody is looking to hire a trader.]",
 					"buttons": [
 						{
 							"text": "Contact the poster.",

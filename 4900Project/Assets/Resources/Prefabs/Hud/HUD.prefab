@@ -1852,11 +1852,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe619982db767f1498036bb413917f1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   tooltip: {fileID: 7535620344024647575}
   title: Fuel
-  description: The fuel that you have for your caravan. You'll be stuck walking if
+  description: The fuel that you have for your ship. You'll be stuck walking if
     you run out of fuel!
 --- !u!1 &5971513800694635578
 GameObject:
