@@ -138,6 +138,7 @@
 							"effects": [
 								"@add_edge 124 125",
 								"@toggle_random_encounters 1",
+								"@toggle_driving 1",
 								"@set_dialogue_encounter 0 2"
 							],
 							"next_page_id": 4

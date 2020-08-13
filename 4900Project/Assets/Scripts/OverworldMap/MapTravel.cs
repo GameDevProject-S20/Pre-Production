@@ -63,18 +63,18 @@ public class MapTravel : MonoBehaviour
         int currentFuel = DataTracker.Current.Player.Inventory.Contains("Fuel");
 
         // If the player has enough fuel to travel: Go ahead & travel
-        if (currentFuel >= cost) { 
+        if (currentFuel >= cost) {
+            DataTracker.Current.SetTravelType(DataTracker.TravelType.TRUCK);
             DataTracker.Current.Player.Inventory.RemoveItem("Fuel", cost);
             DataTracker.Current.dayCount += CaravanTravelRate;
             isTravelling = false; // Remove the debounce
-            DataTracker.Current.EventManager.OnTravelTypeChanged.Invoke(DataTracker.TravelType.TRUCK);
             onTravelReady();
         }
         else
         {
-            // Otherwise, we need to change vehicle type and run a LowFuel encounter
-            DataTracker.Current.EventManager.OnTravelTypeChanged.Invoke(DataTracker.TravelType.WALK);
+            DataTracker.Current.SetTravelType(DataTracker.TravelType.WALK);
 
+            // Otherwise, we need to run a LowFuel encounter
             if (EncounterManager.Instance.RandomEncountersOn)
             {
                 DataTracker.Current.EncounterManager.RunRandomEncounter();

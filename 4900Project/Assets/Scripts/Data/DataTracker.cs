@@ -82,7 +82,9 @@ public class DataTracker : MonoBehaviour
 
     public void SetTravelType(TravelType type)
     {
-        this.TravelMode = type;
+        if (TravelMode == type) return;
+
+        TravelMode = type;
         EventManager.Instance.OnTravelTypeChanged.Invoke(type);
     }
 

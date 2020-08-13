@@ -57,7 +57,7 @@ public class Initializer : MonoBehaviour
         }
 
 
-        EncounterManager.Instance.ToggleRandomEncounters(false);
+        EncounterManager.Instance.ToggleRandomEncounters(true);
         EncounterManager.Instance.ReloadRandomEncounterQueue();
     }
 
