@@ -2856,14 +2856,14 @@
 						{
 							"text": "[Safe Bet] 70% chance to win 3 Iron Ore",
 							"effects": [
-								"@random 0.7 (@give Iron_Ore 3) (@give Iron_Ore 0)"
+								"@random 0.7 (@give Iron_Ore 3) (@health 0)"
 							],
 							"next_page_id": 2
 						},
 						{
 							"text": "[Risky Bet] 30% chance to win 12 Iron Ore",
 							"effects": [
-								"@random 0.3 (@give Iron_Ore 12) (@give Iron_Ore 0)"
+								"@random 0.3 (@give Iron_Ore 12) (@health 0)"
 							],
 							"next_page_id": 2
 						}
