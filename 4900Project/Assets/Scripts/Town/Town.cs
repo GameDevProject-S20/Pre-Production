@@ -145,15 +145,18 @@ public class Town
     /// <param name="shopType"></param>
     public void InitializeShop(string name, string description, Shop.ShopTypes shopType)
     {
-        // Create a store and populate it based on the town's tags
-        Shop shop = new Shop(ShopManager.Instance.GetId(), name, description, "", shopType);
-        shop.InitializeInventory(this);
-        ShopManager.Instance.addShop(shop);
-        shops.Add(shop.id);
+        Shop shop = null;
         if (this.Name.Equals("York"))
         {
-            ShopManager.Instance.GetShopById(TownManager.Instance.GetTownByName("York").shops[0]).inventory.AddItem("Generator", 1);
+            shop = ShopManager.Instance.CreateYorkShop();
         }
+        else {
+            // Create a store and populate it based on the town's tags
+            shop = new Shop(ShopManager.Instance.GetId(), name, description, "", shopType);
+            shop.InitializeInventory(this);
+        }
+        ShopManager.Instance.addShop(shop);
+        shops.Add(shop.id);
         if (this.Name.Equals("Frakton"))
         {
             ShopManager.Instance.GetShopById(TownManager.Instance.GetTownByName("Frakton").shops[0]).inventory.AddItem("Heavy Machinery", 1);

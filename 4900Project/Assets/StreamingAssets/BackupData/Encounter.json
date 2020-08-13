@@ -1545,14 +1545,14 @@
 					"text": "Hello! Thanks for coming to help. I'm from Steelton, not too far east of here. We make all the steel around these parts.",
 					"buttons": [
 						{
-							"text": "What's the problem?",
+							"text": "What brings you to Frakton?",
 							"next_page_id":3
 						}
 					]
 				},
 				{
 					"id": 3,
-					"text": "I came here to buy a replacement for a machine which broke down. I brought a lot of steel to sell for it, but I lost my cargo on the way here.",
+					"text": "I came here to buy a replacement for a machine which broke down in our steel factory. I brought a lot of steel to trade for it, but I lost my cargo on the way here.",
 					"buttons": [
 						{
 							"text": "You lost it?",
@@ -1572,7 +1572,7 @@
 				},
 				{
 					"id": 5,
-					"text": "If you buy the replacement <color=#d9ae21>machinery</color> and bring it me in Steelton, I'll reward you. Will you help me?",
+					"text": "If you buy the replacement <color=#d9ae21>machinery</color> and bring it to Steelton, I'll reward you. Will you help me?",
 					"buttons": [
 						{
 							"text": "Yes.",

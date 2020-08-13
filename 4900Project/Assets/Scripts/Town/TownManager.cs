@@ -255,7 +255,7 @@ public class TownManager
 
         tag.shopSellModifiers.Add(ItemTag.Antique, 3f);
         tag.playerSellModifiers.Add(ItemTag.Antique, 3f);
-
+        tag.AbundancyModifiers.Add(ItemTag.General,1.5f);
         Tags.Add(tag.Name, tag);  
     }
 

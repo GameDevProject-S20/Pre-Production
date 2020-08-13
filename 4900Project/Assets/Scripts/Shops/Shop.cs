@@ -142,6 +142,7 @@ public class Shop
         // Small Towns can have abundant and common items
         // Medium & Large Towns can have any general item
         List<Item> generalItems = ItemManager.Current.GetAllItemsOfType(ItemTag.General);
+
         float SmallTownMod = 0.4f;
         float MediumTownMod = 1.0f;
         float LargeTownMod = 1.0f;
@@ -191,6 +192,13 @@ public class Shop
                 inventory.AddItem(item.DisplayName, amount);
             }
 
+        }
+
+        List<Item> miscItems = ItemManager.Current.GetAllItemsOfType(ItemTag.Miscellaneous);
+        foreach (var item in miscItems){
+            if (Random.value <= 0.3f) {
+                inventory.AddItem(item.DisplayName, Random.Range(1,10));
+            }
         }
 
     }

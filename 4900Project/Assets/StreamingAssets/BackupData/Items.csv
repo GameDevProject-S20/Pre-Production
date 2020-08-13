@@ -1,5 +1,5 @@
 DisplayName,Tooltip,Description,Value,Weight,IconName,Tags,IsConsumable
-Bandit Token,A symbol of alliance.,"A Greek 'Omega', roughly fashioned from metal. Bandits will not hassle you.",5,1,banditToken.png,"Luxury,Bandit,All",no
+Bandit Token,A symbol of alliance.,"A Greek 'Omega', roughly fashioned from metal. Bandits will not hassle you.",5,1,banditToken.png,"Bandit,All",no
 Fuel,A neccesity for travel between colonies,"Fuel is the lifeblood of traders, never leave port without first checking your tank. ",1,1,Fuel.png,"Fuel,General",no
 Rations,Unappetizing but cheap,The bare minimum to keep someone running for a day,3,1,Food.png,"Food,General,All",no
 Fresh Fruit,"Tasty, but spoils without proper storage","A rarity in a good portion of the world, which makes is quite valuable to the right people.",11,3,FreshFruit.png,"Food,All",no
@@ -7,7 +7,6 @@ Fresh Meat,A valuable delicacy.,Raising livestock is an expensive process. Meat 
 Wrench,An essential repair tool,Helps with maintaining machines. Wear and tear means you need a replacement once in a while.,10,1,Wrench.png,"Tools_And_Parts,General,All",no
 Repair Patch,One use smart repair patch,"Uncommon tech allows these patches to conduct repairs autonomously, but burn out performing the job",15,4,RepairPatch.png,"Tools_And_Parts,General,All",no
 Generator,Creates electricity,Consumes fuel to generate power. Vital for survival.,40,25,Generator.png,"Machinery,All",no
-2000's Painting,Collectors love this stuff,Art from before the world ended. Nostalgic.,11,3,Painting.png,"Luxury,Antique,All",no
 Jewelry,"A valuable, if nonfunctional, accessory",Goes nice with a finely tailored outfit. Good luck finding one,15,1,Jewlery.png,"Luxury,All",no
 Concrete,Basic building material,What most things are built out of these days,3,10,Concrete.png,"Building_Materials,General",no
 Scrap Metal,General purpose parts,Good for making something new or fixing something old,4,8,ScrapMetal.png,"Building_Materials,General,All",no
@@ -16,41 +15,31 @@ Hunting Rifle,Enough for animals.,"A low caliber firearm, useful for defense. No
 High Caliber Rifle,Powerful firearm.,A high-powered weapon manufactured before the Shattering.,49,10,rifleTier2.png,"Combat,All",no
 Body Armor,Keeps you intact,Armor meant to protect from the typical bandit raid.,30,10,BodyArmor.png,"Combat,All",no
 Rpg,Sends a message.,Let anyone who intends to raid you severely regret their choices for a whole second.,80,15,RPG.png,"Combat,All",no
-Herbal Medicine,Simple medical aid.,"When it comes to healing, simple herbs and some cloth are better than nothing.",10,3,MedicineTier1.png,"Medical,General,All",no
+Herbal Medicine,Simple medical aid.,"When it comes to healing, simple herbs and some cloth are better than nothing.",10,3,MedicineTier1.png,"Medical,General,All",yes
 Medicine,Patches up wounds.,"Bandages, medicine and a suture kit to treat injury and illness.",20,6,MedicineTier2.png,"Medical,General,All",yes
-Medical Kit,Hospital-grade first aid kit.,"Stocked with the best medical supplies and drugs, easily applied by even an unskilled user.",30,8,MedicineTier3.png,"Medical,All",no
+Medical Kit,Hospital-grade first aid kit.,"Stocked with the best medical supplies and drugs, easily applied by even an unskilled user.",30,8,MedicineTier3.png,"Medical,All",yes
 Surgical Equipment,Used in hospitals.,Advanced equipment used in hospitals to operate on patients.,100,20,surgicalEquipment.png,"Medical,All",no
 Iron Ore,Raw ore used in steel production.,"With the right amount of carbon content, raw iron can be refined in a Steel Mill.",11,4,iron.png,"Mineral,All",no
-Purified Water,One of life's essentials.,It's wet.,10,1,PurifiedWater.png,"Food,General",no
-Can Opener,Used to open canned foods.,"Knives are fine, but avoiding metal flakes in your soup is better.",1,1,CanOpener.png,Junk,no
-Pocket Watch,It tells time.,"Excellent collector's piece, for the right buyer.",15,1,PocketWatch.png,"Luxury,Antique",no
-Painkillers,Provides temporary pain relief.,"An assortment of painkillers, sure to help you forget all your woes.",5,1,PainKillers.png,Medical,no
-Soda,A tasty beverage.,"A tasty beverage, sure to give you an energy boost.",3,1,Soda.png,"Food,General",no
-Rope,A versatile utility.,"Useful for a variety of tasks, from securing items to tying up bandits.",2,1,Rope.png,"Tools_And_Parts,General",no
-Flashlight,Good for seeing in the dark.,"It's seen better days, but gets the job done.",2,1,Flashlight.png,General,no
-Blanket,Keeps you warm at night.,"Useful for staying warm, and ensuring a good night's sleep",3,3,Blanket.png,General,no
-Utility Knife,Contains numerous useful tools.,"Has a corkscrew, scissors, a knife, and several screwdrivers.",3,1,UtilityKnife.png,"Tools_And_Parts,General",no
-Socks,Keeps your feet warm.,They're fuzzy.,1,1,Socks.png,Junk,no
-Gloves,Protects your hands.,"Provide resistance against cuts, as well as heat resistance.",1,1,WorkGloves.png,Junk,no
-Canned Tuna,No expiry date listed.,Additional food source.,2,1,CannedTuna.png,"Food,General",no
-Hatchet,Versatile tool.,"Can be used to chop items, or enemies.",3,4,Hatchet.png,"Tools_And_Parts,Combat",no
-Bandages,Good for patching up light wounds.,Can be used to patch up minor wounds.,2,1,Bandages.png,"Medical,General",yes
-Wood,Great for fires.,The bedrock of any human society.,2,8,Wood.png,"Building_Materials,General",no
-Sardines,"If you ignore the taste, it's not half bad.",Additional food source.,2,1,Sardines.png,"Food,General",no
-Tent,Will protect you from the elements.,Useful as a temporary shelter.,2,8,Tent.png,General,no
-Antibiotics,Effective at preventing infections.,Very rare and powerful medicine - quite valuable.,30,1,Antibiotics.png,"Medical,Advanced",no
-Cooking Pot,Useful for cooking.,Essential for cooking any sort of meal.,2,3,CookingPot.png,Junk,no
-Battery,Good for powering small items.,"Useful for powering small items, such as flashlights.",1,1,Battery.png,"Junk,General",no
-Compass,"Follow ""N"" to go to the North Pole.","This likely had a use once, but is now a collector's item.",15,1,Compass.png,"Luxury,Antique",no
-Propane,The label says this is highly flammable.,"Came from a barbecue, should be handled with care.",10,10,Propane.png,"Tools_And_Parts,General",no
-Toolbox,Contains an assortment of tools.,This treasure chest has every tool you could ever need.,40,6,Toolbox.png,"Tools_And_Parts,Advanced",no
-Matches,Waterproof matches.,"Useful for starting fires, but has a limited number of uses.",2,1,Matches.png,"Junk,General",no
-Lighter,"Starts fires, and looks cool too.","Useful for starting fires, and can be refuelled",3,1,Lighter.png,"Junk,General",no
-Large Battery,Good for powering large items.,"A surprising lack of corrosion, and looks like it still holds charge.",5,5,LargeBattery.png,"Tools_And_Parts,Advanced",no
-Survival Guide,Surely helpful to someone?,A book with a plethora of survival knowledge.,5,2,SurvivalGuide.png,Junk,no
-Shovel,Useful for digging up treasure.,"Useful for digging, and can double as an impromptu weapon",2,5,Shovel.png,"Tools_And_Parts,General,Combat",no
-Combat Knife,It's very sharp.,An effective weapon in close-combat.,5,3,CombatKnife.png,"Tools_And_Parts,Combat",no
-Butane,"Used for starting fires, and refilling lighters.","Extremely flammable, but very effective at quickly starting fires.",2,2,Butane.png,"Tools_And_Parts,General",no
+Purified Water,One of life's essentials.,It's wet.,10,1,PurifiedWater.png,"Food,Miscellaneous,All",no
+Can Opener,Used to open canned foods.,"Knives are fine, but avoiding metal flakes in your soup is better.",1,1,CanOpener.png,"Junk,All",no
+Painkillers,Provides temporary pain relief.,"An assortment of painkillers, sure to help you forget all your woes.",5,1,PainKillers.png,"Medical,All",yes
+Rope,A versatile utility.,"Useful for a variety of tasks, from securing items to tying up bandits.",2,1,Rope.png,"Tools_And_Parts,Miscellaneous,All",no
+Flashlight,Good for seeing in the dark.,"It's seen better days, but gets the job done.",2,1,Flashlight.png,"Miscellaneous,All",no
+Blanket,Keeps you warm at night.,"Useful for staying warm, and ensuring a good night's sleep",3,3,Blanket.png,"Miscellaneous,All",no
+Socks,Keeps your feet warm.,They're fuzzy.,1,1,Socks.png,"Junk,Miscellaneous,All",no
+Gloves,Protects your hands.,"Provide resistance against cuts, as well as heat resistance.",1,1,WorkGloves.png,"Junk,Miscellaneous,All",no
+Hatchet,Versatile tool.,"Can be used to chop items, or enemies.",10,4,Hatchet.png,"Tools_And_Parts,Combat,All",no
+Wood,Great for fires.,The bedrock of any human society.,12,15,Wood.png,"Building_Materials,Miscellaneous,All",no
+Antibiotics,Effective at preventing infections.,Very rare and powerful medicine - quite valuable.,30,1,Antibiotics.png,"Medical,All",no
+Cooking Pot,Useful for cooking.,Essential for cooking any sort of meal.,2,3,CookingPot.png,"Junk,Miscellaneous,All",no
+Compass,"Follow ""N"" to go to the North Pole.","Useful back when Earth had a strong magnetic field, but is now a collector's item.",15,1,Compass.png,"Luxury,Antique,Miscellaneous,All",no
+Propane,The label says this is highly flammable.,"Came from a barbecue, should be handled with care.",8,10,Propane.png,"Tools_And_Parts,Miscellaneous,All",no
+Toolbox,Contains an assortment of tools.,This treasure chest has every tool you could ever need.,40,6,Toolbox.png,"Tools_And_Parts,Miscellaneous,All",no
+Matches,Waterproof matches.,"Useful for starting fires, but has a limited number of uses.",1,1,Matches.png,"Junk,Miscellaneous,All",no
+Lighter,"Starts fires, and looks cool too.","Useful for starting fires, and can be refuelled",3,1,Lighter.png,"Junk,Miscellaneous,All",no
+Large Battery,Good for powering large items.,"A surprising lack of corrosion, and looks like it still holds charge.",5,5,LargeBattery.png,"Tools_And_Parts,Miscellaneous,All",no
+Survival Guide,Surely helpful to someone?,A book with a plethora of survival knowledge.,5,2,SurvivalGuide.png,"Junk,Miscellaneous,All",no
+Shovel,Useful for digging.,"A vital tool for a driver stuck in the mud, or a would-be treasure hunter.",10,5,Shovel.png,"Tools_And_Parts,Miscellaneous,All",no
 Motor,Converts electricity to mechanical power.,"Motors are used in farming equipment, mining machines and vehicles.",25,15,motor.png,"Machinery,All",no
 Seismic Data,Data on regional seismic activity.,"This scientific data is indecipherable to you, but an expert may value it.",1,1,ScienceData1.png,"Scientific,All",no
 Mineral Data,Data on soil mineral composition.,"This scientific data is indecipherable to you, but an expert may value it.",1,1,ScienceData2.png,"Scientific,All",no
@@ -59,4 +48,10 @@ Astronomical Data,Data on astronomical observations.,"This scientific data is in
 Tricorder,Scientific tool for field recordings.,The Standard Model Field Tri-Recorder can measure a wide variety of environmental conditions.,30,2,tricorder.png,"Tools_And_Parts,Scientific,All",no
 Family Heirloom,An old gift.,This locket has been in your family since before the Shattering. Along your long travels it remains a piece of home.,40,1,Heirloom.png,"Luxury,Unique",no
 Heavy Machinery,Used in the steelmaking process.,"This large, expensive machine is used to lift large quantities of molten steel.",150,35,heavyMachine.png,Machinery,no
-
+Pocket Watch,It tells time.,"Excellent collector's piece, for the right buyer.",3,1,PocketWatch.png,"Luxury,Antique,All",no
+2000's Painting,Collectors love this stuff.,Art from before the world ended. Nostalgic.,5,3,Painting.png,"Antique,All",no
+Old Cellphone,Old World communication device.,No Signal' reads the screen. You aren't sure how it's still powered.,8,1,CellPhone.png,"Antique,All",no
+Antique Rifle,Doesn't fire anymore.,A rifle from an old war. You can't tell exactly which one.,10,1,OldRifle.png,"Antique,All",no
+NineTenTwo Swish,Old entertainment device.,A functioning entertainment console is a luxury indeed.,12,1,switch.png,"Antique,All",no
+Fashion Magainze,At least a century old.,"""The hair, the colours, the pants! People can’t afford to care about this anymore.""",8,1,magazine.png,"Antique,All",no
+Vinyl Record,"""I've been dreaming of White Christmas…""",You aren't sure if there's a working record player left on the planet.,18,1,vinyl.png,"Antique,All",no

@@ -71,7 +71,7 @@ namespace SIEvents
 
         public override string ToString()
         {
-            return string.Format("{0} {1}{2}: {3}/{4}", (transactionType == TransactionTypeEnum.BUY) ? "Buy" : "Sell", ItemName, (ReqLocId.HasValue) ? " " + TownManager.Instance.GetTownById(ReqLocId.Value).Name : "", currentCount, requiredCount);
+            return string.Format("{0} {1}{2}: {3}/{4}", (transactionType == TransactionTypeEnum.BUY) ? "Buy" : "Sell", ItemName, " in ", (ReqLocId.HasValue) ? " " + TownManager.Instance.GetTownById(ReqLocId.Value).Name : "", currentCount, requiredCount);
         }
     }
 }
