@@ -67,18 +67,29 @@ public class MapTravel : MonoBehaviour
         }
         else
         {
-            // Otherwise, we need to run a LowFuel encounter
-            DataTracker.Current.EncounterManager.RunRandomEncounter();
+            if (Clock.Instance.Time.Hour < Clock.NightStartHour - 1) // ARL -- part of the bypass mentioned below
+            {
+                // Otherwise, we need to run a LowFuel encounter
+                DataTracker.Current.EncounterManager.RunRandomEncounter();
 
-            // Delay the progression of travel until they complete the encounter
-            EventManager.Instance.OnDialogueEnd.AddListener(() =>
+                // Delay the progression of travel until they complete the encounter
+                EventManager.Instance.OnDialogueEnd.AddListener(() =>
+                {
+                // Remove the debounce
+                isTravelling = false;
+
+                // Travel
+                onTravelReady();
+                });
+            }
+            else // ARL temporary -- bypass gas requirement if night about to fall. This has to do with a bug where the campfire will run twice if a low fuel encounter triggers as they leave the previous node
             {
                 // Remove the debounce
                 isTravelling = false;
 
                 // Travel
                 onTravelReady();
-            });
+            }
         }
     }
 

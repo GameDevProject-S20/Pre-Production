@@ -338,6 +338,8 @@ public class OverworldMapUI : MonoBehaviour
     {
         isTravelling = false;
 
+        Clock.Instance.IncrementHour(MapTravel.TravelTimeHours);
+
         foreach (Transform path in PathsContainer.transform)
         {
             if (path.gameObject.name.Contains("_" + DataTracker.Current.currentLocationId.ToString() + "_"))
@@ -350,8 +352,7 @@ public class OverworldMapUI : MonoBehaviour
             }
         }
 
-        int hour = Clock.Instance.Time.Hour;
-        if (hour >= 20)
+        if (!Clock.Instance.IsDay())
         {
             EventManager.Instance.OnCampfireEnded.AddListener(campfireEndListener);
             CampfireManager.Instance.LoadCampfireScene();
@@ -385,7 +386,6 @@ public class OverworldMapUI : MonoBehaviour
         }
 
         DataTracker.Current.currentLocationId = selectedNode.NodeData.Id;
-        Clock.Instance.IncrementHour(MapTravel.TravelTimeHours);
         EventManager.Instance.OnNodeArrive.Invoke(selectedNode.NodeData);
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
