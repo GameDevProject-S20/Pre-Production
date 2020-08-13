@@ -384,13 +384,13 @@
 							"next_page_id": 2
 						},
 						{
-							"text": "[Trade] Offer 4 Rations for 7 Fuel.",
+							"text": "[Trade] Offer 4 Rations for 12 Fuel.",
 							"conditions": [
 								"!has Rations 4"
 							],
 							"effects": [
 								"@take Rations 4",
-								"@give Fuel 7"
+								"@give Fuel 12"
 							],
 							"next_page_id": 2
 						},
@@ -426,13 +426,13 @@
 							"next_page_id": 2
 						},
 						{
-							"text": "[Trade] Offer 4 Rations for 7 Fuel.",
+							"text": "[Trade] Offer 4 Rations for 12 Fuel.",
 							"conditions": [
 								"!has Rations 4"
 							],
 							"effects": [
 								"@take Rations 4",
-								"@give Fuel 7"
+								"@give Fuel 12"
 							],
 							"next_page_id": 2
 						},
@@ -1839,7 +1839,8 @@
 								"!has Heavy_Machinery 1"
 							],
 							"effects": [
-								"@take Heavy_Machinery 1"
+								"@take Heavy_Machinery 1",
+								"@give steel 6"
 							],
 							"next_page_id": 2
 						},
@@ -1851,11 +1852,10 @@
 				},
 				{
 					"id": 2,
-					"text": "You're a life-saver. We'll pay you in steel, of course.",
+					"text": "You're a life-saver. I expect payment in steel is satisfactory.",
 					"buttons": [
 						{
 							"effects": [
-								"@give steel 6",
 								"@resident remove steelQuest2 Steelton",
 								"@resolve"
 							]
@@ -1931,9 +1931,6 @@
 					"buttons": [
 						{
 							"text": "But I'm not a scientist!",
-							"effects": [
-								"@give Tricorder 1"
-							],
 							"next_page_id": 6
 						}
 					]
@@ -1944,6 +1941,9 @@
 					"buttons": [
 						{
 							"text": "What kind of measurements do you need?",
+							"effects": [
+								"@give Tricorder 1"
+							],
 							"next_page_id": 7
 						}
 					]
@@ -2927,10 +2927,10 @@
 					"avatar_name": "Mechanic",
 					"buttons": [
 						{
-							"text": "[Trade] Repair your vehicle for 20 Scrap Metal and 15 Fuel",
+							"text": "[Trade] Repair your vehicle for 10 Scrap Metal and 15 Fuel",
 							"conditions": [
 								"!has Fuel 15",
-								"!has Scrap_Metal 20"
+								"!has Scrap_Metal 10"
 							],
 							"effects": [
 								"@take Fuel 6",
@@ -2946,9 +2946,9 @@
 							"next_page_id": 4
 						},
 						{
-							"text": "[Stubborn] Get out and push, Lose 25 Fuel",
+							"text": "[Stubborn] Get out and push, Lose all Fuel",
 							"effects": [
-								"@take Fuel 25"
+								"@take Fuel 10000"
 							],
 							"next_page_id": 2
 						}
@@ -3753,7 +3753,7 @@
 				},
 				{
 					"id": 3,
-					"text": "\"Th-Thank you\" he stammers, \"I'll not forget this kindess. That ring belonged to my partner; I'm too old for the trader's life, but it should be worth something\".",
+					"text": "\"Th-Thank you\" he stammers, \"I'll not forget this kindess. That ring used to belong to my partner... I'm too old for the trader's life, but it should be worth something\".",
 					"buttons": [
 						{
 							"text": "[Pity] Return the ring",
@@ -4392,12 +4392,13 @@
 					"text": "For no apparent reason, you get the urge to stop and step outside. Something about this spot... you can feel it in your bones.",
 					"buttons": [
 						{
-							"text": "Dig with your shovel.",
+							"text": "[Excavate] Dig with your shovel.",
 							"conditions": [
 								"!has Shovel 1"
 							],
 							"effects": [
-								"@give_tag Antique 1"
+								"@give_tag Antique 1",
+								"@take Shovel 1"
 							],
 							"next_page_id":2
 						},
