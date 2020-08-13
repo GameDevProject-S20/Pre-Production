@@ -22,7 +22,6 @@ Iron Ore,Raw ore used in steel production.,"With the right amount of carbon cont
 Purified Water,One of life's essentials.,It's wet.,10,1,PurifiedWater.png,"Food,General,All",no
 Can Opener,Used to open canned foods.,"Knives are fine, but avoiding metal flakes in your soup is better.",1,1,CanOpener.png,"Junk,All",no
 Pocket Watch,It tells time.,"Excellent collector's piece, for the right buyer.",15,1,PocketWatch.png,"Luxury,Antique,All",no
-Painkillers,Provides temporary pain relief.,"An assortment of painkillers, sure to help you forget all your woes.",5,1,PainKillers.png,"Medical,All",no
 Soda,A tasty beverage.,"A tasty beverage, sure to give you an energy boost.",3,1,Soda.png,"Food,General,All",no
 Rope,A versatile utility.,"Useful for a variety of tasks, from securing items to tying up bandits.",2,1,Rope.png,"Tools_And_Parts,General,All",no
 Flashlight,Good for seeing in the dark.,"It's seen better days, but gets the job done.",2,1,Flashlight.png,"General,All",no
@@ -48,9 +47,7 @@ Large Battery,Good for powering large items.,"A surprising lack of corrosion, an
 Survival Guide,Surely helpful to someone?,A book with a plethora of survival knowledge.,5,2,SurvivalGuide.png,"Junk,All",no
 Shovel,Useful for digging up treasure.,"Useful for digging, and can double as an impromptu weapon",2,5,Shovel.png,"Tools_And_Parts,General,All",no
 Butane,"Used for starting fires, and refilling lighters.","Extremely flammable, but very effective at quickly starting fires.",2,2,Butane.png,"Tools_And_Parts,Miscellaneous,All",no
-Purified Water,One of life's essentials.,It's wet.,10,1,PurifiedWater.png,"Food,Miscellaneous,All",no
 Painkillers,Provides temporary pain relief.,"An assortment of painkillers, sure to help you forget all your woes.",5,1,PainKillers.png,"Medical,All",yes
-Gloves,Protects your hands.,"Provide resistance against cuts, as well as heat resistance.",1,1,WorkGloves.png,"Junk,Miscellaneous,All",no
 Motor,Converts electricity to mechanical power.,"Motors are used in farming equipment, mining machines and vehicles.",25,15,motor.png,"Machinery,All",no
 Seismic Data,Data on regional seismic activity.,"This scientific data is indecipherable to you, but an expert may value it.",1,1,ScienceData1.png,"Scientific,All",no
 Mineral Data,Data on soil mineral composition.,"This scientific data is indecipherable to you, but an expert may value it.",1,1,ScienceData2.png,"Scientific,All",no
