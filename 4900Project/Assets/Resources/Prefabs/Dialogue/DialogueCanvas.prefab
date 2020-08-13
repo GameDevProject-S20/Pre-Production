@@ -2336,7 +2336,7 @@ MonoBehaviour:
   contentRect: {fileID: 7864621161261145241}
   scrollViewContainerRect: {fileID: 7864621162552622781}
   interactableButtonTextColour: {r: 204, g: 196, b: 179, a: 255}
-  uninteractableButtonTextColour: {r: 145, g: 139, b: 126, a: 255}
+  uninteractableButtonTextColour: {r: 0.5686275, g: 0.54509807, b: 0.49411765, a: 255}
 --- !u!114 &6177136937307398341
 MonoBehaviour:
   m_ObjectHideFlags: 0
