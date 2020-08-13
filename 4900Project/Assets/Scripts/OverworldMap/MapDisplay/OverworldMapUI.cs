@@ -157,8 +157,6 @@ public class OverworldMapUI : MonoBehaviour
         this.Vroom = Resources.Load<AudioClip>("Music/Sound Effects/gruntsound-extended");
         travelSpeed = 0.3f;
 
-
-
         campfireEndListener = () =>
         {
             FinishOnNodeArrival();
@@ -374,30 +372,33 @@ public class OverworldMapUI : MonoBehaviour
             }
         }
 
-        if (!Clock.Instance.IsDay() && DataTracker.Current.TravelMode != DataTracker.TravelType.WALK)
+        if (!Clock.Instance.IsDay())
         {
             EventManager.Instance.OnCampfireEnded.AddListener(campfireEndListener);
             CampfireManager.Instance.LoadCampfireScene();
-
-            // Don't finish the OnNodeArrival until campfire finished.
         }
         else
         {
-            // Trigger encounters on empty nodes
-            if (selectedNode.NodeData.Type == OverworldMap.LocationType.NONE)
-            {
-                if (selectedNode.NodeData.LocationId != -1 || selectedNode.RollEncounter())
-                {
-                    EventManager.Instance.OnEncounterTrigger.Invoke(selectedNode.NodeData.LocationId);
-                }
-            }
-
             FinishOnNodeArrival();
         }
     }
 
     void FinishOnNodeArrival()
     {
+
+        // Trigger encounters on empty nodes
+        if (selectedNode.NodeData.Type == OverworldMap.LocationType.NONE)
+        {
+            if (selectedNode.NodeData.LocationId != -1 ||  
+                (EncounterManager.Instance.RandomEncountersOn && DataTracker.Current.TravelMode == DataTracker.TravelType.WALK))
+            {
+                EventManager.Instance.OnEncounterTrigger.Invoke(selectedNode.NodeData.LocationId);
+            }
+            else if (EncounterManager.Instance.RandomEncountersOn && selectedNode.RollEncounter()){
+                EventManager.Instance.OnEncounterTrigger.Invoke(selectedNode.NodeData.LocationId);
+            }
+        }
+
         if (selectedNode.NodeData.Type == OverworldMap.LocationType.TOWN)
         {
             SidePanel.OpenTown(selectedNode.NodeData.LocationId);
