@@ -4,11 +4,11 @@ Id,Name,Leader,Colour,Size,Tags,Residents,LeaderEncounterId
 2,Frakton,Sheriff Cailyn,#de8212,Large,,steelQuest1,72
 3,Alabaster,Dr David,#fc1e1e,Large,Hospital,hospital,73
 4,New Ottawa,the New Democratic Council,#94d914,Large,Factory,,74
-5,Rocket City,Overseer Zachary,#0c28c7,Large,,FALSE,75
+5,Rocket City,Overseer Zachary,#0c28c7,Large,,,75
 6,Steelton,the Northern Trade Coalition,#38c29f,Medium,Steel,,76
 7,Lombard,Mayor Aaron,#6a0cc7,Medium,Historical,,77
 9,Skull,Chief Alex,#3492eb,Medium,Bandit,,79
-10,Fields,Wilson Agriculture Corp,#27c6db,Small,Farming,,80
+10,Fields,Wilson Agriculture Corp,#27c6db,Small,Farming,scienceQuest1,80
 11,Carrot Farm,the Green Pact,#d62474,Small,Farming,,81
 12,Sherbrooke,Farmer Sean,##cc2c00,Small,Farming,,82
 13,Riverbed,Mayor Tali,#c99863,Small,Farming,,83

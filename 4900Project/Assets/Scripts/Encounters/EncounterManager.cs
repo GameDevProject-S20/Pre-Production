@@ -51,6 +51,7 @@ namespace Encounters
             randomEncounterQueue = reloadRandomEncounters();
             EventManager.Instance.OnEncounterTrigger.AddListener((int id) =>
             {
+                if (DataTracker.Current.hourCount >= 19) return;
                 if (id == -1)
                 {
                     RunRandomEncounter();

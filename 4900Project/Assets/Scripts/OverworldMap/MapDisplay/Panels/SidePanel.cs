@@ -21,6 +21,7 @@ public class SidePanel : MonoBehaviour
 
     bool isTown;
     int id;
+    int locId;
     bool isOpen = false; 
 
     private void Start() {
@@ -46,8 +47,11 @@ public class SidePanel : MonoBehaviour
 
     public void OpenTown(int id){
         this.id = id;
+        OverworldMap.LocationNode node;
+        DataTracker.Current.WorldMap.GetNode(id, out node);
+        locId = node.LocationId;
         isTown = true;
-        Town t = DataTracker.Current.TownManager.GetTownById(id);
+        Town t = DataTracker.Current.TownManager.GetTownById(locId);
         TitlePanel.SetActive(true);
         Buffer.SetActive(true);
 
@@ -93,6 +97,9 @@ public class SidePanel : MonoBehaviour
 
     public void OpenPOI(int id){
         this.id = id;
+        OverworldMap.LocationNode node;
+        DataTracker.Current.WorldMap.GetNode(id, out node);
+        locId = node.LocationId;
         isTown = false;
         TitlePanel.SetActive(false);
         Buffer.SetActive(false);
@@ -113,10 +120,10 @@ public class SidePanel : MonoBehaviour
 
     public void OnButtonClick(){
         if (isTown){
-            EventManager.Instance.OnEnterTownButtonClick.Invoke(id);
+            EventManager.Instance.OnEnterTownButtonClick.Invoke(locId);
         }
         else {
-            EventManager.Instance.OnEnterPOIButtonClick.Invoke(id);
+            EventManager.Instance.OnEnterPOIButtonClick.Invoke(locId);
         }
         Close();
 

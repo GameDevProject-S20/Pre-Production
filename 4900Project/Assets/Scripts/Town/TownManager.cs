@@ -271,6 +271,11 @@ public class TownManager
         Residents.Add("hospital", new Resident("hospital", "Hospital", "Replenish your health.", "Icons/ItemIcons/MedicineTier2",12));
         Residents.Add("steelQuest1", new Resident("steelQuest1","Steelmaker's Request", "A message on the job board catches your eye...", "Icons/CyberPunk Avatars/014",210));
         Residents.Add("steelQuest2", new Resident("steelQuest2","Steelmaker", "The Steelmaker awaits your delivery.", "Icons/CyberPunk Avatars/014",211));
+        Residents.Add("scienceQuest1", new Resident("scienceQuest1","Researcher", "A researcher has set up a lab in town.", "Icons/CyberPunk Avatars/Scientist1",212));
+        Residents.Add("scienceQuest2A", new Resident("scienceQuest2A","Penelope", "A researcher with the Laurentian Institute.", "Icons/CyberPunk Avatars/Scientist1",213));
+        Residents.Add("scienceQuest2B", new Resident("scienceQuest2B","Researcher", "A researcher has set up a lab in town.", "Icons/CyberPunk Avatars/Scientist2",213));
+        Residents.Add("scienceQuest2C", new Resident("scienceQuest2C","Researcher", "A researcher has set up a lab in town.", "Icons/CyberPunk Avatars/Scientist3",213));
+        Residents.Add("scienceQuest3", new Resident("scienceQuest3","Take Soil Sample", "This spot is as good as any.", "Icons/ItemIcons/Shovel",200));
 
     }
 

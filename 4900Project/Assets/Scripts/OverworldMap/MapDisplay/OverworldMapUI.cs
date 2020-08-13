@@ -340,10 +340,10 @@ public class OverworldMapUI : MonoBehaviour
 
         if (selectedNode.NodeData.Type == OverworldMap.LocationType.TOWN)
         {
-            SidePanel.OpenTown(selectedNode.NodeData.LocationId);
+            SidePanel.OpenTown(selectedNode.NodeData.Id);
         }
         else if (selectedNode.NodeData.Type == OverworldMap.LocationType.POI){
-            SidePanel.OpenPOI(selectedNode.NodeData.LocationId);
+            SidePanel.OpenPOI(selectedNode.NodeData.Id);
         }
        
         // Trigger encounters on empty nodes
