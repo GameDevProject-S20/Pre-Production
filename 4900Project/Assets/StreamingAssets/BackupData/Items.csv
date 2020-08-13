@@ -47,7 +47,7 @@ Matches,Waterproof matches.,"Useful for starting fires, but has a limited number
 Lighter,"Starts fires, and looks cool too.","Useful for starting fires, and can be refuelled",3,1,Lighter.png,"Junk,General,All",no
 Large Battery,Good for powering large items.,"A surprising lack of corrosion, and looks like it still holds charge.",5,5,LargeBattery.png,"Tools_And_Parts,Advanced,All",no
 Survival Guide,Surely helpful to someone?,A book with a plethora of survival knowledge.,5,2,SurvivalGuide.png,"Junk,All",no
-Shovel,Useful for digging up treasure.,"Useful for digging, and can double as an impromptu weapon",2,5,Shovel.png,"Tools_And_Parts,General,Combat,All",no
+Shovel,Useful for digging up treasure.,"Useful for digging, and can double as an impromptu weapon",2,5,Shovel.png,"Tools_And_Parts,General,All",no
 Butane,"Used for starting fires, and refilling lighters.","Extremely flammable, but very effective at quickly starting fires.",2,2,Butane.png,"Tools_And_Parts,General,All",no
 Motor,Converts electricity to mechanical power.,"Motors are used in farming equipment, mining machines and vehicles.",25,15,motor.png,"Machinery,All",no
 Seismic Data,Data on regional seismic activity.,"This scientific data is indecipherable to you, but an expert may value it.",1,1,ScienceData1.png,"Scientific,All",no
