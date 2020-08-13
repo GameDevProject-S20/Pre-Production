@@ -420,9 +420,6 @@ public class OverworldMapUI : MonoBehaviour
             }
 
         }
-        DataTracker.Current.clock.IncrementHour(MapTravel.CaravanTravelRate);
-
-        
     }
 
     private void RemoveCampfireEndListener()
