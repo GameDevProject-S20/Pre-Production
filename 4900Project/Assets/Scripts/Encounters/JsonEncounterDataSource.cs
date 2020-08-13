@@ -34,6 +34,7 @@ public class JsonEncounterDataSource : IEncounterDataSource
     {
         public int encounter_id;
         public bool valid;
+        public string[] conditions;
         public string[] tags;
         public RawPage[] dialogue_tree;
     }
@@ -143,6 +144,7 @@ public class JsonEncounterDataSource : IEncounterDataSource
         //### These are the properties we need to load in from file ###//
         var id = rawEncounter.encounter_id;
         var valid = rawEncounter.valid;
+        var rawConditions = rawEncounter.conditions;
         var tags = rawEncounter.tags;
         var rawDialogue = rawEncounter.dialogue_tree;
         //###                                                       ###//
@@ -151,10 +153,12 @@ public class JsonEncounterDataSource : IEncounterDataSource
         if (id == 0) throw new ArgumentException("Encounter id must not be 0!");
 
         var dialogue = parseDialogue(rawDialogue, id);
+        var conditions = parsePresentConditions(rawConditions);
 
         Encounter encounter = new RandomEncounter()
         {
             Id = id,
+            Conditions = conditions,
             Tags = tags,
             Dialogue = dialogue
         };
@@ -356,7 +360,7 @@ public class JsonEncounterDataSource : IEncounterDataSource
         //###                                                       ###//
         //#############################################################//
 
-        var conditions = parsePageOptionConditions(rawConditions);
+        var conditions = parsePresentConditions(rawConditions);
 
         var effects = parseEffects(rawEffects, encounterId);
 
@@ -384,27 +388,27 @@ public class JsonEncounterDataSource : IEncounterDataSource
     }
 
     /// <summary>
-    /// Helper function for parsing a series of Page Option (Button) Condiitons
+    /// Helper function for parsing a series of Present Condiitons
     /// </summary>
-    /// <returns>Condition</returns>
-    private IEnumerable<IPresentCondition> parsePageOptionConditions(string[] rawConditions)
+    /// <returns>A list of parsed conditions</returns>
+    private List<IPresentCondition> parsePresentConditions(string[] rawConditions)
     {
         if (rawConditions == null)
         {
-            return Enumerable.Empty<IPresentCondition>();
+            return new List<IPresentCondition>();
         }
         else
         {
-            return rawConditions.Select(e => parsePageOptionCondition(e));
+            return rawConditions.Select(e => parsePresentCondition(e)).ToList();
         }
     }
 
     /// <summary>
-    /// Handles creation of conditions that must be satisfied in order to press the button
+    /// Handles creation of conditions that must be satisfied in order to press a button or trigger a random encounter
     ///
     /// </summary>
     /// <returns>Condition</returns>
-    private IPresentCondition parsePageOptionCondition(string statement)
+    private IPresentCondition parsePresentCondition(string statement)
     {
         IPresentCondition c = null;
 

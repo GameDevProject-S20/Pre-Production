@@ -55,7 +55,9 @@ public class Initializer : MonoBehaviour
             EncounterManager.Instance.AddEncounter(e);
         }
 
+
         EncounterManager.Instance.ToggleRandomEncounters(false);
+        EncounterManager.Instance.ReloadRandomEncounterQueue();
     }
 
     private void BuildQuest()
