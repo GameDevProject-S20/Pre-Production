@@ -38,12 +38,12 @@ public class EncounterNode
             probMap = Resources.Load<Texture2D>("Sprites/Map/eventProbabilityTexture");
             loaded = true;
         }
-        EventManager.Instance.OnTimeAdvance.AddListener(TimePass);
+        EventManager.Instance.OnTimeChanged.AddListener(TimePass);
     }
 
-    void TimePass(int i){
+    void TimePass(System.TimeSpan _){
         if (p == DefaultProbability) return;
-        growthTime += i * growthMod[DefaultProbability];
+        growthTime += growthMod[DefaultProbability];
         if (growthTime >= growthTimeMax) {
             if (p == "Safe") {
                 p = "Low";
@@ -75,7 +75,7 @@ public class EncounterNode
     }
 
     public void Delete(){
-        EventManager.Instance.OnTimeAdvance.RemoveListener(TimePass);
+        EventManager.Instance.OnTimeChanged.RemoveListener(TimePass);
     }
 
     public void SampleTexture(float x, float y)

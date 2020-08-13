@@ -101,9 +101,7 @@ namespace SIEvents
 
         //=== Time ==================================================//
 
-        public Events.MiscEvents.TimeEvent OnTimeAdvance = new Events.MiscEvents.TimeEvent();
-        public UnityEvent OnDayAdvance = new UnityEvent();
-        public UnityEvent OnEvening = new UnityEvent();
+        public Events.MiscEvents.TimeChangedEvent OnTimeChanged = new Events.MiscEvents.TimeChangedEvent();
 
         //=== Misc ===================================================//
         public UnityEvent onDataTrackerLoad = new UnityEvent();
