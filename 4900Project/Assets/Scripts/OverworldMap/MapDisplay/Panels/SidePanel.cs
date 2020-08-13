@@ -42,10 +42,7 @@ public class SidePanel : MonoBehaviour
             {
                 EwasKeyDown = EisDown;
                 OnButtonClick();
-            } else
-            {
-                GameObject.Find("Map").GetComponent<OverworldMapUI>().TownMapClosed(); 
-            }
+            } 
         }
         EwasKeyDown = EisDown;
 
